@@ -1,6 +1,7 @@
 # Consideraciones de mi forma de programar
 
-## Respuestas Modelo:
+## Respuestas Modelo
+
 ```json
 {
     "isError": false,
@@ -19,3 +20,4 @@
   * disabled = son campos que se pueden mostrar pero desabilitados porque los configura el back
   * \+ el type (para que se aequivalene hay que agregarle las "")
   * \+ required y default
+  

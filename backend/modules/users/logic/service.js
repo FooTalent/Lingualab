@@ -1,8 +1,10 @@
 import configEnv from "../../../config/env.js";
 import CustomService from "../../../libraries/customs/service.js";
-import createToken from "../../../libraries/sessions/createToken.js";
-import { createHashAsync, isValidPasswordAsync } from "../../../libraries/sessions/passwords.js";
+import createToken from "./createToken.js";
+import { createHashAsync, isValidPasswordAsync } from "./passwords.js";
 import ThisDaoMongo from "../data/dao.mongo.js";
+import { sendMail } from "../../../libraries/emails/sendMail.js";
+import LastUpdateDTO from "../../../libraries/customs/dto.lastupdate.js";
 
 export default class Service extends CustomService {
   constructor() {
@@ -13,6 +15,10 @@ export default class Service extends CustomService {
 
   get = async (filter, excludePassword = true )  => await this.dao.get   (filter, excludePassword)
   getBy = async (filter, excludePassword = true) => await this.dao.getBy (filter, excludePassword)
+  update      = async (eid, elementUpdate)  => {
+    const elementToUpdate = (new LastUpdateDTO(elementUpdate)).things;
+    return await this.dao.update({_id: eid}, elementToUpdate)
+  }
 
   register = async (userData) => {
     userData.password = await createHashAsync(userData.password)
@@ -45,5 +51,24 @@ export default class Service extends CustomService {
 
   logout = async () => {}
 
-  
+  userRecovery = async (email) => {    
+    const userFound = await this.dao.getBy({email});
+    const token = createToken({id: userFound._id, role: userFound.role}, '1h')
+
+    const to = email
+    const subject  = 'Recuperar Contraseña'
+    const template = 'recoveryUser'
+    const context = {
+      user: { first_name: userFound.first_name, email: userFound.email},
+      url: `${configEnv.cors_origin}/#/recoverypassword`,
+      token
+    }
+    return sendMail( to, subject, template, context)
+  }
+
+  updatePassword = async (uid, password) => {
+    password = await createHashAsync(password)
+    return await this.dao.update({_id: uid}, {password, update: Date.now()})
+  }
+
 }

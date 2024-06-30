@@ -4,7 +4,7 @@ import __dirname from './libraries/dirname.js';
 import { connectDb } from './config/connectMongo.js';
 import { addLogger, logger } from './libraries/logger.js';
 import handleResponses from './middleware/handleResponses.js';
-import initializePassport from './config/passport.config.js';
+import initializePassport from './modules/users/config/passport.config.js';
 import passport from 'passport';
 import appRouter from './config/routes.js'
 

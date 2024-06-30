@@ -11,7 +11,6 @@ export default class Controller extends CustomController {
     }
   }
 
-  update = (req, res) => { res.sendSuccess({}, "PUT"); }
   del    = (req, res) => { res.sendSuccess({}, "DELETE"); }
 
   register = async (req, res) => {
@@ -41,4 +40,26 @@ export default class Controller extends CustomController {
   }
 
   getUserSession = (req, res) => res.sendSuccess(req.user)
+
+  userRecovery = async (req, res, next) => {
+    try {    
+      const { email } = req.body
+      const resp = await this.service.userRecovery(email)
+      res.sendSuccess(resp)
+    } catch (error) {
+      req.logger.error(error);
+      next(error);
+    }
+  }
+
+  userRecoveryPassword = async (req, res, next) => {
+    try {
+      let { password } = req.body
+      await this.service.updatePassword(req.user.id, password)
+      res.sendSuccess("User updated")
+    } catch (error) {
+      req.logger.error(error);
+      next(error);
+    }
+  }
 }

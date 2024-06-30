@@ -1,4 +1,4 @@
-import configEnv from "./env.js";
+import configEnv from "../../../config/env.js";
 import passport from "passport";
 import jwt from "passport-jwt";
 

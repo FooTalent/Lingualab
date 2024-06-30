@@ -1,4 +1,4 @@
-import configEnv from "../../config/env.js";
+import configEnv from "../../../config/env.js";
 import jwt from "jsonwebtoken";
 
 const JWT_PRIVATE_KEY = configEnv.jwt_code;
