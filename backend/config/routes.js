@@ -1,7 +1,10 @@
 import { Router } from "express";
-
+import usersRouter from "../modules/users/api/routes.js";
 const router = Router()
 
-export default router
+router
   .get('/', (req, res) => {   res.send('Hello, World!')})
-  .get('*', (req, res) => res.sendNotFound())
+  .use('/api/users/', usersRouter)
+  .get('*', (req, res) => {res.sendNotFound()})
+
+export default router

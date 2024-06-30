@@ -8,6 +8,9 @@ const configEnv = {
 
   mongo_uri: process.env.MONGO_URI,
 
+  uadmins: process.env.USERS_ADMIN,
+  uadmin_pass: process.env.USER_ADMIN_PASS,
+
   jwt_code: process.env.JWT_SECRET_CODE,
 }
 

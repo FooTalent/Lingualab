@@ -4,6 +4,8 @@ import __dirname from './libraries/dirname.js';
 import { connectDb } from './config/connectMongo.js';
 import { addLogger, logger } from './libraries/logger.js';
 import handleResponses from './middleware/handleResponses.js';
+import initializePassport from './config/passport.config.js';
+import passport from 'passport';
 import appRouter from './config/routes.js'
 
 // App initialization ------------------------------
@@ -21,6 +23,10 @@ connectDb()
 // App Middleware --------------------------------
 app.use(addLogger)
 app.use(handleResponses)
+
+// passport
+initializePassport()
+app.use(passport.initialize())
 
 // App Routes --------------------------------
 app.use(appRouter);
