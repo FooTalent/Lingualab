@@ -5,7 +5,7 @@ const usersService = new Service()
 
 // ? AUTH JWT BEARER - PASSPORT
 export const handleAuth = (policies) => {
-  // Policies => ['PUBLIC', 'USER', 'ADMIN']
+  // Policies => ['PUBLIC', 'TEACHER', 'STUDENT', 'ADMIN']
   return async (req, res, next) => {
     try {
       passport.authenticate('jwt', {session: false}, async function (err, user, info) {
