@@ -50,11 +50,6 @@ const thisSchema = new Schema({
   },
 })
 
-thisSchema.pre('save', function (next) {
-  this.updated = Date.now();
-  next();
-});
-
 const dataModel = model('Users', thisSchema)
 
 export default dataModel

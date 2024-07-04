@@ -21,5 +21,11 @@ export default class ThisDaoMongo extends DaoMongo {
     }
     return await query.exec();
   }
+
+  updateConection = async (filter) => await this.model.findOneAndUpdate(
+    filter,
+    { connection: Date.now() },
+    { new: true, timestamps: false }
+  )
 }
 
