@@ -15,9 +15,6 @@ export default function Router() {
                 
                 <Route element={<AuthLayout />}>
                     <Route path='/auth/login' element={<Login />} />
-                </Route>
-
-                <Route element={<AuthLayout />}>
                     <Route path='/auth/register' element={<Register />} />
                 </Route>
             </Routes>

@@ -12,3 +12,7 @@ export const login = async (userData) => {
     }
 
 }
+
+export const register = async (userData) => {
+
+}

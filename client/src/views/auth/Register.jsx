@@ -59,7 +59,7 @@ export default function Register() {
                                 {...register(inputName, {
                                     required: 'Campo obligatorio',
                                     pattern: {
-                                        value: true ? /\S+@\S+\.\S+/ : /\S+@\S+\.\S+/,
+                                        // value: true ? /\S+@\S+\.\S+/ : /\S+@\S+\.\S+/,
                                         message: `Invalid ${inputName}`,
                                     },
                                 })}
