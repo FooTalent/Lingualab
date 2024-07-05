@@ -47,5 +47,19 @@ export const createUserSlice = (set, get) => ({
                 status: JSON.parse(storeLogin)
             })
         }
+    },
+    userRegister: async (userData) => {
+        const data = new FormData()
+
+        Object.keys(userData).map((field) => {
+            data.append(field, field)
+        })
+
+        // Falta agregar función para corroborar con back y en base a eso devolver respuesta
+
+        Toast.fire({
+            title: "Usuario creado con éxito",
+            icon: "success"
+        })
     }
 })

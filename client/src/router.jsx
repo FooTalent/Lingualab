@@ -3,6 +3,7 @@ import AuthLayout from './layouts/AuthLayout'
 import Login from './views/auth/Login'
 import AppLayout from './layouts/AppLayout'
 import Home from './views/Home'
+import Register from './views/auth/Register'
 
 export default function Router() {
 
@@ -14,6 +15,10 @@ export default function Router() {
                 </Route>
                 <Route element={<AuthLayout />}>
                     <Route path='/auth/login' element={<Login />} />
+                </Route>
+
+                <Route element={<AuthLayout />}>
+                    <Route path='/auth/register' element={<Register />} />
                 </Route>
             </Routes>
         </BrowserRouter>
