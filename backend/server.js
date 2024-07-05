@@ -7,9 +7,11 @@ import handleResponses from './middleware/handleResponses.js';
 import initializePassport from './modules/users/config/passport.config.js';
 import passport from 'passport';
 import appRouter from './config/routes.js'
+import cors from 'cors'
 
 // App initialization ------------------------------
 const app = express();
+app.use(cors({origin:configEnv.cors_origin}));
 
 // App Configurations --------------------------------
 const port = configEnv.port || 8080;

@@ -9,10 +9,10 @@ export default function Register() {
     const { userRegister, status } = useAppStore()
 
     const initialValues = {
-        Name: '',
-        Surname: '',
-        Email: '',
-        Password: '',
+        email: "",
+        password: "",
+        first_name: "", 
+        last_name: ""
     }
 
     const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues })
@@ -25,6 +25,7 @@ export default function Register() {
 
     const handleForm = async (formData) => {
         await userRegister(formData)
+        
     }
 
     const getInputType = (inputName) => {
