@@ -15,10 +15,6 @@ export default class Service extends CustomService {
 
   get = async (filter, excludePassword = true )  => await this.dao.get   (filter, excludePassword)
   getBy = async (filter, excludePassword = true) => await this.dao.getBy (filter, excludePassword)
-  update      = async (eid, elementUpdate)  => {
-    const elementToUpdate = (new LastUpdateDTO(elementUpdate)).things;
-    return await this.dao.update({_id: eid}, elementToUpdate)
-  }
 
   register = async (userData) => {
     userData.password = await createHashAsync(userData.password)
@@ -45,7 +41,7 @@ export default class Service extends CustomService {
     }
 
     const token = createToken({id: userFound._id, role: userFound.role})
-    await this.dao.update({_id: userFound._id}, {connection: new Date()})
+    await this.dao.updateConection({_id: userFound._id})
     return {name: userFound.first_name, token}
   }
 
