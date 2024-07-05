@@ -1,7 +1,7 @@
-import CustomServiceLU from "../../../libraries/customs/service.lu.js";
+import CustomService from "../../../libraries/customs/service.js";
 import ThisDaoMongo from "../data/dao.mongo.js";
 
-export default class Service extends CustomServiceLU {
+export default class Service extends CustomService {
   constructor() {
     super(new ThisDaoMongo);
   }

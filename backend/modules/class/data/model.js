@@ -1,9 +1,10 @@
-import { Schema, model} from 'mongoose'
+import { Schema, model} from 'mongoose';
+import { LANGUAGES, LEVELS } from '../../valueList.js';
 
 const thisSchema = new Schema({
-  teacher:        { type: Schema.Types.ObjectId, ref: 'Users',   required: true, },
-  language:       { type: String, label: 'Lenguaje', required: true },
-  level:          { type: String, label: 'Nivel',    enum: ["BASICO", "MEDIO", "ALTO"], required: true },
+  teacher:        { type: Schema.Types.ObjectId, ref: 'Users', required: true, },
+  language:       { type: String, label: 'Lenguaje', enum: LANGUAGES, required: true },
+  level:          { type: String, label: 'Nivel',    enum: LEVELS,    required: true },
   duration_hours: { type: Number, label: 'Duración hs', min: 1, max: 10, },
   resources:      [{
     resource:       { type: Schema.Types.ObjectId,  ref: 'Resources',  required: true, }

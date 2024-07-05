@@ -1,23 +1,23 @@
-import { Schema, model} from 'mongoose'
+import { Schema, model} from 'mongoose';
+import { LANGUAGES, LEVELS } from '../../valueList.js'
 
 const thisSchema = new Schema({
   teacher:        { type: Schema.Types.ObjectId, ref: 'Users',   required: true, },
   students:       { type: [
-    { Student: {type: Schema.Types.ObjectId, ref: 'Users',   required: true }}
+    { Student:    { type: Schema.Types.ObjectId, ref: 'Users',   required: true }}
   ] },
-  daytime:     { type: Date,   label: 'Fecha y Hora de inicio', }, // es fecha y hora
-  language:    { type: String, label: 'Lenguaje', required: true },
-  level:       { type: String, label: 'Nivel',    enum: ["BASICO", "MEDIO", "ALTO"], required: true },
-  duration_hours: { type: Number, label: 'Duración hs', required: true,   min: 1, max: 10, },
-  link_meet:         { type: String, label: 'Link',   },
-  link_calendar:         { type: String, label: 'Link',   },
-  link_pago:         { type: String, label: 'Link',   },
-  class:        { type: Schema.Types.ObjectId, ref: 'Class'},
+  daytime:        { type: Date,   }, // es fecha y hora
+  language:       { type: String, enum: LANGUAGES, required: true },
+  level:          { type: String, enum: LEVELS,    required: true },
+  duration_hours: { type: Number, required: true,  min: 1, max: 10, },
+  link_meet:      { type: String, },
+  link_calendar:  { type: String, },
+  link_pago:      { type: String, },
+  class:          { type: Schema.Types.ObjectId, ref: 'Class'},
 
   // data of conection
-  created:     { type: Date,   label: 'Fecha Creación',       default: Date.now,  immutable: true, disabled: true},
-  updated:     { type: Date,   label: 'Ultima actualización', default: Date.now,  disabled: true},
-  connection:  { type: Date,   label: 'Ultima conexión',      default: Date.now,  disabled: true},
+  created:        { type: Date,   default: Date.now,  immutable: true, disabled: true},
+  updated:        { type: Date,   default: Date.now,  disabled: true},
 
 }, {
   timestamps: {
@@ -26,11 +26,29 @@ const thisSchema = new Schema({
   },
 })
 
-thisSchema.pre('save', function (next) {
-  this.updated = Date.now();
+// Middleware para verificar roles antes de guardar
+thisSchema.pre('save', async function (next) {
+  const User = model('User'); // Importar el modelo User
+
+  // Verificar que el teacher tenga el rol de 'teacher'
+  const teacher = await User.findById(this.teacher);
+  if (!teacher || teacher.role !== 'teacher') {
+    const err = new Error('El teacher debe tener el rol de teacher.');
+    return next(err);
+  }
+
+  // Verificar que todos los estudiantes tengan el rol de 'student'
+  for (const student of this.students) {
+    const studentDoc = await User.findById(student.student);
+    if (!studentDoc || studentDoc.role !== 'student') {
+      const err = new Error('Todos los estudiantes deben tener el rol de student.');
+      return next(err);
+    }
+  }
+
   next();
 });
 
-const dataModel = model('classroom', thisSchema)
+const dataModel = model('Classroom', thisSchema)
 
 export default dataModel
