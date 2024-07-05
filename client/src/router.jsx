@@ -10,7 +10,7 @@ export default function Router() {
         <BrowserRouter>
             <Routes>
                 <Route element={<AppLayout />}>
-                    <Route path='/' element={<Home />} />
+                    <Route path='/' element={<Home />} index />
                 </Route>
                 
                 <Route element={<AuthLayout />}>
