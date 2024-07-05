@@ -6,13 +6,13 @@ import Home from './views/Home'
 import Register from './views/auth/Register'
 
 export default function Router() {
-
     return (
         <BrowserRouter>
             <Routes>
                 <Route element={<AppLayout />}>
                     <Route path='/' element={<Home />} />
                 </Route>
+                
                 <Route element={<AuthLayout />}>
                     <Route path='/auth/login' element={<Login />} />
                 </Route>

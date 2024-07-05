@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useAppStore } from '../../store/useAppStore';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import ErrorMessage from "../../components/ErrorMessage";
 
@@ -47,6 +47,7 @@ export default function Register() {
                 className="space-y-8 p-10 mt-10 bg-white"
                 noValidate
             >
+                <Link to={'/auth/login'}>Ya tienes usuario?</Link>
                 {
                     Object.keys(initialValues).map(inputName => (
                         <div key={inputName} className="flex flex-col gap-1">
