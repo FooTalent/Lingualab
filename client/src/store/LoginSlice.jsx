@@ -35,6 +35,7 @@ export const createUserSlice = (set, get) => ({
             status: false,
             user: null
         }))
+        localStorage.setItem('status', JSON.stringify(get().status))
         Toast.fire({
             title: "Sesión finalizada",
             icon: "info"

@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import ErrorMessage from "../../components/ErrorMessage";
 import { useAppStore } from "../../store/useAppStore";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
     const navigate = useNavigate()
@@ -80,6 +80,7 @@ const Login = () => {
                     value='Iniciar Sesión'
                     className=" bg-Purple hover:bg-PurpleHover w-full p-3  text-white font-black  text-xl cursor-pointer"
                 />
+                <Link to={'/auth/register'}>Registrarse</Link>
             </form>
         </>
     )
