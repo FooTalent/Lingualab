@@ -13,25 +13,22 @@ export default class Controller extends CustomController {
 
   del    = (req, res) => { res.sendSuccess({}, "DELETE"); }
 
-  register = async (req, res) => {
+  register = async (req, res, next) => {
     try {
       const userData = validateFields(req.body, this.requieredfield.register);
       await this.service.register(userData)
       res.sendSuccess({}, "Registro exitoso")
     } catch (error) { 
-      req.logger.error(error);
-      res.sendCatchError(error) }
+      next(error);
+    }
   }
 
-  login = async (req, res) => {
+  login = async (req, res, next) => {
+    console.log("paso por login");
     const userData = validateFields(req.body, this.requieredfield.login);
-    try {
-      const {name, token} = await this.service.login(userData)
-      res.sendSuccess({token}, "Log In exitoso con: " + name);
-    } catch (error) {
-      req.logger.error(error);
-      res.sendCatchError(error)
-    }
+
+    const {name, token} = await this.service.login(userData)
+    res.sendSuccess({token}, `Log In exitoso con: ${name}`);
   }
 
   logout = async (req, res) => {
@@ -47,7 +44,6 @@ export default class Controller extends CustomController {
       const resp = await this.service.userRecovery(email)
       res.sendSuccess(resp)
     } catch (error) {
-      req.logger.error(error);
       next(error);
     }
   }
@@ -58,7 +54,6 @@ export default class Controller extends CustomController {
       await this.service.updatePassword(req.user.id, password)
       res.sendSuccess("User updated")
     } catch (error) {
-      req.logger.error(error);
       next(error);
     }
   }
