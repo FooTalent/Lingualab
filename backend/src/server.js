@@ -1,9 +1,9 @@
 import express from 'express';
 import configEnv from './config/env.js';
 import cors from 'cors'
-import __dirname from './libraries/dirname.js';
+import __dirname from './libraries/utils/dirname.js';
 import { connectDb } from './config/connectMongo.js';
-import { addLogger, logger } from './libraries/logger.js';
+import { addLogger, logger } from './middleware/logger.js';
 import handleResponses from './middleware/handleResponses.js';
 import initializePassport from './modules/users/config/passport.config.js';
 import passport from 'passport';
@@ -34,7 +34,7 @@ app.use(passport.initialize())
 
 // App Routes --------------------------------
 app.use('/api', appRouter);
-app.all('*', (req, res, next) => { next(new AppError(`No se encuentra la url es este servidor`, 404, {url: req.originalUrl})); });
+app.all('*', (req, res, next) => { next(new AppError(`No se encuentra la url: ${req.originalUrl} en este servidor`, 404)); });
 app.use(handleEspecificErrors)
 app.use(handleGenericErrors)
 

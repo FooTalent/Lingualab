@@ -1,4 +1,4 @@
-import AppError from "../config/AppError.js";
+import AppError from "../../config/AppError.js";
 
 const validateFields = (fields, requiredFields) => {
   const missingFields = [];
@@ -9,7 +9,7 @@ const validateFields = (fields, requiredFields) => {
     }
   }
   if (missingFields.length > 0) {
-    throw new AppError(`Debe completar los siguientes campos: ${missingFields.join(', ')}`);
+    throw new AppError(`Debe completar los siguientes campos: ${missingFields.join(', ')}`, 400);
   }
   return fields;
 };

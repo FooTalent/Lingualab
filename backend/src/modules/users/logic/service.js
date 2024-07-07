@@ -4,7 +4,7 @@ import createToken from "./createToken.js";
 import { createHashAsync, isValidPasswordAsync } from "./passwords.js";
 import ThisDaoMongo from "../data/dao.mongo.js";
 import { sendMail } from "../../../libraries/emails/sendMail.js";
-import LastUpdateDTO from "../../../libraries/customs/dto.lastupdate.js";
+import AppError from "../../../config/AppError.js";
 
 export default class Service extends CustomService {
   constructor() {
@@ -19,7 +19,7 @@ export default class Service extends CustomService {
   register = async (userData) => {
     userData.password = await createHashAsync(userData.password)
     const userFound = await this.dao.getBy({email: userData.email});
-    if (userFound) throw new Error(`Ya existe un usuario con ese email. pruebe con otro`)
+    if (userFound) throw new AppError(`Ya existe un usuario con ese email. pruebe con otro`, 400)
     return await this.dao.create(userData)
   }
 
@@ -31,7 +31,7 @@ export default class Service extends CustomService {
         const token = createToken({id: 0, role: "admin"})
         return {name: "Admin", token}
       } else {
-        throw new Error(`Email o contraseña equivocado`);
+        throw new AppError(`Email o contraseña equivocado`, 401);
       }
     }
     // User Verification

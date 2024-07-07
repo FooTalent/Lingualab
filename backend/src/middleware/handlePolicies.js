@@ -1,13 +1,12 @@
 import passport from "passport";
 import Service from "../modules/users/logic/service.js";
-import catchAsync from "./catchAsync.js";
 
 const usersService = new Service()
 
 // ? AUTH JWT BEARER - PASSPORT
 export const handleAuth = (policies) => {
   // Policies => ['PUBLIC', 'TEACHER', 'STUDENT', 'ADMIN']
-  return catchAsync(async (req, res, next) => {
+  return async (req, res, next) => {
     passport.authenticate('jwt', {session: false}, async function (err, user, info) {
       if (err) next(err)
       if (user) {
@@ -22,7 +21,7 @@ export const handleAuth = (policies) => {
       if(!policies.includes(user.role.toUpperCase())) return res.sendUserForbidden('Usuario no Autorizado')
       next();
     })(req, res, next);      
-  });
+  };
 };
 
 export const isPublic = ["PUBLIC"]

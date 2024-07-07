@@ -1,5 +1,5 @@
 import CustomController from "../../../libraries/customs/controller.js";
-import validateFields from "../../../libraries/validatefiels.js";
+import validateFields from "../../../libraries/utils/validatefiels.js";
 import Service from "../logic/service.js";
 
 export default class Controller extends CustomController {
@@ -14,13 +14,9 @@ export default class Controller extends CustomController {
   del    = (req, res) => { res.sendSuccess({}, "DELETE"); }
 
   register = async (req, res, next) => {
-    try {
-      const userData = validateFields(req.body, this.requieredfield.register);
-      await this.service.register(userData)
-      res.sendSuccess({}, "Registro exitoso")
-    } catch (error) { 
-      next(error);
-    }
+    const userData = validateFields(req.body, this.requieredfield.register);
+    await this.service.register(userData)
+    res.sendCreated({}, "Registro exitoso")
   }
 
   login = async (req, res, next) => {
@@ -38,23 +34,15 @@ export default class Controller extends CustomController {
 
   getUserSession = (req, res) => res.sendSuccess(req.user)
 
-  userRecovery = async (req, res, next) => {
-    try {    
-      const { email } = req.body
-      const resp = await this.service.userRecovery(email)
-      res.sendSuccess(resp)
-    } catch (error) {
-      next(error);
-    }
+  userRecovery = async (req, res, next) => {   
+    const { email } = req.body
+    const resp = await this.service.userRecovery(email)
+    res.sendSuccess(resp)
   }
 
   userRecoveryPassword = async (req, res, next) => {
-    try {
-      let { password } = req.body
-      await this.service.updatePassword(req.user.id, password)
-      res.sendSuccess("User updated")
-    } catch (error) {
-      next(error);
-    }
+    let { password } = req.body
+    await this.service.updatePassword(req.user.id, password)
+    res.sendSuccess("User updated")
   }
 }
