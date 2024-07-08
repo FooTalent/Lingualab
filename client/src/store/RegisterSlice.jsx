@@ -1,33 +1,25 @@
-import { useNavigate } from "react-router-dom";
+
 import { register } from "../services";
 import { Toast } from "../utils/toast";
 
-export const createRegisterSlice = (set, get) => ({
-    user: {},
-    status: false,
+export const createRegisterSlice = (set) => ({
+    complete: false,
     userRegister: async (userData) => {
-        const navigate = useNavigate()
         const registerUser = await register(userData)
-
-        if(!registerUser.isError){
+        console.log(registerUser)
+        if (!registerUser.isError) {
             Toast.fire({
                 title: registerUser.message,
                 icon: "success"
             })
-            .then(() => {
-                navigate('/auth/login')
-            })
-
+            set(() => ({
+                complete: true
+            }))
         } else {
             Toast.fire({
                 title: registerUser.message,
                 icon: 'error'
             })
-
-            return false
         }
-
-
-
     }
 })

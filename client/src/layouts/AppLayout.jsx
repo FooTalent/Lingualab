@@ -15,10 +15,11 @@ export default function AppLayout() {
             };
             checkLoginStatus();
         }
-    }, []);
-    if (!status) {
-        navigate('/auth/login')
-    }
+        if (!status) {
+            navigate('/auth/login')
+        }
+    }, [status]);
+
     return (
         <>
             <div className='bg-gray-800 min-h-screen'>

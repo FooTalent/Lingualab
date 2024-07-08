@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useAppStore } from '../../store/useAppStore';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -6,26 +6,23 @@ import ErrorMessage from "../../components/ErrorMessage";
 
 export default function Register() {
     const navigate = useNavigate()
-    const { userRegister, status } = useAppStore()
+    const { userRegister, complete } = useAppStore()
 
     const initialValues = {
         email: "",
         password: "",
-        first_name: "", 
+        first_name: "",
         last_name: ""
     }
 
-    const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues })
-
-    useEffect(() => {
-        if (status) {
-            navigate('/')
-        }
-    }, [status, navigate]);
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({ defaultValues: initialValues })
 
     const handleForm = async (formData) => {
         await userRegister(formData)
-        
+        if (complete) {
+            navigate("/auth/login")
+        }
+        reset()
     }
 
     const getInputType = (inputName) => {
