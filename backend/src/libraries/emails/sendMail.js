@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import hbs from 'nodemailer-express-handlebars';
-import __dirname from '../dirname.js';
+import __dirname from '../utils/dirname.js';
 import configEnv from '../../config/env.js';
 
 const user = configEnv.gmail_user_name;

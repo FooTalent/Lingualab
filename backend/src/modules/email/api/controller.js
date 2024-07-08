@@ -1,4 +1,4 @@
-import validateFields from "../../../libraries/validatefiels.js";
+import validateFields from "../../../libraries/utils/validatefiels.js";
 import { sendMail } from "../../../libraries/emails/sendMail.js";
 
 export default class Controller {

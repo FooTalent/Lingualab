@@ -1,5 +1,5 @@
 import { connect } from "mongoose"
-import { logger } from "../libraries/logger.js";
+import { logger } from "../middleware/logger.js";
 import configEnv from "./env.js"
 
 
