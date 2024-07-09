@@ -31,13 +31,13 @@ export default class Service extends CustomService {
         const token = createToken({id: 0, role: "admin"})
         return {name: "Admin", token}
       } else {
-        throw new AppError(`Email o contraseña equivocado`, 401);
+        throw new AppError(`Email o contraseña equivocado`, 203);
       }
     }
     // User Verification
     const userFound = await this.dao.getBy({email: userData.email}, false);
     if (!userFound || !(await isValidPasswordAsync(userData.password, userFound.password))) {
-      throw new AppError(`Email o contraseña equivocado`, 401);
+      throw new AppError(`Email o contraseña equivocado`, 203);
     }
 
     const token = createToken({id: userFound._id, role: userFound.role})
