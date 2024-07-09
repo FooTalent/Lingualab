@@ -33,6 +33,7 @@ initializePassport()
 app.use(passport.initialize())
 
 // App Routes --------------------------------
+app.get('/', (req, res) => {res.send({prueba: "texto de prueba del backend"})});
 app.use('/api', appRouter);
 app.all('*', (req, res, next) => { next(new AppError(`No se encuentra la url: ${req.originalUrl} en este servidor`, 404)); });
 app.use(handleEspecificErrors)

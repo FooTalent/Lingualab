@@ -16,7 +16,7 @@ const reviewSchema = new Schema({
 }, { _id: false });
 
 const thisSchema = new Schema({
-  email:       { type: String,   required: true, match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address'], unique: true },
+  email:       { type: String,   required: true, match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Debe completar un email valido'], unique: true },
   password:    { type: String,   required: true },
   role:        { type: String,   default: "Teacher", enum: ROLES,},
   photo:       { type: String,   }, // TODO falta MULTER
