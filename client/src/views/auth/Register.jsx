@@ -70,7 +70,7 @@ export default function Register() {
 
     return (
         <React.Fragment>
-            <h1 className="text-5xl font-black text-white text-center">Sign Up</h1>
+            <h1 className="text-5xl font-black text-white text-center">Registrarse</h1>
 
             <form
                 onSubmit={handleSubmit(handleForm)}

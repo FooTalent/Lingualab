@@ -2,9 +2,17 @@ import React from 'react'
 
 export default function SwitchToggle() {
   return (
-    <label htmlFor="check" className='relative bg-gray-100 w-28 h-14 rounded-full'>
-      <input type="checkbox" id="check" className='sr-only peer' />
-      <span className='w-2/5 h-4/5 bg-rose-300 absolute rounded-full left-1 top-1 peer-checked:bg-rose-600 peer-checked:left-11 transition-all duration-500'></span>
-    </label>
+    <div className='flex justify-evenly'>
+      <button
+        className="bg-transparent hover:bg-PurpleHover text-zinc-800 font-semibold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded transition-all duration-500 ease-in-out"
+      >
+        Alumno
+      </button>
+      <button
+        className="bg-transparent hover:bg-PurpleHover text-zinc-800 font-semibold hover:text-white py-2 px-4 border border-purple-500 hover:border-transparent rounded transition-all duration-500 ease-in-out"
+      >
+        Profesor
+      </button>
+    </div>
   )
 }

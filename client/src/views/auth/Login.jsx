@@ -78,7 +78,7 @@ const Login = () => {
                 <input
                     type="submit"
                     value='Iniciar Sesión'
-                    className=" bg-Purple hover:bg-PurpleHover w-full p-3  text-white font-black  text-xl cursor-pointer"
+                    className="bg-Purple hover:bg-PurpleHover w-full p-3  text-white font-black  text-xl cursor-pointer"
                 />
                 <Link to={'/auth/register'}>Registrarse</Link>
             </form>
