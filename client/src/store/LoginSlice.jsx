@@ -6,6 +6,7 @@ export const createUserSlice = (set, get) => ({
     status: false,
     userLogin: async (userData) => {
         const loginUser = await login(userData)
+        console.log(loginUser)
         if (loginUser.isError === false) {
             set(() => ({
                 status: true,
@@ -17,17 +18,11 @@ export const createUserSlice = (set, get) => ({
             })
             localStorage.setItem('status', JSON.stringify(get().status))
         } else {
-            if (loginUser.info === 'User not found') {
-                Toast.fire({
-                    title: "El usuario no existe",
-                    icon: "error"
-                })
-            } else {
-                Toast.fire({
-                    title: "Contraseña incorrecta",
-                    icon: "error"
-                })
-            }
+            Toast.fire({
+                title: `${loginUser.message}`,
+                icon: "error"
+            })
+
         }
     },
     loguot: () => {

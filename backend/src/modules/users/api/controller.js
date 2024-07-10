@@ -20,7 +20,6 @@ export default class Controller extends CustomController {
   }
 
   login = async (req, res, next) => {
-    console.log("paso por login");
     const userData = validateFields(req.body, this.requieredfield.login);
 
     const {name, token} = await this.service.login(userData)

@@ -27,17 +27,17 @@ export default class Service extends CustomService {
   login = async (userData) => {
     // Admin Verification
     if (this.admins.includes(userData.email)) {
-      if (await isValidPasswordAsync(userData.password, {password: this.admin_pass})) {
+      if (await isValidPasswordAsync(userData.password, this.admin_pass)) {
         const token = createToken({id: 0, role: "admin"})
         return {name: "Admin", token}
       } else {
-        throw new AppError(`Email o contraseña equivocado`, 401);
+        throw new AppError(`Email o contraseña equivocado`, 203);
       }
     }
     // User Verification
     const userFound = await this.dao.getBy({email: userData.email}, false);
-    if (!userFound || !isValidPasswordAsync(userData.password, userFound)) {
-      throw new Error(`Email o contraseña equivocado`);
+    if (!userFound || !(await isValidPasswordAsync(userData.password, userFound.password))) {
+      throw new AppError(`Email o contraseña equivocado`, 203);
     }
 
     const token = createToken({id: userFound._id, role: userFound.role})
