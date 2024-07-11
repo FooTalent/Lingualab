@@ -1,44 +1,76 @@
-import React from 'react'
+import React from 'react';
 import { useAppStore } from '../../store/useAppStore';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import ErrorMessage from "../../components/ErrorMessage";
+import InputList from '../../components/Form/InputList';
 
 export default function Register() {
-    const navigate = useNavigate()
-    const { userRegister, complete } = useAppStore()
+    const navigate = useNavigate();
+    const { userRegister, complete } = useAppStore();
 
     const initialValues = {
-        email: "",
-        password: "",
-        first_name: "",
-        last_name: ""
-    }
+        first_name: '',
+        last_name: '',
+        email: '',
+        password: '',
+        role: true,
+    };
 
-    const { register, handleSubmit, formState: { errors }, reset } = useForm({ defaultValues: initialValues })
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({ defaultValues: initialValues });
 
     const handleForm = async (formData) => {
-        await userRegister(formData)
+        await userRegister(formData);
         if (complete) {
-            navigate("/auth/login")
+            navigate("/auth/login");
         }
-        reset()
-    }
+        reset();
+    };
 
-    const getInputType = (inputName) => {
-        switch (inputName) {
-            case 'Email':
-                return 'email'
-            case 'Password':
-                return 'password'
-            default:
-                return 'text'
+    const getInputConfig = (inputName) => {
+        let params = { 
+            label: '', 
+            type: 'text', 
+            validations: /^[a-zA-Z]{3,}$/, 
+            messageError: 'Debe contener como mínimo 3 carácteres' 
         }
-    }
+
+        switch (inputName) {
+            case 'first_name':
+                params.label = 'Nombre';
+                break;
+            case 'last_name':
+                params.label = 'Apellido';
+                break;
+            case 'email':
+                params = {
+                    label: 'Email',
+                    type: 'email',
+                    validations: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                    messageError: 'Email incorrecto',
+                };
+                break;
+            case 'password':
+                params = {
+                    label: 'Contraseña',
+                    type: 'password',
+                    validations: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/,
+                    messageError: `La contraseña debe contener:
+                    \nMínimo 8 carácteres
+                    \nUna letra mayúscula 
+                    \nUna letra minúscula 
+                    \nUn carácter especial`,
+                };
+                break;
+            default:
+                break;
+        }
+
+        return params;
+    };
 
     return (
         <React.Fragment>
-            <h1 className="text-5xl font-black text-white text-center">Sign Up</h1>
+            <h1 className="text-5xl font-black text-white text-center">Registrarse</h1>
 
             <form
                 onSubmit={handleSubmit(handleForm)}
@@ -46,37 +78,15 @@ export default function Register() {
                 noValidate
             >
                 <Link to={'/auth/login'}>Ya tienes usuario?</Link>
-                {
-                    Object.keys(initialValues).map(inputName => (
-                        <div key={inputName} className="flex flex-col gap-1">
-                            <label className="font-normal text-2xl">{inputName}</label>
-                            <input
-                                id={inputName}
-                                type={getInputType(inputName)}
-                                className="w-full p-2 border-gray-300 border"
-                                {...register(inputName, {
-                                    required: 'Campo obligatorio',
-                                    pattern: {
-                                        // value: true ? /\S+@\S+\.\S+/ : /\S+@\S+\.\S+/,
-                                        message: `Invalid ${inputName}`,
-                                    },
-                                })}
-                            />
-                            {errors[inputName] && (
-                                <ErrorMessage>{errors[inputName].message}</ErrorMessage>
-                            )}
-                        </div>
 
-                    ))
-                }
+                <InputList data={initialValues} register={register} errors={errors} getInputConfig={getInputConfig} />
 
                 <input
                     type="submit"
                     value='Register'
-                    className=" bg-Purple hover:bg-PurpleHover w-full p-3  text-white font-black  text-xl cursor-pointer"
+                    className="bg-Purple hover:bg-PurpleHover w-full p-3 text-white font-black text-xl cursor-pointer"
                 />
-
             </form>
         </React.Fragment>
-    )
+    );
 }
