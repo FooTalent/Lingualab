@@ -24,10 +24,10 @@ const transport = nodemailer.createTransport({
 const hbsoptions = {
   viewEngine: {
     extname: 'hbs',
-    partialsDir: `${__dirname}/libraries/emails/templates/`,
+    partialsDir: `${__dirname}/emails/templates/`,
     defaultLayout: false,
   },
-  viewPath: `${__dirname}/libraries/emails/templates/`,
+  viewPath: `${__dirname}/emails/templates/`,
   extName: '.hbs',
 }
 

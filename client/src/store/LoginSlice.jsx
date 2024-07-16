@@ -1,4 +1,4 @@
-import { login } from "../services";
+import { forgotPass, login } from "../services";
 import { Toast } from "../utils/toast";
 
 export const createUserSlice = (set, get) => ({
@@ -6,7 +6,6 @@ export const createUserSlice = (set, get) => ({
     status: false,
     userLogin: async (userData) => {
         const loginUser = await login(userData)
-        console.log(loginUser)
         if (loginUser.isError === false) {
             set(() => ({
                 status: true,
@@ -43,5 +42,9 @@ export const createUserSlice = (set, get) => ({
                 status: JSON.parse(storeLogin)
             })
         }
+    },
+    forgotPassword: async (email) => {
+        const forgot = await forgotPass(email)
+        console.log(forgot)
     }
 })
