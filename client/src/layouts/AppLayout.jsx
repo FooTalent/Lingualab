@@ -7,7 +7,6 @@ import { useEffect } from 'react'
 export default function AppLayout() {
     const navigate = useNavigate()
     const { status, localLogin } = useAppStore()
-    console.log(status)
     useEffect(() => {
         if (!status) {
             const checkLoginStatus = async () => {

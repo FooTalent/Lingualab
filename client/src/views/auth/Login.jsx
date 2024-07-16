@@ -101,16 +101,13 @@ const Login = () => {
                         ¿Olvidaste tu contraseña?
                     </Link>
                 </div>
-                <div className="flex flex-col gap-5">
-                    <input
-                        type="submit"
-                        value='Iniciar Sesión'
-                        className=" bg-Yellow w-full p-3 font-black  text-xl cursor-pointer"
-                    />
-                    <Link
-                        to={'/auth/register'}
-                    >¿No tienes cuenta? Registrate</Link>
-                </div>
+
+                <input
+                    type="submit"
+                    value='Iniciar Sesión'
+                    className=" bg-Purple hover:bg-PurpleHover w-full p-3  text-white font-black  text-xl cursor-pointer"
+                />
+                <Link to={'/auth/register'}>Registrarse</Link>
             </form>
         </>
     )
