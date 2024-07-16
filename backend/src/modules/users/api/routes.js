@@ -1,6 +1,7 @@
 import { Router } from "express";
 import Controller from "./controller.js";
 import { clients, handleAuth, users } from "../../../middleware/handlePolicies.js";
+import { uploader } from "../../../middleware/multer.js";
 import wrapRoutesWithCatchAsync from "../../../libraries/utils/wrapRoutesWithCatchAsync.js";
 
 const router = Router();
@@ -20,5 +21,8 @@ router
 .put    ('/userrecovery', handleAuth(users),    controller.userRecoveryPassword )
 
 wrapRoutesWithCatchAsync(router)
+
+router
+.post   ('/uploadphoto',  handleAuth(users), uploader('profiles').single('photo'),  controller.uploadPhoto)
 
 export default router
