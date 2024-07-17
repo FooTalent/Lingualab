@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'node:path'
 import configEnv from './config/env.js';
 import cors from 'cors'
 import __dirname from './libraries/utils/dirname.js';
@@ -19,7 +20,7 @@ app.use(cors({origin:configEnv.cors_origin}));
 const port = configEnv.port || 8080;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname + '/public'))
+app.use(express.static(path.join(__dirname, 'public')))
 
 // App Data Source Configuration --------------------------------
 connectDb()
