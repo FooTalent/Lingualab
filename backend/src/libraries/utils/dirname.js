@@ -1,5 +1,8 @@
 import { fileURLToPath } from 'node:url';
-import { dirname } from 'node:path';
+import { dirname, join } from 'node:path';
 
 const __filename = fileURLToPath(import.meta.url);
-export default dirname(dirname(__filename));
+const __dirname = dirname(__filename);
+const projectRoot = join(__dirname, '../../..')
+
+export default projectRoot
