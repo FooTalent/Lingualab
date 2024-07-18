@@ -27,11 +27,11 @@ export default function Register() {
     };
 
     const getInputConfig = (inputName) => {
-        let params = { 
-            label: '', 
-            type: 'text', 
-            validations: /^[a-zA-Z]{3,}$/, 
-            messageError: 'Debe contener como mínimo 3 carácteres' 
+        let params = {
+            label: '',
+            type: 'text',
+            validations: /^[a-zA-Z]{3,}$/,
+            messageError: 'Debe contener como mínimo 3 carácteres'
         }
 
         switch (inputName) {
@@ -43,7 +43,7 @@ export default function Register() {
                 break;
             case 'email':
                 params = {
-                    label: 'Email',
+                    label: 'Correo',
                     type: 'email',
                     validations: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                     messageError: 'Email incorrecto',
@@ -70,21 +70,27 @@ export default function Register() {
 
     return (
         <React.Fragment>
-            <h1 className="text-5xl font-black text-white text-center">Registrarse</h1>
 
             <form
                 onSubmit={handleSubmit(handleForm)}
-                className="space-y-8 p-10 mt-10 bg-white"
+                className="space-y-2"
                 noValidate
             >
-                <Link to={'/auth/login'}>Ya tienes usuario?</Link>
+                <Link
+                    to={'/auth/login'}
+                    className='link'
+                >¿Ya tienes usuario?</Link>
 
-                <InputList data={initialValues} register={register} errors={errors} getInputConfig={getInputConfig} />
-
+                <InputList
+                    data={initialValues}
+                    register={register}
+                    errors={errors}
+                    getInputConfig={getInputConfig}
+                />
                 <input
                     type="submit"
-                    value='Register'
-                    className="bg-Purple hover:bg-PurpleHover w-full p-3 text-white font-black text-xl cursor-pointer"
+                    value='Registrarse'
+                    className="inputSubmit"
                 />
             </form>
         </React.Fragment>

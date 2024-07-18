@@ -1,6 +1,6 @@
 
 export default function Logo() {
     return (
-        <img src="/LinguaLab.png" alt="Logotipo empresa" className="h-[300px] w-[400px]" />
+        <img src="/Group.png" alt="Logotipo empresa" />
     )
 }

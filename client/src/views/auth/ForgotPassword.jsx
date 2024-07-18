@@ -18,7 +18,6 @@ const ForgotPassword = () => {
 
     return (
         <>
-            <h1 className="text-5xl font-black ">Reestablecer Password</h1>
             <p className="text-2xl font-light mt-5">
                 ¿Olvidaste tu contraseña? ingresa tu email {''}
                 <span className=" text-Purple font-bold"> y reestable tu contraseña</span>
@@ -31,7 +30,6 @@ const ForgotPassword = () => {
             >
                 <div className="flex flex-col gap-2 w-[384px]">
                     <label
-                        className="font-normal text-2xl"
                         htmlFor="email"
                     >Email</label>
                     <input
@@ -55,7 +53,7 @@ const ForgotPassword = () => {
                 <input
                     type="submit"
                     value='Enviar Instrucciones'
-                    className="bg-Purple hover:bg-PurpleHover w-full p-3  text-white font-black  text-xl cursor-pointer"
+                    className="inputSubmit"
                 />
             </form>
             <nav className="flex flex-col space-y-4">

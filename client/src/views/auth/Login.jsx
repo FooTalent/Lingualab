@@ -26,7 +26,6 @@ const Login = () => {
     }, [status, navigate]);
 
     const handleLogin = async (formData) => {
-        console.log(formData)
         await userLogin(formData)
         await localLogin()
     }
@@ -43,9 +42,7 @@ const Login = () => {
                 noValidate
             >
                 <div className="flex flex-col gap-2 w-[384px]">
-                    <label
-                        className="font-normal text-2xl"
-                    >Correo</label>
+                    <label>Correo</label>
                     <div className="relative w-full">
                         <MailIcon
                             className="absolute left-3 top-1/2 transform -translate-y-1/2 text-Purple"
@@ -54,7 +51,6 @@ const Login = () => {
                             id="email"
                             type="email"
                             placeholder="Email de Registro"
-                            className="w-full p-3 px-10  border-gray-300 border placeholder:text-center"
                             {...register("email", {
                                 required: "El Email es obligatorio",
                                 pattern: {
@@ -70,16 +66,13 @@ const Login = () => {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                    <label
-                        className="font-normal text-2xl"
-                    >Contraseña</label>
+                    <label>Contraseña</label>
                     <div className="relative w-full">
                         <VpnKeyIcon
                             className="absolute left-3 top-1/2 transform -translate-y-1/2 text-Purple" />
                         <input
                             type={showPassword ? "text" : "password"}
                             placeholder="Password de Registro"
-                            className="w-full p-3 px-10  border-gray-300 border"
                             {...register("password", {
                                 required: "El Password es obligatorio",
                             })}
@@ -96,8 +89,10 @@ const Login = () => {
                     {errors.password && (
                         <ErrorMessage>{errors.password.message}</ErrorMessage>
                     )}
+
                     <Link
-                        to={'/auth/forgot-password'}>
+                        to={'/auth/forgot-password'}
+                        className="link">
                         ¿Olvidaste tu contraseña?
                     </Link>
                 </div>
@@ -105,9 +100,13 @@ const Login = () => {
                 <input
                     type="submit"
                     value='Iniciar Sesión'
-                    className="bg-Purple hover:bg-PurpleHover w-full p-3  text-white font-black  text-xl cursor-pointer"
+                    className="inputSubmit"
                 />
-                <Link to={'/auth/register'}>Registrarse</Link>
+                <Link
+                    to={'/auth/register'}
+                    className="link flex">
+                    ¿No tienes cuenta? Registrate aqui
+                </Link>
             </form>
         </>
     )

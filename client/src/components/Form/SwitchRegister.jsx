@@ -18,7 +18,7 @@ export default function SwitchRegister({ inputName, register }) {
               />
               <label
                 htmlFor={role}
-                className={`w-full bg-transparent peer-checked:bg-PurpleHover text-zinc-800 font-semibold peer-checked:text-white py-3 px-4 border border-purple-500 peer-checked:border-transparent ${role === 'teacher' ? 'rounded-s text-start' : 'rounded-e text-end'} transition-all duration-700 ease-in-out`}
+                className={`w-full text-center bg-transparent peer-checked:bg-PurpleHover text-zinc-800 font-semibold peer-checked:text-white py-3 px-4 border border-purple-500 peer-checked:border-transparent ${role === 'teacher' ? 'rounded-s' : 'rounded-e'} transition-all duration-700 ease-in-out`}
               >
                 {role.toUpperCase()}
               </label>
