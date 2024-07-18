@@ -9,15 +9,15 @@ export default function DashboardCalendar() {
         <div className='bg-white'>
             <NavUser />
 
-            <main className='flex flex-wrap justify-between py-5 pt-20 px-16'>
+            <main className='flex flex-wrap justify-between py-20 px-16'>
                 <div className='w-2/4 flex flex-col gap-7'>
                     <ClassList nextClasses={getClases} />
                 </div>
 
-                <aside className='flex flex-col w-96 item-center'>
+                <aside className='flex flex-col w-4/12 item-center'>
                     <div className='flex flex-nowrap justify-between gap-2'>
-                        <input type="search" className='border rounded-lg px-3 py-4 outline-none bg-slate-100 text-gray-400' placeholder='Buscar clases anteriores' />
-                        <button className='flex gap-2 border rounded-lg px-4 py-3 items-center bg-yellow-300'>Filtrar</button>
+                        <input type="search" className='w-8/12 border rounded-lg px-3 py-4 outline-none bg-slate-100 text-gray-400' placeholder='Buscar clases anteriores' />
+                        <button className='w-4/12 flex gap-2 border rounded-lg px-4 py-3 items-center bg-yellow-300'>Filtrar</button>
                     </div>
 
                     <div>
