@@ -2,3 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    input{
+        @apply w-full p-3 px-10  border-gray-300 border placeholder:text-center rounded-lg
+    }
+    label{
+        @apply font-normal text-xl gap-[10px] px-4 py-2
+    }
+    .inputSubmit{
+        @apply bg-Yellow w-full p-3 font-bold rounded-lg text-xl cursor-pointer
+    }
+    .link{
+        @apply text-Purple font-semibold text-end
+    }
+}

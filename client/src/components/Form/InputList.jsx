@@ -1,4 +1,3 @@
-import React from 'react';
 import InputForm from './InputForm';
 import SwitchRegister from './SwitchRegister';
 
