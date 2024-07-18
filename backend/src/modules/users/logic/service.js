@@ -56,7 +56,7 @@ export default class Service extends CustomService {
     const template = 'recoveryUser'
     const context = {
       user: { first_name: userFound.first_name, email: userFound.email},
-      url: `${configEnv.cors_origin}/#/recoverypassword`,
+      url: `${configEnv.cors_origin}/auth/new-password`,
       token
     }
     return sendMail( to, subject, template, context)
@@ -67,4 +67,7 @@ export default class Service extends CustomService {
     return await this.dao.update({_id: uid}, {password, update: Date.now()})
   }
 
+  updatePhoto = async (uid, path) => {
+    return await this.dao.update({_id: uid}, {photo: path})
+  }
 }

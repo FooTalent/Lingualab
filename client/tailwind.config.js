@@ -8,9 +8,16 @@ export default {
     extend: {
       colors: {
         Purple: '#6B00ED',
-        Yellow: '#FFEE00',
-        PurpleHover: '#5300B8'
-      }
+        Yellow: '#FFDC00',
+        PurpleHover: '#5300B8',
+        whiteCustom: '#FFFFFFBF',
+      },
+      backgroundImage:{
+        'fondo': "url('/fondoLogin.jpg')"
+      },
+      boxShadow: {
+        custom: '0px 0px 20px 2px #00000033',
+      },
     },
   },
   plugins: [],

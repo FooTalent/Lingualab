@@ -4,6 +4,8 @@ import Login from './views/auth/Login'
 import AppLayout from './layouts/AppLayout'
 import Home from './views/Home'
 import Register from './views/auth/Register'
+import ForgotPassword from './views/auth/ForgotPassword'
+import NewPassword from './views/auth/NewPassword'
 import Calendar from './views/user/Calendar'
 
 export default function Router() {
@@ -15,9 +17,12 @@ export default function Router() {
                     <Route path='/user/calendario' element={<Calendar />} />
                 </Route>
 
+
                 <Route element={<AuthLayout />}>
                     <Route path='/auth/login' element={<Login />} />
                     <Route path='/auth/register' element={<Register />} />
+                    <Route path='/auth/forgot-password' element={<ForgotPassword />} />
+                    <Route path='/auth/new-password' element={<NewPassword />} />
                 </Route>
             </Routes>
         </BrowserRouter>
