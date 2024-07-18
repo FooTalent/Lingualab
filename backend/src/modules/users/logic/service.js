@@ -67,4 +67,7 @@ export default class Service extends CustomService {
     return await this.dao.update({_id: uid}, {password, update: Date.now()})
   }
 
+  updatePhoto = async (uid, path) => {
+    return await this.dao.update({_id: uid}, {photo: path})
+  }
 }
