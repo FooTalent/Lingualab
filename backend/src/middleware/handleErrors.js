@@ -10,6 +10,14 @@ export const handleEspecificErrors = (err, req, res, next) => {
   next(err);
 }
 
+export const handleMulterErrors = (err, req, res, next) => {
+  if (err.code === 'LIMIT_FILE_SIZE') {
+    logger.error(`Status 413 - ${err.toString()}`)
+    return res.status(413).json({ isError: true, message: err.message});
+  }
+  next(err)
+};
+
 export const handleGenericErrors = (err, req, res, next) => {
   //console.log(err);
   // console.log('handleGenericErrors');

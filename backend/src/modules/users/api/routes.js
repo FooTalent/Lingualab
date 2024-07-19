@@ -23,6 +23,9 @@ router
 wrapRoutesWithCatchAsync(router)
 
 router
-.post   ('/uploadphoto',  handleAuth(users), uploader('profiles').single('photo'),  controller.uploadPhoto)
+.post   ('/uploadphoto',  
+        handleAuth(users), 
+        uploader('profiles', 5, ['image/jpeg', 'image/png']).single('photo'),
+        controller.uploadPhoto)
 
 export default router

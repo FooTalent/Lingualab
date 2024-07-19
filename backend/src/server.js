@@ -10,7 +10,7 @@ import initializePassport from './modules/users/config/passport.config.js';
 import passport from 'passport';
 import appRouter from './config/routes.js'
 import AppError from './config/AppError.js';
-import { handleEspecificErrors, handleGenericErrors } from './middleware/handleErrors.js';
+import { handleEspecificErrors, handleGenericErrors, handleMulterErrors } from './middleware/handleErrors.js';
 
 // App initialization ------------------------------
 const app = express();
@@ -37,6 +37,7 @@ app.use(passport.initialize())
 app.get('/', (req, res) => {res.send({prueba: "texto de prueba del backend"})});
 app.use('/api', appRouter);
 app.all('*', (req, res, next) => { next(new AppError(`No se encuentra la url: ${req.originalUrl} en este servidor`, 404)); });
+app.use(handleMulterErrors)
 app.use(handleEspecificErrors)
 app.use(handleGenericErrors)
 
