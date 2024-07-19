@@ -6,7 +6,7 @@ export default class Controller extends CustomController {
   constructor() {
     super(new Service);
     this.requieredfield = {
-      register: ['first_name', 'last_name', 'email', 'password'],
+      register: ['first_name', 'last_name', 'email', 'password', 'role'],
       login: ['email', 'password']
     }
   }
