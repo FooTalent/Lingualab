@@ -1,6 +1,7 @@
 import React from 'react'
 import NavUser from '../../components/user/NavUser'
 import ClassList from '../../components/user/ClassList'
+import UserCalendar from '../../components/user/UserCalendar'
 
 export default function DashboardCalendar() {
     const getClases = ['', '', '']
@@ -18,13 +19,9 @@ export default function DashboardCalendar() {
                         <button className='w-4/12 flex gap-2 border rounded-lg px-4 py-3 items-center bg-yellow-300'>Filtrar</button>
                     </div>
 
-                    <div>
-
-                    </div>
+                    <UserCalendar />
                 </aside>
             </main>
-
-
         </div>
     )
 }

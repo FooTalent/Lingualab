@@ -16,7 +16,7 @@ export default function ClassCard({ clase }) {
                     <h2 className='font-bold self-center'>Clase n° 1</h2>
                 </div>
 
-                <div className='flex flex-col gap-2 text-sm'>
+                <div className='flex flex-col gap-2'>
                     <p>Nombre del alumno</p>
                     <p>11/07/2024</p>
                     <p>18:00 - 19:00 hs</p>

@@ -12,6 +12,7 @@ export default function ClassCardResources({ handleResources, state }) {
             <label
                 htmlFor="resourcesCollapse"
                 onClick={() => handleResources(state)}
+                className='text-lg p-0'
             >
                 Recursos de esta clase
             </label>
