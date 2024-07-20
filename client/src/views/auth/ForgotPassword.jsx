@@ -1,7 +1,7 @@
-import ErrorMessage from "../../components/ErrorMessage"
 import { useForm } from "react-hook-form"
 import { useAppStore } from "../../store/useAppStore"
 import { Link } from "react-router-dom"
+import InputList from "../../components/Form/InputList"
 
 
 
@@ -15,6 +15,12 @@ const ForgotPassword = () => {
         await forgotPassword(formData)
         reset()
     }
+    const getInputConfig = () => ({
+        label: 'Email',
+        type: 'email',
+        placeholder: 'Ingresa tu email'
+    });
+
 
     return (
         <>
@@ -25,31 +31,15 @@ const ForgotPassword = () => {
 
             <form
                 onSubmit={handleSubmit(handleForgotPassword)}
-                className="space-y-8 p-10"
+                className="flex flex-col md:gap-[20px] md:w-[404px]"
                 noValidate
             >
-                <div className="flex flex-col gap-2 w-[384px]">
-                    <label
-                        htmlFor="email"
-                    >Email</label>
-                    <input
-                        id="email"
-                        type="email"
-                        placeholder="Email de Registro"
-                        className="w-full p-3  border-gray-300 border"
-                        {...register("email", {
-                            required: "El Email de registro es obligatorio",
-                            pattern: {
-                                value: /\S+@\S+\.\S+/,
-                                message: "E-mail no válido",
-                            },
-                        })}
-                    />
-                    {errors.email && (
-                        <ErrorMessage>{errors.email.message}</ErrorMessage>
-                    )}
-                </div>
-
+                <InputList
+                    data={initialValues}
+                    register={register}
+                    errors={errors}
+                    getInputConfig={getInputConfig}
+                />
                 <input
                     type="submit"
                     value='Enviar Instrucciones'
