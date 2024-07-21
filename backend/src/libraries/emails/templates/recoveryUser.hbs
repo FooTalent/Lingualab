@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+    .title {
+      font-family: 'Alegreya Sans', sans-serif;
+      font-weight: 500;
+    }
+    .brand {
+      font-weight: 700;
+      color: rgb(89, 155, 181);
+    }
+    strong, p, a {
+      font-family: 'Raleway', sans-serif;
+    }
+    .button {
+      width: 300px;
+      height: 50px;
+      padding: 15px;
+      border-radius: 10px;
+      color: white;
+      background-color: black;
+    }
+    .button:hover {
+      color: black;
+      background-color: rgb(89, 155, 181);
+    }
+  </style>
+</head>
+<body>
+  <h1 class="title">Mail de recuperación de Contraseña</h1>
+  <hr/>
+  <p>Usuario: {{user.first_name}}</p>
+  <p>Usuario: {{user.email}}</p>
+  <br>
+  <p>haga clic en el siguiente botón para recuperar su contraseña</p><br>
+  <a class="button" href="{{url}}?token={{token}}">Recuperar contraseña</a>
+  <br>
+  <br>
+  <br>
+  <br>
+</body>
+</html>
