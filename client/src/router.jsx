@@ -12,7 +12,7 @@ export default function Router() {
         <BrowserRouter>
             <Routes>
                 <Route element={<AppLayout />}>
-                    <Route path='/' element={<Home />} index />
+                    <Route path='/classroom' element={<Home />} index />
                 </Route>
 
                 <Route element={<AuthLayout />}>

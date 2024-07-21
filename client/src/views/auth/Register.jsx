@@ -69,7 +69,7 @@ export default function Register() {
                     label: 'Contraseña',
                     type: 'password',
                     placeholder: 'Crea una contraseña',
-                    validations: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*._?]).{8,}$/,
+                    validations: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/,
                     messageError: `La contraseña debe contener:
                     \nMínimo 8 carácteres
                     \nUna letra mayúscula 

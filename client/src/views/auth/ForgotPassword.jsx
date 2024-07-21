@@ -24,9 +24,9 @@ const ForgotPassword = () => {
 
     return (
         <>
-            <p className="text-2xl font-light mt-5">
+            <p className="text-2xl font-light mt-5 text-Purple">
                 ¿Olvidaste tu contraseña? ingresa tu email {''}
-                <span className=" text-Purple font-bold"> y reestable tu contraseña</span>
+                <span className="font-bold"> y reestablece tu contraseña</span>
             </p>
 
             <form
@@ -46,7 +46,7 @@ const ForgotPassword = () => {
                     className="inputSubmit"
                 />
             </form>
-            <nav className="flex flex-col space-y-4">
+            <nav className="flex flex-col space-y-4 text-Purple">
                 <Link
                     to='/auth/login'
                     className="text-center font-normal"

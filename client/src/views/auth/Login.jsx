@@ -44,7 +44,7 @@ const Login = () => {
 
     useEffect(() => {
         if (status) {
-            navigate('/')
+            navigate('/classroom')
         }
     }, [status, navigate]);
 
