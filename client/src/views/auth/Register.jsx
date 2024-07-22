@@ -19,6 +19,7 @@ export default function Register() {
     const { register, handleSubmit, formState: { errors }, reset } = useForm({ defaultValues: initialValues });
 
     const handleForm = async (formData) => {
+        console.log(formData)
         await userRegister(formData);
         if (complete) {
             navigate("/auth/login");
@@ -30,21 +31,35 @@ export default function Register() {
         let params = {
             label: '',
             type: 'text',
+            placeholder: '',
             validations: /^[a-zA-Z]{3,}$/,
             messageError: 'Debe contener como mínimo 3 carácteres'
         }
 
         switch (inputName) {
             case 'first_name':
-                params.label = 'Nombre';
+                params = {
+                    label: 'Nombre',
+                    type: 'text',
+                    placeholder: 'Ingresa tu nombre',
+                    validations: /^[a-zA-Z]*$/,
+                    messageError: 'Sole se permiten letras'
+                }
                 break;
             case 'last_name':
-                params.label = 'Apellido';
+                params = {
+                    label: 'Apellido',
+                    type: 'text',
+                    placeholder: 'Ingresa tu apellido',
+                    validations: /^[a-zA-Z]*$/,
+                    messageError: 'Sole se permiten letras'
+                }
                 break;
             case 'email':
                 params = {
-                    label: 'Correo',
+                    label: 'Email',
                     type: 'email',
+                    placeholder: 'Ingresa tu email',
                     validations: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                     messageError: 'Email incorrecto',
                 };
@@ -53,7 +68,8 @@ export default function Register() {
                 params = {
                     label: 'Contraseña',
                     type: 'password',
-                    validations: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/,
+                    placeholder: 'Crea una contraseña',
+                    validations: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/,
                     messageError: `La contraseña debe contener:
                     \nMínimo 8 carácteres
                     \nUna letra mayúscula 
@@ -73,14 +89,9 @@ export default function Register() {
 
             <form
                 onSubmit={handleSubmit(handleForm)}
-                className="space-y-2"
+                className="flex flex-col md:gap-[8px] md:w-[404px]"
                 noValidate
             >
-                <Link
-                    to={'/auth/login'}
-                    className='link'
-                >¿Ya tienes usuario?</Link>
-
                 <InputList
                     data={initialValues}
                     register={register}
@@ -89,10 +100,19 @@ export default function Register() {
                 />
                 <input
                     type="submit"
-                    value='Registrarse'
+                    value='Crear Cuenta'
                     className="inputSubmit"
                 />
             </form>
+            <div className='flex flex-col items-center w-full'>
+                <span className="font-semibold text-sm">Ya tengo cuenta{' '}
+                    <Link
+                        to={'/auth/login'}
+                        className='link'
+                    >Ingresar</Link>
+                </span>
+            </div>
+
         </React.Fragment>
     );
 }
