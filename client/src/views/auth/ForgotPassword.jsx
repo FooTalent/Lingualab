@@ -3,8 +3,6 @@ import { useAppStore } from "../../store/useAppStore"
 import { Link } from "react-router-dom"
 import InputList from "../../components/Form/InputList"
 
-
-
 const ForgotPassword = () => {
     const { forgotPassword } = useAppStore()
     const initialValues = {
@@ -46,20 +44,23 @@ const ForgotPassword = () => {
                     className="inputSubmit"
                 />
             </form>
-            <nav className="flex flex-col space-y-4 text-Purple">
-                <Link
-                    to='/auth/login'
-                    className="text-center font-normal"
-                >
-                    ¿Ya tienes cuenta? Iniciar Sesión
-                </Link>
-
-                <Link
-                    to='/auth/register'
-                    className="text-center font-normal"
-                >
-                    ¿No tienes cuenta? Registrate
-                </Link>
+            <nav className="flex flex-col space-y-4">
+                <span className="font-semibold text-sm">¿Ya tienes cuenta?{' '}
+                    <Link
+                        to='/auth/login'
+                        className="link"
+                    >
+                        Iniciar Sesión
+                    </Link>
+                </span>
+                <span className="font-semibold text-sm">¿Ya tienes cuenta?{' '}
+                    <Link
+                        to='/auth/register'
+                        className="link"
+                    >
+                        Registrate
+                    </Link>
+                </span>
             </nav>
 
         </>
