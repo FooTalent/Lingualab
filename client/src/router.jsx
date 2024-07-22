@@ -11,7 +11,7 @@ export default function Router() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Navigate to="/auth/login" replace />} />
+                <Route path="/" element={<Navigate to="/classroom" replace />} />
                 <Route element={<AppLayout />}>
                     <Route path='/classroom' element={<Home />} index />
                 </Route>
