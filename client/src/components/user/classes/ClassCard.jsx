@@ -10,13 +10,13 @@ export default function ClassCard({ clase }) {
     }
     return (
         <div className='border rounded-xl shadow-lg p-4 flex justify-between flex-wrap'>
-            <div className='flex flex-col gap-4 flex-wrap w-4/6'>
+            <div className='flex flex-col gap-4 w-4/6'>
                 <div className='flex gap-6 items-center'>
-                    <div className='bg-Purple rounded-md px-4 py-3 font-extrabold text-white text-sm'>A1-A2</div>
-                    <h2 className='font-bold self-center'>Clase n° 1</h2>
+                    <div className='bg-Purple rounded-md px-3 py-2 font-bold text-white text-sm'>A1-A2</div>
+                    <h2 className='font-bold self-center'>Clase N° 1</h2>
                 </div>
 
-                <div className='flex flex-col gap-2'>
+                <div className='flex flex-col gap-2 text-sm'>
                     <p>Nombre del alumno</p>
                     <p>11/07/2024</p>
                     <p>18:00 - 19:00 hs</p>

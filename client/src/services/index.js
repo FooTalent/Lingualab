@@ -17,6 +17,11 @@ export const register = async (userData) => {
     return newUser.data
 }
 
+export const getClasses = async (idTeacher) => {
+    const allTeacherClasses = await axios.post(url + '' , idTeacher)
+    return allTeacherClasses
+}
+
 export const newPass = async (password, token) => {
     const data = {
         password: password

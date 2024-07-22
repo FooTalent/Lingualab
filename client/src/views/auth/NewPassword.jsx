@@ -1,7 +1,7 @@
 import { useAppStore } from "../../store/useAppStore";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from 'react-router-dom';
-import InputList from '../../components/Form/InputList';
+import InputList from '../../components/form/InputList';
 
 export default function NewPassword() {
     const navigate = useNavigate()

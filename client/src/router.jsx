@@ -14,7 +14,7 @@ export default function Router() {
             <Routes>
                 <Route element={<AppLayout />}>
                     <Route path='/' element={<Home />} index />
-                    <Route path='/user/calendario' element={<DashboardCalendar />} />
+                    <Route path='/calendario' element={<DashboardCalendar />} />
                 </Route>
 
                 <Route element={<AuthLayout />}>
