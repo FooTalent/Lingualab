@@ -8,7 +8,6 @@ const controller = new Controller()
 // http://localhost:8080/api/calendar/
 router
 .get ('/', controller.get)
-.get ('/redirect', controller.redirect)
 .post('/', controller.post)
 
 wrapRoutesWithCatchAsync(router)

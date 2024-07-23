@@ -4,7 +4,6 @@ import { googleEnv, googleSA } from '../../config/env.js';
 // Cuentas de servicio (servidor(backend) a servidor)
 // https://www.geeksforgeeks.org/how-to-integrate-google-calendar-in-node-js/
 
-const GOOGLE_PROJECT_NUMBER  = googleEnv.projectNumber
 const GOOGLE_CALENDAR_ID = googleEnv.calendarId
 
 const SCOPES = 'https://www.googleapis.com/auth/calendar';
@@ -16,10 +15,8 @@ const auth = new google.auth.JWT(
   SCOPES
 );
 
-
 export const calendar = google.calendar({
   version: 'v3',
-  // project: GOOGLE_PROJECT_NUMBER,
   auth: auth,
 });
 
@@ -44,6 +41,7 @@ export async function insertEvent(newEvent) {
   const response = await calendar.events.insert({
     calendarId: GOOGLE_CALENDAR_ID,
     resource: newEvent,
+    sendUpdates: 'all'
   });
-  return { message: "Event successfully created!", event: response.data };
+  return { message: "Evento creado correctamente", event: response.data };
 }

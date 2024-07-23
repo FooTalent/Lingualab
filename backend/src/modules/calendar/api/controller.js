@@ -11,7 +11,7 @@ export default class Controller {
       'start',      // fecha hora de inicio
       'end',        // fecha hora fin
       'country',    // pais, usado para el timezone del horario
-      //'teacher' ,   // Un email --> Lista de asistentes
+      'teacher' ,   // Un email --> Lista de asistentes
       //'students'    // Un array de {email} Lista de asistentes
     ]
   }
@@ -26,7 +26,6 @@ export default class Controller {
   //   "country": "Argentina", // de aqui optiene el timezone
   //   "location": "Córdoba, Argentina",
   // ?  VER COLORID
-  // ?  VER CREATOR
   //   "reminders": [
   //     { "method": "email", "minutes": 15 },
   //     { "method": "popup", "minutes": 15 }
@@ -42,18 +41,16 @@ export default class Controller {
     res.sendSuccess(result);
   }
 
-  redirect = async (req, res) => {};
-
   post = async (req, res) => {
 
-    let addEvent = validateFields(req.body, this.requieredfield);
+    let addEvent = validateFields(req.body, this.requieredfield); // devuelve los campos valdiados sino un error indicando los faltantes - no incluye extras
 
     const timeZone = COUNTRY_TIMEZONES[addEvent.country];
     if (!timeZone) {
       throw new AppError(`País invalido: ${addEvent.country}`, 400);
     }
 
-    const { description, location, reminders, attendees } = req.body;
+    const { description, location, reminders } = req.body;
 
     const newEvent = {
       summary:      addEvent.summary,
@@ -74,11 +71,11 @@ export default class Controller {
           { method: 'popup', minutes: 15 },
         ],
       },
-      //attendees: [{ email: addEvent.teacher }],  //...addEvent.students
+      attendees: [{ email: addEvent.teacher }],  //...addEvent.students
     };
 
     const result = await insertEvent(newEvent);
-    res.sendSuccess(result);
+    res.sendSuccess(result.event, result.message);
   }
 
 }
