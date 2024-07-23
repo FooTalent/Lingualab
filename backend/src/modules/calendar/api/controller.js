@@ -11,7 +11,7 @@ export default class Controller {
       'start',      // fecha hora de inicio
       'end',        // fecha hora fin
       'country',    // pais, usado para el timezone del horario
-      'teacher' ,   // Un email --> Lista de asistentes
+      //'teacher' ,   // Un email --> Lista de asistentes
       //'students'    // Un array de {email} Lista de asistentes
     ]
   }
@@ -38,8 +38,8 @@ export default class Controller {
   // }
 
   get = async (req, res) => {
-    // const result = await listEvent();
-    // res.sendSuccess(result);
+    const result = await listEvent();
+    res.sendSuccess(result);
   }
 
   redirect = async (req, res) => {};
@@ -74,7 +74,7 @@ export default class Controller {
           { method: 'popup', minutes: 15 },
         ],
       },
-      attendees: [{ email: addEvent.teacher }],  //...addEvent.students
+      //attendees: [{ email: addEvent.teacher }],  //...addEvent.students
     };
 
     const result = await insertEvent(newEvent);
