@@ -9,8 +9,10 @@ export default function ClassList({ dayClases }) {
                     return (
                         <ClassCard
                             key={Math.random()}
+                            title={clase.title}
                             level={clase.level}
                             students={clase.students}
+                            date={clase.date}
                             resources={clase.class}
                         />
                     )

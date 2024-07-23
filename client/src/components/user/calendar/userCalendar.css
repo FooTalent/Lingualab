@@ -4,6 +4,8 @@
     border: 2px solid #FFDC00;
     padding: 24px;
     border-radius: 12px;
+    min-height: 383px;
+    max-height: 383px;
 }
 
 /* Cabecero calendario */

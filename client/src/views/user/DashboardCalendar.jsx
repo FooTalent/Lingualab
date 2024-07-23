@@ -9,7 +9,11 @@ export default function DashboardCalendar() {
 
     return (
         <main className='flex flex-wrap justify-between px-16'>
-            <ClassList dayClases={classes} />
+            {
+                classes.length === 0
+                    ? <h1>No hay clases aun</h1>
+                    : <ClassList dayClases={classes} />
+            }
 
             <aside className='flex flex-col w-4/12 item-center'>
                 <div className='flex flex-nowrap justify-between gap-2'>

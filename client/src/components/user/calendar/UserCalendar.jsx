@@ -82,7 +82,7 @@ export default function UserCalendar({ props }) {
             localizer={localizer}
             onView={'month'}
             onNavigate={(handleNavigate)}
-            className={'!p-0 flex flex-col gap-16 mt-8 min-h-36'}
+            className={'!p-0 flex flex-col gap-16 mt-8'}
             formats={formats}
             date={selectedDate}
             events={events}
