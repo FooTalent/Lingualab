@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 @layer base {
     input{
         @apply font-semibold w-full p-3 px-12 border-gray-300 border placeholder:text-black rounded-lg
@@ -13,7 +15,7 @@
         @apply bg-Yellow w-full p-2 font-bold rounded-lg text-xl cursor-pointer
     }
     .link{
-        @apply text-Purple font-bold text-end text-sm 
+        @apply text-Purple font-semibold text-end text-sm 
     }
     .icons{
         @apply absolute left-3 top-1/2 transform -translate-y-1/2 text-Purple

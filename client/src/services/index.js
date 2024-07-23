@@ -13,7 +13,7 @@ export const forgotPass = async (email) => {
 }
 
 export const register = async (userData) => {
-    const newUser = await axios.post(url + 'api/users/register', userData)
+    const newUser = await axios.post(`${url}api/users/register`, userData)
     return newUser.data
 }
 

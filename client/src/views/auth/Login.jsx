@@ -19,6 +19,7 @@ const Login = () => {
         let params = {
             label: '',
             type: '',
+            placeholder: '',
             validations: '',
             messageError: ''
         }
@@ -28,12 +29,14 @@ const Login = () => {
                 params = {
                     label: 'Email',
                     type: 'email',
+                    placeholder: 'Ingresa tu email'
                 };
                 break;
             case 'password':
                 params = {
                     label: 'Contraseña',
                     type: 'password',
+                    placeholder: 'Ingresa tu contraseña'
                 };
                 break;
             default:
@@ -44,7 +47,7 @@ const Login = () => {
 
     useEffect(() => {
         if (status) {
-            navigate('/classroom')
+            navigate('/')
         }
     }, [status, navigate]);
 
