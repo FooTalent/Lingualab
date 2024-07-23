@@ -1,10 +1,9 @@
+import { useEffect, useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { useEffect, useState } from 'react';
 import moment from 'moment'
-import 'moment/locale/es'
+import ToolBar from './ToolBar';
 
-moment.locale('es')
 const localizer = momentLocalizer(moment);
 
 export default function UserCalendar({ props }) {
@@ -40,39 +39,23 @@ export default function UserCalendar({ props }) {
         <Calendar
             localizer={localizer}
             onView={'month'}
-            onNavigate={handleNavigate}
-            className={'!p-0 flex flex-col gap-16 mt-8'}
+            onNavigate={(handleNavigate)}
+            className={'!p-0 flex flex-col gap-16 mt-8 min-h-1'}
             formats={formats}
             date={selectedDate}
             components={{
                 toolbar: () => (
-                    <div className="flex justify-center gap-8 rounded-xl shadow-calendar py-6 px-4">
-                        <button
-                            className={`px-4 py-3 bg-Purple text-white font-bold text-md rounded-md`}
-                        >
-                            {isToday(selectedDate) ? 'HOY' : selectedDate.getDate()}
-                        </button>
-                        <button
-                            className={`px-4 py-3 bg-Purple text-white font-bold text-md rounded-md`}
-                        >
-                            {monthName.toUpperCase()}
-                        </button>
-                        <button
-                            className={`px-4 py-3 bg-Purple text-white font-bold text-md rounded-md`}
-                        >
-                            {selectedDate.getFullYear()}
-                        </button>
-                    </div>
-                ),
-                header: ({ label }) => (
-                    <div className="">
-                        {label}
-                    </div>
+                    <ToolBar selectedDate={selectedDate} isToday={isToday} monthName={monthName} />
                 ),
                 month: {
+                    header: ({ label }) => (
+                        <div className=''>
+                            {label}
+                        </div>
+                    ),
                     dateHeader: ({ date, label }) => (
                         <button
-                            className="px-2 py-1"
+                            className="px-2 py-1 bg-yellow-300"
                             onClick={() => {
                                 setSelectedDate(date);
                             }}
@@ -81,16 +64,6 @@ export default function UserCalendar({ props }) {
                         </button>
                     )
                 }
-            }}
-            dayPropGetter={(date) => {
-                return {
-                    className: 'p-3 bg-gray-100 border border-gray-200'
-                };
-            }}
-            eventPropGetter={(event) => {
-                return {
-                    className: 'bg-purple-500 text-white p-2 rounded-md'
-                };
             }}
         />
     );
