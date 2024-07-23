@@ -5,7 +5,7 @@ import { useAppStore } from "../../store/useAppStore";
 
 export default function DashboardCalendar() {
     // const { classes } = useAppStore()
-    const classes = ['']
+    const classes = ['', '', '']
 
     return (
         <main className='flex flex-wrap justify-between px-16'>
