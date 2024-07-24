@@ -19,7 +19,6 @@ export default function Register() {
     const { register, handleSubmit, formState: { errors }, reset } = useForm({ defaultValues: initialValues });
 
     const handleForm = async (formData) => {
-        console.log(formData)
         await userRegister(formData);
         if (complete) {
             navigate("/auth/login");

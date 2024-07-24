@@ -1,11 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ClassList from '../../components/user/classes/ClassList'
 import UserCalendar from '../../components/user/calendar/UserCalendar'
 import { useAppStore } from "../../store/useAppStore";
 
 export default function DashboardCalendar() {
-    // const { classes } = useAppStore()
-    const classes = ['', '', '']
+    const { fetchClasses, classes } = useAppStore()
+    const user = JSON.parse(localStorage.getItem('user'))
+
+    useEffect(() => {
+        // fetchClasses(user.token)
+        console.log(classes)
+    }, [])
+    
 
     return (
         <main className='flex flex-wrap justify-between px-16'>
