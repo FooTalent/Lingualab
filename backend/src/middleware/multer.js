@@ -6,7 +6,7 @@ import AppError from '../config/AppError.js'
 export const uploader = (folder, maxSize, type) => multer({
     storage: multer.diskStorage({
         destination: (req, file, cb) => {
-            cb(null, path.join(__dirname, `public/assets/${folder}`))
+            cb(null, path.join(`public/assets/${folder}`))
         },
         filename: (req, file, cb) => {
             cb(null, Date.now() + file.originalname)
