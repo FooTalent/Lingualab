@@ -1,11 +1,7 @@
 import { google } from 'googleapis'
 import { googleEnv, googleSA } from '../../config/env.js';
 
-// Cuentas de servicio (servidor(backend) a servidor)
-// https://www.geeksforgeeks.org/how-to-integrate-google-calendar-in-node-js/
-
 const GOOGLE_CALENDAR_ID = googleEnv.calendarId
-
 const SCOPES = 'https://www.googleapis.com/auth/calendar';
 
 const auth = new google.auth.JWT(

@@ -1,10 +1,10 @@
-import AppError from "../../../config/AppError.js";
-import { googleEnv } from "../../../config/env.js";
-import CustomController from "../../../libraries/customs/controller.js";
-import { oauth2Client, SCOPES } from "../../../libraries/google/googleAuth.js";
-import validateFields from "../../../libraries/utils/validatefiels.js";
-import Service from "../logic/service.js";
 import { google } from 'googleapis'
+import CustomController from "../../../libraries/customs/controller.js";
+import AppError from "../../../config/AppError.js";
+import validateFields from "../../../libraries/utils/validatefiels.js";
+import { googleEnv } from "../../../config/env.js";
+import { oauth2Client, SCOPES } from "../../../libraries/google/googleAuth.js";
+import Service from "../logic/service.js";
 
 export default class Controller extends CustomController {
   constructor() {
@@ -14,6 +14,8 @@ export default class Controller extends CustomController {
       login: ['email', 'password']
     }
   }
+
+  getUserSession = (req, res) => res.sendSuccess(req.user)
 
   // SESSION TRADICIONAL
   register = async (req, res, next) => {
@@ -32,50 +34,6 @@ export default class Controller extends CustomController {
   logout = async (req, res) => {
     this.service.logout()
     res.sendSuccess({},"Cerrado de Sesión existoso")
-  }
-
-  getUserSession = (req, res) => res.sendSuccess(req.user)
-  
-  // SESSION GOOGLE
-  googleAuth = (req, res) => {   
-    // Generar URL de autenticación
-    const url = oauth2Client.generateAuthUrl({
-      access_type: 'offline', // Solicitar acceso sin conexión para recibir un token de actualización
-      scope: SCOPES,
-      redirect_uri: googleEnv.redirecUri
-    });
-    // Redirigir al usuario al servidor OAuth 2.0 de Google
-    res.redirect(url);
-  }
-
-  googleRedirect = (req, res, next) => {
-    console.log('google Redirect');
-
-    const code = req.query.code;
-
-    oauth2Client.getToken(code, async (err, tokens) => {
-
-      if (err) { return next(new AppError(`No se pudo obtener el token de google \n ${err}`,500)); }
-      
-      // Establece las credenciales para el cliente API de Google
-      oauth2Client.setCredentials(tokens);
-      
-      
-      try {
-        // Obtener información del perfil de Google
-        const oauth2 = google.oauth2({ version: 'v2', auth: oauth2Client });
-        const { data } = await oauth2.userinfo.get();
-
-        // Manejar el registro o login del usuario
-        const {name, token} =  await this.service.googleLoginOrRegister(data);
-
-        // Notificar al usuario de un inicio de sesión exitoso, 
-        res.sendSuccess({token}, `Log In exitoso con Google: ${name}`);
-
-      } catch (error) {
-        next(new AppError(`Error al obtener información del usuario de Google \n ${error}`, 500));
-      }
-    });
   }
 
   // RECUPERACION DE CONTRASEÑA
@@ -99,6 +57,50 @@ export default class Controller extends CustomController {
       res.sendSuccess("Photo uploaded")
     } catch (error) {
       next(error)
+    }
+  }
+
+  // GOOGLE
+  googleAuth = (req, res) => {   
+    // Generar URL de autenticación
+    const url = oauth2Client.generateAuthUrl({
+      access_type: 'offline', // Solicitar acceso sin conexión para recibir un token de actualización
+      scope: SCOPES,
+      redirect_uri: googleEnv.redirecUri
+    });
+    res.redirect(url);
+  }
+
+  googleRedirect = (req, res, next) => {
+    const code = req.query.code;
+
+    oauth2Client.getToken(code, async (err, tokens) => {
+
+      if (err) { return next(new AppError(`No se pudo obtener el token de google \n ${err}`,500)); }
+      
+      oauth2Client.setCredentials(tokens);
+            
+      try {
+        // Obtener información del perfil de Google y manejar el registro/login
+        const oauth2 = google.oauth2({ version: 'v2', auth: oauth2Client });
+        const { data } = await oauth2.userinfo.get();
+        const {name, token} =  await this.service.googleLoginOrRegister(data);
+        res.sendSuccess({token}, `Log In exitoso con Google: ${name}`);
+      } catch (error) {
+        next(new AppError(`Error al obtener información del usuario de Google \n ${error}`, 500));
+      }
+    });
+  }
+
+  createEvent = async (req, res, next) => {
+    const userId = req.user._id;
+    const eventDetails = req.body;
+
+    try {
+      const event = await this.service.createEvent(userId, eventDetails);
+      res.sendSuccess(event, 'Event created successfully');
+    } catch (error) {
+      next(new AppError(`Error al crear el evento: ${error.message}`, 500));
     }
   }
 }
