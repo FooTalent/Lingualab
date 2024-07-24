@@ -22,7 +22,7 @@ export const googleEnv = {
   clienId : process.env.GOOGLE_CLIENT_ID,
   clientSecret : process.env.GOOGLE_CLIENT_SECRET,
   origin : process.env.GOOGLE_ORIGIN,
-  redirec : process.env.GOOGLE_REDIREC,
+  redirecUri : process.env.GOOGLE_REDIREC,
   projectNumber : process.env.GOOGLE_PROJECT_NUMBER,
   calendarId : process.env.GOOGLE_CALENDAR_ID,
   testUser: process.env.USUARIO_PRUEBA,

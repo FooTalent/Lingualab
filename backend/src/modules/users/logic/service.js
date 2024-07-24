@@ -5,6 +5,7 @@ import { createHashAsync, isValidPasswordAsync } from "./passwords.js";
 import ThisDaoMongo from "../data/dao.mongo.js";
 import { sendMail } from "../../../libraries/emails/sendMail.js";
 import AppError from "../../../config/AppError.js";
+import generateRandomPassword from "../../../libraries/utils/generateRandomPassword.js";
 
 export default class Service extends CustomService {
   constructor() {
@@ -16,6 +17,7 @@ export default class Service extends CustomService {
   get = async (filter, excludePassword = true )  => await this.dao.get   (filter, excludePassword)
   getBy = async (filter, excludePassword = true) => await this.dao.getBy (filter, excludePassword)
 
+  // REGISTRO TRADICIONAL
   register = async (userData) => {
     userData.password = await createHashAsync(userData.password)
     const userFound = await this.dao.getBy({email: userData.email});
@@ -23,7 +25,6 @@ export default class Service extends CustomService {
     return await this.dao.create(userData)
   }
 
-  
   login = async (userData) => {
     // Admin Verification
     if (this.admins.includes(userData.email)) {
@@ -47,6 +48,49 @@ export default class Service extends CustomService {
 
   logout = async () => {}
 
+  // REGISTRO / LOGIN X GOOGLE
+  googleLoginOrRegister = async (googleUser) => {
+    // {
+    //   id: '116279619298827542282',
+    //   email: 'gustavo.sirtori@gmail.com',    
+    //   verified_email: true,
+    //   name: 'Gustavo Sírtori',
+    //   given_name: 'Gustavo',
+    //   family_name: 'Sírtori',
+    //   picture: 'https://lh3.googleusercontent.com/a/ACg8ocIDoQuRqWl6XhgAviDN_OGGe-C4qCNNz8WOdXNnXh9q1fM0-XJL=s96-c'
+    // }
+    let userFound = await this.dao.getBy({email: googleUser.email});
+
+    if (!userFound) {
+      userFound = await this.dao.create({
+        first_name: googleUser.given_name,
+        last_name: googleUser.family_name,
+        email: googleUser.email,
+        google_id: googleUser.id,
+        password: generateRandomPassword(10),
+        photo: googleUser.picture,
+        role: "Teacher"
+      })
+    } else {
+      // Si el usuario existe, actualiza googleId y photo si no están presentes
+      let updatedFields = {};
+      if (!userFound.googleId) {
+        updatedFields.googleId = googleUser.id;
+      }
+      if (!userFound.photo) {
+        updatedFields.photo = googleUser.picture;
+      }
+      if (Object.keys(updatedFields).length > 0) {
+        userFound = await this.dao.update({_id: userFound._id}, updatedFields)
+      }
+    }
+
+    const token = createToken({_id: userFound._id, role: userFound.role})
+    await this.dao.updateConection({_id: userFound._id})
+    return {name: userFound.first_name, token}
+  }
+
+  // RECUPERAICON DE CONTRASEÑA
   userRecovery = async (email) => {    
     const userFound = await this.dao.getBy({email});
     const token = createToken({id: userFound._id, role: userFound.role}, '1h')
@@ -67,6 +111,7 @@ export default class Service extends CustomService {
     return await this.dao.update({_id: uid}, {password, update: Date.now()})
   }
 
+  // ACTUALIZACION DE IMAGEN
   updatePhoto = async (uid, path) => {
     return await this.dao.update({_id: uid}, {photo: path})
   }
