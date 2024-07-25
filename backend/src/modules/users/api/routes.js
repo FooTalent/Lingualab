@@ -24,5 +24,7 @@ router
         uploader('profiles', 5, ['image/jpeg', 'image/png']).single('photo'),
         catchAsync(controller.uploadPhoto))
 
+export default router
+
 // http://localhost:8080/api/users/google/login
 // http://localhost:8080/api/users/google/redirect
