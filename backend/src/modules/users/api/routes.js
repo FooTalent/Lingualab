@@ -19,9 +19,10 @@ router
 .get    ('/google/login',                       controller.googleAuth)
 .get    ('/google/redirect',                    controller.googleRedirect)
 .post   ('/google/events', handleAuth(users),   catchAsync(controller.createEvent)) // TODO FALTA TESTEAR
-.post   ('/uploadphoto',   handleAuth(users),   uploader('profiles').single('photo'),  catchAsync(controller.uploadPhoto))
-
-export default router
+.post   ('/uploadphoto',  
+        handleAuth(users), 
+        uploader('profiles', 5, ['image/jpeg', 'image/png']).single('photo'),
+        catchAsync(controller.uploadPhoto))
 
 // http://localhost:8080/api/users/google/login
 // http://localhost:8080/api/users/google/redirect

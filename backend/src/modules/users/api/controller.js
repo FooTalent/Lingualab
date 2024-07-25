@@ -20,7 +20,6 @@ export default class Controller extends CustomController {
         'country',    // pais, usado para el timezone del horario
         'students'    // Un array de {email} Lista de asistentes
       ]
-  
     }
   }
 

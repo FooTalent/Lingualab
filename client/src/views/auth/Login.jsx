@@ -1,12 +1,9 @@
 import { useForm } from "react-hook-form";
-import ErrorMessage from "../../components/ErrorMessage";
+
 import { useAppStore } from "../../store/useAppStore";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import MailIcon from '@mui/icons-material/Mail';
-import VpnKeyIcon from '@mui/icons-material/VpnKey';
+import InputList from "../../components/Form/InputList";
 
 
 const Login = () => {
@@ -17,7 +14,36 @@ const Login = () => {
     }
     const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues })
     const { userLogin, localLogin, status } = useAppStore()
-    const [showPassword, setShowPassword] = useState(false);
+
+    const getInputConfig = (inputName) => {
+        let params = {
+            label: '',
+            type: '',
+            placeholder: '',
+            validations: '',
+            messageError: ''
+        }
+
+        switch (inputName) {
+            case 'email':
+                params = {
+                    label: 'Email',
+                    type: 'email',
+                    placeholder: 'Ingresa tu email'
+                };
+                break;
+            case 'password':
+                params = {
+                    label: 'Contraseña',
+                    type: 'password',
+                    placeholder: 'Ingresa tu contraseña'
+                };
+                break;
+            default:
+                break;
+        }
+        return params;
+    };
 
     useEffect(() => {
         if (status) {
@@ -26,89 +52,42 @@ const Login = () => {
     }, [status, navigate]);
 
     const handleLogin = async (formData) => {
-        console.log(formData)
         await userLogin(formData)
         await localLogin()
     }
-
-    const togglePasswordVisibility = () => {
-        setShowPassword(prevState => !prevState);
-    };
-
     return (
         <>
             <form
                 onSubmit={handleSubmit(handleLogin)}
-                className="space-y-2"
+                className="flex flex-col md:w-[404px] md:gap-[8px]"
                 noValidate
             >
-                <div className="flex flex-col gap-2 w-[384px]">
-                    <label
-                        className="font-normal text-2xl"
-                    >Correo</label>
-                    <div className="relative w-full">
-                        <MailIcon
-                            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-Purple"
-                        />
-                        <input
-                            id="email"
-                            type="email"
-                            placeholder="Email de Registro"
-                            className="w-full p-3 px-10  border-gray-300 border placeholder:text-center"
-                            {...register("email", {
-                                required: "El Email es obligatorio",
-                                pattern: {
-                                    value: /\S+@\S+\.\S+/,
-                                    message: "E-mail no válido",
-                                },
-                            })}
-                        />
-                    </div>
-                    {errors.email && (
-                        <ErrorMessage>{errors.email.message}</ErrorMessage>
-                    )}
-                </div>
-
-                <div className="flex flex-col gap-2">
-                    <label
-                        className="font-normal text-2xl"
-                    >Contraseña</label>
-                    <div className="relative w-full">
-                        <VpnKeyIcon
-                            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-Purple" />
-                        <input
-                            type={showPassword ? "text" : "password"}
-                            placeholder="Password de Registro"
-                            className="w-full p-3 px-10  border-gray-300 border"
-                            {...register("password", {
-                                required: "El Password es obligatorio",
-                            })}
-                        />
-                        <button
-                            type="button"
-                            onClick={togglePasswordVisibility}
-                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-Purple"
-                        >
-                            {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                        </button>
-                    </div>
-
-                    {errors.password && (
-                        <ErrorMessage>{errors.password.message}</ErrorMessage>
-                    )}
-                    <Link
-                        to={'/auth/forgot-password'}>
-                        ¿Olvidaste tu contraseña?
-                    </Link>
-                </div>
-
+                <InputList
+                    data={initialValues}
+                    register={register}
+                    errors={errors}
+                    getInputConfig={getInputConfig}
+                />
+                <Link
+                    to={'/auth/forgot-password'}
+                    className="link">
+                    ¿Olvidaste tu contraseña?
+                </Link>
                 <input
                     type="submit"
                     value='Iniciar Sesión'
-                    className="bg-Purple hover:bg-PurpleHover w-full p-3  text-white font-black  text-xl cursor-pointer"
+                    className="inputSubmit"
                 />
-                <Link to={'/auth/register'}>Registrarse</Link>
             </form>
+            <div className="flex justify-center items-center">
+                <span className="font-semibold text-sm">¿No tienes cuenta?{' '}
+                    <Link
+                        to={'/auth/register'}
+                        className="link">
+                        Crear Cuenta
+                    </Link>
+                </span>
+            </div>
         </>
     )
 }
