@@ -19,7 +19,7 @@ const configEnv = {
 }
 
 export const googleEnv = {
-  clienId : process.env.GOOGLE_CLIENT_ID,
+  clientId : process.env.GOOGLE_CLIENT_ID,
   clientSecret : process.env.GOOGLE_CLIENT_SECRET,
   origin : process.env.GOOGLE_ORIGIN,
   redirecUri : process.env.GOOGLE_REDIREC,

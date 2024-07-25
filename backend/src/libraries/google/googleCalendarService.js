@@ -18,7 +18,7 @@ export const calendar = google.calendar({
 
 export async function listEvent() {
   const response = await calendar.events.list({
-    calendarId: GOOGLE_CALENDAR_ID,
+    calendarId: 'primary',
     timeMin: (new Date()).toISOString(),
     maxResults: 10,
     singleEvents: true,
@@ -31,13 +31,4 @@ export async function listEvent() {
   } else {
     return { message: 'No hay eventos encontrados' };
   }
-}
-
-export async function insertEvent(newEvent) {
-  const response = await calendar.events.insert({
-    calendarId: GOOGLE_CALENDAR_ID,
-    resource: newEvent,
-    sendUpdates: 'all'
-  });
-  return { message: "Evento creado correctamente", event: response.data };
 }

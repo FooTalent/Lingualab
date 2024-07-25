@@ -1,19 +1,8 @@
-import AppError from "../../../config/AppError.js";
-import { insertEvent, listEvent } from "../../../libraries/google/googleCalendarService.js";
-import validateFields from "../../../libraries/utils/validatefiels.js";
-import { COUNTRY_TIMEZONES } from "../../email/api/timezoneMapping.js";
+import { listEvent } from "../../../libraries/google/googleCalendarService.js";
 
-COUNTRY_TIMEZONES
 export default class Controller {
   constructor() {
-    this.requieredfield = [
-      'summary',    // titulo
-      'start',      // fecha hora de inicio
-      'end',        // fecha hora fin
-      'country',    // pais, usado para el timezone del horario
-      'teacher' ,   // Un email --> Lista de asistentes
-      //'students'    // Un array de {email} Lista de asistentes
-    ]
+    
   }
 
   // https://developers.google.com/calendar/api/v3/reference/events?hl=es-419#resource-representations
@@ -39,43 +28,6 @@ export default class Controller {
   get = async (req, res) => {
     const result = await listEvent();
     res.sendSuccess(result);
-  }
-
-  post = async (req, res) => {
-
-    let addEvent = validateFields(req.body, this.requieredfield); // devuelve los campos valdiados sino un error indicando los faltantes - no incluye extras
-
-    const timeZone = COUNTRY_TIMEZONES[addEvent.country];
-    if (!timeZone) {
-      throw new AppError(`País invalido: ${addEvent.country}`, 400);
-    }
-
-    const { description, location, reminders } = req.body;
-
-    const newEvent = {
-      summary:      addEvent.summary,
-      location:     location || '', // Ubicación por defecto vacía
-      description:  description || '', // Descripción por defecto vacía
-      start: {
-        dateTime:   new Date(addEvent.start).toISOString(),
-        timeZone,
-      },
-      end: {
-        dateTime:   new Date(addEvent.end).toISOString(),
-        timeZone,
-      },
-      reminders: {
-        useDefault: false,
-        overrides: reminders || [
-          { method: 'email', minutes: 15 },
-          { method: 'popup', minutes: 15 },
-        ],
-      },
-      attendees: [{ email: addEvent.teacher }],  //...addEvent.students
-    };
-
-    const result = await insertEvent(newEvent);
-    res.sendSuccess(result.event, result.message);
   }
 
 }

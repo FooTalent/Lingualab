@@ -6,6 +6,7 @@ import ThisDaoMongo from "../data/dao.mongo.js";
 import { sendMail } from "../../../libraries/emails/sendMail.js";
 import generateRandomPassword from "../../../libraries/utils/generateRandomPassword.js";
 import AppError from "../../../config/AppError.js";
+import { google } from "googleapis";
 
 export default class Service extends CustomService {
   constructor() {
@@ -41,7 +42,7 @@ export default class Service extends CustomService {
       throw new AppError(`Email o contraseña equivocado`, 203);
     }
 
-    const token = createToken({id: userFound._id, role: userFound.role})
+    const token = createToken({_id: userFound._id, role: userFound.role})
     await this.dao.updateConection({_id: userFound._id})
     return {name: userFound.first_name, token}
   }
@@ -75,7 +76,7 @@ export default class Service extends CustomService {
   }
 
   // GOOGLE
-  googleLoginOrRegister = async (googleUser) => {
+  googleLoginOrRegister = async (googleUser, tokens) => {
     let userFound = await this.dao.getBy({email: googleUser.email});
 
     if (!userFound) {
@@ -87,11 +88,14 @@ export default class Service extends CustomService {
         password: generateRandomPassword(10),
         photo: googleUser.picture,
         role: "Teacher",
-        //googleAccessToken: tokens.access_token,
-        //googleRefreshToken: tokens.refresh_token,
+        googleAccessToken: tokens.access_token,
+        googleRefreshToken: tokens.refresh_token,
       })
     } else {
-      let updatedFields = {};
+      let updatedFields = {
+        googleAccessToken: tokens.access_token,
+        googleRefreshToken: tokens.refresh_token
+      };
       if (!userFound.googleId) updatedFields.googleId = googleUser.id;
       if (!userFound.photo)    updatedFields.photo    = googleUser.picture;
 
@@ -109,17 +113,21 @@ export default class Service extends CustomService {
     if (!user) { throw new AppError('Usuario no encontrado', 400); }
 
     // Configurar oauth2Client con los tokens del usuario
-    const oauth2Client = new google.auth.OAuth2();
+    const oauth2Client = new google.auth.OAuth2(
+      googleEnv.clientId,
+      googleEnv.clientSecret,
+      googleEnv.redirecUri
+    );
     oauth2Client.setCredentials({
-      access_token: user.googleAccessToken, // TODO en que momento se genera esto?
-      refresh_token: user.googleRefreshToken, // TODO en que momento se genera esto?
+      access_token: user.googleAccessToken,
+      refresh_token: user.googleRefreshToken,
     });
 
     const calendar = google.calendar({ version: 'v3', auth: oauth2Client })
 
     // Crear el evento
     const event = await calendar.events.insert({
-      calendarId: googleEnv.calendarId,
+      calendarId: 'primary',
       requestBody: eventDetails,
       sendUpdates: 'all',
     });

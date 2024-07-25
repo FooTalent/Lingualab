@@ -35,6 +35,8 @@ const thisSchema = new Schema({
 
   // google
   google_id:   { type: String,   },
+  googleAccessToken: { type: String },
+  googleRefreshToken: { type: String },
 
   // only teacher
   price_per_hour: { type: Number,},
