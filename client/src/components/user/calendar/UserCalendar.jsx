@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import moment from 'moment'
-import ToolBar from './ToolBar';
 import './userCalendar.css'
+import moment from 'moment'
+import 'moment/locale/es'
+import ToolBar from './ToolBar';
 import Day from './Day'
 
+moment.locale('es')
 const localizer = momentLocalizer(moment);
 
-export default function UserCalendar({ props }) {
+export default function UserCalendar() {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [monthName, setMonthName] = useState('');
     const [events, setEvents] = useState([])
@@ -80,6 +82,7 @@ export default function UserCalendar({ props }) {
     return (
         <Calendar
             localizer={localizer}
+            culture='es'
             onView={'month'}
             onNavigate={(handleNavigate)}
             className={'!p-0 flex flex-col gap-16 mt-8'}
