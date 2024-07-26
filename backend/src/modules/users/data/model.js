@@ -40,6 +40,11 @@ const thisSchema = new Schema({
   
   reviews:     { type: [reviewSchema], },
 
+  // google
+  google_id:   { type: String,   },
+  googleAccessToken: { type: String },
+  googleRefreshToken: { type: String },
+
   // only teacher
   price_per_hour: { type: Number,},
   currency:    { type: String,   default: "ARS", enum: CURRENCIES,},
