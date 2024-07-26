@@ -6,11 +6,16 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        roboto: ['Roboto', 'sans-serif'],
+      },
       colors: {
         Purple: '#6945FF',
         Yellow: '#FFDC00',
         PurpleHover: '#5300B8',
         whiteCustom: '#FFFFFFBF',
+        Grey: '#9B9B9B',
+        BorderGrey: '#EFF0F6'
       },
       backgroundImage:{
         'fondo': "url('/fondoLogin.jpg')"
