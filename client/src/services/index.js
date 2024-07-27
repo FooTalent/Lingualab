@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const url = import.meta.env.VITE_BACKEND_URL
 
+// USER SESSION ----------------------------------------------------------------
 export const login = async (userData) => {
     const loginUser = await axios.post(`${url}api/users/login`, userData)
     return loginUser.data
@@ -64,7 +65,18 @@ export const googleLoginUser = async () => {
     }
   };
 
-export const getUserData = async () => {
-    const userData = await axios.get(`${url}api/users/current`)
-    return userData.data
-}
+  
+// USER PROFILE ----------------------------------------------------------------
+export const getUserData = async (token) => {
+  try {
+      const response = await axios.get(`${url}api/users/current`, {
+          headers: {
+              'Authorization': `Bearer ${token}`
+          }
+      });
+      return response.data.data;
+  } catch (error) {
+      console.error('Error fetching user data:', error);
+      return null;
+  }
+};

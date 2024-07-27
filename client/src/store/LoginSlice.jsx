@@ -1,10 +1,12 @@
-import { forgotPass, login, newPass } from "../services";
+import { forgotPass, getUserData, login, newPass } from "../services";
 import { Toast } from "../utils/toast";
 
 export const createUserSlice = (set, get) => ({
     user: {},
+    userDetail: {},
     status: false,
     change: false,
+    // user sessions
     userLogin: async (userData) => {
         const loginUser = await login(userData)
         console.log(loginUser)
@@ -69,5 +71,23 @@ export const createUserSlice = (set, get) => ({
                 change: true
             }))
         }
-    }
+    },
+
+    // user profile
+    fetchCurrentUser: async () => {
+        const { token } = get().user;
+        if (token) {
+            try {
+                const userData = await getUserData(token);
+                if (userData) {
+                    set(() => ({
+                        userDetail: { ...userData }
+                    }));
+                    localStorage.setItem('userDetail', JSON.stringify(get().userDetail));
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        }
+    },
 })
