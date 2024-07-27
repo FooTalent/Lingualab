@@ -12,26 +12,31 @@ export default function InputForm({ inputName, register, errors, getInputConfig 
         setShowPassword(prevState => !prevState);
     };
     const isPasswordInput = inputName === 'password' || inputName === 'rPassword'
+    const { label, type, placeholder, validations, messageError } = getInputConfig(inputName);
+
     const validationRules = {
         required: 'Campo obligatorio',
         pattern: {
-            value: getInputConfig(inputName).validations,
-            message: getInputConfig(inputName).messageError,
+            value: validations,
+            message: messageError,
         }
     };
     if (inputName === 'rPassword') {
-        validationRules.validate = getInputConfig(inputName).validations.validate;
+        validationRules.validate = validations.validate;
     }
 
     return (
         <div key={inputName} className="flex flex-col">
-            <label>{getInputConfig(inputName).label}</label>
+            <label>{label}</label>
             <div className='relative w-full'>
-                {inputName === 'email' ? <MailIcon className='icons' /> : isPasswordInput ? <VpnKeyIcon className='icons' /> : <PersonIcon className='icons' />}
+                {inputName === 'email' ?
+                    <MailIcon className='icons' /> :
+                    isPasswordInput ? <VpnKeyIcon className='icons' /> :
+                        <PersonIcon className='icons' />}
                 <input
                     id={inputName}
-                    placeholder={getInputConfig(inputName).placeholder}
-                    type={isPasswordInput ? showPassword ? 'text' : 'password' : getInputConfig(inputName).type}
+                    placeholder={placeholder}
+                    type={isPasswordInput ? showPassword ? 'text' : 'password' : type}
                     {...register(inputName, validationRules)}
                 />
                 {isPasswordInput &&

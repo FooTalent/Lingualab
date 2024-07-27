@@ -9,7 +9,9 @@ export default function NewPassword() {
         password: '',
         rPassword: '',
     }
-    const { register, handleSubmit, formState: { errors }, reset, watch } = useForm({ defaultValues: initialValues })
+    const { register, handleSubmit, formState: { errors }, reset, watch } = useForm({
+        defaultValues: initialValues, mode: 'onChange', reValidateMode: 'onChange'
+    })
 
     const currentUrl = window.location.href
     const parsedUrl = new URL(currentUrl);
@@ -66,11 +68,13 @@ export default function NewPassword() {
         reset()
     }
     return (
-
         <>
+            <p className="text-2xl font-[500] text-black">
+                Restablece tu contraseña
+            </p>
             <form
                 onSubmit={handleSubmit(handlePassword)}
-                className="space-y-2"
+                className="formUser"
                 noValidate
             >
                 <InputList

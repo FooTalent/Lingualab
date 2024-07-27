@@ -16,7 +16,9 @@ export default function Register() {
         role: true,
     };
 
-    const { register, handleSubmit, formState: { errors }, reset } = useForm({ defaultValues: initialValues });
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({
+        defaultValues: initialValues, mode: 'onChange', reValidateMode: 'onChange'
+    });
 
     const handleForm = async (formData) => {
         await userRegister(formData);
@@ -88,7 +90,7 @@ export default function Register() {
 
             <form
                 onSubmit={handleSubmit(handleForm)}
-                className="flex flex-col md:gap-[8px] md:w-[404px]"
+                className="formUser"
                 noValidate
             >
                 <InputList
