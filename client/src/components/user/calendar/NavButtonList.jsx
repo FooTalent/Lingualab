@@ -3,8 +3,8 @@ import NavButton from './NavButton'
 
 export default function NavButtonList({ onNavigate, onView, label, view }) {
     const navButtons = [
-        { label: 'Anterior', action: () => onNavigate('PREV') },
-        { label: 'Siguiente', action: () => onNavigate('NEXT') },
+        { label: 'Anterior', action: () => onNavigate('PREV', false) },
+        { label: 'Siguiente', action: () => onNavigate('NEXT', false) },
         { label: 'Día', action: () => onView('day') },
         { label: 'Semana', action: () => onView('week') },
         { label: 'Mes', action: () => onView('month') },
