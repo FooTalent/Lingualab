@@ -7,6 +7,8 @@ export const createUserSlice = (set, get) => ({
     change: false,
     userLogin: async (userData) => {
         const loginUser = await login(userData)
+        console.log(loginUser)
+
         if (loginUser.isError === false) {
             set(() => ({
                 status: true,

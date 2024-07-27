@@ -1,7 +1,8 @@
-import { getClasses, register } from "../services";
+import { getClasses, getUserData } from "../services";
 
 export const createClassSlice = (set) => ({
     classes: [],
+    userData: {},
     fetchClasses: async (idTeacher) => {
         const teacherClasses = await getClasses(idTeacher)
         if (!teacherClasses.isError) {

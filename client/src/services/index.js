@@ -36,3 +36,8 @@ export const newPass = async (password, token) => {
     const newPassword = await axios.put(`${url}api/users/userrecovery`, data, auth)
     return newPassword.data
 }
+
+export const getUserData = async () => {
+    const userData = await axios.get(`${url}api/users/current`)
+    return userData.data
+}

@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import ClassList from '../../components/user/classes/ClassList'
-import UserCalendar from '../../components/user/calendar/UserCalendar'
+import UserCalendar from '../../components/user/calendarEX/UserCalendar'
 import { useAppStore } from "../../store/useAppStore";
 import SearchIcon from '@mui/icons-material/Search';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 
 export default function DashboardCalendar() {
-    // const { fetchClasses, classes } = useAppStore()
+    const { fetchClasses, getUserData } = useAppStore()
+    const [classes, setClasses] = useState([''])
     const user = JSON.parse(localStorage.getItem('user'))
-    const classes = ['', '', '', '']
 
-    useEffect(() => {
-        // fetchClasses(user.token)
-        console.log(classes)
-    }, [])
+    // useEffect(() => {
+    //     const newClasses = fetchClasses()
+    //     setClasses(newClasses)
+    // }, [])
 
 
     return (
