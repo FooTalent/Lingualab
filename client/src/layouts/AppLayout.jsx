@@ -7,9 +7,9 @@ import NavBar from '../components/NavBar'
 
 export default function AppLayout() {
     const navigate = useNavigate()
-    const { user, status, localLogin, userDetail, fetchCurrentUser } = useAppStore()
+    const { status, localLogin, fetchCurrentUser } = useAppStore()
 
-    useEffect( async () => {
+    useEffect( () => {
         const initialize = async () => {
             if (!status) {
                 await localLogin();
@@ -22,8 +22,6 @@ export default function AppLayout() {
         };
         initialize();
     }, [status]);
-    
-    console.log("userDetail: ",userDetail);
     
     return (
         <>

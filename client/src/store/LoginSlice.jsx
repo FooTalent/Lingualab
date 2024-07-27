@@ -75,12 +75,16 @@ export const createUserSlice = (set, get) => ({
     fetchCurrentUser: async () => {
         const { token } = get().user;
         if (token) {
-            const userData = await getUserData(token);
-            if (userData) {
-                set(() => ({
-                    userDetail: {...userData}
-                }));
-                localStorage.setItem('userDetail', JSON.stringify(get().user));
+            try {
+                const userData = await getUserData(token);
+                if (userData) {
+                    set(() => ({
+                        userDetail: { ...userData }
+                    }));
+                    localStorage.setItem('userDetail', JSON.stringify(get().userDetail));
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
             }
         }
     },
