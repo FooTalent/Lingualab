@@ -1,7 +1,11 @@
 import React from 'react'
 
-export default function NavButton({ label }) {
+export default function NavButton({ label, onClick }) {
     return (
-        <button onClick={() => onNavigate('PREV')}>{label}</button>
+        <button
+            onClick={onClick}
+        >
+            {label}
+        </button>
     )
 }
