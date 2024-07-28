@@ -7,7 +7,7 @@ export default class Controller extends CustomController {
     super(new Service);this.requieredfield = ["title", "level", "language", "teacher"]
   }
 
-    create = async (req, res, next) => {
+  create = async (req, res, next) => {
     try {
       const newElement = validateFields(req.body, this.requieredfield);
       const { description, duration_hours, idClassroom} = req.body

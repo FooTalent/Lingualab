@@ -70,6 +70,22 @@ export const fetchClassRoomById = async (token, classroomId) => {
   }
 };
 
+export const updateClassroom = async (data, token, classroomId) => {
+  try {
+    const response = await axios.put(`${url}api/classroom/${classroomId}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      console.error('Acceso no autorizado - talvez token invalido');
+    }
+    throw error;
+  }
+}
+
 // CLASS DETAIL ----------------------------------------------------------------
 
 export const createClassDetail = async (data, token) => {
