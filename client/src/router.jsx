@@ -6,6 +6,7 @@ import Home from './views/Home'
 import Register from './views/auth/Register'
 import ForgotPassword from './views/auth/ForgotPassword'
 import NewPassword from './views/auth/NewPassword'
+import Recursos from './views/Recursos'
 
 export default function Router() {
     return (
@@ -13,6 +14,7 @@ export default function Router() {
             <Routes>
                 <Route element={<AppLayout />}>
                     <Route path='/' element={<Home />} index />
+                    <Route path='/recursos' element={<Recursos />} />
                 </Route>
 
                 <Route element={<AuthLayout />}>
