@@ -1,18 +1,15 @@
 //Componente Perfil
 import { useState } from 'react';
-import { MenuItem, InputLabel, FormControl } from '@mui/material';
 import EmailIcon from '@mui/icons-material/Email';
 import PublicIcon from '@mui/icons-material/Public';
 import PhoneIcon from '@mui/icons-material/Phone';
-import BadgeIcon from '@mui/icons-material/Badge';
-import CreditCardIcon from '@mui/icons-material/CreditCard';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import SchoolIcon from '@mui/icons-material/School';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import Select from 'react-select';
 import countryList from 'country-list';
 import countryCodes from 'country-codes-list';
+import PropTypes from 'prop-types';
 
 const Profile = () => {
   const countries = countryList.getData();
@@ -25,7 +22,7 @@ const Profile = () => {
   }));
 
   return (
-    <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden relative">
+    <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden relative" style={{ marginTop: '50px' }}>
       <div className="flex justify-center mt-6">
         <img
           className="w-48 h-48 rounded-full"
@@ -42,7 +39,8 @@ const Profile = () => {
       </div>
       <div className="px-6 py-4 flex justify-center">
         <textarea
-          className="shadow appearance-none border rounded w-[600px] h-[120px] py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none text-left"
+          className="shadow appearance-none border rounded w-[600px] h-[120px] py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none"
+          style={{ textAlign: 'left' }}
           id="about"
           placeholder="Acerca de mí..."
         />
@@ -86,7 +84,8 @@ const Dropdown = ({ title, countryOptions, countryPhoneOptions }) => {
               <span className="font-bold">Email</span>
             </div>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-1 text-left"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-1"
+              style={{ textAlign: 'left' }}  // Asegura que el texto esté alineado a la izquierda
               type="email"
               placeholder="Email"
             />
@@ -110,7 +109,8 @@ const Dropdown = ({ title, countryOptions, countryPhoneOptions }) => {
                 placeholder="Código"
               />
               <input
-                className="shadow appearance-none border rounded w-2/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ml-2 text-left"
+                className="shadow appearance-none border rounded w-2/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ml-2"
+                style={{ textAlign: 'left' }}  // Asegura que el texto esté alineado a la izquierda
                 type="tel"
                 placeholder="Teléfono"
               />
@@ -126,7 +126,8 @@ const Dropdown = ({ title, countryOptions, countryPhoneOptions }) => {
             {educationLinks.map((link, index) => (
               <input
                 key={index}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-1 text-left"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-1"
+                style={{ textAlign: 'left' }}  // Asegura que el texto esté alineado a la izquierda
                 type="text"
                 placeholder="Agregar link"
               />
@@ -145,7 +146,8 @@ const Dropdown = ({ title, countryOptions, countryPhoneOptions }) => {
             {certificateLinks.map((link, index) => (
               <input
                 key={index}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-1 text-left"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-1"
+                style={{ textAlign: 'left' }}  // Asegura que el texto esté alineado a la izquierda
                 type="text"
                 placeholder="Agregar link"
               />
@@ -164,8 +166,21 @@ const Dropdown = ({ title, countryOptions, countryPhoneOptions }) => {
   );
 };
 
+// Define las validaciones de las props
+Dropdown.propTypes = {
+  title: PropTypes.string.isRequired,
+  countryOptions: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  countryPhoneOptions: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ),
+};
+
 export default Profile;
-
-
-
-
