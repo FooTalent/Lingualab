@@ -3,7 +3,8 @@ import { Link, useLocation } from "react-router-dom"
 const NavBar = () => {
     const { pathname } = useLocation()
     const navPages = [
-        { text: "Aula Virtual", to: "/" },
+        { text: "Home", to: "/" },
+        { text: "Aula Virtual", to: "/aulavirtual" },
         { text: "Calendario", to: "/calendario" },
         { text: "Recursos", to: "/recursos" },
     ]

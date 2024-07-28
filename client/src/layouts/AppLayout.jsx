@@ -7,19 +7,22 @@ import NavBar from '../components/NavBar'
 
 export default function AppLayout() {
     const navigate = useNavigate()
-    const { status, localLogin } = useAppStore()
-    useEffect(() => {
-        if (!status) {
-            const checkLoginStatus = async () => {
-                await localLogin();
-            };
-            checkLoginStatus();
-        }
-        if (!status) {
-            navigate('/auth/login')
-        }
-    }, [status]);
+    const { status, localLogin, fetchCurrentUser } = useAppStore()
 
+    useEffect( () => {
+        const initialize = async () => {
+            if (!status) {
+                await localLogin();
+            }
+            if (!status) {
+                navigate('/auth/login');
+            } else {
+                await fetchCurrentUser();
+            }
+        };
+        initialize();
+    }, [status]);
+    
     return (
         <>
             <div className='min-h-screen'>
