@@ -87,7 +87,7 @@ export default function CreateResourceForm() {
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                             placeholder="Escribe el nombre del recurso..."
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
                             required
                         />
                     </div>
@@ -118,7 +118,7 @@ export default function CreateResourceForm() {
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
                             placeholder="https://..."
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
                             required
                         />
                     </div>
@@ -129,7 +129,7 @@ export default function CreateResourceForm() {
                             id="description"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
                         />
                     </div>
 
