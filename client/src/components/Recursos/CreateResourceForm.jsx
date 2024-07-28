@@ -42,7 +42,7 @@ export default function CreateResourceForm() {
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4 flex flex-row justify-between">
                         <div className="w-full mr-2">
-                            <label htmlFor="level" className="block text-gray-700 font-bold mb-2">Nivel</label>
+                            <label htmlFor="level" className="block text-gray-700 font-bold mb-2">Nivel:</label>
                             <select
                                 id="level"
                                 value={level}
@@ -57,7 +57,7 @@ export default function CreateResourceForm() {
                             </select>
                         </div>
                         <div className="w-full">
-                            <label htmlFor="type" className="block text-gray-700 font-bold mb-2">Recurso</label>
+                            <label htmlFor="type" className="block text-gray-700 font-bold mb-2">Recurso:</label>
                             <select
                                 id="type"
                                 value={type}
@@ -149,20 +149,6 @@ export default function CreateResourceForm() {
                         </button>
                     </div>
                 </form>
-                {/* <h2>Crea un nuevo recurso</h2>
-                <form action="" className="">
-                <label htmlFor="level">Nivel</label>
-                <select name="level">
-                    <option value="" disabled>Elegir nivel</option>
-                    <option value="A1-A2">Básico: A1 - A2</option>
-                    <option value="B1-B2">Intermedio: B1 - B2</option>
-                    <option value="C1-C2">Avanzado: C1 - C2</option>
-                </select>
-                <label htmlFor="type">Recurso</label>
-                <select name="type">
-    
-                </select>
-                </form> */}
             </div>
         </div>
     )
