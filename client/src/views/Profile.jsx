@@ -1,59 +1,54 @@
 //Componente Perfil
+import { useState } from 'react';
 import { MenuItem, InputLabel, FormControl } from '@mui/material';
 import EmailIcon from '@mui/icons-material/Email';
 import PublicIcon from '@mui/icons-material/Public';
 import PhoneIcon from '@mui/icons-material/Phone';
-import BadgeIcon from '@mui/icons-material/Badge'; // Para el icono de Alias
-import CreditCardIcon from '@mui/icons-material/CreditCard'; // Para el icono de CBU
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance'; // Para el icono de Banco
+import BadgeIcon from '@mui/icons-material/Badge';
+import CreditCardIcon from '@mui/icons-material/CreditCard';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import SchoolIcon from '@mui/icons-material/School';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
 import Select from 'react-select';
 import countryList from 'country-list';
 import countryCodes from 'country-codes-list';
 
-
 const Profile = () => {
-  // Obtener la lista de países
   const countries = countryList.getData();
   const countryOptions = countries.map(country => ({ value: country.code, label: country.name }));
 
-  // Obtener la lista de códigos de país
   const countryPhoneCodes = countryCodes.customList('countryCode', '{countryCallingCode}');
   const countryPhoneOptions = Object.keys(countryPhoneCodes).map(code => ({
     value: countryPhoneCodes[code],
     label: `${countryPhoneCodes[code]}`
   }));
 
-  // Lista de bancos para el desplegable
-  const banks = ["Banco A", "Banco B", "Banco C"]; // Reemplazar con nombres reales
-  const bankOptions = banks.map(bank => ({ value: bank, label: bank }));
-
   return (
-    <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden relative">
       <div className="flex justify-center mt-6">
         <img
-          className="w-24 h-24 rounded-full"
+          className="w-48 h-48 rounded-full"
+          style={{ borderRadius: '50%' }}
           src="https://thumbs.dreamstime.com/b/retrato-de-alegre-y-hermosa-ropa-ojos-mujer-con-aspecto-complaciente-lleva-su%C3%A9ter-casual-gris-modelos-en-estudio-contra-fondo-183224846.jpg"
           alt="Patricia López"
         />
       </div>
-      <div className="text-center mt-2">
-        <h2 className="text-lg font-semibold">Patricia López</h2>
-        <p className="text-gray-600">Profesora: Inglés</p>
+      <div className="text-center mt-4">
+        <h2 className="text-lg font-semibold">Patricia López, Profesora: Inglés</h2>
+        <button className="bg-purple-500 text-white rounded-full p-2 absolute top-2 right-2">
+          <EditIcon />
+        </button>
       </div>
-      <div className="px-6 py-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="about">
-          Acerca de mi...
-        </label>
-        <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      <div className="px-6 py-4 flex justify-center">
+        <textarea
+          className="shadow appearance-none border rounded w-[600px] h-[120px] py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none text-left"
           id="about"
-          type="text"
-          placeholder="Acerca de mi..."
+          placeholder="Acerca de mí..."
         />
       </div>
-      <div className="px-6 pb-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="px-6 pb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
         <Dropdown title="Datos personales" countryOptions={countryOptions} countryPhoneOptions={countryPhoneOptions} />
-        <Dropdown title="Datos bancarios" bankOptions={bankOptions} />
         <Dropdown title="Formación" />
       </div>
       <div className="px-6 py-4 flex justify-center">
@@ -65,28 +60,39 @@ const Profile = () => {
   );
 };
 
-const Dropdown = ({ title, countryOptions, countryPhoneOptions, bankOptions }) => {
+const Dropdown = ({ title, countryOptions, countryPhoneOptions }) => {
+  const [educationLinks, setEducationLinks] = useState([]);
+  const [certificateLinks, setCertificateLinks] = useState([]);
+
+  const addEducationLink = () => {
+    setEducationLinks([...educationLinks, '']);
+  };
+
+  const addCertificateLink = () => {
+    setCertificateLinks([...certificateLinks, '']);
+  };
+
   return (
     <details className="mb-4">
       <summary className="bg-yellow-400 text-black font-semibold py-2 px-4 rounded cursor-pointer flex justify-between items-center">
         <span>{title}</span>
-        <span className="ml-2">&#9660;</span> {/* Flecha hacia abajo */}
+        <span className="ml-2">&#9660;</span>
       </summary>
       <div className="mt-2 ml-4 text-gray-600">
         {title === "Datos personales" && (
           <div>
             <div className="flex items-center mt-2">
               <EmailIcon className="mr-2" />
-              <span>Email</span>
+              <span className="font-bold">Email</span>
             </div>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-1"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-1 text-left"
               type="email"
               placeholder="Email"
             />
             <div className="flex items-center mt-4">
               <PublicIcon className="mr-2" />
-              <span>País</span>
+              <span className="font-bold">País</span>
             </div>
             <Select
               className="w-full mt-1"
@@ -95,7 +101,7 @@ const Dropdown = ({ title, countryOptions, countryPhoneOptions, bankOptions }) =
             />
             <div className="flex items-center mt-4">
               <PhoneIcon className="mr-2" />
-              <span>Teléfono</span>
+              <span className="font-bold">Teléfono</span>
             </div>
             <div className="flex mt-1">
               <Select
@@ -104,48 +110,62 @@ const Dropdown = ({ title, countryOptions, countryPhoneOptions, bankOptions }) =
                 placeholder="Código"
               />
               <input
-                className="shadow appearance-none border rounded w-2/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ml-2"
+                className="shadow appearance-none border rounded w-2/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ml-2 text-left"
                 type="tel"
                 placeholder="Teléfono"
               />
             </div>
           </div>
         )}
-        {title === "Datos bancarios" && (
+        {title === "Formación" && (
           <div>
             <div className="flex items-center mt-2">
-              <BadgeIcon className="mr-2" />
-              <span>Alias</span>
+              <SchoolIcon className="mr-2" />
+              <span className="font-bold">Estudios</span>
             </div>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-1"
-              type="text"
-              placeholder="Nombre del Alias"
-            />
+            {educationLinks.map((link, index) => (
+              <input
+                key={index}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-1 text-left"
+                type="text"
+                placeholder="Agregar link"
+              />
+            ))}
+            <button
+              className="flex items-center mt-2 text-blue-500"
+              onClick={addEducationLink}
+            >
+              <AddIcon className="mr-1" />
+              <span>Agregar link</span>
+            </button>
             <div className="flex items-center mt-4">
-              <CreditCardIcon className="mr-2" />
-              <span>CBU</span>
+              <SchoolIcon className="mr-2" />
+              <span className="font-bold">Certificados</span>
             </div>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-1"
-              type="text"
-              placeholder="CBU"
-            />
-            <div className="flex items-center mt-4">
-              <AccountBalanceIcon className="mr-2" />
-              <span>Banco</span>
-            </div>
-            <Select
-              className="w-full mt-1"
-              options={bankOptions}
-              placeholder="Seleccione un banco"
-            />
+            {certificateLinks.map((link, index) => (
+              <input
+                key={index}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-1 text-left"
+                type="text"
+                placeholder="Agregar link"
+              />
+            ))}
+            <button
+              className="flex items-center mt-2 text-blue-500"
+              onClick={addCertificateLink}
+            >
+              <AddIcon className="mr-1" />
+              <span>Agregar link</span>
+            </button>
           </div>
         )}
-        {/* Puedes agregar contenido similar para los otros desplegables si es necesario */}
       </div>
     </details>
   );
 };
 
 export default Profile;
+
+
+
+
