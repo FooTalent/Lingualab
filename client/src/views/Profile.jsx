@@ -51,7 +51,7 @@ const Profile = () => {
       </div>
       <div className="px-6 py-4 flex justify-center">
         <button className="bg-purple-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-          Guardar
+          Confirmar edición
         </button>
       </div>
     </div>
@@ -85,7 +85,7 @@ const Dropdown = ({ title, countryOptions, countryPhoneOptions }) => {
             </div>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-1"
-              style={{ textAlign: 'left' }}  // Asegura que el texto esté alineado a la izquierda
+              style={{ textAlign: 'left' }} 
               type="email"
               placeholder="Email"
             />
@@ -110,7 +110,7 @@ const Dropdown = ({ title, countryOptions, countryPhoneOptions }) => {
               />
               <input
                 className="shadow appearance-none border rounded w-2/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ml-2"
-                style={{ textAlign: 'left' }}  // Asegura que el texto esté alineado a la izquierda
+                style={{ textAlign: 'left' }}  
                 type="tel"
                 placeholder="Teléfono"
               />
@@ -127,7 +127,7 @@ const Dropdown = ({ title, countryOptions, countryPhoneOptions }) => {
               <input
                 key={index}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-1"
-                style={{ textAlign: 'left' }}  // Asegura que el texto esté alineado a la izquierda
+                style={{ textAlign: 'left' }}  
                 type="text"
                 placeholder="Agregar link"
               />
@@ -147,7 +147,7 @@ const Dropdown = ({ title, countryOptions, countryPhoneOptions }) => {
               <input
                 key={index}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-1"
-                style={{ textAlign: 'left' }}  // Asegura que el texto esté alineado a la izquierda
+                style={{ textAlign: 'left' }}  
                 type="text"
                 placeholder="Agregar link"
               />
