@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Options from './Options'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import VideocamIcon from '@mui/icons-material/Videocam';
@@ -14,10 +13,10 @@ export default function ClassCard({ title, level, students, resources, date }) {
     }
 
     return (
-        <div className='relative border rounded-xl shadow-cardContainer p-4 flex justify-between flex-nowrap w-full text-card'>
+        <div className='relative border hover:border-Purple rounded-xl shadow-cardContainer p-4 flex justify-between flex-nowrap w-full text-card'>
             <div className='flex flex-col gap-4 w-7/12'>
                 <h2 className='font-bold text-lg'>{title} Programa 1</h2>
-                <h4 className='font-semibold text-base'>{title} Programa 1</h4>
+                <h3 className='font-semibold text-base'>{title} Programa 1</h3>
 
                 <div className='flex flex-col gap-2 text-sm'>
                     <p className='flex items-center gap-2 text-ellipsis'><AccountCircleIcon /> {students}</p>

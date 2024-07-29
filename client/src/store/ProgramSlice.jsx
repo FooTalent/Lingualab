@@ -1,10 +1,9 @@
-import { getClasses, getUserData } from "../services";
+import { fetchClassRoomById } from "../services/programs.services";
 
-export const createClassSlice = (set) => ({
+export const createProgramSlice = (set) => ({
     classes: [],
-    userData: {},
-    fetchClasses: async (idTeacher) => {
-        const teacherClasses = await getClasses(idTeacher)
+    fetchClasses: async (token, classroomId) => {
+        const teacherClasses = await fetchClassRoomById(token, classroomId)
         if (!teacherClasses.isError) {
             set(() => ({
                 classes: teacherClasses.data
