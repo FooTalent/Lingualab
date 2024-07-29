@@ -10,6 +10,7 @@ import Profile from './views/Profile'
 import VirtualClasstoom from './views/VirtualClassroom/VirtualClassroom'
 import ProgramDetail from './views/Programs/ProgramDetail'
 import ClassRoomDetail from './views/ClassRoom/ClassRoomDetail'
+import Recursos from './views/Resources/Recursos'
 
 export default function Router() {
     return (
@@ -20,6 +21,7 @@ export default function Router() {
                     <Route path='/aulavirtual' element={<VirtualClasstoom />} />
                     <Route path='/programas/:eid' element={<ProgramDetail />} />
                     <Route path='/classroom/:eid' element={<ClassRoomDetail />} />
+                    <Route path='/recursos' element={<Recursos />} />
                     <Route path='/profile' element={<Profile />}  />
                 </Route>
 

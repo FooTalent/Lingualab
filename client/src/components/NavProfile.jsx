@@ -2,6 +2,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState } from 'react';
 import { useAppStore } from '../store/useAppStore';
+import { Link } from 'react-router-dom';
 
 const NavProfile = () => {
     const { loguot } = useAppStore()
@@ -28,12 +29,12 @@ const NavProfile = () => {
                     <div className='absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg'>
                         <ul className='py-1'>
                             <li>
-                                <button
-                                    onClick={handleMenuClose}
+                                <Link
+                                    to='/profile'
                                     className='buttonNavProf'
                                 >
                                     Perfil
-                                </button>
+                                </Link>
                             </li>
                             <li>
                                 <button
