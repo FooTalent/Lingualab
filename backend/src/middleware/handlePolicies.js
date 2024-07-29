@@ -10,7 +10,7 @@ export const handleAuth = (policies) => {
     passport.authenticate('jwt', {session: false}, async function (err, user, info) {
       if (err) next(err)
       if (user) {
-        const newuser = await usersService.getBy({_id: user.id})
+        const newuser = await usersService.getBy({_id: user._id})
         req.user = newuser
       }
       if(policies[0] === 'PUBLIC') return next();

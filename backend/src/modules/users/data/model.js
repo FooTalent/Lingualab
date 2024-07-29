@@ -15,13 +15,18 @@ const reviewSchema = new Schema({
   score:       { type: Number, required: true,   min: 1, max: 10, },
 }, { _id: false });
 
+const educationSchema = new Schema({
+  title:       { type: String,},
+  link:        { type: String,},
+}, { _id: false });
+
 const thisSchema = new Schema({
   email:       { type: String,   required: true, match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Debe completar un email valido'], unique: true },
   password:    { type: String,   required: true },
   role:        { type: String,   default: "Teacher", enum: ROLES,},
   photo:       { type: String,   }, // TODO falta MULTER
-  first_name:  { type: String,   required: true },
-  last_name:   { type: String,   required: true, },
+  first_name:  { type: String,   required: true, maxLength: 50 },
+  last_name:   { type: String,   required: true, maxLength: 50 },
   birthday:    { type: Date,     },
   gender:      { type: String,   enum: GENDERS,},
   presentation:{ type: String,   },
@@ -29,9 +34,16 @@ const thisSchema = new Schema({
                   { type: String, enum: LANGUAGES, }],},
   country:     { type: [String], },
   time_zone:   { type: Number,   },
-  phone:       { type: String,   },
+  phone:       { type: String, maxLength: 20   },
+  studies:     { type: [educationSchema], },
+  certificate: { type: [educationSchema], },
   
   reviews:     { type: [reviewSchema], },
+
+  // google
+  google_id:   { type: String,   },
+  googleAccessToken: { type: String },
+  googleRefreshToken: { type: String },
 
   // only teacher
   price_per_hour: { type: Number,},
