@@ -1,10 +1,10 @@
 import { useState } from "react"
-import { postResource } from "../../services/resources"
+import { postResource } from "../../services/resources.services"
 import { Toast } from "../../utils/toast"
 import { LEVELS_MAP, RESOURCE_TYPES, LANGUAGES } from "../../utils/valueLists"
 
 
-export default function CreateResourceForm() {
+export default function CreateResourceForm({onSubmit, onCancel}) {
     const [level, setLevel] = useState('')
     const [type, setType] = useState('')
     const [title, setTitle] = useState('')
@@ -16,7 +16,7 @@ export default function CreateResourceForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const newResource = await postResource({
+        onSubmit({
             title,
             type,
             level,
@@ -24,22 +24,10 @@ export default function CreateResourceForm() {
             url,
             description
         })
-        if (newResource.isError === false) {
-            Toast.fire({
-                title: "Recurso agregado",
-                icon: "success"
-            })
-        } else {
-            Toast.fire({
-                title: `${newResource.message}`,
-                icon: "error"
-            })
-        }
-
     }
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="fixed inset-0 flex items-center justify-center min-h-screen bg-black bg-opacity-40">
             <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl">
                 <h2 className="text-2xl font-bold mb-4">Crea un nuevo Recurso</h2>
                 <form onSubmit={handleSubmit}>
@@ -137,7 +125,7 @@ export default function CreateResourceForm() {
                     <div className="flex justify-between">
                         <button
                             type="button"
-                            onClick={() => console.log('Cancelar')}
+                            onClick={onCancel}
                             className="px-4 py-2 border border-Purple text-Purple  rounded-md hover:bg-purple-100"
                         >
                             Cancelar
