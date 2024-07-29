@@ -119,3 +119,19 @@ export const fetchClassDetailList= async (token, teacherId) => {
     throw error;
   }
 };
+
+export const updateClassdetail = async (data, token, classdetailId) => {
+  try {
+    const response = await axios.put(`${url}api/classdetail/${classdetailId}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      console.error('Acceso no autorizado - talvez token invalido');
+    }
+    throw error;
+  }
+}

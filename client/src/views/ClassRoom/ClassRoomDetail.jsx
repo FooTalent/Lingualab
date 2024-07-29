@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { useAppStore } from '../../store/useAppStore';
-import { createClassDetail, fetchClassDetailList, fetchClassRoomById, updateClassroom } from '../../services/programs.services';
+import { createClassDetail, fetchClassDetailList, fetchClassRoomById, updateClassdetail, updateClassroom } from '../../services/programs.services';
 import { LEVELS_MAP } from '../../utils/valueLists';
+import ClassDetailList from './ClassDetailList';
+import CreateClassDetailForm from './CreateClassDetailForm';
+import TextEditor from '../../components/TextEditor/TextEditor';
 
 const ClassRoomDetail = () => {
   const { eid } = useParams();
@@ -23,6 +26,8 @@ const ClassRoomDetail = () => {
     description: '',
     duration_hours: 0,
   });
+
+  const [richText, setRichText] = useState('');
 
   // carga Classroom
   useEffect(() => {
@@ -45,8 +50,8 @@ const ClassRoomDetail = () => {
       setLoading(false);
     }
   }, [eid, refresh, user]);
-
-  // Carga classdetail (desde classroom) SE PODRIA ELIMINAR SI NO HACE FALTA
+  console.log(classRoom);
+  // Carga classdetail (desde classroom)
   useEffect(() => {
     if (classRoom) {
       setClassDetail(classRoom?.class_detail);
@@ -58,6 +63,10 @@ const ClassRoomDetail = () => {
         description: '',
         duration_hours: classRoom.duration_hours,
       })
+      console.log(classRoom.class_detail?.content);
+      if (classRoom.class_detail?.content) {
+        setRichText(classRoom.class_detail.content);
+      }
     }
   }, [classRoom?.class_detail, userDetail, refresh]);
 
@@ -120,6 +129,19 @@ const ClassRoomDetail = () => {
     }
   };
   
+  const handleSaveChanges = async () => {
+    try {
+      setLoading(true);
+      console.log(richText);
+      await updateClassdetail({content: richText}, user.token, classRoom.class_detail._id);
+    } catch (error) {
+      console.error('Error updating class detail', error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+      setRefresh(!refresh);
+    }
+  };
 
   if (loading) return <p className="text-center">Cargando datos...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
@@ -137,70 +159,30 @@ const ClassRoomDetail = () => {
       </div>
       <p>{classRoom?.description}</p>
       <hr className="my-4" />    
-      {classDetail ? (
+      {!classDetail ? (
+        <div>
+          <h2 className="text-2xl font-semibold mb-2">Seleccionar o crear una nueva clase</h2>
+          <ClassDetailList
+            classDetailList={classDetailList}
+            selectedClassDetail={selectedClassDetail}
+            setSelectedClassDetail={setSelectedClassDetail}
+            handleAssignClassDetail={handleAssignClassDetail}
+          />
+          <CreateClassDetailForm
+            newClassDetail={newClassDetail}
+            setNewClassDetail={setNewClassDetail}
+            handleCreateClassDetail={handleCreateClassDetail}
+          />
+        </div>
+      ) : (
         <div>
           <h2 className="text-2xl font-semibold mb-2">Detalles de la clase</h2>
           <p><strong>Título:</strong> {classDetail.title}</p>
           <p><strong>Descripción:</strong> {classDetail.description}</p>
-          <p className="text-yellow-500 mt-4">* Aún se deben agregar elementos a la clase detalle.</p>
-        </div>
-      ) : (
-        <div>
-          <h2 className="text-2xl font-semibold mb-2">Seleccionar o crear una nueva clase</h2>
-          <div className="mb-4">
-            <label htmlFor="classDetailSelect" className="block mb-2">Seleccionar una clase existente</label>
-            <select
-              id="classDetailSelect"
-              value={selectedClassDetail}
-              onChange={(e) => setSelectedClassDetail(e.target.value)}
-              className="form-select w-full px-3 py-2 border border-gray-300 rounded-md"
-            >
-              <option value="">Seleccionar una clase existente</option>
-              {classDetailList.map(detail => (
-                <option key={detail._id} value={detail._id}>{detail.title}</option>
-              ))}
-            </select>
-            <button onClick={handleAssignClassDetail} className="bg-blue-500 text-white px-4 py-2 rounded-md mt-2">Asignar clase</button>
-          </div>
           <div>
-            <h3 className="text-xl font-semibold mb-2">Crear nueva clase</h3>
-            <input
-              type="text"
-              placeholder="Título"
-              value={newClassDetail.title}
-              onChange={(e) => setNewClassDetail({ ...newClassDetail, title: e.target.value })}
-              className="form-input w-full px-3 py-2 border border-gray-300 rounded-md mb-2"
-            />
-            <input
-              type="text"
-              placeholder="Nivel"
-              value={newClassDetail.level}
-              onChange={(e) => setNewClassDetail({ ...newClassDetail, level: e.target.value })}
-              className="form-input w-full px-3 py-2 border border-gray-300 rounded-md mb-2"
-              disabled
-            />
-            <input
-              type="text"
-              placeholder="Idioma"
-              value={newClassDetail.language}
-              onChange={(e) => setNewClassDetail({ ...newClassDetail, language: e.target.value })}
-              className="form-input w-full px-3 py-2 border border-gray-300 rounded-md mb-2"
-              disabled
-            />
-            <textarea
-              placeholder="Descripción"
-              value={newClassDetail.description}
-              onChange={(e) => setNewClassDetail({ ...newClassDetail, description: e.target.value })}
-              className="form-textarea w-full px-3 py-2 border border-gray-300 rounded-md mb-2"
-            />
-            <input
-              type="number"
-              placeholder="Duración (horas)"
-              value={newClassDetail.duration_hours}
-              onChange={(e) => setNewClassDetail({ ...newClassDetail, duration_hours: e.target.value })}
-              className="form-input w-full px-3 py-2 border border-gray-300 rounded-md mb-2"
-            />
-            <button onClick={handleCreateClassDetail} className="bg-green-500 text-white px-4 py-2 rounded-md mt-2">Crear clase</button>
+            <h3 className="text-xl font-semibold mb-2">Agregar detalles adicionales</h3>
+            <TextEditor value={richText} onChange={setRichText} />
+            <button onClick={handleSaveChanges} className="bg-green-500 text-white px-4 py-2 rounded-md mt-2">Guardar cambios</button>
           </div>
         </div>
       )}
