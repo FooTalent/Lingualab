@@ -147,4 +147,12 @@ export default class Controller extends CustomController {
     // const result = await insertEvent(newEvent);
     // res.sendSuccess(result.event, result.message);
   }
+
+  //STUDIANTES
+  getStudent = async (req, res, next) => {
+    const {tid} = req.params
+
+    const element = await this.service.get({role: 'Student'});
+    res.sendSuccessOrNotFound(element);
+  }
 }

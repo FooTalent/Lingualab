@@ -22,7 +22,9 @@ router
 .post   ('/uploadphoto',  
         handleAuth(users), 
         uploader('profiles', 5, ['image/jpeg', 'image/png']).single('photo'),
-        catchAsync(controller.uploadPhoto))
+        catchAsync(controller.uploadPhoto)),
+router
+.get    ('/students/:tid', handleAuth(clients), controller.getStudent)
 
 export default router
 
