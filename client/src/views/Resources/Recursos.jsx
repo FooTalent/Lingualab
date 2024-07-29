@@ -20,7 +20,7 @@ export default function Recursos() {
       }
       getResources()
     }
-  }, [refreshCards])
+  }, [user, refreshCards])
 
   const handleCreateResource = async () => {
     setModalStatus(true)
