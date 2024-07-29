@@ -1,32 +1,29 @@
 import React from 'react'
 import NavButton from './NavButton'
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-export default function NavButtonList({ onNavigate, onView, label, view }) {
+export default function NavButtonList({ onNavigate, onView, today, view }) {
     const navButtons = [
-        { label: 'Anterior', action: () => onNavigate('PREV', false) },
-        { label: 'Siguiente', action: () => onNavigate('NEXT', false) },
-        { label: 'Día', action: () => onView('day') },
-        { label: 'Semana', action: () => onView('week') },
-        { label: 'Mes', action: () => onView('month') },
+        { label: <ArrowBackIosIcon fontSize='medium' />, action: () => onNavigate('PREV', view), },
+        { label: <ArrowForwardIosIcon fontSize='medium' />, action: () => onNavigate('NEXT', view), },
+        { label: 'Día', action: () => onView('day'), },
+        { label: 'Semana', action: () => onView('week'), },
+        { label: 'Mes', action: () => onView('month'), },
     ]
-    const adaptedLabel = (label.label).toUpperCase()
 
     return (
-        <div className="flex justify-between items-center">
-            <div className='flex gap-3 items-center'>
-                {
-                    navButtons.slice(0, 2).map((item, index) => (
-                        <NavButton key={index} label={item.label} onClick={item.action} />
-                    ))
-                }
+        <div className="flex justify-between items-center mb-6">
+            <div className='flex items-center gap-2'>
+                <NavButton label={navButtons[0].label} onClick={navButtons[0].action} icon={navButtons[0].icon} />
+                <span className='font-medium text-xl'>{today}</span>
+                <NavButton label={navButtons[1].label} onClick={navButtons[1].action} icon={navButtons[1].icon} />
             </div>
 
-            {view === 'day' ? adaptedLabel : ''}
-
-            <div className='flex gap-3 items-center'>
+            <div className='flex items-center'>
                 {
                     navButtons.slice(2).map((item, index) => (
-                        <NavButton key={index} label={item.label} onClick={item.action} />
+                        <NavButton key={index} label={item.label} onClick={item.action} icon={item.icon} />
                     ))
                 }
             </div>

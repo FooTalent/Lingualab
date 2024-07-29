@@ -4,6 +4,8 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import NavButtonList from '../../components/user/calendar/NavButtonList';
 import EventWrapper from '../../components/user/calendar/EventWrapper';
 import Modal from '../../components/user/calendar/Modal';
+import DateCellWrapper from '../../components/user/calendar/DateCellWrapper';
+import Month from '../../components/user/calendar/Month';
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
 
@@ -13,7 +15,11 @@ const localizer = dayjsLocalizer(dayjs);
 export default function Calendario() {
     const [view, setView] = useState('month')
     const [date, setDate] = useState(new Date())
-    const [events, setEvents] = useState([{ title: 'Prueba', start: new Date(), end: new Date() }])
+    const [events, setEvents] = useState([
+        { title: 'A1-A2 Raul. M', start: new Date(), end: new Date() },
+        { title: 'B1-B2 Maria. P', start: new Date(), end: new Date() },
+        { title: 'C1-C2 Fernando. C', start: new Date(), end: new Date() }
+    ])
     const [open, setOpen] = useState(false)
     const now = dayjs()
 
@@ -24,16 +30,11 @@ export default function Calendario() {
             .join(' ')
     }
 
-    const handleNavigate = (action, condition) => {
-        let newDate
-        !condition
-            ? newDate = action === 'PREV' ? dayjs(date).subtract(1, view).toDate()
-                : action === 'NEXT' ? dayjs(date).add(1, view).toDate()
-                    : new Date()
+    const handleNavigate = (action, view) => {
+        const newDate = action === 'PREV' ? dayjs(date).subtract(1, view).toDate()
+            : action === 'NEXT' ? dayjs(date).add(1, view).toDate()
+                : new Date()
 
-            : newDate = action === 'PREV' ? dayjs(date).subtract(1, 'day').toDate()
-                : action === 'NEXT' ? dayjs(date).add(1, 'day').toDate()
-                    : new Date()
 
         setDate(newDate)
     }
@@ -42,13 +43,17 @@ export default function Calendario() {
         setView(newView)
     }
 
+    // Formato días de la semana
     const formats = {
         dayFormat: (date, culture, localizer) => {
             const day = localizer.format(date, 'dd', culture).toUpperCase();
             const dateNum = localizer.format(date, 'D', culture);
             return `${day} ${dateNum}`;
         },
-        weekdayFormat: (date, culture, localizer) => localizer.format(date, 'ddd', culture).toUpperCase().slice(0, 2)
+        weekdayFormat: (date, culture, localizer) => {
+            const formattedDate = localizer.format(date, 'ddd', culture)
+            return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1).slice(0, 2)
+        }
     }
 
     const handleSelectSlot = (e) => {
@@ -58,11 +63,13 @@ export default function Calendario() {
 
     return (
         <>
-            <main className='relative py-8 px-10'>
-                <span className='absolute top-0 right-6'>{handleDate(now)}</span>
+            <main className='flex flex-col gap-5 px-10'>
+                <span className='text-sm self-end'>{handleDate(now)}</span>
 
                 <Calendar
                     localizer={localizer}
+                    date={date}
+                    onNavigate={handleNavigate}
                     events={events}
                     formats={formats}
                     selectable={true}
@@ -72,15 +79,17 @@ export default function Calendario() {
                     onSelectSlot={handleSelectSlot}
                     className='min-h-screen cursor-pointer'
                     components={{
-                        toolbar: (label) => (
+                        toolbar: () => (
                             <NavButtonList
                                 onNavigate={handleNavigate}
                                 onView={handleView}
-                                label={label}
+                                today={handleDate(dayjs(date), true)}
                                 view={view}
                             />
                         ),
                         eventWrapper: EventWrapper,
+                        dateCellWrapper: DateCellWrapper,
+                        header: Month,
                     }}
                 />
             </main>

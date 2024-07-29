@@ -23,20 +23,28 @@ export default function Modal({ open, setOpen, onNavigate, label }) {
   if (!open) return null
 
   return (
-    <div className='fixed z-10 inset-0 flex items-center justify-center'>
+    <div className='fixed z-10 inset-0 flex items-center justify-center py-5'>
       <div className='absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm'></div>
-      <div className='bg-white w-1/4 h-3/4 z-10'>
-        <button onClick={handleOpen}><CloseIcon /></button>
-        <div>
-          <button className='cursor-pointer' onClick={() => onNavigate('PREV', true)}>
-            <KeyboardArrowLeftIcon />
+      <div className='p-6 bg-white rounded-2xl w-4/12 h-full z-10'>
+        <div className='flex flex-col gap-4 px-4'>
+          <button
+            onClick={handleOpen}
+            className='self-end text-Purple'
+          >
+            <CloseIcon fontWeight={'bold'} fontSize='medium'/>
           </button>
-          {label}
-          <button className='cursor-pointer' onClick={() => onNavigate('NEXT', true)}>
-            <KeyboardArrowRightIcon />
-          </button>        </div>
-        <h3>Mis clases hoy</h3>
-        <div>
+          <div className='flex justify-between items-center text-xl'>
+            <button className='cursor-pointer' onClick={() => onNavigate('PREV', 'day')}>
+              <KeyboardArrowLeftIcon fontSize='large' className='text-Purple' />
+            </button>
+            {label}
+            <button className='cursor-pointer' onClick={() => onNavigate('NEXT', 'day')}>
+              <KeyboardArrowRightIcon fontSize='large' className='text-Purple' />
+            </button>        </div>
+          <h3 className='text-xl font-medium'>Mis clases hoy</h3>
+        </div>
+
+        <div className='p-4 flex flex-col gap-6'>
           <ClassList dayClases={classes} />
         </div>
       </div>
