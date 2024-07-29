@@ -10,7 +10,7 @@ import Profile from './views/Profile'
 import VirtualClasstoom from './views/VirtualClassroom/VirtualClassroom'
 import ProgramDetail from './views/Programs/ProgramDetail'
 import ClassRoomDetail from './views/ClassRoom/ClassRoomDetail'
-import Recursos from './views/Recursos'
+import Recursos from './views/Resources/Recursos'
 
 export default function Router() {
     return (

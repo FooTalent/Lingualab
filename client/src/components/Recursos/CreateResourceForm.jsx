@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { postResource } from "../../services/resources"
 import { Toast } from "../../utils/toast"
+import { LEVELS_MAP, RESOURCE_TYPES, LANGUAGES } from "../../utils/valueLists"
 
 
 export default function CreateResourceForm() {
@@ -10,6 +11,8 @@ export default function CreateResourceForm() {
     const [url, setUrl] = useState('')
     const [description, setDescription] = useState('')
     const [language, setLanguage] = useState('')
+
+    const levelsArr = Object.keys(LEVELS_MAP)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -47,13 +50,15 @@ export default function CreateResourceForm() {
                                 id="level"
                                 value={level}
                                 onChange={(e) => setLevel(e.target.value)}
-                                className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-indigo-500"
+                                className="block w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-indigo-500"
                                 required
-                            >
+                            >   
                                 <option value="" disabled>Elegir nivel</option>
-                                <option value="A1-A2">Básico: A1-A2</option>
-                                <option value="B1-B2">Intermedio: B1-B2</option>
-                                <option value="C1-C2">Avanzado: C1-C2</option>
+                                {
+                                    levelsArr.map((lvl, i) => (
+                                        <option key={i} value={lvl}>{lvl}</option>
+                                    ))
+                                }
                             </select>
                         </div>
                         <div className="w-full">
@@ -62,19 +67,15 @@ export default function CreateResourceForm() {
                                 id="type"
                                 value={type}
                                 onChange={(e) => setType(e.target.value)}
-                                className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-indigo-500"
+                                className="block w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-indigo-500"
                                 required
                             >
                                 <option value="" disabled>Elegir la categoría del recurso</option>
-                                <option value="Juego">Juego</option>
-                                <option value="Canción">Canción</option>
-                                <option value="Serie">Serie</option>
-                                <option value="Película">Película</option>
-                                <option value="Diccionario">Diccionario</option>
-                                <option value="Libro">Libro</option>
-                                <option value="Audio Libro">Audiolibro</option>
-                                <option value="Ejercicio">Ejercicio</option>
-                                <option value="Examen">Examen</option>
+                                {
+                                    RESOURCE_TYPES.map((lvl, i) => (
+                                        <option key={i} value={lvl}>{lvl}</option>
+                                    ))
+                                }
                             </select>
                         </div>
                     </div>
@@ -87,7 +88,7 @@ export default function CreateResourceForm() {
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                             placeholder="Escribe el nombre del recurso..."
-                            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                            className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
                             required
                         />
                     </div>
@@ -98,15 +99,15 @@ export default function CreateResourceForm() {
                             id="language"
                             value={language}
                             onChange={(e) => setLanguage(e.target.value)}
-                            className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-indigo-500"
+                            className="block w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-indigo-500"
                             required
                         >
                             <option value="" disabled>Elegir el idioma del recurso</option>
-                            <option value="Inglés">Inglés</option>
-                            <option value="Español">Español</option>
-                            <option value="Francés">Francés</option>
-                            <option value="Alemán">Alemán</option>
-                            <option value="Chino">Chino</option>
+                            {
+                                LANGUAGES.map((lvl, i) => (
+                                    <option key={i} value={lvl}>{lvl}</option>
+                                ))
+                            }
                         </select>
                     </div>
 
@@ -118,7 +119,7 @@ export default function CreateResourceForm() {
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
                             placeholder="https://..."
-                            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                            className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
                             required
                         />
                     </div>
@@ -129,7 +130,7 @@ export default function CreateResourceForm() {
                             id="description"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                            className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
                         />
                     </div>
 
