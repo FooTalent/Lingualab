@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { useAppStore } from '../../store/useAppStore';
-import { createClassDetail, fetchClassDetailList, fetchClassRoomById, updateClassroom } from '../../services/programs.services';
+import { createClassDetail, fetchClassDetailList, fetchClassRoomById, updateClassdetail, updateClassroom } from '../../services/programs.services';
 import { LEVELS_MAP } from '../../utils/valueLists';
 import ClassDetailList from './ClassDetailList';
 import CreateClassDetailForm from './CreateClassDetailForm';
-import TextEditor from '../../components/TextEditor';
+import TextEditor from '../../components/TextEditor/TextEditor';
 
 const ClassRoomDetail = () => {
   const { eid } = useParams();
@@ -50,7 +50,7 @@ const ClassRoomDetail = () => {
       setLoading(false);
     }
   }, [eid, refresh, user]);
-
+  console.log(classRoom);
   // Carga classdetail (desde classroom)
   useEffect(() => {
     if (classRoom) {
@@ -63,6 +63,10 @@ const ClassRoomDetail = () => {
         description: '',
         duration_hours: classRoom.duration_hours,
       })
+      console.log(classRoom.class_detail?.content);
+      if (classRoom.class_detail?.content) {
+        setRichText(classRoom.class_detail.content);
+      }
     }
   }, [classRoom?.class_detail, userDetail, refresh]);
 
@@ -128,9 +132,8 @@ const ClassRoomDetail = () => {
   const handleSaveChanges = async () => {
     try {
       setLoading(true);
-      const updatedClassDetail = { ...classDetail, content: richText };
-      console.log(updatedClassDetail);
-      //await updateClassroom({ class_detail: updatedClassDetail }, user.token, classRoom._id);
+      console.log(richText);
+      await updateClassdetail({content: richText}, user.token, classRoom.class_detail._id);
     } catch (error) {
       console.error('Error updating class detail', error);
       setError(error.message);
@@ -177,7 +180,7 @@ const ClassRoomDetail = () => {
           <p><strong>Título:</strong> {classDetail.title}</p>
           <p><strong>Descripción:</strong> {classDetail.description}</p>
           <div>
-            <h3 className="text-xl font-semibold mb-2">Desarrolla en contenido de tu clase:</h3>
+            <h3 className="text-xl font-semibold mb-2">Agregar detalles adicionales</h3>
             <TextEditor value={richText} onChange={setRichText} />
             <button onClick={handleSaveChanges} className="bg-green-500 text-white px-4 py-2 rounded-md mt-2">Guardar cambios</button>
           </div>

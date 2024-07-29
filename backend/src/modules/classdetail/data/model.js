@@ -11,6 +11,7 @@ const thisSchema = new Schema({
   resources:      [{
     resource:       { type: Schema.Types.ObjectId,  ref: 'Resources',  required: true, }
   }],
+  content:        { type: String, },
 
   // data of conection
   created:     { type: Date,   default: Date.now,  immutable: true, },
