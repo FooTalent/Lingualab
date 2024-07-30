@@ -166,7 +166,6 @@ const Dropdown = ({ title, countryOptions, countryPhoneOptions }) => {
   );
 };
 
-// Define las validaciones de las props
 Dropdown.propTypes = {
   title: PropTypes.string.isRequired,
   countryOptions: PropTypes.arrayOf(
