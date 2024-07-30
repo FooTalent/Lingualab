@@ -11,7 +11,7 @@ import VirtualClasstoom from './views/VirtualClassroom/VirtualClassroom'
 import ProgramDetail from './views/Programs/ProgramDetail'
 import ClassRoomDetail from './views/ClassRoom/ClassRoomDetail'
 import Recursos from './views/Resources/Recursos'
-import Calendario from './views/user/Calendario'
+import Calendario from './views/User/Calendario'
 
 export default function Router() {
     return (

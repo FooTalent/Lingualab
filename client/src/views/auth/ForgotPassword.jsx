@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form"
 import { useAppStore } from "../../store/useAppStore"
 import { Link } from "react-router-dom"
-import InputList from '../../components/form/InputList'
+import InputList from '../../components/Form/InputList'
 
 const ForgotPassword = () => {
     const { forgotPassword } = useAppStore()

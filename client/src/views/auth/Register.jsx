@@ -2,7 +2,7 @@ import React from 'react';
 import { useAppStore } from '../../store/useAppStore';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import InputList from '../../components/form/InputList'
+import InputList from '../../components/Form/InputList'
 
 export default function Register() {
     const navigate = useNavigate();
