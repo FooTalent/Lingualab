@@ -2,7 +2,7 @@ export default class DaoMongo {
   constructor(model) {
     this.model = model;
   }
-
+  
   get         = async (filter = {})           => await this.model.find(filter)
   getBy       = async (filter)                => await this.model.findOne(filter)
   getPaginate = async (filter, options)       => await this.model.paginate(filter, options);
