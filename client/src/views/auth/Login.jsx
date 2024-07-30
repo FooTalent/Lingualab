@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useAppStore } from "../../store/useAppStore";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import InputList from "../../components/Form/InputList";
+import InputList from "../../components/form/InputList";
 import { googleLoginUser } from "../../services";
 
 

@@ -18,7 +18,7 @@ export default function SwitchRegister({ inputName, register }) {
               htmlFor={role}
               className={`md:w-[186px] w-[140px] rounded-lg text-center bg-white peer-checked:bg-Purple text-Purple font-semibold peer-checked:text-white py-3 border border-Purple peer-checked:border-transparent transition-all duration-700 ease-in-out`}
             >
-              {role === 'Teacher' ? 'Profesor' : 'Estudiante'}
+              {role === 'Teacher' ? 'Teacher' : 'Student'}
             </label>
           </div>
         ))

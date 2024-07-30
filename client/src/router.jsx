@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import AuthLayout from './layouts/AuthLayout'
 import Login from './views/auth/Login'
 import AppLayout from './layouts/AppLayout'
@@ -11,6 +11,7 @@ import VirtualClasstoom from './views/VirtualClassroom/VirtualClassroom'
 import ProgramDetail from './views/Programs/ProgramDetail'
 import ClassRoomDetail from './views/ClassRoom/ClassRoomDetail'
 import Recursos from './views/Resources/Recursos'
+import Calendario from './views/user/Calendario'
 
 export default function Router() {
     return (
@@ -23,6 +24,7 @@ export default function Router() {
                     <Route path='/classroom/:eid' element={<ClassRoomDetail />} />
                     <Route path='/recursos' element={<Recursos />} />
                     <Route path='/profile' element={<Profile />}  />
+                    <Route path='/calendario' element={<Calendario />} />
                 </Route>
 
                 <Route element={<AuthLayout />}>
