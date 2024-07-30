@@ -11,6 +11,7 @@ import VirtualClasstoom from './views/VirtualClassroom/VirtualClassroom'
 import ProgramDetail from './views/Programs/ProgramDetail'
 import ClassRoomDetail from './views/ClassRoom/ClassRoomDetail'
 import Recursos from './views/Resources/Recursos'
+import ViewStudent from './views/ViewStudent'
 
 export default function Router() {
     return (
@@ -23,6 +24,7 @@ export default function Router() {
                     <Route path='/classroom/:eid' element={<ClassRoomDetail />} />
                     <Route path='/recursos' element={<Recursos />} />
                     <Route path='/profile' element={<Profile />}  />
+                    <Route path='/viewStudent' element={<ViewStudent />}  />
                 </Route>
 
                 <Route element={<AuthLayout />}>
