@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Calendar, dayjsLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import NavButtonList from '../../components/user/calendar/NavButtonList';
@@ -16,9 +16,9 @@ export default function Calendario() {
     const [view, setView] = useState('month')
     const [date, setDate] = useState(new Date())
     const [events, setEvents] = useState([
-        { title: 'A1-A2 Raul. M', start: new Date(), end: new Date() },
-        { title: 'B1-B2 Maria. P', start: new Date(), end: new Date() },
-        { title: 'C1-C2 Fernando. C', start: new Date(), end: new Date() }
+        { title: 'Raul. M', level: 'A1-A2', start: new Date(), end: new Date() },
+        { title: ' Maria. P', level: 'B1-B2', start: new Date(), end: new Date() },
+        { title: ' Fernando. C', level: 'C1-C2', start: new Date(), end: new Date() }
     ])
     const [open, setOpen] = useState(false)
     const now = dayjs()
@@ -34,7 +34,6 @@ export default function Calendario() {
         const newDate = action === 'PREV' ? dayjs(date).subtract(1, view).toDate()
             : action === 'NEXT' ? dayjs(date).add(1, view).toDate()
                 : new Date()
-
 
         setDate(newDate)
     }
@@ -57,8 +56,8 @@ export default function Calendario() {
     }
 
     const handleSelectSlot = (e) => {
+        setDate(dayjs(e.start).toDate());
         setOpen(true);
-        setDate(e.start);
     };
 
     return (
@@ -89,7 +88,14 @@ export default function Calendario() {
                         ),
                         eventWrapper: EventWrapper,
                         dateCellWrapper: DateCellWrapper,
-                        header: Month,
+                        month: {
+                            header: ({ label }) => {
+                                const formattedDate = dayjs(date).format('ddd').charAt(0).toUpperCase() + dayjs(date).format('ddd').slice(1, 3);
+                                return (
+                                    <Month label={label} date={formattedDate} />
+                                )
+                            },
+                        },
                     }}
                 />
             </main>

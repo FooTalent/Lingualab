@@ -9,7 +9,7 @@ export default function Modal({ open, setOpen, onNavigate, label }) {
   const { user, classes, fetchClasses } = useAppStore();
 
   useEffect(() => {
-    fetchClasses(user.token, )
+    // fetchClasses(user.token, )
   }, [])
 
   useEffect(() => {
