@@ -24,7 +24,7 @@ export default class Controller extends CustomController {
         $lte: endDateUTC
       }
     }
-    if ( isTemplate ) filter.isTemplate = isTemplate
+    isTemplate ? filter.isTemplate = isTemplate : filter.isTemplate = false
     
     const elements = await this.service.get(filter)
     res.sendSuccessOrNotFound(elements)

@@ -12,7 +12,7 @@ export default class Controller extends CustomController {
       const filter = {}
 
       const { isTemplate } = req.query
-      if ( isTemplate ) filter.isTemplate = isTemplate
+      isTemplate ? filter.isTemplate = isTemplate : filter.isTemplate = false
 
       const element = await this.service.get(filter);
       res.sendSuccessOrNotFound(element);

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const url = import.meta.env.VITE_BACKEND_URL
 
-// PROGRMAS ----------------------------------------------------------------
+// PROGRAMS               ( programs  --> pasar query: isTemplate = true) ----------------------------------------------------------------
 
 export const fetchPrograms = async (token) => {
   try {
@@ -36,7 +36,7 @@ export const fetchProgramById = async (token, programId) => {
   }
 };
 
-// CLASS ROOM ----------------------------------------------------------------
+// PROGRANS CLASS         ( class     --> pasar query: isTemplate = true) ----------------------------------------------------------------
 
 export const createClassroom = async (data, token) => {
   try {
@@ -86,7 +86,7 @@ export const updateClassroom = async (data, token, classroomId) => {
   }
 }
 
-// CLASS DETAIL ----------------------------------------------------------------
+// CLASS DETAIL ------------ESTO SE ROMPIO, NO EXISTE MAS----------------------------------------------------
 
 export const createClassDetail = async (data, token) => {
   try {
@@ -135,3 +135,7 @@ export const updateClassdetail = async (data, token, classdetailId) => {
     throw error;
   }
 }
+
+// VIRTUALROOMS O CALENDAR
+// PROGRAMS  ( programs  --> x defecto --> isTemplate = false)----------------------------------------------------------------
+// CLASS     ( class     --> x defecto --> isTemplate = false) ----------------------------------------------------------------
