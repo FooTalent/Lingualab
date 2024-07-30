@@ -21,7 +21,7 @@ export default function Router() {
                     <Route path='/aulavirtual' element={<VirtualClasstoom />} />
                     <Route path='/programas/:eid' element={<ProgramDetail />} />
                     <Route path='/classroom/:eid' element={<ClassRoomDetail />} />
-                    <Route path='/resources' element={<Resources />} />
+                    <Route path='/recursos' element={<Resources />} />
                     <Route path='/profile' element={<Profile />}  />
                 </Route>
 
