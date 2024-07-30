@@ -42,10 +42,12 @@ export const createUserSlice = (set, get) => ({
     localLogin: () => {
         const storeLogin = localStorage.getItem('status')
         const userLogin = localStorage.getItem('user')
+        const userInfo = localStorage.getItem('userDetail')
         if (storeLogin) {
             set({
                 status: JSON.parse(storeLogin),
-                user: JSON.parse(userLogin)
+                user: JSON.parse(userLogin),
+                userDetail: JSON.parse(userInfo)
             })
         }
     },
