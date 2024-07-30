@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
 import { useAppStore } from "../../store/useAppStore"
 import { deleteResource, fetchResources, postResource } from "../../services/resources.services"
-import CreateResourceForm from "../../components/Recursos/CreateResourceForm";
-import ResourceCard from "../../components/Recursos/ResourceCard"
+import CreateResourceForm from "../../components/Resources/CreateResourceForm";
+import ResourceCard from "../../components/Resources/ResourceCard"
 import { Toast } from "../../utils/toast";
 
-export default function Recursos() {
+export default function Resources() {
 
   const [resources, setResources] = useState([])
   const [refreshCards, setRefreshCards] = useState(true)
