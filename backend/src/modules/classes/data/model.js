@@ -1,7 +1,7 @@
 import { Schema, model} from 'mongoose';
 import { LANGUAGES, LEVELS } from '../../valueList.js'
 
-const thisSchema = new Schema({
+const classSchema = new Schema({
   // basic properties
   title:          { type: String, required: true },
   description:    { type: String, },
@@ -10,6 +10,7 @@ const thisSchema = new Schema({
   program:        { type: Schema.Types.ObjectId, ref: 'programs', required: true,},
   resources:      [{ type: Schema.Types.ObjectId,  ref: 'resources', }],
   teacher:        { type: Schema.Types.ObjectId, ref: 'Users', required: true },
+  isTemplate:     { type: Boolean, default: true },
 
   // TODO aditional properties (en duda si va)
   language:       { type: String, enum: LANGUAGES, required: true },
@@ -38,6 +39,6 @@ classSchema.post('save', async function(doc, next) {
   next();
 });
 
-const dataModel = model('classes', thisSchema)
+const dataModel = model('classes', classSchema)
 
 export default dataModel

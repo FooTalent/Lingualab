@@ -8,7 +8,7 @@ export default class Controller extends CustomController {
     this.requieredfield = ["title", "level", "language", "teacher", "program"]
   }
   get    = async (req, res) => {
-    const {tid, date} = req.query
+    const {tid, date, isTemplate} = req.query
     const filter = {}
 
     if (tid) filter.teacher = tid
@@ -24,6 +24,8 @@ export default class Controller extends CustomController {
         $lte: endDateUTC
       }
     }
+    if ( isTemplate ) filter.isTemplate = isTemplate
+    
     const elements = await this.service.get(filter)
     res.sendSuccessOrNotFound(elements)
   }
@@ -31,8 +33,8 @@ export default class Controller extends CustomController {
   create = async (req, res, next) => {
     try {
       const newElement = validateFields(req.body, this.requieredfield);
-      const { description, duration_hours, daytime} = req.body
-      const element = await this.service.create({...newElement, description, duration_hours, daytime});
+      const { description, duration_hours, daytime, isTemplate} = req.body
+      const element = await this.service.create({...newElement, description, duration_hours, daytime, isTemplate});
       res.sendSuccess(element)
     } catch (error) {
       next(error)
