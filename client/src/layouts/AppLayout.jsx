@@ -12,16 +12,15 @@ export default function AppLayout() {
 
     useEffect(() => {
         const initialize = async () => {
-            if (!status) {
-                await localLogin();
-                await fetchCurrentUser();
-            }
-            if (!status) {
-                navigate('/auth/login');
-            }
+            await localLogin();
+            await fetchCurrentUser();
         };
         initialize();
     }, [status]);
+
+    if (!status) {
+        navigate('/auth/login');
+    }
 
     return (
         <>
