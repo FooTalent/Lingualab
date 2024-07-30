@@ -37,7 +37,6 @@ export const fetchProgramById = async (token, programId) => {
 };
 
 // CLASS ROOM ----------------------------------------------------------------
-
 export const createClassroom = async (data, token) => {
   try {
     const response = await axios.post(`${url}api/classroom`, data, {

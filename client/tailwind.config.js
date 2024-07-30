@@ -18,6 +18,9 @@ export default {
         BorderGrey: '#EFF0F6',
         card: '#444',
         yellowInput: '#FFDC00',
+        a1a2: '#25CFB7',
+        b1b2: '#3A9FB6',
+        c1c2: '#3C5A99',
       },
       backgroundImage:{
         'fondo': "url('/fondoLogin.jpg')"
