@@ -9,7 +9,7 @@ export default function ResourceCard({resource, deleteFunc}) {
         <article className="flex max-w-3xl border shadow-md p-4 mb-4 bg-white rounded-lg ">
             <div className="flex-1">
                 <div className="flex items-center mb-2">
-                    <span className="text-white text-sm font-bold py-1 px-2 rounded" style={{backgroundColor: LEVELS_MAP[resource.level]}}>{resource.level}</span>
+                    <span className="text-white text-sm py-1 px-2 rounded" style={{backgroundColor: LEVELS_MAP[resource.level]}}>{resource.level}</span>
                     <h2 className="ml-4 text-lg font-semibold text-gray-800">{resource.title}</h2>
                 </div>
                 <div>
