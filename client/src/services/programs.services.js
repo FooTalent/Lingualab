@@ -2,7 +2,9 @@ import axios from 'axios';
 
 const url = import.meta.env.VITE_BACKEND_URL
 
-// PROGRAMS               ( programs  --> pasar query: isTemplate = true) ----------------------------------------------------------------
+// --------------- DISEÑO DE CLASES ---------------------------
+// ------------------------------------------------------------
+// PROGRAMS ( programs  --> pasar query: isTemplate = true) ----------------------------------------------------------------
 
 export const fetchPrograms = async (token) => {
   try {
@@ -36,7 +38,7 @@ export const fetchProgramById = async (token, programId) => {
   }
 };
 
-// PROGRANS CLASS         ( class     --> pasar query: isTemplate = true) ----------------------------------------------------------------
+// PROGRANS CLASS  ( class     --> pasar query: isTemplate = true) ----------------------------------------------------------------
 
 export const createClassroom = async (data, token) => {
   try {
@@ -86,7 +88,7 @@ export const updateClassroom = async (data, token, classroomId) => {
   }
 }
 
-// CLASS DETAIL ------------ESTO SE ROMPIO, NO EXISTE MAS----------------------------------------------------
+// TODO CLASS DETAIL ------------ESTO SE ROMPIO, NO EXISTE MAS----------------------------------------------------
 
 export const createClassDetail = async (data, token) => {
   try {
@@ -136,6 +138,7 @@ export const updateClassdetail = async (data, token, classdetailId) => {
   }
 }
 
-// VIRTUALROOMS O CALENDAR
-// PROGRAMS  ( programs  --> x defecto --> isTemplate = false)----------------------------------------------------------------
+// --------------- AULA VIRTUAL o CALENDARIO ------------------
+// ------------------------------------------------------------
+// PROGRAMS  ( programs  --> x defecto --> isTemplate = false) ----------------------------------------------------------------
 // CLASS     ( class     --> x defecto --> isTemplate = false) ----------------------------------------------------------------
