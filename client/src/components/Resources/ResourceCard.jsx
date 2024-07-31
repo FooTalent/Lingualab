@@ -6,11 +6,11 @@ export default function ResourceCard({resource, deleteFunc}) {
     const {_id} = resource
 
     return (
-        <article className="flex max-w-3xl border shadow-md p-4 mb-4 bg-white rounded-lg ">
-            <div className="flex-1">
+        <article className="flex w-full border shadow-md px-8 py-6 min-h-16 bg-white rounded-lg ">
+            <div className="flex flex-col gap-4 w-full">
                 <div className="flex items-center mb-2">
-                    <span className="text-white text-sm py-1 px-2 rounded" style={{backgroundColor: LEVELS_MAP[resource.level]}}>{resource.level}</span>
-                    <h2 className="ml-4 text-lg font-semibold text-gray-800">{resource.title}</h2>
+                    <span className="text-white text-sm py-2 px-4 rounded" style={{backgroundColor: LEVELS_MAP[resource.level]}}>{resource.level}</span>
+                    <h2 className="ml-4 text-xl font-semibold text-[#444]">{resource.title}</h2>
                 </div>
                 <div>
                     <p className="text-sm text-gray-600">
@@ -20,12 +20,17 @@ export default function ResourceCard({resource, deleteFunc}) {
                     </p>
                 </div>
             </div>
-            <div className="flex items-center space-x-2">
-                <button onClick={() => deleteFunc(_id)} className="text-gray-500 hover:text-red-500">
-                    <svg width="26px" height="26px" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M12.663 1.5h-1.326c-1.069 0-1.49.09-1.921.27-.432.181-.792.453-1.084.82-.292.365-.493.746-.784 1.774L7.368 5H5a1 1 0 0 0 0 2h.563l.703 11.25c.082 1.32.123 1.98.407 2.481a2.5 2.5 0 0 0 1.083 1.017C8.273 22 8.935 22 10.258 22h3.484c1.323 0 1.985 0 2.502-.252a2.5 2.5 0 0 0 1.083-1.017c.284-.5.325-1.16.407-2.482L18.437 7H19a1 1 0 1 0 0-2h-2.367l-.18-.636c-.292-1.028-.493-1.409-.785-1.775a2.694 2.694 0 0 0-1.084-.819c-.431-.18-.852-.27-1.92-.27zm1.89 3.5-.025-.09c-.203-.717-.29-.905-.424-1.074a.696.696 0 0 0-.292-.221c-.2-.084-.404-.115-1.149-.115h-1.326c-.745 0-.95.031-1.149.115a.696.696 0 0 0-.292.221c-.135.169-.221.357-.424 1.074L9.446 5h5.108zM9.61 8.506a.75.75 0 0 0-.724.776l.297 8.495a.75.75 0 0 0 1.499-.053l-.297-8.494a.75.75 0 0 0-.775-.724zm4.008.724a.75.75 0 0 1 1.499.052l-.297 8.495a.75.75 0 0 1-1.499-.053l.297-8.494z" fill="currentColor"/></svg>
+            <div className="flex items-center gap-6 px-2 justify-center p-1">
+                <button onClick={() => deleteFunc(_id)} className="text-gray-500 hover:text-red-500 flex items-center">
+                    <svg  width="15px" viewBox="0 0 18 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.25 3H13.5V2.25C13.5 1.65326 13.2629 1.08097 12.841 0.65901C12.419 0.237053 11.8467 0 11.25 0H6.75C6.15326 0 5.58097 0.237053 5.15901 0.65901C4.73705 1.08097 4.5 1.65326 4.5 2.25V3H0.75C0.551088 3 0.360322 3.07902 0.21967 3.21967C0.0790178 3.36032 0 3.55109 0 3.75C0 3.94891 0.0790178 4.13968 0.21967 4.28033C0.360322 4.42098 0.551088 4.5 0.75 4.5H1.5V18C1.5 18.3978 1.65804 18.7794 1.93934 19.0607C2.22064 19.342 2.60218 19.5 3 19.5H15C15.3978 19.5 15.7794 19.342 16.0607 19.0607C16.342 18.7794 16.5 18.3978 16.5 18V4.5H17.25C17.4489 4.5 17.6397 4.42098 17.7803 4.28033C17.921 4.13968 18 3.94891 18 3.75C18 3.55109 17.921 3.36032 17.7803 3.21967C17.6397 3.07902 17.4489 3 17.25 3ZM7.5 14.25C7.5 14.4489 7.42098 14.6397 7.28033 14.7803C7.13968 14.921 6.94891 15 6.75 15C6.55109 15 6.36032 14.921 6.21967 14.7803C6.07902 14.6397 6 14.4489 6 14.25V8.25C6 8.05109 6.07902 7.86032 6.21967 7.71967C6.36032 7.57902 6.55109 7.5 6.75 7.5C6.94891 7.5 7.13968 7.57902 7.28033 7.71967C7.42098 7.86032 7.5 8.05109 7.5 8.25V14.25ZM12 14.25C12 14.4489 11.921 14.6397 11.7803 14.7803C11.6397 14.921 11.4489 15 11.25 15C11.0511 15 10.8603 14.921 10.7197 14.7803C10.579 14.6397 10.5 14.4489 10.5 14.25V8.25C10.5 8.05109 10.579 7.86032 10.7197 7.71967C10.8603 7.57902 11.0511 7.5 11.25 7.5C11.4489 7.5 11.6397 7.57902 11.7803 7.71967C11.921 7.86032 12 8.05109 12 8.25V14.25ZM12 3H6V2.25C6 2.05109 6.07902 1.86032 6.21967 1.71967C6.36032 1.57902 6.55109 1.5 6.75 1.5H11.25C11.4489 1.5 11.6397 1.57902 11.7803 1.71967C11.921 1.86032 12 2.05109 12 2.25V3Z" fill="#444444"/>
+                    </svg>
                 </button>
-                <button className="text-gray-500 hover:text-blue-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 24 24" fill="currentColor"><path d="M7.127 22.562l-7.127 1.438 1.438-7.128 5.689 5.69zm1.414-1.414l11.228-11.225-5.69-5.692-11.227 11.227 5.689 5.69zm9.768-21.148l-2.816 2.817 5.691 5.691 2.816-2.819-5.691-5.689z"/></svg>
+                <button className="text-gray-500 hover:text-blue-500 flex items-center p-1">
+                    <svg width="20px" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.71 4.54006C18.1 4.15006 18.1 3.50006 17.71 3.13006L15.37 0.790059C15 0.400059 14.35 0.400059 13.96 0.790059L12.12 2.62006L15.87 6.37006M0 14.7501V18.5001H3.75L14.81 7.43006L11.06 3.68006L0 14.7501Z" fill="#444444"/>
+                    </svg>
+
                 </button>
             </div>
         </article>

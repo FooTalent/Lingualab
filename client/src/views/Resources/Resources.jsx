@@ -97,7 +97,7 @@ export default function Resources() {
             <button type="submit" className="rounded-lg py-3 px-4 text-white bg-Purple">Buscar</button>
           </form>
         </div>
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col w-full gap-6">
           {
             resources.map((resource, i) => (
               <ResourceCard resource={resource} key={i} deleteFunc={handleDelete} />
