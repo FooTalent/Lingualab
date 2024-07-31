@@ -2,7 +2,7 @@ import { useState } from "react"
 
 export default function CategoryFilter({onClick, resource}) {
 
-  const [isSelected, setIsSelected] = useState('false')
+  const [isSelected, setIsSelected] = useState(false)
 
   const handleFilter = () => {
     onClick()
@@ -14,7 +14,7 @@ export default function CategoryFilter({onClick, resource}) {
         onClick={handleFilter}
         className={
         `flex items-center rounded-lg py-3 px-6 border 
-        ${isSelected ? 'bg-white text-[#444444] border-[#444444]' : 'bg-Purple text-white border-transparent'}`
+        ${isSelected ?  'bg-Purple text-white border-transparent' : 'bg-white text-[#444444] border-[#444444]'}`
     }>
       {resource}
     </button>

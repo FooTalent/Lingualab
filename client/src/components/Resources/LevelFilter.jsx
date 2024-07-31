@@ -2,7 +2,7 @@ import { useState } from "react"
 
 export default function LevelFilter({data}) {
 
-  const [isSelected, setIsSelected] = useState('false')
+  const [isSelected, setIsSelected] = useState(false)
 
   const handleFilter = () => {
     setIsSelected(!isSelected)
