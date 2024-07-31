@@ -11,7 +11,7 @@ import WorkSpace from './views/WorkSpace/WorkSpace'
 import ProgramDetail from './views/Program/ProgramDetail'
 import ClassDetail from './views/Class/ClassDetail'
 import Recursos from './views/Resources/Recursos'
-import Calendario from './views/user/Calendario'
+import Calendario from './views/User/Calendario'
 
 export default function Router() {
     return (
