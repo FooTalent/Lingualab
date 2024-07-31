@@ -5,4 +5,19 @@ export default class Controller extends CustomController {
   constructor() {
     super(new Service);
   }
+
+  get    = async (req, res, next) => {
+    try {
+      const filter = {};
+
+      const { level } = req.query;
+      if (level) filter.level = level;
+      // if (isTemplate) filter.isTemplate = isTemplate === "true";
+
+      const element = await this.service.get(filter);
+      res.sendSuccessOrNotFound(element);
+    } catch (error) {
+      next(error);
+    }
+  }
 }

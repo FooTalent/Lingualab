@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useAppStore } from "../../store/useAppStore"
-import { deleteResource, fetchResources, postResource } from "../../services/resources.services"
+import { deleteResource, fetchResources, fetchResourcesWithFilter, postResource } from "../../services/resources.services"
 import CreateResourceForm from "../../components/Resources/CreateResourceForm";
 import ResourceCard from "../../components/Resources/ResourceCard"
 import { Toast } from "../../utils/toast";
@@ -13,17 +13,25 @@ export default function Resources() {
   const [resources, setResources] = useState([])
   const [refreshCards, setRefreshCards] = useState(true)
   const [modalStatus, setModalStatus] = useState(false)
+  const [filterLevel, setFilterLevel] = useState('')
   const { user } = useAppStore()
 
   useEffect(() => {
     if(user){
       const getResources = async () => {
-          const res = await fetchResources(user.token)
-          setResources(res.data)
-      }
+
+          if(!filterLevel || filterLevel === ''){
+            const res = await fetchResources(user.token)
+            setResources(res.data)
+          } else {
+
+            const res = await fetchResourcesWithFilter(user.token, filterLevel)
+            setResources(res.data)
+          }
+        }
       getResources()
     }
-  }, [user, refreshCards])
+  }, [user, refreshCards, filterLevel])
 
   const handleCreateResource = async () => {
     setModalStatus(true)
@@ -61,6 +69,11 @@ export default function Resources() {
     }
   }
 
+  const handleFilterLevel = (lvl) => {
+    setRefreshCards(!refreshCards)
+    setFilterLevel(lvl)
+  }
+
   const callFilter = () => {
     //TODO
   };
@@ -72,7 +85,7 @@ export default function Resources() {
           <div className="flex w-full justify-between items-center mb-16">
             {
               LEVELS.map((lvl, i) => (
-                <LevelFilter key={i} data={lvl}/>
+                <LevelFilter key={i} data={lvl} onClick={handleFilterLevel}/>
               ))
             }
           </div>
