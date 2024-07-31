@@ -10,6 +10,8 @@ import Select from 'react-select';
 import countryList from 'country-list';
 import countryCodes from 'country-codes-list';
 import PropTypes from 'prop-types';
+import { BsCameraFill } from "react-icons/bs";
+import { useAppStore } from '../store/useAppStore';
 
 const Profile = () => {
   const countries = countryList.getData();
@@ -20,39 +22,47 @@ const Profile = () => {
     value: countryPhoneCodes[code],
     label: `${countryPhoneCodes[code]}`
   }));
+  const { userDetail } = useAppStore()
 
   return (
-    <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden relative" style={{ marginTop: '50px' }}>
-      <div className="flex justify-center mt-6">
-        <img
-          className="w-48 h-48 rounded-full"
-          style={{ borderRadius: '50%' }}
-          src="https://thumbs.dreamstime.com/b/retrato-de-alegre-y-hermosa-ropa-ojos-mujer-con-aspecto-complaciente-lleva-su%C3%A9ter-casual-gris-modelos-en-estudio-contra-fondo-183224846.jpg"
-          alt="Patricia López"
-        />
+    <div className=" relative bg-white gap-[20px] flex items-center justify-center flex-col mx-auto mt-20 max-w-[1210px]">
+      <div className="absolute top-[-50px] bg-white gap-[20px] flex items-center justify-center">
+        {userDetail.photo ? (
+          <img
+            className='h-[200px] w-[200px] rounded-full'
+            src={userDetail.photo} />
+        ) :
+          <div className='flex items-center justify-center border rounded-full p-2 gap-2 h-[200px] w-[200px]'>
+            <BsCameraFill
+              className='h-[100px] w-[100px] text-Grey' />
+          </div>
+        }
+
       </div>
-      <div className="text-center mt-4">
-        <h2 className="text-lg font-semibold">Patricia López, Profesora: Inglés</h2>
-        <button className="bg-purple-500 text-white rounded-full p-2 absolute top-2 right-2">
-          <EditIcon />
-        </button>
-      </div>
-      <div className="px-6 py-4 flex justify-center">
-        <textarea
-          className="shadow appearance-none border rounded w-[600px] h-[120px] py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none"
-          style={{ textAlign: 'left' }}
-          id="about"
-          placeholder="Acerca de mí..."
-        />
-      </div>
-      <div className="px-6 pb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Dropdown title="Datos personales" countryOptions={countryOptions} countryPhoneOptions={countryPhoneOptions} />
-        <Dropdown title="Formación" />
-      </div>
-      <div className="px-6 py-4 flex justify-center">
-        <button className="bg-purple-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-          Confirmar edición
-        </button>
+      <div className="border p-6 gap-12 rounded-xl w-full mt-20">
+        <div className="text-center mt-20">
+          <h2 className="text-lg font-semibold">Patricia López, Profesora: Inglés</h2>
+          <button className="bg-purple-500 text-white rounded-full p-2 absolute top-28 right-6">
+            <EditIcon />
+          </button>
+        </div>
+        <div className="px-6 py-4 flex justify-center">
+          <textarea
+            className="shadow appearance-none border rounded w-[600px] h-[120px] py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none"
+            style={{ textAlign: 'left' }}
+            id="about"
+            placeholder="Acerca de mí..."
+          />
+        </div>
+        <div className="px-6 pb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Dropdown title="Datos personales" countryOptions={countryOptions} countryPhoneOptions={countryPhoneOptions} />
+          <Dropdown title="Formación" />
+        </div>
+        <div className="px-6 py-4 flex justify-center">
+          <button className="bg-purple-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+            Confirmar edición
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -85,7 +95,7 @@ const Dropdown = ({ title, countryOptions, countryPhoneOptions }) => {
             </div>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-1"
-              style={{ textAlign: 'left' }} 
+              style={{ textAlign: 'left' }}
               type="email"
               placeholder="Email"
             />
@@ -110,7 +120,7 @@ const Dropdown = ({ title, countryOptions, countryPhoneOptions }) => {
               />
               <input
                 className="shadow appearance-none border rounded w-2/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ml-2"
-                style={{ textAlign: 'left' }}  
+                style={{ textAlign: 'left' }}
                 type="tel"
                 placeholder="Teléfono"
               />
@@ -127,7 +137,7 @@ const Dropdown = ({ title, countryOptions, countryPhoneOptions }) => {
               <input
                 key={index}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-1"
-                style={{ textAlign: 'left' }}  
+                style={{ textAlign: 'left' }}
                 type="text"
                 placeholder="Agregar link"
               />
@@ -147,7 +157,7 @@ const Dropdown = ({ title, countryOptions, countryPhoneOptions }) => {
               <input
                 key={index}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mt-1"
-                style={{ textAlign: 'left' }}  
+                style={{ textAlign: 'left' }}
                 type="text"
                 placeholder="Agregar link"
               />
