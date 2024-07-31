@@ -8,7 +8,8 @@ const thisSchema = new Schema({
   language:    { type: String, label: 'Lenguaje', enum: LANGUAGES, required: true },
   url:         { type: String, label: 'URL',      },
   description: { type: String, label: 'Descripcion', },
-
+  teacher:        { type: Schema.Types.ObjectId, ref: 'Users', },
+  
   // data of conection
   created:     { type: Date,   label: 'Fecha Creación',       default: Date.now,  immutable: true, disabled: true},
   updated:     { type: Date,   label: 'Ultima actualización', default: Date.now,  disabled: true},
@@ -20,6 +21,6 @@ const thisSchema = new Schema({
   },
 })
 
-const dataModel = model('Resources', thisSchema)
+const dataModel = model('resources', thisSchema)
 
 export default dataModel

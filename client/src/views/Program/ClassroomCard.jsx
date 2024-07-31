@@ -11,9 +11,6 @@ const ClassroomCard = ({ classroom, buttonFunction }) => {
         <h2 className="text-xl font-semibold">{title}</h2>
       </div>
       <div className="text-gray-700 mb-2">
-        <strong>Alumnos:</strong> {students ? students.length : null}
-      </div>
-      <div className="text-gray-700 mb-2">
         <strong>Fecha:</strong> {daytime ? new Date(daytime).toLocaleString() : null }
       </div>
       <div className='flex flex-row justify-between'>
