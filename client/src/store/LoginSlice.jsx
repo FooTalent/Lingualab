@@ -9,6 +9,7 @@ export const createUserSlice = (set, get) => ({
     // user sessions
     userLogin: async (userData) => {
         const loginUser = await login(userData)
+
         if (loginUser.isError === false) {
             set(() => ({
                 status: true,
@@ -44,7 +45,7 @@ export const createUserSlice = (set, get) => ({
         if (storeLogin) {
             set({
                 status: JSON.parse(storeLogin),
-                user: JSON.parse(userLogin)
+                user: JSON.parse(userLogin),
             })
         }
     },
