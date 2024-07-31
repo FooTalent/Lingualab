@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useAppStore } from '../../store/useAppStore';
 import { dayjsLocalizer } from 'react-big-calendar';
 import ClassCalendar from '../../components/user/calendar/ClassCalendar';
 import Modal from '../../components/user/calendar/Modal';
@@ -9,9 +10,21 @@ dayjs.locale('es');
 const localizer = dayjsLocalizer(dayjs);
 
 export default function Calendario() {
+    const { user, userDetail, fetchClasses } = useAppStore()
+    const [classes, setClasses] = useState([])
     const [date, setDate] = useState(new Date());
     const [events, setEvents] = useState([]);
     const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        fetchTeacherClasses()
+        console.log(classes)
+    }, [])
+
+    const fetchTeacherClasses = async () => {
+        const newClasses = await fetchClasses(user.token, userDetail._id, 'startDate=2024-07-01&endDate=2024-08-01');
+        setClasses(newClasses);
+    }
 
     const handleDate = (date) => {
         return dayjs(date).format('dddd D [-] MMMM [-] YYYY')
