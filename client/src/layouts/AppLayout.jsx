@@ -8,21 +8,21 @@ import CurrentTime from '../components/CurrentTime'
 
 export default function AppLayout() {
     const navigate = useNavigate()
-    const { status, localLogin, fetchCurrentUser } = useAppStore()
+    const { status, localLogin } = useAppStore()
 
     useEffect(() => {
         const initialize = async () => {
             if (!status) {
                 await localLogin();
-                await fetchCurrentUser();
+                navigate('/auth/login')
             }
         };
         initialize();
-    }, [status]);
+    }, [status, localLogin, navigate]);
 
-    if (!status) {
-        navigate('/auth/login');
-    }
+    // if (!status) {
+    //     navigate('/auth/login');
+    // }
 
     return (
         <>

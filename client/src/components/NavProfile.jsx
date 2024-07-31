@@ -7,8 +7,6 @@ import { Link } from 'react-router-dom';
 const NavProfile = () => {
     const { loguot, userDetail } = useAppStore()
     const [menuOpen, setMenuOpen] = useState(false);
-    console.log(userDetail)
-    console.log(userDetail.first_name)
 
     const handleMenuToggle = () => {
         setMenuOpen(!menuOpen);
@@ -24,7 +22,12 @@ const NavProfile = () => {
         <div className='relative flex justify-end items-center gap-3 h-12'>
             <NotificationsIcon className='w-6 h-6 cursor-pointer text-white' />
             <div className='flex flex-row justify-center items-center text-white'>
-                <span className='flex justify-center items-center font-bold rounded-full w-8 h-8 bg-Yellow uppercase'>{initials ? initials : "?"}</span>
+                {userDetail.photo ? (
+                    <img className='flex justify-center items-center font-bold rounded-full w-8 h-8'
+                        src={userDetail.photo}
+                    />
+                ) : <span className='flex justify-center items-center font-bold rounded-full w-8 h-8 bg-Yellow uppercase'>{initials ? initials : "?"}</span>}
+
                 <h3 className='p-2'>Hola! Profesor</h3>
                 <button onClick={handleMenuToggle} className='relative'>
                     <ExpandMoreIcon className='text-white' />
