@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppStore } from '../../store/useAppStore';
-import { createClassroom, fetchProgramById } from '../../services/programs.services';
-import Modal from './Modal';
-import CreateClassroomForm from './CreateClassroomForm';
+import { createClass, getProgramById } from '../../services/programs.services';
+import Modal from '../../components/Modal';
+import CreateClassForm from './CreateClassForm';
 import ClassroomCard from './ClassroomCard';
+import { LEVELS_MAP } from '../../utils/valueLists';
+import BackButton from '../../components/BackButtom';
 
 const ProgramDetail = () => {
   const { eid } = useParams();
@@ -16,34 +18,31 @@ const ProgramDetail = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
-  // console.log(program); // <-- DESPUES ELIMINAR -----------------------------------------------------------------
-
   useEffect(() => {
     if (user && user.token) {
-      const getProgram = async () => {
+      const fetchProgram = async () => {
         try {
           setLoading(true);
-          const response = await fetchProgramById(user.token, eid);
+          const response = await getProgramById(user.token, eid);
           setProgram(response);
         } catch (error) {
-          console.error('Error fetching program', error);
+          console.error('Error buscando el programa', error);
           setError(error.message);
         } finally {
           setLoading(false);
         }
       };
 
-      getProgram();
+      fetchProgram();
     } else {
       setLoading(false);
     }
   }, [user, eid, refresh]);
 
-  const handleCreateClassroom = async (classroomData) => {
+  const handleCreateClass = async (classroomData) => {
     try {
-      const newClassRoom = await createClassroom(classroomData, user.token);
+      const newClassRoom = await createClass(user.token, classroomData);
       console.log(newClassRoom);
-      // Agrega cualquier lógica adicional después de crear la clase, como cerrar el modal
       setRefresh(!refresh);
       setIsModalOpen(false);
     } catch (error) {
@@ -51,6 +50,7 @@ const ProgramDetail = () => {
       setError(error.message);
     }
   };
+
   const handleEditClassroom = (classroomId) => {
     navigate(`/classroom/${classroomId}`);
   };
@@ -60,15 +60,24 @@ const ProgramDetail = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className='flex flex-row justify-between w-10/12'>
-        <h1 className="text-3xl font-bold mb-4">{program.title}</h1>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded-md"
-          onClick={() => setIsModalOpen(true)}> Crear Clase </button>
+      <div className='flex flex-row justify-between items-center mb-4'>
+        <BackButton />
+        <div className="flex items-center">
+          <span className="text-white px-2 py-1 rounded mr-2" style={{backgroundColor: LEVELS_MAP[program.level]}}>{program.level}</span>
+          <h1 className="text-3xl font-bold mb-4">{program.title}</h1>
+        </div>
+        <button 
+          className="bg-blue-500 text-white px-4 py-2 rounded-md"
+          onClick={() => setIsModalOpen(true)}
+        >
+          Crear Clase
+        </button>
       </div>
 
       <div className="mt-6">
-        <p className="mb-2"><strong>Descripción:</strong> {program.description}</p>
-        <p className="mb-2"><strong>Nivel:</strong> {program.level}</p>
+        {program.description ? (
+          <p className="mb-2"><strong>Descripción:</strong> {program.description}</p>
+        ) : null}
         <p className="mb-2"><strong>Idioma:</strong> {program.language}</p>
         <p className="mb-4"><strong>Profesor:</strong> {program.teacher.last_name}, {program.teacher.first_name}</p> 
       </div>
@@ -76,11 +85,11 @@ const ProgramDetail = () => {
       {program.classes.length > 0 ? (
         <div className="grid grid-cols-1 gap-4">
           {program.classes.map((classroom) => (
-          <ClassroomCard
-            key={classroom._id}
-            classroom={classroom}
-            buttonFunction={handleEditClassroom}
-          />
+            <ClassroomCard
+              key={classroom._id}
+              classroom={classroom}
+              buttonFunction={handleEditClassroom}
+            />
           ))}
         </div>
       ) : (
@@ -88,9 +97,9 @@ const ProgramDetail = () => {
       )}
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Crear Clase">
-        <CreateClassroomForm
+        <CreateClassForm
           programData={program}
-          onSubmit={handleCreateClassroom}
+          onSubmit={handleCreateClass}
           onClose={() => setIsModalOpen(false)}
         />
       </Modal>

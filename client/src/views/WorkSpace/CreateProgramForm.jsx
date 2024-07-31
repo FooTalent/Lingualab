@@ -1,27 +1,25 @@
 import React, { useState } from 'react';
-import { LEVELS, LEVELS_MAP } from '../../utils/valueLists';
+import { LANGUAGES, LEVELS, LEVELS_MAP } from '../../utils/valueLists';
 
-const CreateClassroomForm = ({ programData, onSubmit, onClose }) => {
-  const [classroomData, setClassroomData] = useState({
-    daytime: '',
-    duration_hours: 1,
-    teacher: programData.teacher._id,
-    language: programData.language,
-    level: programData.level,
-    program: programData._id
+const CreateProgramForm = ({ onSubmit, onClose }) => {
+  const [programData, setProgramData] = useState({
+    title: '',
+    description: '',
+    language: LANGUAGES[0],
+    level: LEVELS[0].data,
   });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setClassroomData({
-      ...classroomData,
+    setProgramData({
+      ...programData,
       [name]: value,
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(classroomData);
+    onSubmit(programData);
   };
 
   return (
@@ -31,7 +29,7 @@ const CreateClassroomForm = ({ programData, onSubmit, onClose }) => {
         <input
           type="text"
           name="title"
-          value={classroomData.title}
+          value={programData.title}
           onChange={handleInputChange}
           className="w-full p-2 border rounded-md"
         />
@@ -41,40 +39,34 @@ const CreateClassroomForm = ({ programData, onSubmit, onClose }) => {
         <input
           type="text"
           name="description"
-          value={classroomData.description}
-          onChange={handleInputChange}
-          className="w-full p-2 border rounded-md"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">Fecha y Hora</label>
-        <input
-          type="datetime-local"
-          name="daytime"
-          value={classroomData.daytime}
+          value={programData.description}
           onChange={handleInputChange}
           className="w-full p-2 border rounded-md"
         />
       </div>
       <div className="mb-4">
         <label className="block text-gray-700">Idioma</label>
-        <input
-          type="text"
+        <select
           name="language"
-          value={classroomData.language}
+          value={programData.language}
           onChange={handleInputChange}
           className="w-full p-2 border rounded-md"
-          disabled
-        />
+        >
+          {LANGUAGES.map((language) => (
+            <option key={language} value={language}>
+              {language}
+            </option>
+          ))}
+        </select>
       </div>
       <div className="mb-4">
         <label className="block text-gray-700">Nivel</label>
         <select
           name="level"
-          value={classroomData.level}
+          value={programData.level}
           onChange={handleInputChange}
           className="w-full p-2 border rounded-md"
-          style={{ color: LEVELS_MAP[classroomData.level] }}
+          style={{ color: LEVELS_MAP[programData.level] }}
         >
           {LEVELS.map((level) => (
             <option key={level.key} value={level.data} style={{ color: level.color }}>
@@ -82,16 +74,6 @@ const CreateClassroomForm = ({ programData, onSubmit, onClose }) => {
             </option>
           ))}
         </select>
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">Duración (horas)</label>
-        <input
-          type="number"
-          name="duration_hours"
-          value={classroomData.duration_hours}
-          onChange={handleInputChange}
-          className="w-full p-2 border rounded-md"
-        />
       </div>
       <div className="flex justify-end">
         <button
@@ -112,4 +94,4 @@ const CreateClassroomForm = ({ programData, onSubmit, onClose }) => {
   );
 };
 
-export default CreateClassroomForm;
+export default CreateProgramForm;

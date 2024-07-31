@@ -4,31 +4,32 @@ import Service from "../logic/service.js";
 
 export default class Controller extends CustomController {
   constructor() {
-    super(new Service);
-    this.requieredfield = ["title", "level", "language", "teacher"]
+    super(new Service());
+    this.requiredFields = ["title", "level", "language", "teacher"];
   }
   get    = async (req, res, next) => {
     try {
-      const filter = {}
+      const filter = {};
 
-      const { isTemplate } = req.query
-      isTemplate ? filter.isTemplate = isTemplate : filter.isTemplate = false
+      const { teacherId, isTemplate } = req.query;
+      if (teacherId) filter.teacher = teacherId;
+      if (isTemplate) filter.isTemplate = isTemplate === "true";
 
       const element = await this.service.get(filter);
       res.sendSuccessOrNotFound(element);
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 
   create = async (req, res, next) => {
     try {
-      const newElement = validateFields(req.body, this.requieredfield);
-      const { description, isTemplate } = req.body
+      const newElement = validateFields(req.body, this.requiredFields );
+      const { description, isTemplate } = req.body;
       const element = await this.service.create({...newElement, description, isTemplate});
-      res.sendSuccess(element)
+      res.sendSuccess(element);
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 }

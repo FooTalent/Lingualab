@@ -6,9 +6,9 @@ const url = import.meta.env.VITE_BACKEND_URL
 // ------------------------------------------------------------
 // PROGRAMS ( programs  --> pasar query: isTemplate = true) ----------------------------------------------------------------
 
-export const fetchPrograms = async (token) => {
+export const getPrograms = async (token, teacherId) => {
   try {
-    const response = await axios.get(`${url}api/programs`, {
+    const response = await axios.get(`${url}api/programs/?isTemplate=true&teacherId=${teacherId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -22,7 +22,24 @@ export const fetchPrograms = async (token) => {
   }
 };
 
-export const fetchProgramById = async (token, programId) => {
+export const createProgram = async (token, teacherId, data) => {
+  try {
+    const newProgram = { ...data, teacher: teacherId}
+    const response = await axios.post(`${url}api/programs`, newProgram, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      console.error('Acceso no autorizado - talvez token invalido');
+    }
+    throw error;
+  }
+};
+
+export const getProgramById = async (token, programId) => {
   try {
     const response = await axios.get(`${url}api/programs/${programId}`, {
       headers: {
@@ -39,10 +56,25 @@ export const fetchProgramById = async (token, programId) => {
 };
 
 // PROGRANS CLASS  ( class     --> pasar query: isTemplate = true) ----------------------------------------------------------------
-
-export const createClassroom = async (data, token) => {
+export const getClassById = async (token, classId) => {
   try {
-    const response = await axios.post(`${url}api/classroom`, data, {
+    const response = await axios.get(`${url}api/classes/${classId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data.data;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      console.error('Acceso no autorizado - talvez token invalido');
+    }
+    throw error;
+  }
+};
+
+export const createClass = async (token, data) => {
+  try {
+    const response = await axios.post(`${url}api/classes`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -56,75 +88,9 @@ export const createClassroom = async (data, token) => {
   }
 };
 
-export const fetchClassRoomById = async (token, classroomId) => {
+export const updateClass = async (token, classroomId, data ) => {
   try {
-    const response = await axios.get(`${url}api/classroom/${classroomId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data.data;
-  } catch (error) {
-    if (error.response && error.response.status === 401) {
-      console.error('Acceso no autorizado - talvez token invalido');
-    }
-    throw error;
-  }
-};
-
-export const updateClassroom = async (data, token, classroomId) => {
-  try {
-    const response = await axios.put(`${url}api/classroom/${classroomId}`, data, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    if (error.response && error.response.status === 401) {
-      console.error('Acceso no autorizado - talvez token invalido');
-    }
-    throw error;
-  }
-}
-
-// TODO CLASS DETAIL ------------ESTO SE ROMPIO, NO EXISTE MAS----------------------------------------------------
-
-export const createClassDetail = async (data, token) => {
-  try {
-    const response = await axios.post(`${url}api/classdetail/`, data, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data.data;
-  } catch (error) {
-    if (error.response && error.response.status === 401) {
-      console.error('Acceso no autorizado - talvez token invalido');
-    }
-    throw error;
-  }
-};
-
-export const fetchClassDetailList= async (token, teacherId) => {
-  try {
-    const response = await axios.get(`${url}api/classdetail/list/${teacherId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data.data;
-  } catch (error) {
-    if (error.response && error.response.status === 401) {
-      console.error('Acceso no autorizado - talvez token invalido');
-    }
-    throw error;
-  }
-};
-
-export const updateClassdetail = async (data, token, classdetailId) => {
-  try {
-    const response = await axios.put(`${url}api/classdetail/${classdetailId}`, data, {
+    const response = await axios.put(`${url}api/classes/${classroomId}`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
