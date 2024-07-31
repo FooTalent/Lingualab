@@ -1,4 +1,4 @@
-import { forgotPass, getUserData, login, newPass } from "../services";
+import { forgotPass, getUserData, googleLoginUser, login, newPass } from "../services";
 import { Toast } from "../utils/toast";
 
 export const createUserSlice = (set, get) => ({
@@ -19,11 +19,60 @@ export const createUserSlice = (set, get) => ({
                 title: "Bienvenido",
                 icon: "success"
             })
+            const { token } = get().user;
+            if (token) {
+                try {
+                    const userData = await getUserData(token);
+                    if (userData) {
+                        set(() => ({
+                            userDetail: { ...userData }
+                        }));
+                        localStorage.setItem('userDetail', JSON.stringify(get().userDetail));
+                    }
+                } catch (error) {
+                    console.error('Error fetching user data:', error);
+                }
+            }
             localStorage.setItem('status', JSON.stringify(get().status))
             localStorage.setItem('user', JSON.stringify(get().user))
         } else {
             Toast.fire({
                 title: `${loginUser.message}`,
+                icon: "error"
+            })
+        }
+    },
+    userLoginGoogle: async () => {
+        const res = await googleLoginUser()
+
+        if (res) {
+            set(() => ({
+                status: true,
+                user: res
+            }))
+            Toast.fire({
+                title: "Bienvenido",
+                icon: "success"
+            })
+            const { token } = get().user;
+            if (token) {
+                try {
+                    const userData = await getUserData(token);
+                    if (userData) {
+                        set(() => ({
+                            userDetail: { ...userData }
+                        }));
+                        localStorage.setItem('userDetail', JSON.stringify(get().userDetail));
+                    }
+                } catch (error) {
+                    console.error('Error fetching user data:', error);
+                }
+            }
+            localStorage.setItem('status', JSON.stringify(get().status))
+            localStorage.setItem('user', JSON.stringify(get().user))
+        } else {
+            Toast.fire({
+                title: "error",
                 icon: "error"
             })
         }
@@ -73,20 +122,21 @@ export const createUserSlice = (set, get) => ({
     },
 
     // user profile
-    fetchCurrentUser: async () => {
-        const { token } = get().user;
-        if (token) {
-            try {
-                const userData = await getUserData(token);
-                if (userData) {
-                    set(() => ({
-                        userDetail: { ...userData }
-                    }));
-                    localStorage.setItem('userDetail', JSON.stringify(get().userDetail));
-                }
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-            }
-        }
-    },
+    // fetchCurrentUser: async () => {
+    //     const { token } = get().user;
+    //     if (token) {
+    //         try {
+    //             const userData = await getUserData(token);
+    //             if (userData) {
+    //                 set(() => ({
+    //                     userDetail: { ...userData }
+    //                 }));
+    //                 localStorage.setItem('userDetail', JSON.stringify(get().userDetail));
+    //             }
+    //         } catch (error) {
+    //             console.error('Error fetching user data:', error);
+    //         }
+    //     }
+    // },
+
 })

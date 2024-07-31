@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const url = import.meta.env.VITE_BACKEND_URL
 
+
 // USER SESSION ----------------------------------------------------------------
 export const login = async (userData) => {
     const loginUser = await axios.post(`${url}api/users/login`, userData)
@@ -34,9 +35,9 @@ export const newPass = async (password, token) => {
 }
 
 export const googleLoginUser = async () => {
-    try {
-      const popup = window.open(
-        `${url}auth/google`,
+  try {
+    const popup = window.open(
+        `${url}api/users/google/login`,
         "targetWindow",
         `toolbar=no,
           location=no,
@@ -48,17 +49,27 @@ export const googleLoginUser = async () => {
           height=700`
       );
       return new Promise((resolve) => {
-        window.addEventListener("message", (event) => {
-          if (event.origin === `${url}` && event.data) {
-            popup.close();
-            resolve({ data: event.data });
-          }
-        });
-      });
-    } catch ({ response }) {
-      return { error: response };
-    }
-  };
+      const handleMessage = (event) => {
+  
+        if (event.data && event.data.token) {
+  
+          // Limpia el listener
+          window.removeEventListener('message', handleMessage);
+  
+          // Cierra la ventana emergente
+          popup.close();
+  
+          // Resuelve la promesa con el token
+          resolve({ token: event.data.token });
+        }
+      };
+    
+      window.addEventListener('message', handleMessage, false);
+      })
+    }catch (error) {
+    console.error('Error during Google authentication:', error);
+  }
+};
 
   
 // USER PROFILE ----------------------------------------------------------------

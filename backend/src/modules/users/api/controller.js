@@ -93,7 +93,14 @@ export default class Controller extends CustomController {
         const oauth2 = google.oauth2({ version: 'v2', auth: oauth2Client });
         const { data } = await oauth2.userinfo.get();
         const {name, token} =  await this.service.googleLoginOrRegister(data, tokens);
-        res.sendSuccess({token}, `Log In exitoso con Google: ${name}`);
+        res.send(`
+          <html>
+            <script>
+              window.opener.postMessage({ token: "${token}" }, "*");
+              window.close();
+            </script>
+          </html>
+        `);
       } catch (error) {
         next(new AppError(`Error al obtener información del usuario de Google \n ${error}`, 500));
       }
