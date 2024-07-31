@@ -3,7 +3,7 @@ import usersRouter from "../modules/users/api/routes.js";
 import resourcesRouter from "../modules/resource/api/routes.js";
 import programsRouter from "../modules/programs/api/routes.js";
 import classesRouter from "../modules/classes/api/routes.js";
-import virtualClassroomsRouter from "../modules/virtualclassrooms/api/routes.js";
+import virtualClassroomsRouter from "../modules/virtualclassroom/api/routes.js";
 import emailRouter from "../modules/email/api/routes.js";
 import calendarRouter from "../modules/calendar/api/routes.js";
 

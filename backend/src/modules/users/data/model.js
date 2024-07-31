@@ -23,7 +23,7 @@ const userSchema = new Schema({
   role:        { type: String,   default: "Teacher", enum: ROLES,},
 
   // specific properties
-  virtualclassrooms: [{ type: Schema.Types.ObjectId, ref: 'virtualclassrooms', }],
+  program:     [{ type: Schema.Types.ObjectId, ref: 'programs',}],
   reviews:     { type: [reviewSchema], },
 
   // aditional properties

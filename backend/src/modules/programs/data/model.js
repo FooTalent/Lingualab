@@ -13,6 +13,7 @@ const thisSchema = new Schema({
   // aditional properties
   language:    { type: String, enum: LANGUAGES, required: true },
   level:       { type: String, enum: LEVELS, required: true },
+  link_meet:      { type: String, },
 
   // data of update
   created:     { type: Date,   default: Date.now,  immutable: true, },

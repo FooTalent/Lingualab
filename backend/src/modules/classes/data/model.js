@@ -9,16 +9,13 @@ const classSchema = new Schema({
   duration_hours: { type: Number, min: 1, max: 10, },
   program:        { type: Schema.Types.ObjectId, ref: 'programs', required: true,},
   resources:      [{ type: Schema.Types.ObjectId,  ref: 'resources', }],
-  teacher:        { type: Schema.Types.ObjectId, ref: 'Users', required: true },
+  teacher:        { type: Schema.Types.ObjectId, ref: 'users', required: true },
   isTemplate:     { type: Boolean, default: true },
 
   // TODO aditional properties (en duda si va)
   language:       { type: String, enum: LANGUAGES, required: true },
   level:          { type: String, enum: LEVELS,    required: true },
-  link_meet:      { type: String, },
-  link_calendar:  { type: String, },
-  teacher:        { type: Schema.Types.ObjectId, ref: 'Users', },
-  students:       [{ type: Schema.Types.ObjectId, ref: 'Users'}],
+  students:       [{ type: Schema.Types.ObjectId, ref: 'users'}],
 
   // se cre con la aula vitual
   daytime:        { type: Date,   }, // es fecha y hora
