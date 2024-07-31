@@ -11,6 +11,7 @@ import WorkSpace from './views/WorkSpace/WorkSpace'
 import ProgramDetail from './views/Program/ProgramDetail'
 import ClassDetail from './views/Class/ClassDetail'
 import Recursos from './views/Resources/Recursos'
+import Calendario from './views/user/Calendario'
 
 export default function Router() {
     return (
@@ -23,6 +24,7 @@ export default function Router() {
                     <Route path='/classroom/:eid' element={<ClassDetail />} />
                     <Route path='/recursos' element={<Recursos />} />
                     <Route path='/profile' element={<Profile />}  />
+                    <Route path='/calendario' element={<Calendario />} />
                 </Route>
 
                 <Route element={<AuthLayout />}>

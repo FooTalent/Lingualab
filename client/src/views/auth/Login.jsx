@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-
 import { useAppStore } from "../../store/useAppStore";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -50,7 +49,7 @@ const Login = () => {
         if (status) {
             navigate('/')
         }
-    }, [status, navigate]);
+    }, [status]);
 
     const handleLogin = async (formData) => {
         await userLogin(formData)
