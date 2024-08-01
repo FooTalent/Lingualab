@@ -11,8 +11,8 @@ export const fetchResources = async (token) => {
     return response.data;
 }
 
-export const fetchResourcesWithFilter = async (token, level) => {
-    const response = await axios.get(`${url}api/resources/?level=${level}`, {
+export const fetchResourcesWithFilter = async (token, filter) => {
+    const response = await axios.get(`${url}api/resources/?${filter}`, {
         headers: {
             Authorization: `Bearer ${token}`,
         }

@@ -10,8 +10,13 @@ export default class Controller extends CustomController {
     try {
       const filter = {};
 
-      const { level } = req.query;
-      if (level) filter.level = level;
+      const { level, type } = req.query;
+      if (level){
+        filter.level = level
+      }
+      if (type){
+        filter.type = type
+      }
       // if (isTemplate) filter.isTemplate = isTemplate === "true";
 
       const element = await this.service.get(filter);

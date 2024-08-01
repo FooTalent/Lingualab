@@ -5,7 +5,16 @@ export default function LevelFilter({data, onClick}) {
   const [isSelected, setIsSelected] = useState(false)
 
   const handleFilter = (lvl) => {
-    setIsSelected(!isSelected)
+    setIsSelected(prevIsSelected => {
+      const newIsSelected = !prevIsSelected
+      if (newIsSelected) {
+        onClick(lvl)
+      } else {
+        onClick('')
+      }
+      return newIsSelected
+    })
+  
     if(!isSelected) return onClick(lvl)
     if(isSelected) return onClick('')
   }
