@@ -1,5 +1,5 @@
 import React from 'react';
-import { LEVELS_MAP } from '../../utils/valueLists';
+import { LEVELS_MAP } from '../../../utils/valueLists';
 
 const ClassroomCard = ({ classroom, buttonFunction }) => {
   const { level, title, students, daytime, duration_hours, _id } = classroom;

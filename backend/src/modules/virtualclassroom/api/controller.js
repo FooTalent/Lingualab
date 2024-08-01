@@ -6,8 +6,6 @@ export default class Controller {
   constructor() {
     this.service = new Service()
   }
-  get = (req, res) => {res.send("Clases virtuales")}
-
   create = async (req, res, next) => {
     try {
       const { templateId, studentIds, startDate } = req.body;

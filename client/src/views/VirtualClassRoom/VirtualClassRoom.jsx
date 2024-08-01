@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useAppStore } from '../../store/useAppStore';
 import ProgramCard from './ProgramCard';
-import { createProgram, getPrograms } from '../../services/programs.services';
+import { createProgram, getVCRooms } from '../../services/programs.services';
 import { useNavigate  } from 'react-router-dom';
-import CreateProgramForm from './CreateProgramForm';
+import CreateVCRForm from './CreateVCRForm';
 import Modal from '../../components/Modal';
-import BackButton from '../../components/BackButtom';
 
-const WorkSpace = () => {
+const VirtualClassRoom = () => {
   const [programs, setPrograms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -20,7 +19,7 @@ const WorkSpace = () => {
       const fetchPrograms = async () => {
         try {
           setLoading(true);
-          const response = await getPrograms(user.token, userDetail._id);
+          const response = await getVCRooms(user.token, userDetail._id);
           if (response.isError) {
             throw new Error(response.message);
           }
@@ -51,18 +50,22 @@ const WorkSpace = () => {
   };
 
   function buttonFunction (idProgram) {
-    navigate(`/workspace/programas/${idProgram}`)
+    navigate(`/programas/${idProgram}`)
   }
 
   return (
     <div className="container mx-auto mt-8">
       <div className="flex justify-between items-center mb-4">
-        <BackButton />
-        <h1 className="text-3xl font-bold">Área de Trabajo</h1>
+        <h1 className="text-3xl font-bold">Aula Virtual</h1>
         <button
           className="bg-blue-500 text-white px-4 py-2 rounded-md"
           onClick={() => setIsModalOpen(true)}
-        > Crear Nuevo Programa
+        > Crear Nueva Aula
+        </button>
+        <button
+          className="bg-blue-500 text-white px-4 py-2 rounded-md"
+          onClick={() => navigate(`/workspace/`)}
+        > Diseñar Programas
         </button>
       </div>
 
@@ -88,10 +91,15 @@ const WorkSpace = () => {
         </div>
       )}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Crear Programa">
-        <CreateProgramForm onSubmit={handleCreateProgram} onClose={() => setIsModalOpen(false)} />
+        <CreateVCRForm 
+          onSubmit={handleCreateProgram}
+          onClose={() => setIsModalOpen(false)}
+          techerId={userDetail._id}
+          token={user.token}
+        />
       </Modal>
     </div>
   );
 }
 
-export default WorkSpace
+export default VirtualClassRoom

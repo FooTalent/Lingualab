@@ -7,7 +7,6 @@ const controller = new Controller()
 // http://localhost:8080/api/virtual
 
 router
-.get    ("/",     handleAuth(clients), controller.get)
 .post   ("/",     handleAuth(clients), controller.create )
 
 export default router
