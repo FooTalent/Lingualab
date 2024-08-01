@@ -8,17 +8,17 @@ import CurrentTime from '../components/CurrentTime'
 
 export default function AppLayout() {
     const navigate = useNavigate()
-    const { status, localLogin, fetchCurrentUser } = useAppStore()
+    const { status, localLogin } = useAppStore()
 
     useEffect(() => {
         const initialize = async () => {
             if (!status) {
                 await localLogin();
-                await fetchCurrentUser();
+                // navigate('/auth/login')
             }
         };
         initialize();
-    }, [status]);
+    }, [status, localLogin, navigate]);
 
     if (!status) {
         navigate('/auth/login');
@@ -33,7 +33,7 @@ export default function AppLayout() {
                     <NavProfile />
                 </header>
                 <CurrentTime />
-                <div className='mt-10'>
+                <div className=''>
                     <Outlet />
                 </div>
             </div>
