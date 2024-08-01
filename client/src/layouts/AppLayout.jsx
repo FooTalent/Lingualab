@@ -14,15 +14,15 @@ export default function AppLayout() {
         const initialize = async () => {
             if (!status) {
                 await localLogin();
-                navigate('/auth/login')
+                // navigate('/auth/login')
             }
         };
         initialize();
     }, [status, localLogin, navigate]);
 
-    // if (!status) {
-    //     navigate('/auth/login');
-    // }
+    if (!status) {
+        navigate('/auth/login');
+    }
 
     return (
         <>
@@ -33,7 +33,7 @@ export default function AppLayout() {
                     <NavProfile />
                 </header>
                 <CurrentTime />
-                <div className='mt-10'>
+                <div className=''>
                     <Outlet />
                 </div>
             </div>

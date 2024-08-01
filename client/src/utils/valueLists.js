@@ -1,13 +1,16 @@
 export const LEVELS = [
   {
     data: 'A1-A2',
-    color: "#9C35E5"
+    color: '#25CFB7',
+    inactive: '#B4CECA'
   },{
     data: 'B1-B2',
-    color: "#FF4550"
+    color: '#3A9FB6',
+    inactive: '#86A8AF'
   },{
     data: 'C1-C2',
-    color: "#F69103"
+    color: '#3C5A99',
+    inactive: '#697795'
   }];
 export const LEVELS_MAP = {
   'A1-A2': "#25CFB7",
@@ -17,5 +20,5 @@ export const LEVELS_MAP = {
 export const ROLES = ['Teacher', 'Student', 'Admin'];
 export const GENDERS = ['Masculino', 'Femenino', 'No binario', 'Prefiero no decirlo'];
 export const CURRENCIES = ['ARS', 'DOL', 'EUR'];
-export const RESOURCE_TYPES = ["Juego", "Canción", "Serie", "Película", "Diccionario", "Libro", "Audio Libro", "Ejercicio", "Examen"];
+export const RESOURCE_TYPES = ["Canción", "Ejercicio", "Juego", "Libro/Audio Libros", "Serie/Película", "Diccionario", "Examen"];
 export const LANGUAGES = ['Inglés'];
