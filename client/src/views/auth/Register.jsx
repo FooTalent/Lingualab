@@ -2,7 +2,7 @@ import React from 'react';
 import { useAppStore } from '../../store/useAppStore';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import InputList from '../../components/Form/InputList';
+import InputList from '../../components/Form/InputList'
 
 export default function Register() {
     const navigate = useNavigate();
@@ -16,10 +16,11 @@ export default function Register() {
         role: true,
     };
 
-    const { register, handleSubmit, formState: { errors }, reset } = useForm({ defaultValues: initialValues });
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({
+        defaultValues: initialValues, mode: 'onChange', reValidateMode: 'onChange'
+    });
 
     const handleForm = async (formData) => {
-        console.log(formData)
         await userRegister(formData);
         if (complete) {
             navigate("/auth/login");
@@ -42,8 +43,8 @@ export default function Register() {
                     label: 'Nombre',
                     type: 'text',
                     placeholder: 'Ingresa tu nombre',
-                    validations: /^[a-zA-Z]*$/,
-                    messageError: 'Sole se permiten letras'
+                    validations: /^[\p{L}]*$/u,
+                    messageError: 'Solo se permiten letras'
                 }
                 break;
             case 'last_name':
@@ -51,8 +52,8 @@ export default function Register() {
                     label: 'Apellido',
                     type: 'text',
                     placeholder: 'Ingresa tu apellido',
-                    validations: /^[a-zA-Z]*$/,
-                    messageError: 'Sole se permiten letras'
+                    validations: /^[\p{L}]*$/u,
+                    messageError: 'Solo se permiten letras'
                 }
                 break;
             case 'email':
@@ -89,7 +90,7 @@ export default function Register() {
 
             <form
                 onSubmit={handleSubmit(handleForm)}
-                className="flex flex-col md:gap-[8px] md:w-[404px]"
+                className="formUser"
                 noValidate
             >
                 <InputList

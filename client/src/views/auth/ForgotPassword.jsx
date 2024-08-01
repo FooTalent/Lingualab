@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form"
 import { useAppStore } from "../../store/useAppStore"
 import { Link } from "react-router-dom"
-import InputList from "../../components/Form/InputList"
+import InputList from '../../components/Form/InputList'
 
 const ForgotPassword = () => {
     const { forgotPassword } = useAppStore()
@@ -22,14 +22,13 @@ const ForgotPassword = () => {
 
     return (
         <>
-            <p className="text-2xl font-light mt-5 text-Purple">
-                ¿Olvidaste tu contraseña? ingresa tu email {''}
-                <span className="font-bold"> y reestablece tu contraseña</span>
+            <p className="text-2xl font-[500] text-black">
+                Recuperá tu contraseña
             </p>
 
             <form
                 onSubmit={handleSubmit(handleForgotPassword)}
-                className="flex flex-col md:gap-[20px] md:w-[404px]"
+                className="formUser"
                 noValidate
             >
                 <InputList
@@ -44,21 +43,13 @@ const ForgotPassword = () => {
                     className="inputSubmit"
                 />
             </form>
-            <nav className="flex flex-col space-y-4">
-                <span className="font-semibold text-sm">¿Ya tienes cuenta?{' '}
+            <nav className="flex justify-between px-4">
+                <span className="font-[500] text-sm">¿Recordaste tu contraseña?{' '}
                     <Link
                         to='/auth/login'
                         className="link"
                     >
-                        Iniciar Sesión
-                    </Link>
-                </span>
-                <span className="font-semibold text-sm">¿Ya tienes cuenta?{' '}
-                    <Link
-                        to='/auth/register'
-                        className="link"
-                    >
-                        Registrate
+                        Inicia Sesión
                     </Link>
                 </span>
             </nav>
