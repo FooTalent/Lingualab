@@ -10,8 +10,9 @@ import Profile from './views/Profile'
 import WorkSpace from './views/WorkSpace/WorkSpace'
 import ProgramDetail from './views/Program/ProgramDetail'
 import ClassDetail from './views/Class/ClassDetail'
-import Recursos from './views/Resources/Recursos'
+import Recursos from './views/Resources/Resources'
 import Calendario from './views/user/Calendario'
+import Resources from './views/Resources/Resources'
 
 export default function Router() {
     return (
@@ -22,7 +23,7 @@ export default function Router() {
                     <Route path='/aulavirtual' element={<WorkSpace />} />
                     <Route path='/programas/:eid' element={<ProgramDetail />} />
                     <Route path='/classroom/:eid' element={<ClassDetail />} />
-                    <Route path='/recursos' element={<Recursos />} />
+                    <Route path='/recursos' element={<Resources />} />
                     <Route path='/profile' element={<Profile />}  />
                     <Route path='/calendario' element={<Calendario />} />
                 </Route>
