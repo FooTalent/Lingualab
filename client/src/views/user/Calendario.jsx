@@ -5,25 +5,33 @@ import ClassCalendar from '../../components/user/calendar/ClassCalendar';
 import Modal from '../../components/user/calendar/Modal';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
+import { Toast } from '../../utils/toast';
+import { getClassesByTeacherAndDate } from '../../services/programs.services'
 
 dayjs.locale('es');
 const localizer = dayjsLocalizer(dayjs);
 
 export default function Calendario() {
-    const { user, userDetail, fetchClasses } = useAppStore()
+    const { user, userDetail } = useAppStore()
     const [classes, setClasses] = useState([])
     const [date, setDate] = useState(new Date());
-    const [events, setEvents] = useState([]);
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
         fetchTeacherClasses()
-        console.log(classes)
     }, [])
 
     const fetchTeacherClasses = async () => {
-        const newClasses = await fetchClasses(user.token, userDetail._id, 'startDate=2024-07-01&endDate=2024-08-01');
-        setClasses(newClasses);
+        // startDate=2024-07-01&endDate=2024-08-01
+        const newClasses = await getClassesByTeacherAndDate(user.token, userDetail._id, '')
+        if (!newClasses.isError) {
+            setClasses(newClasses.data);
+        } else {
+            Toast.fire({
+                title: 'No ha sido posible obtener las clases',
+                icon: 'error'
+            })
+        }
     }
 
     const handleDate = (date) => {
@@ -53,8 +61,8 @@ export default function Calendario() {
                     date={date}
                     handleNavigate={handleNavigate}
                     handleSelectSlot={handleSelectSlot}
-                    events={events}
                     handleDate={handleDate}
+                    data={classes}
                 />
             </main>
 
@@ -63,6 +71,8 @@ export default function Calendario() {
                 setOpen={setOpen}
                 onNavigate={handleNavigate}
                 label={handleDate(date)}
+                data={classes}
+                selectedDay={date}
             />
         </>
     );

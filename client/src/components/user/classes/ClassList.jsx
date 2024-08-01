@@ -12,6 +12,8 @@ export default function ClassList({ dayClases }) {
                     students={clase.students}
                     date={clase.date}
                     resources={clase.class}
+                    duration={clase.duration_card}
+                    isNow={clase.isNow}
                 />
             )
         })

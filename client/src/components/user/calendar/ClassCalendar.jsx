@@ -7,12 +7,32 @@ import { Calendar } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import dayjs from 'dayjs';
 
-export default function ClassCalendar({ localizer, date, handleNavigate, handleSelectSlot, events, handleDate }) {
+export default function ClassCalendar({ localizer, date, handleNavigate, handleSelectSlot, handleDate, data }) {
     const [view, setView] = useState('month');
 
     const handleView = (newView) => {
         setView(newView);
     };
+
+    const handleEvents = (classes) => {
+        let newEvents = [];
+        classes.forEach(item => {
+            if (item.title && item.daytime) {
+                const start = dayjs(item.daytime).toDate();
+                const durationHours = Math.trunc(item.duration_hours);
+                const durationMinutes = (item.duration_hours - durationHours) * 60;
+
+                const end = dayjs(item.daytime)
+                    .add(durationHours, 'hour')
+                    .add(durationMinutes, 'minute')
+                    .toDate();
+
+                newEvents.push({ title: item.title, start: start, end: end, level: item.level });
+            }
+        });
+
+        return newEvents;
+    }
 
     // Formato días de la semana
     const formats = {
@@ -32,13 +52,13 @@ export default function ClassCalendar({ localizer, date, handleNavigate, handleS
             localizer={localizer}
             date={date}
             onNavigate={handleNavigate}
-            events={events}
+            events={handleEvents(data)}
+            onSelectSlot={handleSelectSlot}
             formats={formats}
             selectable={true}
             views={['day', 'week', 'month']}
             view={view}
             onView={handleView}
-            onSelectSlot={handleSelectSlot}
             className='min-h-screen cursor-pointer'
             components={{
                 toolbar: () => (
