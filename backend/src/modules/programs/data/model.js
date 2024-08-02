@@ -8,6 +8,7 @@ const thisSchema = new Schema({
   description: { type: String, },
   classes:     [{ type: Schema.Types.ObjectId, ref: 'classes' }],
   teacher:        { type: Schema.Types.ObjectId, ref: 'users', required: true },
+  students:       [{ type: Schema.Types.ObjectId, ref: 'users'}],
   isTemplate:  { type: Boolean, default: true },
 
   // aditional properties

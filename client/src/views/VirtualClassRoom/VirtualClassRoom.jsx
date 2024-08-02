@@ -52,7 +52,7 @@ const VirtualClassRoom = () => {
   };
 
   function buttonFunction (idProgram) {
-    navigate(`/programas/${idProgram}`)
+    navigate(`/aulavirtual/aula/${idProgram}`)
   }
 
   return (

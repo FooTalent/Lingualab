@@ -10,7 +10,7 @@ export default class CustomService {
   }
 
   createCustomProgram = async (templateId, studentIds = [], startDate, user ) => {
-    console.log(templateId);
+    console.log("Service studentIds: ",studentIds);
     let templateProgram;
     if (templateId) {
       templateProgram = await this.daoProgram.getBy({ _id: templateId });
@@ -27,6 +27,7 @@ export default class CustomService {
       level: templateId ? templateProgram.level : "A1-A2",
       isTemplate: false,
       classes: [],
+      students: studentIds,
     });
 
     if (templateId) {
@@ -44,20 +45,18 @@ export default class CustomService {
           duration_hours: classTemplate.duration_hours,
           teacher: user._id,
           isTemplate: false,
-          students: studentIds,
         });
         return newClass;
       });
 
       const newClasses = await Promise.all(newClassesPromises);
       const idClasses = newClasses.map((newClass) => newClass._id);
-      console.log('New Classes IDs:', idClasses);
 
       await this.daoProgram.update({ _id: savedProgram._id }, { classes: idClasses });
     }
 
     const updatedProgram = await this.daoProgram.getBy({ _id: savedProgram._id });
-    console.log('Updated Program with Classes:', updatedProgram);
+    //console.log('Updated Program with Classes:', updatedProgram);
     return updatedProgram;
   }
 }
