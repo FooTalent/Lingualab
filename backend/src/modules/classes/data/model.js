@@ -15,9 +15,6 @@ const classSchema = new Schema({
   // TODO aditional properties (en duda si va)
   language:       { type: String, enum: LANGUAGES, required: true },
   level:          { type: String, enum: LEVELS,    required: true },
-  link_meet:      { type: String, },
-  link_calendar:  { type: String, },
-  teacher:        { type: Schema.Types.ObjectId, ref: 'users', },
   students:       [{ type: Schema.Types.ObjectId, ref: 'users'}],
 
   // se cre con la aula vitual

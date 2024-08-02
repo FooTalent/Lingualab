@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAppStore } from '../../store/useAppStore';
-import { createClass, getProgramById } from '../../services/programs.services';
-import Modal from '../../components/Modal';
+import { useAppStore } from '../../../store/useAppStore';
+import { createClass, getProgramById } from '../../../services/programs.services';
+import Modal from '../../../components/Modal';
 import CreateClassForm from './CreateClassForm';
 import ClassroomCard from './ClassroomCard';
-import { LEVELS_MAP } from '../../utils/valueLists';
-import BackButton from '../../components/BackButtom';
+import { LEVELS_MAP } from '../../../utils/valueLists';
+import BackButton from '../../../components/BackButtom';
 
 const ProgramDetail = () => {
   const { eid } = useParams();
@@ -52,7 +52,7 @@ const ProgramDetail = () => {
   };
 
   const handleEditClassroom = (classroomId) => {
-    navigate(`/classroom/${classroomId}`);
+    navigate(`/workspace/class/${classroomId}`);
   };
 
   if (loading) return <p className="text-center">Cargando datos...</p>;

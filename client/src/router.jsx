@@ -7,10 +7,11 @@ import Register from './views/auth/Register'
 import ForgotPassword from './views/auth/ForgotPassword'
 import NewPassword from './views/auth/NewPassword'
 import Profile from './views/Profile'
+import VirtualClassRoom from './views/VirtualClassRoom/VirtualClassRoom'
 import WorkSpace from './views/WorkSpace/WorkSpace'
-import ProgramDetail from './views/Program/ProgramDetail'
-import ClassDetail from './views/Class/ClassDetail'
-import Resources from './views/Resources/Resources'
+import ProgramDetail from './views/WorkSpace/Program/ProgramDetail'
+import ClassDetail from './views/WorkSpace/Class/ClassDetail'
+import Recursos from './views/Resources/Recursos'
 import Calendario from './views/user/Calendario'
 
 
@@ -20,10 +21,11 @@ export default function Router() {
             <Routes>
                 <Route element={<AppLayout />}>
                     <Route path='/' element={<Home />} index />
-                    <Route path='/aulavirtual' element={<WorkSpace />} />
-                    <Route path='/programas/:eid' element={<ProgramDetail />} />
-                    <Route path='/classroom/:eid' element={<ClassDetail />} />
-                    <Route path='/recursos' element={<Resources />} />
+                    <Route path='/aulavirtual' element={<VirtualClassRoom />} />
+                    <Route path='/workspace' element={<WorkSpace />} />
+                    <Route path='/workspace/programas/:eid' element={<ProgramDetail />} />
+                    <Route path='/workspace/class/:eid' element={<ClassDetail />} />
+                    <Route path='/recursos' element={<Recursos />} />
                     <Route path='/profile' element={<Profile />}  />
                     <Route path='/calendario' element={<Calendario />} />
                 </Route>
