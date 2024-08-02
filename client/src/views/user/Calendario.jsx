@@ -55,7 +55,7 @@ export default function Calendario() {
 
     return (
         <>
-            <main className='flex flex-col gap-5 px-10'>
+            <main className='container mx-auto flex flex-col gap-5'>
                 <ClassCalendar
                     localizer={localizer}
                     date={date}

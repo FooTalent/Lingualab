@@ -1,26 +1,69 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { LEVELS_MAP } from '../../utils/valueLists';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Options from '../../components/user/classes/Options';
+import ShareIcon from '@mui/icons-material/Share';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const ProgramCard = ({ program, buttonFunction }) => {
+  const [state, setState] = useState(false)
+
+  const links = [
+    { path: `/`, label: <>Crear aula a partir de este programa</> },
+    { path: `/`, label: <><ShareIcon />Compartir</> },
+    { path: `/`, label: <>Editar programa</> },
+    { path: `/`, label: <>Duplicar programa</> },
+    { path: `/`, label: <><DeleteIcon />Eliminar programa</> },
+  ]
+
+  const handleOptions = () => {
+    setState(!state)
+  }
+
   return (
-    <div className="program-card border p-4 rounded-lg shadow-lg flex flex-col space-y-2 w-4/5">
-      <div className="flex items-center mb-2">
-        <div
-          className="text-white px-2 py-1 rounded-md"
-          style={{ backgroundColor: LEVELS_MAP[program.level] }}
-        >
-          {program.level}
+    <div className="relative flex flex-nowrap justify-between shadow-cardContainer rounded-xl p-4">
+      <div className='flex flex-col gap-4 w-9/12'>
+        <div className="flex items-center gap-6 text-lg">
+          <div
+            className="flex items-center text-white py-2 px-4 rounded-lg font-medium"
+            style={{ backgroundColor: LEVELS_MAP[program.level] }}
+          >
+            {program.level}
+          </div>
+          <h2
+            className="p-0 text-lg font-bold truncate"
+            style={{ maxWidth: 'calc(100% - 8rem)' }}
+          >
+            {program.title}
+          </h2>
         </div>
-        <h2 className="text-xl font-semibold ml-2">{program.title}</h2>
+
+        <p className='flex gap-4'>
+          <span className='font-semibold'>Idioma:</span>
+          {program.language || '-'}
+        </p>
+
+        <p className='flex gap-4'>
+          <span className='font-semibold'>Descripción:</span>
+          {program.description || "-"}
+        </p>
       </div>
-      <p>Language: {program.language}</p>
-      <p>Reference ID: {program._id}</p>
-      <button
-        className="bg-blue-500 text-white px-2 py-1 rounded-md w-1/6 self-end"
-        onClick={() => buttonFunction(program._id)}
-      >
-        Ver Clases
-      </button>
+
+      <div className="flex flex-col justify-between items-end">
+        <button
+          onClick={handleOptions}
+        >
+          <MoreVertIcon className='text-Purple' />
+        </button>
+        <button
+          className="bg-Purple hover:bg-PurpleHover text-white px-4 py-2 rounded-lg font-extrabold ease-linear duration-150"
+          onClick={() => buttonFunction(program._id)}
+        >
+          Ver clases
+        </button>
+      </div>
+
+      <Options id={program._id} state={state} links={links} />
     </div>
   );
 };

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useAppStore } from '../../store/useAppStore';
-import ProgramCard from './ProgramCard';
 import { createProgram, getPrograms } from '../../services/programs.services';
-import { useNavigate  } from 'react-router-dom';
-import CreateProgramForm from './CreateProgramForm';
+import { useNavigate } from 'react-router-dom';
 import Modal from '../../components/Modal';
-import BackButton from '../../components/BackButtom';
+import NavWorkSpace from './NavWorkSpace';
+import ProgramList from './ProgramList';
+import CreateVCRForm from '../VirtualClassRoom/CreateVCRForm';
 
 const WorkSpace = () => {
   const [programs, setPrograms] = useState([]);
@@ -32,7 +32,7 @@ const WorkSpace = () => {
           setLoading(false);
         }
       };
-  
+
       fetchPrograms();
     } else {
       setLoading(false);
@@ -50,45 +50,39 @@ const WorkSpace = () => {
     }
   };
 
-  function buttonFunction (idProgram) {
+  function buttonFunction(idProgram) {
     navigate(`/workspace/programas/${idProgram}`)
   }
 
   return (
-    <div className="container mx-auto mt-8">
-      <div className="flex justify-between items-center mb-4">
-        <BackButton />
-        <h1 className="text-3xl font-bold">Área de Trabajo</h1>
-        <button
-          className="bg-blue-500 text-white px-4 py-2 rounded-md"
-          onClick={() => setIsModalOpen(true)}
-        > Crear Nuevo Programa
-        </button>
-      </div>
+    <div className="container mx-auto flex flex-col gap-11"    >
+      <NavWorkSpace setModal={setIsModalOpen} />
 
-      {loading ? (
-        <p className="text-center">Cargando Datos...</p>
-      ) : error ? (
-        <p className="text-center text-red-500">Error: {error}</p>
-      ) : programs.length === 0 ? (
-        <div className="text-center mt-8">
-          <p className="text-gray-700">No hay programas creados. ¡Crea uno ahora!</p>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md"
-          >
-            Crear Programa
-          </button>
-        </div>
-      ) : (
-        <div className="programs-container flex flex-wrap justify-center">
-          {programs.map((program) => (
-            <ProgramCard key={program._id} program={program} buttonFunction={buttonFunction} />
-          ))}
-        </div>
-      )}
+      {
+        loading ? (
+          <p className="text-center">Cargando Datos...</p>
+        ) : error ? (
+          <p className="text-center text-red-500">Error: {error}</p>
+        ) : programs.length === 0 ? (
+          <div className="text-center mt-8">
+            <p className="text-gray-700">No hay programas creados. ¡Crea uno ahora!</p>
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md"
+            >
+              Crear Programa
+            </button>
+          </div>
+        ) : <ProgramList data={programs} buttonFunction={buttonFunction} />
+      }
+
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Crear Programa">
-        <CreateProgramForm onSubmit={handleCreateProgram} onClose={() => setIsModalOpen(false)} />
+        <CreateVCRForm
+          onSubmit={handleCreateProgram}
+          onClose={() => setIsModalOpen(false)}
+          techerId={userDetail._id}
+          token={user.token}
+        />
       </Modal>
     </div>
   );

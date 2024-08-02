@@ -12,6 +12,7 @@ export default {
       colors: {
         Purple: '#6945FF',
         Yellow: '#FFDC00',
+        YellowDeselect: '#FFF8CC',
         PurpleHover: '#5300B8',
         whiteCustom: '#FFFFFFBF',
         Grey: '#9B9B9B',
@@ -21,8 +22,9 @@ export default {
         a1a2: '#25CFB7',
         b1b2: '#3A9FB6',
         c1c2: '#3C5A99',
+        inputBg: '#F9F9F9',
       },
-      backgroundImage:{
+      backgroundImage: {
         'fondo': "url('/fondoLogin.jpg')"
       },
       boxShadow: {
@@ -33,6 +35,10 @@ export default {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss/plugin')(({ addVariant }) => {
+      addVariant('search-cancel', '&::-webkit-search-cancel-button');
+    }),
+  ],
 }
 
