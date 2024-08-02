@@ -96,7 +96,7 @@ export const createUserSlice = (set, get) => ({
             set({
                 status: JSON.parse(storeLogin),
                 user: JSON.parse(userLogin),
-                userDetail: JSON.parse(detail)
+                userDetail: JSON.parse(detail),
             })
         }
     },

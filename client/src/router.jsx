@@ -10,8 +10,9 @@ import Profile from './views/Profile'
 import WorkSpace from './views/WorkSpace/WorkSpace'
 import ProgramDetail from './views/Program/ProgramDetail'
 import ClassDetail from './views/Class/ClassDetail'
+import Resources from './views/Resources/Resources'
 import Calendario from './views/user/Calendario'
-import Resources from './views/Resources'
+
 
 export default function Router() {
     return (
