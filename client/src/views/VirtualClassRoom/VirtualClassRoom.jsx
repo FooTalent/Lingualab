@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useAppStore } from '../../store/useAppStore';
 import ProgramCard from './ProgramCard';
-import { createProgram, getVCRooms } from '../../services/programs.services';
+import { getVCRooms, createVCRoom } from '../../services/programs.services';
 import { useNavigate  } from 'react-router-dom';
 import CreateVCRForm from './CreateVCRForm';
 import Modal from '../../components/Modal';
@@ -9,6 +9,7 @@ import Modal from '../../components/Modal';
 const VirtualClassRoom = () => {
   const [programs, setPrograms] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refresh, setRefresh] = useState(true);
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user, userDetail } = useAppStore()
@@ -36,13 +37,14 @@ const VirtualClassRoom = () => {
     } else {
       setLoading(false);
     }
-  }, [user, userDetail]);
+  }, [user, userDetail, refresh]);
 
   const handleCreateProgram = async (programData) => {
     try {
-      const newProgram = await createProgram(user.token, userDetail._id, programData);
+      const newProgram = await createVCRoom(user.token, userDetail._id, programData);
       setPrograms([...programs, newProgram]);
       setIsModalOpen(false);
+      setRefresh(!refresh);
     } catch (error) {
       console.error('Error al crear el programa', error);
       setError(error.message);

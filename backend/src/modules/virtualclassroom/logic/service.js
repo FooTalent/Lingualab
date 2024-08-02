@@ -20,7 +20,7 @@ export default class CustomService {
     }
 
     const savedProgram = await this.daoProgram.create({
-      title: "PROBANDOOOOOOOOOOOOOOOOOOOO",//templateId ? templateProgram.title : "Sin titulo",
+      title: "PROBANDOO" + (templateId ? templateProgram.title : "Sin titulo"),//templateId ? templateProgram.title : "Sin titulo",
       description: templateId ? templateProgram.description : "",
       teacher: user._id,
       language: templateId ? templateProgram.language : "Inglés",

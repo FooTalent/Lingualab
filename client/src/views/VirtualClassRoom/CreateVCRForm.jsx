@@ -4,11 +4,7 @@ import { getStudents } from '../../services/students.services';
 
 const CreateVCRForm = ({ onSubmit, onClose, techerId, token }) => {
   const [programData, setProgramData] = useState({
-    title: '',
-    description: '',
-    templateId: '',
     studentIds: [],
-    startDate: '',
   });
   const [programs, setPrograms] = useState([]);
   const [students, setStudents] = useState([]);
@@ -18,9 +14,9 @@ const CreateVCRForm = ({ onSubmit, onClose, techerId, token }) => {
     const fetchData = async () => {
       try {
         const fetchedPrograms = await getPrograms(token, techerId);
-        setPrograms(fetchedPrograms);
+        setPrograms(fetchedPrograms.data);
         const fetchedStudents = await getStudents(token, techerId);
-        setStudents(fetchedStudents);
+        setStudents(fetchedStudents.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -65,26 +61,6 @@ const CreateVCRForm = ({ onSubmit, onClose, techerId, token }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-4">
-        <label className="block text-gray-700">Título</label>
-        <input
-          type="text"
-          name="title"
-          value={programData.title}
-          onChange={handleInputChange}
-          className="w-full p-2 border rounded-md"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">Descripción</label>
-        <input
-          type="text"
-          name="description"
-          value={programData.description}
-          onChange={handleInputChange}
-          className="w-full p-2 border rounded-md"
-        />
-      </div>
-      <div className="mb-4">
         <label className="block text-gray-700">Template</label>
         <select
           name="templateId"
@@ -111,7 +87,7 @@ const CreateVCRForm = ({ onSubmit, onClose, techerId, token }) => {
             <option value="">Seleccionar Estudiante</option>
             {students.map((student) => (
               <option key={student._id} value={student._id}>
-                {student.name}
+              {student.last_name}, {student.first_name}
               </option>
             ))}
           </select>
@@ -123,12 +99,12 @@ const CreateVCRForm = ({ onSubmit, onClose, techerId, token }) => {
             +
           </button>
         </div>
-        <div className="flex flex-wrap">
+        <div className="flex flex-col">
           {programData.studentIds.map((studentId) => {
             const student = students.find((s) => s._id === studentId);
             return (
               <div key={studentId} className="flex items-center m-1 p-2 border rounded-md bg-gray-200">
-                <span>{student ? student.name : 'Estudiante desconocido'}</span>
+                <span>{student ? `${student.last_name}, ${student.first_name}` : 'Estudiante desconocido'}</span>
                 <button
                   type="button"
                   onClick={() => handleRemoveStudent(studentId)}
