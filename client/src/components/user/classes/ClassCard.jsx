@@ -36,25 +36,14 @@ export default function ClassCard({ id, title, students, duration, isNow, linkMe
                     <MoreVertIcon />
                 </button>
 
-                {isNow ? (
-                    <a
-                        href={linkMeet}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex gap-2 rounded-lg px-2 py-2 bg-yellow-300 font-extrabold"
-                        onClick={handleLinkClick}
-                    >
-                        <VideocamIcon />Unirse
-                    </a>
-                ) : (
-                    <Link
-                        to={`/classroom/${id}`}
-                        className="flex gap-2 rounded-lg px-2 py-2 bg-Purple text-white font-extrabold"
-                        onClick={handleLinkClick}
-                    >
-                        Programa
-                    </Link>
-                )}
+                <Link
+                    to={isNow ? linkMeet : `/classroom/${id}`}
+                    target={isNow ? '_blank' : ''}
+                    className={`flex gap-2 rounded-lg px-2 py-2 font-extrabold ease-linear duration-200 ${isNow ? 'bg-yellowInput hover:bg-card hover:text-yellowInput' : 'bg-Purple text-white hover:bg-PurpleHover'}`}
+                    onClick={handleLinkClick}
+                >
+                    {isNow ? <><VideocamIcon />Unirse</> : 'Programa'}
+                </Link>
             </div>
 
             {stateOption === id && <Options state={stateOption} id={id} />}
