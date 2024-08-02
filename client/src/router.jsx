@@ -11,7 +11,7 @@ import VirtualClassRoom from './views/VirtualClassRoom/VirtualClassRoom'
 import WorkSpace from './views/WorkSpace/WorkSpace'
 import ProgramDetail from './views/WorkSpace/Program/ProgramDetail'
 import ClassDetail from './views/WorkSpace/Class/ClassDetail'
-import Recursos from './views/Resources/Recursos'
+import Recursos from './views/Resources/Resources'
 import Calendario from './views/user/Calendario'
 
 
