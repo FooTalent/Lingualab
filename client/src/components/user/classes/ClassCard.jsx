@@ -5,8 +5,17 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import VideocamIcon from '@mui/icons-material/Videocam';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import ShareIcon from '@mui/icons-material/Share';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function ClassCard({ id, title, students, duration, isNow, linkMeet, toggleOptions, stateOption }) {
+    const links = [
+        { path: `/classroom/${id}`, label: <><PersonAddIcon /> Invitar al/los alumno/os</> },
+        { path: `/classroom/${id}`, label: <><WatchLaterIcon /> Editar fecha y hora</> },
+        { path: `/classroom/${id}`, label: <><ShareIcon /> Compartir</> },
+        { path: `/classroom/${id}`, label: <><DeleteIcon /> Eliminar clase</> },
+    ]
 
     const handleCardOptions = (e) => {
         e.stopPropagation();
@@ -42,11 +51,11 @@ export default function ClassCard({ id, title, students, duration, isNow, linkMe
                     className={`flex gap-2 rounded-lg px-2 py-2 font-extrabold ease-linear duration-200 ${isNow ? 'bg-yellowInput hover:bg-card hover:text-yellowInput' : 'bg-Purple text-white hover:bg-PurpleHover'}`}
                     onClick={handleLinkClick}
                 >
-                    {isNow ? <><VideocamIcon />Unirse</> : 'Programa'}
+                    {isNow ? <><VideocamIcon />Unirse</> : 'Ir al aula'}
                 </Link>
             </div>
 
-            {stateOption === id && <Options state={stateOption} id={id} />}
+            {stateOption === id && <Options state={stateOption} id={id} links={links} />}
         </div>
     );
 }
