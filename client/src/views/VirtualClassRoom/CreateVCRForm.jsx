@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getPrograms } from '../../services/programs.services';
 import { getStudents } from '../../services/students.services';
+import DropdownSelect from './DropdownSelect';
 
 const CreateVCRForm = ({ onSubmit, onClose, techerId, token }) => {
   const [programData, setProgramData] = useState({
@@ -9,6 +10,24 @@ const CreateVCRForm = ({ onSubmit, onClose, techerId, token }) => {
   const [programs, setPrograms] = useState([]);
   const [students, setStudents] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState('Seleccionar el idioma');
+  const [selectedLevel, setSelectedLevel] = useState('Seleccionar el nivel')
+
+  const languages = [
+    'Inglés',
+    'Español',
+    'Francés',
+    'Alemán',
+    'Italiano',
+    'Chino (Mandarín)',
+  ];
+
+  const levels = [
+    'A1-A2',
+    'B1-B2',
+    'C1-C2'
+  ]
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,87 +78,70 @@ const CreateVCRForm = ({ onSubmit, onClose, techerId, token }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="mb-4">
-        <label className="block text-gray-700">Template</label>
-        <select
-          name="templateId"
-          value={programData.templateId}
-          onChange={handleInputChange}
-          className="w-full p-2 border rounded-md"
+    <form
+      onSubmit={handleSubmit}
+      className='flex flex-col gap-4'
+    >
+      <div className='flex flex-wrap gap-3'>
+        <label
+          className="text-xl p-0"
+          htmlFor='title'
         >
-          <option value="">Seleccionar Template</option>
-          {programs.map((program) => (
-            <option key={program._id} value={program._id}>
-              {program.title}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">Estudiantes</label>
-        <div className="flex items-center mb-2">
-          <select
-            value={selectedStudent}
-            onChange={handleStudentChange}
-            className="w-full p-2 border rounded-md"
-          >
-            <option value="">Seleccionar Estudiante</option>
-            {students.map((student) => (
-              <option key={student._id} value={student._id}>
-              {student.last_name}, {student.first_name}
-              </option>
-            ))}
-          </select>
-          <button
-            type="button"
-            onClick={handleAddStudent}
-            className="ml-2 bg-blue-500 text-white px-4 py-2 rounded-md"
-          >
-            +
-          </button>
-        </div>
-        <div className="flex flex-col">
-          {programData.studentIds.map((studentId) => {
-            const student = students.find((s) => s._id === studentId);
-            return (
-              <div key={studentId} className="flex items-center m-1 p-2 border rounded-md bg-gray-200">
-                <span>{student ? `${student.last_name}, ${student.first_name}` : 'Estudiante desconocido'}</span>
-                <button
-                  type="button"
-                  onClick={() => handleRemoveStudent(studentId)}
-                  className="ml-2 text-red-500"
-                >
-                  x
-                </button>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">Fecha de inicio</label>
+          Titulo
+        </label>
+
         <input
-          type="date"
-          name="startDate"
-          value={programData.startDate}
-          onChange={handleInputChange}
-          className="w-full p-2 border rounded-md"
+          type="text"
+          name="title"
+          className='py-3 px-4 outline-none focus:border-black'
+          placeholder='Escribe el nombre del programa...'
         />
       </div>
-      <div className="flex justify-end">
+
+      <DropdownSelect
+        label="Idioma"
+        options={languages}
+        selectedOption={selectedLanguage}
+        onSelect={setSelectedLanguage}
+      />
+
+      <DropdownSelect
+        label="Nivel"
+        options={levels}
+        selectedOption={selectedLevel}
+        onSelect={setSelectedLevel}
+      />
+
+      <div className='flex flex-wrap gap-3'>
+        <label
+          className="text-xl p-0"
+          htmlFor='description'
+        >
+          Descripción
+        </label>
+
+        <input
+          type="text"
+          name="description"
+          className='py-3 px-4 outline-none focus:border-black'
+          placeholder='Escribe el nombre del programa...'
+        />
+      </div>
+
+
+      <div className="grid grid-cols-2 gap-8">
         <button
           type="button"
-          className="bg-gray-500 text-white px-4 py-2 rounded-md mr-2"
+          className="border border-Purple bg-white hover:bg-Purple text-Purple hover:text-white font-extrabold py-3 px-8 rounded-lg mr-2 ease-linear duration-150"
           onClick={onClose}
         >
           Cancelar
         </button>
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded-md"
+          className="border border-Purple bg-Purple hover:bg-PurpleHover text-white font-extrabold py-3 px-8 rounded-lg ease-linear duration-150"
         >
-          Crear
+          Crear programa
         </button>
       </div>
     </form>
