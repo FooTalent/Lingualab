@@ -6,12 +6,14 @@ import Modal from '../../components/Modal';
 import NavWorkSpace from './NavWorkSpace';
 import ProgramList from './ProgramList';
 import CreateVCRForm from '../VirtualClassRoom/CreateVCRForm';
+import CreatedProgram from './CreatedProgram';
 
 const WorkSpace = () => {
   const [programs, setPrograms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCreated, setIsCreated] = useState(true)
   const { user, userDetail } = useAppStore()
   const navigate = useNavigate();
 
@@ -76,12 +78,19 @@ const WorkSpace = () => {
         ) : <ProgramList data={programs} buttonFunction={buttonFunction} />
       }
 
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Crear Programa">
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Crear Programa" modalSize={'medium'}>
         <CreateVCRForm
           onSubmit={handleCreateProgram}
           onClose={() => setIsModalOpen(false)}
           techerId={userDetail._id}
           token={user.token}
+        />
+      </Modal>
+
+      <Modal isOpen={isCreated} onClose={() => setIsModalOpen(false)} modalSize={'small'}>
+        <CreatedProgram
+          // onSubmit={}
+          onClose={() => setIsCreated}
         />
       </Modal>
     </div>

@@ -4,15 +4,18 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Options from '../../components/user/classes/Options';
 import ShareIcon from '@mui/icons-material/Share';
 import DeleteIcon from '@mui/icons-material/Delete';
+import crearAula from '/crearAulaCard.svg'
+import editarPrograma from '/editarPrograma.svg'
+import duplicar from '/duplicar.svg'
 
 const ProgramCard = ({ program, buttonFunction }) => {
   const [state, setState] = useState(false)
 
   const links = [
-    { path: `/`, label: <>Crear aula a partir de este programa</> },
+    { path: `/`, label: <><img src={crearAula} alt='Crear Aula' />Crear aula a partir de este programa</> },
     { path: `/`, label: <><ShareIcon />Compartir</> },
-    { path: `/`, label: <>Editar programa</> },
-    { path: `/`, label: <>Duplicar programa</> },
+    { path: `/`, label: <><img src={editarPrograma} alt='Editar Programa' />Editar programa</> },
+    { path: `/`, label: <><img src={duplicar} alt='Editar Programa' />Duplicar programa</> },
     { path: `/`, label: <><DeleteIcon />Eliminar programa</> },
   ]
 
