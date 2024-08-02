@@ -43,8 +43,8 @@ export default function Register() {
                     label: 'Nombre',
                     type: 'text',
                     placeholder: 'Ingresa tu nombre',
-                    validations: /^[a-zA-Z]*$/,
-                    messageError: 'Sole se permiten letras'
+                    validations: /^[\p{L}]*$/u,
+                    messageError: 'Solo se permiten letras'
                 }
                 break;
             case 'last_name':
@@ -52,8 +52,8 @@ export default function Register() {
                     label: 'Apellido',
                     type: 'text',
                     placeholder: 'Ingresa tu apellido',
-                    validations: /^[a-zA-Z]*$/,
-                    messageError: 'Sole se permiten letras'
+                    validations: /^[\p{L}]*$/u,
+                    messageError: 'Solo se permiten letras'
                 }
                 break;
             case 'email':

@@ -14,6 +14,7 @@ import ClassDetail from './views/WorkSpace/Class/ClassDetail'
 import Recursos from './views/Resources/Recursos'
 import Calendario from './views/user/Calendario'
 
+
 export default function Router() {
     return (
         <BrowserRouter>
