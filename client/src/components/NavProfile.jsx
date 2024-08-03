@@ -3,6 +3,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState } from 'react';
 import { useAppStore } from '../store/useAppStore';
 import { Link } from 'react-router-dom';
+import { crearURLCompleta } from '../utils/urifoto';
 
 const NavProfile = () => {
     const { loguot, userDetail } = useAppStore()
@@ -24,7 +25,7 @@ const NavProfile = () => {
             <div className='flex flex-row justify-center items-center text-white'>
                 {userDetail?.photo ? (
                     <img className='flex justify-center items-center font-bold rounded-full w-8 h-8'
-                        src={userDetail.photo}
+                        src={crearURLCompleta(userDetail.photo)}
                     />
                 ) : <span className='flex justify-center items-center font-bold rounded-full w-8 h-8 bg-Yellow uppercase'>{initials ? initials : "?"}</span>}
 

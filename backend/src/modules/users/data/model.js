@@ -28,9 +28,9 @@ const userSchema = new Schema({
 
   // aditional properties
   photo:       { type: String,   },
+  presentation:{ type: String,   },
   birthday:    { type: Date,     },
   gender:      { type: String,   enum: GENDERS,},
-  presentation:{ type: String,   },
   phone:       { type: String, maxLength: 20   },
   studies:     { type: [educationSchema], },
   certificate: { type: [educationSchema], },
