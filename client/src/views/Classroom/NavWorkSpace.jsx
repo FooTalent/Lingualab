@@ -3,7 +3,7 @@ import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
 
-export default function NavWorkSpace({ setModal }) {
+export default function NavWorkSpace({ setModal, buttonDescription }) {
     const inputRef = useRef(null);
     const [isInputFocused, setIsInputFocused] = useState(false);
     const navigate = useNavigate();
@@ -17,6 +17,7 @@ export default function NavWorkSpace({ setModal }) {
             <div className='flex gap-4 justify-evenly items-center'>
                 <button
                     className={`${false ? 'bg-Yellow font-extrabold' : 'bg-YellowDeselect'} hover:bg-Yellow text-card border-2 border-Yellow rounded-lg py-3 px-4 ease-linear duration-150`}
+                    onClick={() => navigate(`/aulavirtual`)}
                 >
                     Mis aulas
                 </button>
@@ -28,7 +29,7 @@ export default function NavWorkSpace({ setModal }) {
                 <button
                     className={`${true ? '' : ''} bg-card hover:bg-Yellow font-extrabold text-Yellow hover:text-card border-2 border-card hover:border-Yellow rounded-lg py-3 px-4 ease-linear duration-150`}
                     onClick={handleModal}
-                > Crear Programa <AddIcon />
+                > {buttonDescription} <AddIcon />
                 </button>
             </div>
 

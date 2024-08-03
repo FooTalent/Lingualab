@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAppStore } from '../../../store/useAppStore';
-import { getClassById, updateClass } from '../../../services/programs.services';
-import { LEVELS_MAP } from '../../../utils/valueLists';
-import TextEditor from '../../../components/TextEditor/TextEditor';
-import BackButton from '../../../components/BackButtom';
+import { useAppStore } from '../../../../store/useAppStore';
+import { getClassById, updateClass } from '../../../../services/programs.services';
+import { LEVELS_MAP } from '../../../../utils/valueLists';
+import TextEditor from '../../../../components/TextEditor/TextEditor';
+import BackButton from '../../../../components/BackButtom';
 
 const ClassDetail = () => {
   const { eid } = useParams();

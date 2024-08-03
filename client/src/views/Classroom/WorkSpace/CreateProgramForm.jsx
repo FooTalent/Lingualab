@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { LANGUAGES, LEVELS, LEVELS_MAP } from '../../utils/valueLists';
+import { LANGUAGES, LEVELS } from '../../../utils/valueLists';
+import DropdownSelect from '../DropdownSelect';
 
 const CreateProgramForm = ({ onSubmit, onClose }) => {
   const [programData, setProgramData] = useState({
@@ -14,6 +15,13 @@ const CreateProgramForm = ({ onSubmit, onClose }) => {
     setProgramData({
       ...programData,
       [name]: value,
+    });
+  };
+
+  const handleSelectChange = (field, value) => {
+    setProgramData({
+      ...programData,
+      [field]: value,
     });
   };
 
@@ -45,35 +53,20 @@ const CreateProgramForm = ({ onSubmit, onClose }) => {
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700">Idioma</label>
-        <select
-          name="language"
-          value={programData.language}
-          onChange={handleInputChange}
-          className="w-full p-2 border rounded-md"
-        >
-          {LANGUAGES.map((language) => (
-            <option key={language} value={language}>
-              {language}
-            </option>
-          ))}
-        </select>
+        <DropdownSelect
+          label="Idioma"
+          options={LANGUAGES}
+          selectedOption={programData.language}
+          onSelect={(value) => handleSelectChange('language', value)}
+        />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700">Nivel</label>
-        <select
-          name="level"
-          value={programData.level}
-          onChange={handleInputChange}
-          className="w-full p-2 border rounded-md"
-          style={{ color: LEVELS_MAP[programData.level] }}
-        >
-          {LEVELS.map((level) => (
-            <option key={level.key} value={level.data} style={{ color: level.color }}>
-              {level.data}
-            </option>
-          ))}
-        </select>
+        <DropdownSelect
+          label="Nivel"
+          options={LEVELS.map(level => level.data)}
+          selectedOption={programData.level}
+          onSelect={(value) => handleSelectChange('level', value)}
+        />
       </div>
       <div className="flex justify-end">
         <button
