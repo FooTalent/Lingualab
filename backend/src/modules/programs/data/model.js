@@ -26,11 +26,17 @@ const thisSchema = new Schema({
   },
 })
 
-thisSchema.pre('findOne', function(next) {
-  this.populate({
+thisSchema.pre(['findOne', 'find'], function(next) {
+  this
+  .populate({
     path: 'teacher',
     select: '-password'
-  }).populate('classes');
+  })
+  .populate('classes')
+  .populate({
+    path: 'students',
+    select: '_id first_name last_name'
+  });
   next();
 });
 

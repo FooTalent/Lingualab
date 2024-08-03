@@ -15,6 +15,16 @@ const ProgramCard = ({ program, buttonFunction }) => {
       </div>
       <p>Language: {program.language}</p>
       <p>Reference ID: {program._id}</p>
+      {program.students.length > 0 && (
+        <div>
+          <h3 className="font-semibold">Alumnos:</h3>
+          <ul>
+            {program.students.map((student) => (
+              <li key={student._id}>{student.last_name}, {student.first_name}</li>
+            ))}
+          </ul>
+        </div>
+      )}
       <button
         className="bg-blue-500 text-white px-2 py-1 rounded-md w-1/6 self-end"
         onClick={() => buttonFunction(program._id)}

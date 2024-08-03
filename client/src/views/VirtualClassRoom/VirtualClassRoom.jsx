@@ -54,6 +54,7 @@ const VirtualClassRoom = () => {
   function buttonFunction (idProgram) {
     navigate(`/aulavirtual/aula/${idProgram}`)
   }
+  console.log(programs);
 
   return (
     <div className="container mx-auto mt-8">
@@ -88,11 +89,15 @@ const VirtualClassRoom = () => {
       ) : (
         <div className="programs-container flex flex-wrap justify-center">
           {programs.map((program) => (
-            <ProgramCard key={program._id} program={program} buttonFunction={buttonFunction} />
+            <ProgramCard
+              key={program._id}
+              program={program}
+              buttonFunction={buttonFunction}
+              />
           ))}
         </div>
       )}
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Crear Programa">
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Crear Aula">
         <CreateVCRForm 
           onSubmit={handleCreateProgram}
           onClose={() => setIsModalOpen(false)}
