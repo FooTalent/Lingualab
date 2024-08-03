@@ -7,6 +7,7 @@ const NavBar = () => {
         { text: "Aula Virtual", to: "/aulavirtual" },
         { text: "Calendario", to: "/calendario" },
         { text: "Recursos", to: "/recursos" },
+        { text: "Alumnos", to: "/alumnos" },,
     ]
 
     return (

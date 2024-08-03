@@ -24,7 +24,7 @@ export default function Router() {
                     <Route path='/classroom/:eid' element={<ClassRoomDetail />} />
                     <Route path='/recursos' element={<Recursos />} />
                     <Route path='/profile' element={<Profile />}  />
-                    <Route path='/viewstudent' element={<ViewStudent />}  />
+                    <Route path='/alumnos' element={<ViewStudent />}  />
                 </Route>
 
                 <Route element={<AuthLayout />}>
