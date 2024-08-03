@@ -80,9 +80,12 @@ export const createUserSlice = (set, get) => ({
     loguot: () => {
         set(() => ({
             status: false,
-            user: null
+            user: null,
+            userDetail: null
         }))
         localStorage.setItem('status', JSON.stringify(get().status))
+        localStorage.setItem('user', JSON.stringify(get().user))
+        localStorage.setItem('userDetail', JSON.stringify(get().userDetail));
         Toast.fire({
             title: "Sesión finalizada",
             icon: "info"
@@ -121,24 +124,5 @@ export const createUserSlice = (set, get) => ({
                 change: true
             }))
         }
-    },
-
-    // user profile
-    // fetchCurrentUser: async () => {
-    //     const { token } = get().user;
-    //     if (token) {
-    //         try {
-    //             const userData = await getUserData(token);
-    //             if (userData) {
-    //                 set(() => ({
-    //                     userDetail: { ...userData }
-    //                 }));
-    //                 localStorage.setItem('userDetail', JSON.stringify(get().userDetail));
-    //             }
-    //         } catch (error) {
-    //             console.error('Error fetching user data:', error);
-    //         }
-    //     }
-    // },
-
+    }
 })

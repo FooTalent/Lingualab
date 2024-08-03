@@ -16,13 +16,13 @@ const NavProfile = () => {
         setMenuOpen(false);
     };
 
-    const initials = userDetail.first_name?.charAt(0) + userDetail.last_name?.charAt(0)
+    const initials = userDetail?.first_name?.charAt(0) + userDetail?.last_name?.charAt(0)
 
     return (
         <div className='relative flex justify-end items-center gap-3 h-12'>
             <NotificationsIcon className='w-6 h-6 cursor-pointer text-white' />
             <div className='flex flex-row justify-center items-center text-white'>
-                {userDetail.photo ? (
+                {userDetail?.photo ? (
                     <img className='flex justify-center items-center font-bold rounded-full w-8 h-8'
                         src={userDetail.photo}
                     />
