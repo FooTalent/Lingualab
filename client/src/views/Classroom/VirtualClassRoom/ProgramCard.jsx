@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { LEVELS_MAP } from '../../utils/valueLists';
+import React, { useState } from 'react';
+import { LEVELS_MAP } from '../../../utils/valueLists';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import Options from '../../components/user/classes/Options';
+import Options from '../../../components/user/classes/Options';
 import ShareIcon from '@mui/icons-material/Share';
 import DeleteIcon from '@mui/icons-material/Delete';
 import crearAula from '/crearAulaCard.svg'
