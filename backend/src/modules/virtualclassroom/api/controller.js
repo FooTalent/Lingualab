@@ -9,6 +9,7 @@ export default class Controller {
   create = async (req, res, next) => {
     try {
       const { templateId, studentIds, startDate } = req.body;
+     console.log("Controller studentIds: ",studentIds);
 
       const newProgram = await this.service.createCustomProgram( templateId, studentIds, startDate, req.user );
       res.sendSuccess(newProgram)

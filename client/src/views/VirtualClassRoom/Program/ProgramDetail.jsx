@@ -52,9 +52,10 @@ const ProgramDetail = () => {
   };
 
   const handleEditClassroom = (classroomId) => {
-    navigate(`/workspace/class/${classroomId}`);
+    navigate(`/aulavirtual/clase/${classroomId}`);
   };
 
+  console.log(program);
   if (loading) return <p className="text-center">Cargando datos...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
@@ -79,7 +80,17 @@ const ProgramDetail = () => {
           <p className="mb-2"><strong>Descripción:</strong> {program.description}</p>
         ) : null}
         <p className="mb-2"><strong>Idioma:</strong> {program.language}</p>
-        <p className="mb-4"><strong>Profesor:</strong> {program.teacher.last_name}, {program.teacher.first_name}</p> 
+        <p className="mb-4"><strong>Profesor:</strong> {program.teacher.last_name}, {program.teacher.first_name}</p>
+        {program.students.length > 0 && (
+          <div className="mb-4">
+            <h3 className="font-semibold">Alumnos:</h3>
+            <ul>
+              {program.students.map((student) => (
+                <li key={student._id}>{student.last_name}, {student.first_name}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
 
       {program.classes.length > 0 ? (

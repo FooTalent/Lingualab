@@ -8,6 +8,8 @@ import ForgotPassword from './views/auth/ForgotPassword'
 import NewPassword from './views/auth/NewPassword'
 import Profile from './views/Profile'
 import VirtualClassRoom from './views/VirtualClassRoom/VirtualClassRoom'
+import VCRDetail from './views/VirtualClassRoom/Program/ProgramDetail'
+import VCRClassDetail from './views/WorkSpace/Class/ClassDetail'
 import WorkSpace from './views/WorkSpace/WorkSpace'
 import ProgramDetail from './views/WorkSpace/Program/ProgramDetail'
 import ClassDetail from './views/WorkSpace/Class/ClassDetail'
@@ -22,6 +24,8 @@ export default function Router() {
                 <Route element={<AppLayout />}>
                     <Route path='/' element={<Home />} index />
                     <Route path='/aulavirtual' element={<VirtualClassRoom />} />
+                    <Route path='/aulavirtual/aula/:eid' element={<VCRDetail />} />
+                    <Route path='/aulavirtual/clase/:eid' element={<VCRClassDetail />} />
                     <Route path='/workspace' element={<WorkSpace />} />
                     <Route path='/workspace/programas/:eid' element={<ProgramDetail />} />
                     <Route path='/workspace/class/:eid' element={<ClassDetail />} />
