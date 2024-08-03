@@ -10,6 +10,7 @@ const controller = new Controller()
 router
 .get    ("/",              handleAuth(clients), controller.get)     // TODO actualizar para permitir filtros
 .get    ('/current',       handleAuth(users),   controller.getUserSession)
+.put    ('/current/update',handleAuth(users),   controller.currentUpdate)
 .post   ('/register',                           controller.register)
 .post   ('/login',                              controller.login)
 .post   ('/logout',        handleAuth(users),   controller.logout)
@@ -19,7 +20,7 @@ router
 .get    ('/google/redirect',                    controller.googleRedirect)
 .post   ('/google/events', handleAuth(users),   controller.createEvent) // TODO FALTA TESTEAR
 .get    ('/students/:tid', handleAuth(clients), controller.getStudent)
-.post   ('/uploadphoto',  
+.post   ('/current/uploadphoto',  
         handleAuth(users), 
         uploader('profiles', 5, ['image/jpeg', 'image/png']).single('photo'),
         controller.uploadPhoto)

@@ -25,6 +25,16 @@ export default class Controller extends CustomController {
 
   getUserSession = (req, res) => res.sendSuccess(req.user)
 
+  currentUpdate = async (req, res, next) => {
+    try{
+      let { updateUser } = req.body
+      const updatedUser = await this.service.update(req.user._id, updateUser)
+      res.sendSuccess(updatedUser)
+    } catch(error) {
+      next(error)
+    }
+  }
+
   // SESSION TRADICIONAL
   register = async (req, res, next) => {
     try{
