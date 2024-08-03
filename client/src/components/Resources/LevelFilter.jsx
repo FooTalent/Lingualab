@@ -1,22 +1,11 @@
 import { useState } from "react"
 
-export default function LevelFilter({data, onClick}) {
+export default function LevelFilter({data, onClick, isSelected}) {
 
-  const [isSelected, setIsSelected] = useState(false)
+  // const [isSelected, setIsSelected] = useState(false)
 
-  const handleFilter = (lvl) => {
-    setIsSelected(prevIsSelected => {
-      const newIsSelected = !prevIsSelected
-      if (newIsSelected) {
-        onClick(lvl)
-      } else {
-        onClick('')
-      }
-      return newIsSelected
-    })
-  
-    if(!isSelected) return onClick(lvl)
-    if(isSelected) return onClick('')
+  const handleFilter = () => {
+    onClick(data.data)
   }
 
   const buttonStyle = isSelected 
@@ -25,7 +14,7 @@ export default function LevelFilter({data, onClick}) {
 
   return (
     <button 
-      onClick={() => handleFilter(data.data)}
+      onClick={handleFilter}
       className={`flex items-center rounded-lg py-3 px-6 border ${isSelected ? 'shadow-md' : ''}`}
       style={buttonStyle}
     >
