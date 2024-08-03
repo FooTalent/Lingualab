@@ -13,7 +13,7 @@ const WorkSpace = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isCreated, setIsCreated] = useState(true)
+  const [isCreated, setIsCreated] = useState(false)
   const { user, userDetail } = useAppStore()
   const navigate = useNavigate();
 

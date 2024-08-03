@@ -4,8 +4,7 @@ import { getVCRooms, createVCRoom } from '../../services/programs.services';
 import { useNavigate } from 'react-router-dom';
 import CreateVCRForm from './CreateVCRForm';
 import Modal from '../../components/Modal';
-import NavVirtualClassRoom from '../WorkSpace/NavWorkSpace';
-import ProgramList from '../WorkSpace/ProgramList';
+import ProgramCard from './ProgramCard';
 
 const VirtualClassRoom = () => {
   const [programs, setPrograms] = useState([]);
