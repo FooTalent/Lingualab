@@ -41,6 +41,8 @@ export default function Router() {
                     <Route path='/landing' element={<Landing />} />
                     <Route path='/historia' element={<History />} />
                     <Route path='/conocenos' element={<AboutUs />} />
+                    <Route path='/auth/login' element={<Login />} />
+                    <Route path='/auth/register' element={<Register />} />
                     <Route path='/auth/forgot-password' element={<ForgotPassword />} />
                     <Route path='/auth/new-password' element={<NewPassword />} />
                 </Route>

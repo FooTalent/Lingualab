@@ -1,5 +1,5 @@
 import React from 'react';
-import ICONS from './iconMapping'; // Asegúrate de que la ruta sea correcta
+import ICONS from './iconMapping';
 
 const IconImage = ({ category, className }) => {
   return (
