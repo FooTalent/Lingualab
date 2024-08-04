@@ -52,7 +52,7 @@ export default class Service extends CustomService {
   // RECUPERAICON DE CONTRASEÑA
   userRecovery = async (email) => {    
     const userFound = await this.dao.getBy({email});
-    const token = createToken({id: userFound._id, role: userFound.role}, '1h')
+    const token = createToken({_id: userFound._id, role: userFound.role}, '1h')
 
     const to = email
     const subject  = 'Recuperar Contraseña'

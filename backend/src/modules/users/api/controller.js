@@ -25,36 +25,66 @@ export default class Controller extends CustomController {
 
   getUserSession = (req, res) => res.sendSuccess(req.user)
 
+  currentUpdate = async (req, res, next) => {
+    try{
+      let { updateUser } = req.body
+      const updatedUser = await this.service.update(req.user._id, updateUser)
+      res.sendSuccess(updatedUser)
+    } catch(error) {
+      next(error)
+    }
+  }
+
   // SESSION TRADICIONAL
   register = async (req, res, next) => {
-    const userData = validateFields(req.body, this.requieredfield.register);
-    await this.service.register(userData)
-    res.sendCreated({}, "Registro exitoso")
+    try{
+      const userData = validateFields(req.body, this.requieredfield.register);
+      await this.service.register(userData)
+      res.sendCreated({}, "Registro exitoso")
+    } catch(error) {
+      next(error)
+    }
   }
 
   login = async (req, res, next) => {
-    const userData = validateFields(req.body, this.requieredfield.login);
+    try{
+      const userData = validateFields(req.body, this.requieredfield.login);
 
-    const {name, token} = await this.service.login(userData)
-    res.sendSuccess({token}, `Log In exitoso con: ${name}`);
+      const {name, token} = await this.service.login(userData)
+      res.sendSuccess({token}, `Log In exitoso con: ${name}`);
+    } catch(error) {
+      next(error)
+    }
   }
 
   logout = async (req, res) => {
-    this.service.logout()
-    res.sendSuccess({},"Cerrado de Sesión existoso")
+    try{
+      this.service.logout()
+      res.sendSuccess({},"Cerrado de Sesión existoso")
+    } catch(error) {
+      next(error)
+    }
   }
 
   // RECUPERACION DE CONTRASEÑA
   userRecovery = async (req, res, next) => {   
-    const { email } = req.body
-    const resp = await this.service.userRecovery(email)
-    res.sendSuccess(resp)
+    try{
+      const { email } = req.body
+      const resp = await this.service.userRecovery(email)
+      res.sendSuccess(resp)
+    } catch(error) {
+      next(error)
+    }
   }
 
   userRecoveryPassword = async (req, res, next) => {
-    let { password } = req.body
-    await this.service.updatePassword(req.user.id, password)
-    res.sendSuccess("User updated")
+    try{
+      let { password } = req.body
+      await this.service.updatePassword(req.user._id, password)
+      res.sendSuccess("User updated")
+    } catch(error) {
+      next(error)
+    }
   }
 
   // SUBIR FOTO PERFIL
@@ -69,97 +99,110 @@ export default class Controller extends CustomController {
   }
 
   // GOOGLE
-  googleAuth = (req, res) => {   
-    // Generar URL de autenticación
-    const url = oauth2Client.generateAuthUrl({
-      access_type: 'offline', // Solicitar acceso sin conexión para recibir un token de actualización
-      scope: SCOPES,
-      redirect_uri: googleEnv.redirecUri
-    });
-    res.redirect(url);
+  googleAuth = (req, res) => {  
+    try{ 
+      // Generar URL de autenticación
+      const url = oauth2Client.generateAuthUrl({
+        access_type: 'offline', // Solicitar acceso sin conexión para recibir un token de actualización
+        scope: SCOPES,
+        redirect_uri: googleEnv.redirecUri
+      });
+      res.redirect(url);
+    } catch(error) {
+      next(error)
+    }
   }
 
   googleRedirect = (req, res, next) => {
-    const code = req.query.code;
+    try{
 
-    oauth2Client.getToken(code, async (err, tokens) => {
+      const code = req.query.code;
 
-      if (err) { return next(new AppError(`No se pudo obtener el token de google \n ${err}`,500)); }
-      
-      oauth2Client.setCredentials(tokens);
-            
-      try {
-        // Obtener información del perfil de Google y manejar el registro/login
-        const oauth2 = google.oauth2({ version: 'v2', auth: oauth2Client });
-        const { data } = await oauth2.userinfo.get();
-        const {name, token} =  await this.service.googleLoginOrRegister(data, tokens);
-        res.send(`
-          <html>
-            <script>
-              window.opener.postMessage({ token: "${token}" }, "*");
-              window.close();
-            </script>
-          </html>
-        `);
-      } catch (error) {
-        next(new AppError(`Error al obtener información del usuario de Google \n ${error}`, 500));
-      }
-    });
+      oauth2Client.getToken(code, async (err, tokens) => {
+
+        if (err) { return next(new AppError(`No se pudo obtener el token de google \n ${err}`,500)); }
+        
+        oauth2Client.setCredentials(tokens);
+              
+        try {
+          // Obtener información del perfil de Google y manejar el registro/login
+          const oauth2 = google.oauth2({ version: 'v2', auth: oauth2Client });
+          const { data } = await oauth2.userinfo.get();
+          const {name, token} =  await this.service.googleLoginOrRegister(data, tokens);
+          res.send(`
+            <html>
+              <script>
+                window.opener.postMessage({ token: "${token}" }, "*");
+                window.close();
+              </script>
+            </html>
+          `);
+        } catch (error) {
+          next(new AppError(`Error al obtener información del usuario de Google \n ${error}`, 500));
+        }
+      });
+    } catch(error) {
+      next(error)
+    }
   }
 
   createEvent = async (req, res, next) => {
-    const userId = req.user._id;
-    let eventDetails = validateFields(req.body, this.requieredfield.event); // devuelve los campos valdiados sino un error indicando los faltantes - no incluye extras
-    
-    const timeZone = COUNTRY_TIMEZONES[eventDetails.country];
-    if (!timeZone) {
-      throw new AppError(`País invalido: ${eventDetails.country}`, 400);
+    try{
+      const userId = req.user._id;
+      let eventDetails = validateFields(req.body, this.requieredfield.event); // devuelve los campos valdiados sino un error indicando los faltantes - no incluye extras
+      
+      const timeZone = COUNTRY_TIMEZONES[eventDetails.country];
+      if (!timeZone) {
+        throw new AppError(`País invalido: ${eventDetails.country}`, 400);
+      }
+
+      const { description, location, reminders } = req.body;
+      
+      const newEvent = {
+        summary:      eventDetails.summary,
+        location:     location || '', // Ubicación por defecto vacía
+        description:  description || '', // Descripción por defecto vacía
+        start: {
+          dateTime:   new Date(eventDetails.start).toISOString(),
+          timeZone,
+        },
+        end: {
+          dateTime:   new Date(eventDetails.end).toISOString(),
+          timeZone,
+        },
+        reminders: {
+          useDefault: false,
+          overrides: reminders || [
+            { method: 'email', minutes: 15 },
+            { method: 'popup', minutes: 15 },
+          ],
+        },
+        attendees: [{ email: req.user.email }],  //...eventDetails.students
+      };
+
+      console.log(req.user);
+      try {
+        const event = await this.service.createEvent(userId, newEvent);
+        res.sendSuccess(event, 'Event created successfully');
+      } catch (error) {
+        next(new AppError(`Error al crear el evento: ${error.message}`, 500));
+      }
+    } catch(error) {
+      next(error)
     }
-
-    const { description, location, reminders } = req.body;
-    
-    const newEvent = {
-      summary:      eventDetails.summary,
-      location:     location || '', // Ubicación por defecto vacía
-      description:  description || '', // Descripción por defecto vacía
-      start: {
-        dateTime:   new Date(eventDetails.start).toISOString(),
-        timeZone,
-      },
-      end: {
-        dateTime:   new Date(eventDetails.end).toISOString(),
-        timeZone,
-      },
-      reminders: {
-        useDefault: false,
-        overrides: reminders || [
-          { method: 'email', minutes: 15 },
-          { method: 'popup', minutes: 15 },
-        ],
-      },
-      attendees: [{ email: req.user.email }],  //...eventDetails.students
-    };
-
-    console.log(req.user);
-    try {
-      const event = await this.service.createEvent(userId, newEvent);
-      res.sendSuccess(event, 'Event created successfully');
-    } catch (error) {
-      next(new AppError(`Error al crear el evento: ${error.message}`, 500));
-    }
-
-
-
-
     // const result = await insertEvent(newEvent);
     // res.sendSuccess(result.event, result.message);
   }
 
   //STUDIANTES
   getStudent = async (req, res, next) => {
-    const {tid} = req.params
+    try{
+      const {tid} = req.params
 
-    const element = await this.service.get({role: 'Student'});
-    res.sendSuccessOrNotFound(element);
+      const element = await this.service.get({role: 'Student'});
+      res.sendSuccessOrNotFound(element);
+    } catch(error) {
+      next(error)
+    }
   }
 }

@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react'
-import { useAppStore } from '../../../store/useAppStore';
+import React, { useEffect, useState } from 'react';
 import ClassList from '../classes/ClassList';
-import CloseIcon from '@mui/icons-material/Close';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import ModalHeader from './ModalHeader';
+import dayjs from 'dayjs';
 
-export default function Modal({ open, setOpen, onNavigate, label }) {
-  const { user, classes, fetchClasses } = useAppStore();
+export default function Modal({ open, setOpen, onNavigate, label, data, selectedDay }) {
+  const [dayClasses, setDayClasses] = useState([]);
+  const [openOptions, setOpenOptions] = useState(null);
+  const now = dayjs();
 
   useEffect(() => {
-    // fetchClasses(user.token, )
-  }, [])
+    isToday(data);
+  }, [selectedDay]);
 
   useEffect(() => {
     if (open) {
@@ -20,42 +20,88 @@ export default function Modal({ open, setOpen, onNavigate, label }) {
     }
   }, [open]);
 
-  const handleOpen = () => {
-    setOpen(false)
-  }
+  const handleDate = (item) => {
+    const start = dayjs(item.daytime);
+    const durationHours = Math.trunc(item.duration_hours);
+    const durationMinutes = (item.duration_hours - durationHours) * 60;
+    const end = start.add(durationHours, 'hour').add(durationMinutes, 'minute');
 
-  if (!open) return null
+    return `${start.format('HH:mm')} hs : ${end.format('HH:mm')} hs`;
+  };
+
+  const isToday = (clases) => {
+    let newClasses = [];
+
+    if (clases.length) {
+      clases.forEach((clase) => {
+        let formattedDate = dayjs(clase.daytime).format('DD/MM/YYYY');
+        let formattedSelectedDay = dayjs(selectedDay).format('DD/MM/YYYY');
+
+        if (formattedDate === formattedSelectedDay) {
+          const start = dayjs(clase.daytime);
+          const durationHours = Math.trunc(clase.duration_hours);
+          const durationMinutes = (clase.duration_hours - durationHours) * 60;
+          const end = start.add(durationHours, 'hour').add(durationMinutes, 'minute');
+
+          const minutesToStart = start.diff(now, 'minute');
+          const minutesToEnd = end.diff(now, 'minute');
+
+          const checkIsNow = (minutesToStart <= 30 && minutesToStart >= 0) || (minutesToEnd >= 0 && minutesToStart <= 0);
+
+          clase.duration_card = handleDate(clase);
+          clase.isNow = checkIsNow;
+
+          newClasses.push(clase);
+        }
+      });
+    }
+
+    setDayClasses(newClasses);
+    return newClasses.length > 0;
+  };
+
+  const handleOpen = () => {
+    setOpen(false);
+  };
+
+  const handleOutsideClick = (e) => {
+    if (e.target === e.currentTarget) {
+      setOpen(false);
+      setOpenOptions(null);
+    }
+  };
+
+  const toggleOptions = (id) => {
+    setOpenOptions(openOptions === id ? null : id);
+  };
+
+  if (!open) return null;
 
   return (
     <div className='fixed z-10 inset-0 flex items-center justify-center py-5'>
-      <div className='absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm'></div>
-      <div className='p-6 bg-white rounded-2xl w-4/12 z-10 overflow-y-scroll'>
-        <div className='flex flex-col gap-4 px-4'>
-          <button
-            onClick={handleOpen}
-            className='self-end text-Purple'
-          >
-            <CloseIcon fontWeight={'bold'} fontSize='medium' />
-          </button>
-          <div className='flex justify-between items-center text-xl'>
-            <button className='cursor-pointer' onClick={() => onNavigate('PREV', 'day')}>
-              <KeyboardArrowLeftIcon fontSize='large' className='text-Purple' />
-            </button>
-            {label}
-            <button className='cursor-pointer' onClick={() => onNavigate('NEXT', 'day')}>
-              <KeyboardArrowRightIcon fontSize='large' className='text-Purple' />
-            </button>        </div>
-          <h3 className='text-xl font-medium'>Mis clases hoy</h3>
-        </div>
+      <div
+        className='absolute inset-0 bg-card bg-opacity-50'
+        onClick={handleOutsideClick}
+      ></div>
+      <div className='m-auto z-10 p-6 bg-white shadow-modal rounded-2xl w-4/12 h-4/6'>
+        <ModalHeader
+          handleOpen={handleOpen}
+          label={label}
+          onNavigate={onNavigate}
+        />
 
-        <div className='p-4 flex flex-col gap-6'>
-          {
-            classes.lenght
-              ? <ClassList dayClases={classes} />
-              : <h4 className='m-auto py-10'>No hay clases para el día seleccionado</h4>
-          }
+        <div className='px-4 py-2 flex flex-col gap-6 h-4/6 overflow-y-scroll'>
+          {dayClasses.length ? (
+            <ClassList
+              dayClases={dayClasses}
+              toggleOptions={toggleOptions}
+              stateOption={openOptions}
+            />
+          ) : (
+            <h4 className='m-auto py-10'>No hay clases para el día seleccionado</h4>
+          )}
         </div>
       </div>
     </div>
-  )
+  );
 }

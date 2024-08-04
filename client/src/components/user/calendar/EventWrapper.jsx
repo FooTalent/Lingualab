@@ -3,7 +3,7 @@ import Event from './Event'
 
 export default function EventWrapper({ event }) {
     return (
-        <div className='px-2 overflow-hidden'>
+        <div className='px-1'>
             <Event event={event} />
         </div>
     )
