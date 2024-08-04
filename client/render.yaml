@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: your-service-name
+    name: team-22-front
     env: node
     plan: free
     buildCommand: npm ci && npm run build

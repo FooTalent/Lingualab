@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "preinstall": "rm -rf node_modules package-lock.json",
+    "postinstall": "npm install",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
