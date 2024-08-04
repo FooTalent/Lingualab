@@ -8,7 +8,7 @@ export default class Service extends CustomService {
     super(new ThisDaoMongo());
     this.classDao = new ClassDaoMongo();
   }
-
+  
   update = async (eid, elementUpdate) => {
     const dayOfWeekMap = {
       "Lunes": 1,
