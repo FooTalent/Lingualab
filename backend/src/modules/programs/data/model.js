@@ -1,13 +1,21 @@
 import { Schema, model} from 'mongoose'
 import { LANGUAGES, LEVELS } from '../../valueList.js'
 
+
 const thisSchema = new Schema({
+  // basic properties
   title:       { type: String, require:true },
   description: { type: String, },
-  level:       { type: String, enum: LEVELS, required: true },
+  classes:     [{ type: Schema.Types.ObjectId, ref: 'classes' }],
+  teacher:        { type: Schema.Types.ObjectId, ref: 'users', required: true },
+  students:       [{ type: Schema.Types.ObjectId, ref: 'users'}],
+  isTemplate:  { type: Boolean, default: true },
+
+  // aditional properties
   language:    { type: String, enum: LANGUAGES, required: true },
-  teacher:     { type: Schema.Types.ObjectId, ref: 'Users', required: true },
-  classes:     [{ type: Schema.Types.ObjectId, ref: 'Classroom' }],
+  level:       { type: String, enum: LEVELS, required: true },
+  link_meet:      { type: String, },
+
   // data of update
   created:     { type: Date,   default: Date.now,  immutable: true, },
   updated:     { type: Date,   default: Date.now,  },
@@ -18,14 +26,22 @@ const thisSchema = new Schema({
   },
 })
 
-thisSchema.pre('findOne', function(next) {
+thisSchema.pre(['findOne', 'find'], function(next) {
   this
-  this.populate({ path: 'teacher', select: '-password' })
+  .populate({
+    path: 'teacher',
+    select: '-password'
+  })
   .populate('classes')
-  
+  .populate({
+    path: 'students',
+    select: '_id first_name last_name'
+  });
   next();
-})
+});
 
-const dataModel = model('Programs', thisSchema)
+// TODO usar en la ruta .populate('classes')
+
+const dataModel = model('programs', thisSchema)
 
 export default dataModel

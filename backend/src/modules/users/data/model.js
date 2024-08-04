@@ -1,15 +1,9 @@
 import { Schema, model} from 'mongoose'
-import { CURRENCIES, GENDERS, LANGUAGES, ROLES } from '../../valueList.js';
+import { CURRENCIES, GENDERS, LANGUAGES, ROLES, COUNTRIES } from '../../valueList.js';
 
-
-const bankDetailsSchema = new Schema({
-  alias:       { type: String, },
-  cbu:         { type: String, },
-  banco:       { type: String, required: true, }
-}, { _id: false });
 
 const reviewSchema = new Schema({
-  user:        { type: Schema.Types.ObjectId, ref: 'Users',   required: true, },
+  user:        { type: Schema.Types.ObjectId, ref: 'users',   required: true, },
   created:     { type: Date,   default: Date.now,  immutable: true,},
   comment:     { type: String, required: true, },
   score:       { type: Number, required: true,   min: 1, max: 10, },
@@ -20,25 +14,31 @@ const educationSchema = new Schema({
   link:        { type: String,},
 }, { _id: false });
 
-const thisSchema = new Schema({
+const userSchema = new Schema({
+  // basic properties
+  first_name:  { type: String,   required: true, maxLength: 50 },
+  last_name:   { type: String,   required: true, maxLength: 50 },
   email:       { type: String,   required: true, match: [/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/, 'Debe completar un email valido'], unique: true },
   password:    { type: String,   required: true },
   role:        { type: String,   default: "Teacher", enum: ROLES,},
-  photo:       { type: String,   }, // TODO falta MULTER
-  first_name:  { type: String,   required: true, maxLength: 50 },
-  last_name:   { type: String,   required: true, maxLength: 50 },
+
+  // specific properties
+  program:     [{ type: Schema.Types.ObjectId, ref: 'programs',}],
+  reviews:     { type: [reviewSchema], },
+
+  // aditional properties
+  photo:       { type: String,   },
+  presentation:{ type: String,   },
   birthday:    { type: Date,     },
   gender:      { type: String,   enum: GENDERS,},
-  presentation:{ type: String,   },
-  languages:   { type: [
-                  { type: String, enum: LANGUAGES, }],},
-  country:     { type: [String], },
-  time_zone:   { type: Number,   },
   phone:       { type: String, maxLength: 20   },
   studies:     { type: [educationSchema], },
   certificate: { type: [educationSchema], },
-  
-  reviews:     { type: [reviewSchema], },
+
+  // configuration
+  languages:   [{ type: String, enum: LANGUAGES, }],
+  country:     { type: String, enum: COUNTRIES},
+  time_zone:   { type: Number,   },
 
   // google
   google_id:   { type: String,   },
@@ -48,10 +48,6 @@ const thisSchema = new Schema({
   // only teacher
   price_per_hour: { type: Number,},
   currency:    { type: String,   default: "ARS", enum: CURRENCIES,},
-  bank_details:{ type: [bankDetailsSchema], },
-
-  // only student
-  have_debt:   { type: Boolean },
 
   // data of conection
   created:     { type: Date,   default: Date.now,  immutable: true, },
@@ -65,6 +61,12 @@ const thisSchema = new Schema({
   },
 })
 
-const dataModel = model('Users', thisSchema)
+userSchema.methods.toJSON = function() {
+  const user = this.toObject();
+  delete user.password;
+  return user;
+};
+
+const dataModel = model('users', userSchema)
 
 export default dataModel
