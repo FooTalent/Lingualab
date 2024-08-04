@@ -15,6 +15,9 @@ import ProgramDetail    from './views/Classroom/WorkSpace/Program/ProgramDetail'
 import ClassDetail      from './views/Classroom/WorkSpace/Class/ClassDetail'
 import Recursos         from './views/Resources/Resources'
 import Calendario       from './views/user/Calendario'
+import Landing          from './views/Landing'
+import History          from './views/History'
+import AboutUs from './views/AboutUs'
 
 
 export default function Router() {
@@ -35,8 +38,9 @@ export default function Router() {
                 </Route>
 
                 <Route element={<AuthLayout />}>
-                    <Route path='/auth/login' element={<Login />} />
-                    <Route path='/auth/register' element={<Register />} />
+                    <Route path='/landing' element={<Landing />} />
+                    <Route path='/historia' element={<History />} />
+                    <Route path='/conocenos' element={<AboutUs />} />
                     <Route path='/auth/forgot-password' element={<ForgotPassword />} />
                     <Route path='/auth/new-password' element={<NewPassword />} />
                 </Route>
