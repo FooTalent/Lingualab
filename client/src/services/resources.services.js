@@ -20,6 +20,15 @@ export const fetchResourcesWithFilter = async (token, filter) => {
     return response.data;
 }
 
+export const fetchResourceById = async (token, id) => {
+    const response = await axios.get(`${url}api/resources/${id}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    });
+    return response.data;
+}
+
 export const postResource = async (resource, token) => {
     const newResource = await axios.post(`${url}api/resources`, resource, {
         headers: {

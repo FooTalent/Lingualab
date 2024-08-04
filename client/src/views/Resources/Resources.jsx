@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useAppStore } from "../../store/useAppStore"
-import { deleteResource, fetchResourcesWithFilter, postResource } from "../../services/resources.services"
+import { deleteResource, fetchResourcesWithFilter, postResource, fetchResourceById } from "../../services/resources.services"
 import CreateResourceForm from "../../components/Resources/CreateResourceForm";
 import ResourceCard from "./ResourceCard"
 import { Toast } from "../../utils/toast";
@@ -8,7 +8,7 @@ import CategoryFilter from "../../components/Resources/CategoryFilter";
 import { LEVELS, RESOURCE_TYPES } from "../../utils/valueLists";
 import LevelFilter from "../../components/Resources/LevelFilter";
 
-export default function Resources({ onSelect}) {
+export default function Resources({ onSelect, selected}) {
 
   const [resources, setResources] = useState([])
   const [loading, setLoading] = useState(false)
@@ -23,7 +23,6 @@ export default function Resources({ onSelect}) {
 
   // Elementos usado para las classes + onSelect
   const [selectedResources, setSelectedResources] = useState([]);
-  console.log(selectedResources);
 
   useEffect(() => {
     if (user) {
@@ -53,6 +52,23 @@ export default function Resources({ onSelect}) {
       getResources()
     }
   }, [user, refreshCards])
+
+  useEffect(() => {
+    const fetchSelectedResources = async () => {
+      if (selected.length > 0) {
+        try {
+          const fetchedResources = await Promise.all(
+            selected.map((id) => fetchResourceById(user.token, id))
+          );
+          setSelectedResources(fetchedResources.map((res) => res.data));
+        } catch (error) {
+          console.error('Error fetching selected resources:', error);
+        }
+      }
+    };
+
+    fetchSelectedResources();
+  }, [selected]);
 
   const handleCreateResource = async () => {
     setModalStatus(true)
@@ -155,7 +171,7 @@ export default function Resources({ onSelect}) {
               </button>
               { onSelect &&
                 <button onClick={handleConfirmSelection} className="bg-Yellow py-3 px-6 rounded-md">
-                  Confirmar selección
+                  Insertar
                 </button>
               }
             </div>

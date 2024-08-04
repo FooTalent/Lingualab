@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAppStore } from '../../../../store/useAppStore';
 import { getClassById, updateClass } from '../../../../services/programs.services';
 import { LEVELS_MAP } from '../../../../utils/valueLists';
 import TextEditor from '../../../../components/TextEditor/TextEditor';
 import BackButton from '../../../../components/BackButtom';
 import Resources from '../../../Resources/Resources';
+import IconImage from '../../../../utils/IconImage';
 
 const ClassDetail = () => {
   const { eid } = useParams();
@@ -26,6 +27,7 @@ const ClassDetail = () => {
           setLoading(true);
           const response = await getClassById(user.token, eid);
           setClassData(response);
+          setSelectedResources(response.resources)
           setRichText(response.content || '');
         } catch (error) {
           console.error('Error al buscar la clase', error);
@@ -44,7 +46,7 @@ const ClassDetail = () => {
   const handleSaveChanges = async () => {
     try {
       setLoading(true);
-      await updateClass(user.token, classData._id, { content: richText, resources: selectedResources });
+      await updateClass(user.token, classData._id, { content: richText, resources: selectedResources.map(resource => resource._id) });
     } catch (error) {
       console.error('Error al actualizar la clase', error);
       setError(error.message);
@@ -59,8 +61,7 @@ const ClassDetail = () => {
   };
 
   const handleSelectResources = (resources) => {
-    console.log(resources);
-    setSelectedResources(resources.map(resource => resource._id));
+    setSelectedResources(resources);
     setRefresh(!refresh);
     setShowResourceModal(false);
   };
@@ -68,8 +69,6 @@ const ClassDetail = () => {
   const handleCancelClass = () => {
     navigate(-1);
   };
-
-  console.log(classData);
 
   if (loading) return <p className="text-center text-gray-500">Cargando datos...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
@@ -105,8 +104,11 @@ const ClassDetail = () => {
           <div className="my-4">
             <p className="text-lg font-medium">Recursos:</p>
             <ul className="list-disc pl-5 text-gray-700">
-              {classData.resources.map((resource, index) => (
-                <li key={index}>{resource.title}</li>
+              {selectedResources.map((resource, index) => (
+                <div key={index} className='flex h-5'>
+                  <IconImage category={resource.type} className={"fill-current"}/>
+                  <Link to={resource.url}>{resource.title}</Link>
+                </div>
               ))}
             </ul>
           </div>
@@ -137,7 +139,7 @@ const ClassDetail = () => {
       {showResourceModal && (
         <div className="modal">
           <div className="modal-content">
-            <Resources onSelect={handleSelectResources} />
+            <Resources onSelect={handleSelectResources} selected={selectedResources}/>
             <button onClick={() => setShowResourceModal(false)} className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 shadow-md hover:bg-red-700">
               Cerrar
             </button>

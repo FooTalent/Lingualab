@@ -54,7 +54,7 @@ const ProgramDetail = () => {
   const handleEditClassroom = (classroomId) => {
     navigate(`/workspace/class/${classroomId}`);
   };
-
+  
   if (loading) return <p className="text-center">Cargando datos...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
