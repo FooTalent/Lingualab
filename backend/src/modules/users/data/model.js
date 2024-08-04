@@ -5,6 +5,8 @@ import { CURRENCIES, GENDERS, LANGUAGES, ROLES, COUNTRIES } from '../../valueLis
 const reviewSchema = new Schema({
   user:        { type: Schema.Types.ObjectId, ref: 'users',   required: true, },
   created:     { type: Date,   default: Date.now,  immutable: true,},
+  program:     { type: Schema.Types.ObjectId, ref: 'programs'},
+  classes:     { type: Schema.Types.ObjectId, ref: 'classes' },
   comment:     { type: String, required: true, },
   score:       { type: Number, required: true,   min: 1, max: 10, },
 }, { _id: false });

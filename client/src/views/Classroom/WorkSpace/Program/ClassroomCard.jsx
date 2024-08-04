@@ -9,7 +9,6 @@ const ClassroomCard = ({ classroom, buttonFunction }) => {
   const { level, title, students, daytime, duration_hours, _id } = classroom;
   const [resourcesClass, setResourcesClass] = useState([])
   const { user } = useAppStore();
-  console.log(classroom);
 
   useEffect(() => {
     const fetchSelectedResources = async () => {

@@ -62,7 +62,6 @@ const ClassDetail = () => {
 
   const handleSelectResources = (resources) => {
     setSelectedResources(resources);
-    setRefresh(!refresh);
     setShowResourceModal(false);
   };
 
@@ -100,7 +99,7 @@ const ClassDetail = () => {
       <div>
         <h2 className="text-2xl font-semibold mb-2">Edita el contenido de la clase</h2>
         <TextEditor value={richText} onChange={setRichText} />
-        {classData?.resources?.length > 0 && (
+        {selectedResources.length > 0 && (
           <div className="my-4">
             <p className="text-lg font-medium">Recursos:</p>
             <ul className="list-disc pl-5 text-gray-700">
