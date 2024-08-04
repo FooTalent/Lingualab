@@ -70,7 +70,6 @@ const WorkSpace = () => {
     setRefresh(prevRefresh => !prevRefresh);
   };
 
-  console.log(newProgramId);
   return (
     <div className="container mx-auto flex flex-col gap-11">
       <NavWorkSpace setModal={setIsModalOpen} buttonDescription={"Crear Programa"} />

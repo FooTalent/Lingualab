@@ -32,6 +32,14 @@ classSchema.post('save', async function(doc, next) {
   next();
 });
 
+classSchema.pre('findOne', function(next) {
+  this.populate({
+    path: 'resources',
+    select: '_id title'
+  });
+  next();
+})
+
 const dataModel = model('classes', classSchema)
 
 export default dataModel
