@@ -8,11 +8,13 @@ const thisSchema = new Schema({
   description: { type: String, },
   classes:     [{ type: Schema.Types.ObjectId, ref: 'classes' }],
   teacher:        { type: Schema.Types.ObjectId, ref: 'users', required: true },
+  students:       [{ type: Schema.Types.ObjectId, ref: 'users'}],
   isTemplate:  { type: Boolean, default: true },
 
   // aditional properties
   language:    { type: String, enum: LANGUAGES, required: true },
   level:       { type: String, enum: LEVELS, required: true },
+  link_meet:      { type: String, },
 
   // data of update
   created:     { type: Date,   default: Date.now,  immutable: true, },
@@ -24,11 +26,17 @@ const thisSchema = new Schema({
   },
 })
 
-thisSchema.pre('findOne', function(next) {
-  this.populate({
+thisSchema.pre(['findOne', 'find'], function(next) {
+  this
+  .populate({
     path: 'teacher',
     select: '-password'
-  }).populate('classes');
+  })
+  .populate('classes')
+  .populate({
+    path: 'students',
+    select: '_id first_name last_name'
+  });
   next();
 });
 

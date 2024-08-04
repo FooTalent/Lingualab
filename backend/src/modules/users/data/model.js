@@ -23,14 +23,14 @@ const userSchema = new Schema({
   role:        { type: String,   default: "Teacher", enum: ROLES,},
 
   // specific properties
-  virtualclassrooms: [{ type: Schema.Types.ObjectId, ref: 'virtualclassrooms', }],
+  program:     [{ type: Schema.Types.ObjectId, ref: 'programs',}],
   reviews:     { type: [reviewSchema], },
 
   // aditional properties
   photo:       { type: String,   },
+  presentation:{ type: String,   },
   birthday:    { type: Date,     },
   gender:      { type: String,   enum: GENDERS,},
-  presentation:{ type: String,   },
   phone:       { type: String, maxLength: 20   },
   studies:     { type: [educationSchema], },
   certificate: { type: [educationSchema], },
