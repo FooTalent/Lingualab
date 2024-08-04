@@ -3,8 +3,8 @@ services:
     name: your-service-name
     env: node
     plan: free
-    buildCommand: npm install && npm run build
+    buildCommand: npm ci && npm run build
     startCommand: npm run preview
     envVars:
       - key: NODE_VERSION
-        value: 20.15.1
+        value: 20.16.0
