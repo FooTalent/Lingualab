@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { LEVELS_MAP, RESOURCE_TYPES, LANGUAGES } from "../../utils/valueLists"
-import iconX from "./assets/icon-x.svg"
 
 
 export default function CreateResourceForm({onSubmit, onCancel}) {
@@ -26,12 +25,7 @@ export default function CreateResourceForm({onSubmit, onCancel}) {
     }
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center min-h-screen bg-black bg-opacity-40">
-            <div className="bg-white rounded-lg shadow-lg w-full max-w-6xl self-center p-6">
-                <div className="flex justify-end self-stretch">
-                    <img src={iconX} alt="ícono de cerrar modal" className="cursor-pointer" onClick={onCancel}/>
-                </div>
-                <h2 className="text-2xl font-bold mb-4">Crea un nuevo Recurso</h2>
+            <div>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4 flex flex-row justify-between gap-6 justify-self-end self-stretch content-stretch">
                         <div className="w-full flex flex-col justify-between">
@@ -140,6 +134,5 @@ export default function CreateResourceForm({onSubmit, onCancel}) {
                     </div>
                 </form>
             </div>
-        </div>
     )
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useAppStore } from "../../store/useAppStore"
 import { deleteResource, fetchResourcesWithFilter, postResource } from "../../services/resources.services"
+import Modal from "../../components/Modal";
 import CreateResourceForm from "../../components/Resources/CreateResourceForm";
 import ResourceCard from "../../components/Resources/ResourceCard"
 import { Toast } from "../../utils/toast";
@@ -167,8 +168,9 @@ export default function Resources() {
               ))
           }
           {
-            modalStatus &&
-            <CreateResourceForm onSubmit={handleSubmitCreate} onCancel={handleCancel} />
+            <Modal onClose={handleCancel} isOpen={modalStatus} title={"Crea un nuevo Recurso"}>  
+              <CreateResourceForm onSubmit={handleSubmitCreate} onCancel={handleCancel} />
+            </Modal>  
           }
         </div>
       </div>
