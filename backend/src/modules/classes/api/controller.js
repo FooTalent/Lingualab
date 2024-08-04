@@ -12,7 +12,10 @@ export default class Controller extends CustomController {
       const {teacherId, startDate, endDate, isTemplate} = req.query
       const filter = {}
   
-      if (teacherId) filter.teacher = teacherId
+      if (teacherId) {
+        const programsWithTeacher = await model('programs').find({ teacher: teacherId }).select('_id');
+        filter.program = { $in: programsWithTeacher.map(p => p._id) };
+      }
   
       const convertToUTC = (dateString, isEndOfDay = false) => {
         const time = isEndOfDay ? 'T23:59:59-03:00' : 'T00:00:00-03:00';

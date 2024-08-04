@@ -86,3 +86,59 @@ export const getUserData = async (token) => {
       return null;
   }
 };
+
+export const userUpdate = async (token, userData) => {
+  const data = {
+    updateUser: {...userData}
+  };
+  const auth = {
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+      }
+  }
+  try {
+      const response = await axios.put(`${url}api/users/current/update`, data, auth);
+      return response.data.data;
+  } catch (error) {
+      console.error('Error fetching user data:', error);
+      return null;
+  }
+};
+export const userUpdatePhoto = async (token, photo) => {
+  const formData = new FormData();
+  formData.append('photo', photo);
+  const auth = {
+      headers: {
+          'Authorization': `Bearer ${token}`
+      }
+  }
+  try {
+      const response = await axios.post(`${url}api/users/current/uploadphoto`, formData, auth);
+      return response.data;
+  } catch (error) {
+      console.error('Error al actualizar la imagen:', error);
+      return null;
+  }
+};
+
+
+// GET VALUES ---------------------------------------------------------------- // TODO aplicar a todos lados
+export const getCountries = async () => {
+  try {
+      const response = await axios.get(`${url}api/values/countries`);
+      return response.data;
+  } catch (error) {
+      console.error('Error consiguiendo los paises:', error);
+      return null;
+  }
+};
+export const getLanguages = async () => {
+  try {
+      const response = await axios.get(`${url}api/values/languages`);
+      return response.data;
+  } catch (error) {
+      console.error('Error consiguiendo los idiomas:', error);
+      return null;
+  }
+};

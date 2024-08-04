@@ -17,7 +17,6 @@ export default class ThisDaoMongo extends DaoMongo {
         select: 'first_name, last_name'
       })
       .select('-students.password');
-    return result;
-  }
+    return result;
+  }
 }
-

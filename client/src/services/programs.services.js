@@ -107,6 +107,40 @@ export const updateClass = async (token, classroomId, data ) => {
 // --------------- AULA VIRTUAL o CALENDARIO ------------------
 // ------------------------------------------------------------
 // PROGRAMS  ( programs  --> x defecto --> isTemplate = false) ----------------------------------------------------------------
+
+export const getVCRooms = async (token, teacherId) => {
+  try {
+    const response = await axios.get(`${url}api/programs/?isTemplate=false&teacherId=${teacherId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      console.error('Acceso no autorizado - talvez token invalido');
+    }
+    throw error;
+  }
+};
+
+export const createVCRoom = async (token, teacherId, data) => {
+  try {
+    const newClassRoom = { ...data, teacher: teacherId}
+    const response = await axios.post(`${url}api/virtual`, newClassRoom, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      console.error('Acceso no autorizado - talvez token invalido');
+    }
+    throw error;
+  }
+};
+
 // CLASS     ( class     --> x defecto --> isTemplate = false) ----------------------------------------------------------------
 
 export const getClassesByTeacherAndDate= async (token, teacherId, date ) => {
