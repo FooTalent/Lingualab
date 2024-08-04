@@ -36,6 +36,7 @@ const ClassDetail = () => {
       setLoading(false);
     }
   }, [eid, refresh, user]);
+  console.log(classData);
 
   const handleSaveChanges = async () => {
     try {

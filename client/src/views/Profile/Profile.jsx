@@ -114,7 +114,6 @@ const Profile = () => {
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
-  console.log(profileData);
 
   if (loading) {
     return <div>Loading...</div>;

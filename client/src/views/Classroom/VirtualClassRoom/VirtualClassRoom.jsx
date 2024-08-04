@@ -45,6 +45,8 @@ const VirtualClassRoom = () => {
     }
   }, [user, userDetail, refresh]);
 
+  console.log(programs);
+
   const handleCreateProgram = async (programData) => {
     try {
       const newProgram = await createVCRoom(user.token, userDetail._id, programData);

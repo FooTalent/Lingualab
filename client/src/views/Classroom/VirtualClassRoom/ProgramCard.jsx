@@ -46,10 +46,13 @@ const ProgramCard = ({ program, buttonFunction }) => {
           {program.language || '-'}
         </p>
 
-        <p className='flex gap-4'>
-          <span className='font-semibold'>Descripción:</span>
-          {program.description || "-"}
-        </p>
+        {program.students.map((student) => {
+          return (
+            <p key={student._id} className='flex gap-2'>
+              {student.last_name}, {student.first_name}
+            </p>
+          );
+        })}
       </div>
 
       <div className="flex flex-col justify-between items-end">
@@ -62,7 +65,7 @@ const ProgramCard = ({ program, buttonFunction }) => {
           className="bg-Purple hover:bg-PurpleHover text-white px-4 py-2 rounded-lg font-extrabold ease-linear duration-150"
           onClick={() => buttonFunction(program._id)}
         >
-          Ver clases
+          Ir al aula
         </button>
       </div>
 

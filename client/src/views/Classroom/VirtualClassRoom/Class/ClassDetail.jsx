@@ -6,7 +6,7 @@ import { LEVELS_MAP } from '../../../../utils/valueLists';
 import TextEditor from '../../../../components/TextEditor/TextEditor';
 import BackButton from '../../../../components/BackButtom';
 
-const ClassDetail = () => {
+const VCRClassDetail = () => {
   const { eid } = useParams();
   const { user } = useAppStore();
   const [refresh, setRefresh] = useState(true);
@@ -36,6 +36,7 @@ const ClassDetail = () => {
       setLoading(false);
     }
   }, [eid, refresh, user]);
+  console.log(classData);
 
   const handleSaveChanges = async () => {
     try {
@@ -91,4 +92,4 @@ const ClassDetail = () => {
   );
 };
 
-export default ClassDetail;
+export default VCRClassDetail;
