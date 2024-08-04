@@ -1,7 +1,8 @@
 import { useAppStore } from "../store/useAppStore"
 
 const Home = () => {
-    const { status } = useAppStore()
+    const { status, userDetail } = useAppStore()
+    console.log(userDetail);
 
     if (status) return (
         <div>

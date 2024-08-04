@@ -19,7 +19,6 @@ import Landing          from './views/Landing'
 import History          from './views/History'
 import AboutUs from './views/AboutUs'
 
-
 export default function Router() {
     return (
         <BrowserRouter>
