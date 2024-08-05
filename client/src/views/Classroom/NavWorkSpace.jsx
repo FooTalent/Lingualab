@@ -27,7 +27,7 @@ export default function NavWorkSpace({ setModal, buttonDescription, route }) {
                 > Mis Programas
                 </button>
                 <button
-                    className={`${true ? '' : ''} bg-card hover:bg-Yellow font-extrabold text-Yellow hover:text-card border-2 border-card hover:border-Yellow rounded-lg py-3 px-4 ease-linear duration-150`}
+                    className={`bg-card hover:bg-Yellow font-extrabold text-Yellow hover:text-card border-2 border-card hover:border-Yellow rounded-lg py-3 px-4 ease-linear duration-150`}
                     onClick={handleModal}
                 > {buttonDescription} <AddIcon />
                 </button>

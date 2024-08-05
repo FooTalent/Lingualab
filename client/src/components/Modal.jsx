@@ -17,7 +17,7 @@ const Modal = ({ isOpen, onClose, title, children, modalSize }) => {
                 <CloseIcon fontSize='large' />
               </button>
 
-              <h2 className="text-3xl font-semibold self-start">{title}</h2>
+              <h2 className="text-customTitle font-semibold self-start">{title}</h2>
             </div>
             : <></>
         }

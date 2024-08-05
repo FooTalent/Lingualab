@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { LEVELS, LEVELS_MAP } from '../../../../utils/valueLists';
+import DropdownSelect from '../../DropdownSelect';
 
 const CreateClassForm = ({ programData, onSubmit, onClose }) => {
   const [classroomData, setClassroomData] = useState({
@@ -23,44 +24,65 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
     onSubmit(classroomData);
   };
 
+  const testPrograms = [
+
+  ]
+
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="mb-4">
-        <label className="block text-gray-700">Título</label>
+    <form
+      onSubmit={handleSubmit}
+      className='flex flex-col gap-4 text-card justify-evenly'
+    >
+      <div className='grid grid-cols-2 gap-4'>
+        <DropdownSelect
+          label="Programa"
+          options={testPrograms}
+          selectedOption={classroomData.program}
+          onSelect={handleInputChange}
+        />
+
+        <DropdownSelect
+          label="Nivel"
+          name='level'
+          options={LEVELS.map(level => level.data)}
+          selectedOption={classroomData.level}
+          onSelect={handleInputChange}
+        />
+      </div>
+
+      <div className="flex flex-col gap-3 font-medium">
+        <label className="p-0 text-custom">Título</label>
         <input
           type="text"
           name="title"
           value={classroomData.title}
           onChange={handleInputChange}
-          className="w-full p-2 border rounded-md"
+          className="py-3 px-4 border border-Grey rounded-lg placeholder:text-Grey outline-none focus:border-card hover:border-card"
+          placeholder='Escribe el nombre de la clase...'
         />
       </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">Descripción</label>
+
+      <div className="flex flex-col gap-3 font-medium">
+        <label className="p-0 text-custom">Descripción</label>
         <input
           type="text"
           name="description"
           value={classroomData.description}
           onChange={handleInputChange}
-          className="w-full p-2 border rounded-md"
+          className="py-3 px-4 border border-Grey rounded-lg placeholder:text-Grey outline-none focus:border-card hover:border-card"
+          placeholder='Escribe una breve descripción...'
         />
       </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">Nivel</label>
-        <select
-          name="level"
-          value={classroomData.level}
-          onChange={handleInputChange}
-          className="w-full p-2 border rounded-md"
-          style={{ color: LEVELS_MAP[classroomData.level] }}
-        >
-          {LEVELS.map((level) => (
-            <option key={level.key} value={level.data} style={{ color: level.color }}>
-              {level.data}
-            </option>
-          ))}
-        </select>
-      </div>
+
+        <DropdownSelect
+          label="Estudiantes"
+          name='students'
+          icon={true}
+          options={[]}
+          selectedOption={classroomData.students}
+          onSelect={handleInputChange}
+        />
+
       <div className="mb-4">
         <label className="block text-gray-700">Duración (horas)</label>
         <input

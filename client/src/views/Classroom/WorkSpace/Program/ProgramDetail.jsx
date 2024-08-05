@@ -7,6 +7,8 @@ import CreateClassForm from './CreateClassForm';
 import ClassroomCard from './ClassroomCard';
 import { LEVELS_MAP } from '../../../../utils/valueLists';
 import BackButton from '../../../../components/BackButtom';
+import EditIcon from '@mui/icons-material/Edit';
+import AddIcon from '@mui/icons-material/Add';
 
 const ProgramDetail = () => {
   const { eid } = useParams();
@@ -54,24 +56,34 @@ const ProgramDetail = () => {
   const handleEditClassroom = (classroomId) => {
     navigate(`/workspace/class/${classroomId}`);
   };
-  
+
   if (loading) return <p className="text-center">Cargando datos...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (
-    <div className="container mx-auto p-4">
-      <div className='flex flex-row justify-between items-center mb-4'>
+    <div className="container mx-auto">
+      <div className='flex justify-between items-center'>
         <BackButton />
-        <div className="flex items-center">
-          <span className="text-white px-2 py-1 rounded mr-2" style={{backgroundColor: LEVELS_MAP[program.level]}}>{program.level}</span>
-          <h1 className="text-3xl font-bold mb-4">{program.title}</h1>
+
+        <div className="flex items-center gap-8">
+          <span className="text-white text-lg font-extrabold py-3 px-4 rounded-lg" style={{ backgroundColor: LEVELS_MAP[program.level] }}>{program.level}</span>
+          <h1 className="text-card text-customSubTitle font-semibold">{program.title}</h1>
         </div>
-        <button 
-          className="bg-blue-500 text-white px-4 py-2 rounded-md"
-          onClick={() => setIsModalOpen(true)}
-        >
-          Crear Clase
-        </button>
+
+        <div className='flex items-center gap-6'>
+          <button
+            className={`flex items-center gap-4 bg-card hover:bg-Yellow font-extrabold text-Yellow hover:text-card border-2 border-card hover:border-Yellow rounded-lg py-3 px-4 ease-linear duration-150`}
+            onClick={undefined}
+          >
+            Editar <EditIcon />
+          </button>
+          <button
+            className={`flex items-center gap-4 bg-Yellow hover:bg-card font-extrabold text-card hover:text-Yellow border-2 border-Yellow hover:border-card rounded-lg py-3 px-4 ease-linear duration-150`}
+            onClick={() => setIsModalOpen(true)}
+          >
+            Crear <AddIcon />
+          </button>
+        </div>
       </div>
 
       <div className="mt-6">
@@ -79,7 +91,7 @@ const ProgramDetail = () => {
           <p className="mb-2"><strong>Descripción:</strong> {program.description}</p>
         ) : null}
         <p className="mb-2"><strong>Idioma:</strong> {program.language}</p>
-        <p className="mb-4"><strong>Profesor:</strong> {program.teacher.last_name}, {program.teacher.first_name}</p> 
+        <p className="mb-4"><strong>Profesor:</strong> {program.teacher.last_name}, {program.teacher.first_name}</p>
       </div>
 
       {program.classes.length > 0 ? (

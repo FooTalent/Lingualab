@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import AddIcon from '@mui/icons-material/Add';
 
-export default function DropdownSelect({ label, options, selectedOption, onSelect }) {
+export default function DropdownSelect({ label, icon, options, selectedOption, onSelect }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const isObjectArray = options.length > 0 && typeof options[0] === 'object';
@@ -14,11 +15,11 @@ export default function DropdownSelect({ label, options, selectedOption, onSelec
 
   return (
     <div className="relative flex flex-wrap gap-3">
-      <label className="text-xl p-0">
+      <label className="text-custom p-0">
         {label}
       </label>
       <div
-        className={`relative border w-full flex justify-between items-center border-gray-300 ${selectedOption !== `Seleccionar ${label.toLowerCase()}` ? 'text-black' : 'text-gray-400'} rounded-lg py-3 px-4 cursor-pointer`}
+        className={`relative border w-full flex justify-between items-center border-Grey ${selectedOption !== `Seleccionar ${label.toLowerCase()}` ? 'text-card' : 'text-Grey'} rounded-lg py-3 px-4 cursor-pointer  focus:border-card hover:border-card`}
         onClick={() => setIsOpen(!isOpen)}
       >
         <span>{selectedOption}</span>
@@ -44,6 +45,16 @@ export default function DropdownSelect({ label, options, selectedOption, onSelec
           </div>
         )}
       </div>
+
+      {
+        icon
+          ? <button
+            className={`flex items-center gap-4 bg-card hover:bg-Yellow font-extrabold text-Yellow hover:text-card border-2 border-card hover:border-Yellow rounded-lg py-3 px-4 ease-linear duration-150`}
+          >
+            <AddIcon />
+          </button>
+          : <></>
+      }
     </div>
   );
 }

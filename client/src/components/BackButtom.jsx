@@ -1,7 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-const BackButton = ({ className = '', ...props }) => {
+const BackButton = ({ ...props }) => {
   const navigate = useNavigate();
 
   const handleGoBack = () => {
@@ -11,10 +12,11 @@ const BackButton = ({ className = '', ...props }) => {
   return (
     <button
       onClick={handleGoBack}
-      className={`bg-blue-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-700 ${className}`}
+      className={`flex items-center gap-4 border border-card rounded-lg p-3 font-medium text-lg text-card hover:text-white hover:bg-card ease-linear duration-150`}
       {...props}
     >
-      Volver atrás
+      <ArrowBackIcon />
+      Volver
     </button>
   );
 };
