@@ -12,10 +12,10 @@ const ProgramCard = ({ program, buttonFunction }) => {
   const [state, setState] = useState(false)
 
   const links = [
-    { path: `/`, label: <><img src={crearAula} alt='Crear Aula' />Crear aula a partir de este programa</> },
+    //{ path: `/`, label: <><img src={crearAula} alt='Crear Aula' />Crear aula a partir de este programa</> },
     { path: `/`, label: <><ShareIcon />Compartir</> },
-    { path: `/`, label: <><img src={editarPrograma} alt='Editar Programa' />Editar programa</> },
-    { path: `/`, label: <><img src={duplicar} alt='Editar Programa' />Duplicar programa</> },
+    { path: `/`, label: <><img src={editarPrograma} alt='Editar aula' />Editar aula</> },
+    { path: `/`, label: <><img src={duplicar} alt='Editar aula' />Duplicar aula</> },
     { path: `/`, label: <><DeleteIcon />Eliminar programa</> },
   ]
 
@@ -41,11 +41,6 @@ const ProgramCard = ({ program, buttonFunction }) => {
           </h2>
         </div>
 
-        <p className='flex gap-4'>
-          <span className='font-semibold'>Idioma:</span>
-          {program.language || '-'}
-        </p>
-
         {program.students.map((student) => {
           return (
             <p key={student._id} className='flex gap-2'>
@@ -53,6 +48,11 @@ const ProgramCard = ({ program, buttonFunction }) => {
             </p>
           );
         })}
+
+        <p className='flex gap-4'>
+          <span className='font-semibold'>Fecha Inicio:</span>
+          {program.first_class || '-'}
+        </p>
       </div>
 
       <div className="flex flex-col justify-between items-end">

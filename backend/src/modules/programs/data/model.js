@@ -1,5 +1,5 @@
 import { Schema, model} from 'mongoose'
-import { LANGUAGES, LEVELS } from '../../valueList.js'
+import { LANGUAGES, LEVELS, DAYSOFWEEK } from '../../valueList.js'
 
 
 const thisSchema = new Schema({
@@ -15,6 +15,8 @@ const thisSchema = new Schema({
   language:    { type: String, enum: LANGUAGES, required: true },
   level:       { type: String, enum: LEVELS, required: true },
   link_meet:      { type: String, },
+  first_class: { type: Date, },
+  daysOfWeek:  [{ type: String, enum: DAYSOFWEEK,}],
 
   // data of update
   created:     { type: Date,   default: Date.now,  immutable: true, },
