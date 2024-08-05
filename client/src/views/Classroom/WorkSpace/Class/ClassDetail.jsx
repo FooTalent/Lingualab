@@ -7,6 +7,8 @@ import TextEditor from '../../../../components/TextEditor/TextEditor';
 import BackButton from '../../../../components/BackButtom';
 import Resources from '../../../Resources/Resources';
 import IconImage from '../../../../utils/IconImage';
+import ProgramInfo from '../Program/ProgramInfo';
+import ButtonModal from '../../../../components/Form/ButtonModal';
 
 const ClassDetail = () => {
   const { eid } = useParams();
@@ -42,7 +44,7 @@ const ClassDetail = () => {
       setLoading(false);
     }
   }, [eid, refresh, user]);
-  
+
   const handleSaveChanges = async () => {
     try {
       setLoading(true);
@@ -73,72 +75,70 @@ const ClassDetail = () => {
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="flex flex-row justify-between items-center mb-4">
-        <div className="flex items-center">
-          <span 
-            className="text-white px-3 py-1 rounded mr-3" 
+    <div className="container mx-auto flex flex-col gap-5">
+      <div className="flex items-center gap-12">
+        <BackButton />
+
+        <div className="flex items-center gap-6 truncate">
+          <span
+            className="text-white py-3 px-4 rounded-lg text-lg font-extrabold"
             style={{ backgroundColor: LEVELS_MAP[classData?.level] }}
           >
             {classData?.level}
           </span>
-          <h1 className="text-4xl font-bold">{classData?.title}</h1>
+          <h1 className="text-customSubTitle font-semibold">{classData?.title}</h1>
         </div>
-        <BackButton />
       </div>
-      <div className="mb-4">
-        <p className="text-lg font-medium">Descripción:</p>
-        <p className="text-gray-700">{classData?.description}</p>
-      </div>
-      <div className="mb-4">
-        <p className="text-lg font-medium">Duración:</p>
-        <p className="text-gray-700">{classData?.duration_hours} hs</p>
-      </div>
-      <hr className="my-4" />
 
-      <div>
-        <h2 className="text-2xl font-semibold mb-2">Edita el contenido de la clase</h2>
+      <ProgramInfo program={classData} />
+
+      <div className='flex flex-col gap-5'>
+        <h2 className="text-customSubTitle font-semibold">Edita el contenido de la clase</h2>
+
         <TextEditor value={richText} onChange={setRichText} />
+
         {selectedResources.length > 0 && (
           <div className="my-4">
             <p className="text-lg font-medium">Recursos:</p>
             <ul className="list-disc pl-5 text-gray-700">
               {selectedResources.map((resource, index) => (
                 <div key={index} className='flex h-5'>
-                  <IconImage category={resource.type} className={"fill-current"}/>
+                  <IconImage category={resource.type} className={"fill-current"} />
                   <Link to={resource.url}>{resource.title}</Link>
                 </div>
               ))}
             </ul>
           </div>
         )}
-        <div className="flex justify-between mt-4">
-          <button
-            onClick={handleOpenResourceModal}
-            className="bg-blue-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-700 mr-4"
-          >
-            Añadir recursos
-          </button>
-          <div className="flex">
+
+        <div className="flex justify-between items-center">
+          <div className='flex gap-6'>
             <button
-              onClick={handleCancelClass}
-              className="bg-gray-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-gray-700 mr-4"
+              className='bg-card hover:bg-Yellow text-Yellow hover:text-card rounded-lg py-3 px-8 text-xl font-extrabold ease-linear duration-150'
+              onClick={handleOpenResourceModal}
             >
-              Cancelar
+              Ir a recursos
             </button>
+
             <button
-              onClick={handleSaveChanges}
-              className="bg-green-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-green-700"
+              className='bg-card hover:bg-Yellow text-Yellow hover:text-card rounded-lg py-3 px-8 text-xl font-extrabold ease-linear duration-150'
+              onClick={handleOpenResourceModal}
             >
-              Guardar cambios
+              Ir al Drive
             </button>
+          </div>
+
+          <div className='flex gap-6'>
+            <ButtonModal buttonAction={handleCancelClass} type='prev' label='Cancelar' />
+            <ButtonModal buttonAction={handleSaveChanges} type='next' label='Guardar cambios' />
           </div>
         </div>
       </div>
+
       {showResourceModal && (
         <div className="modal">
           <div className="modal-content">
-            <Resources onSelect={handleSelectResources} selected={selectedResources}/>
+            <Resources onSelect={handleSelectResources} selected={selectedResources} />
             <button onClick={() => setShowResourceModal(false)} className="bg-red-600 text-white px-4 py-2 rounded-md mt-4 shadow-md hover:bg-red-700">
               Cerrar
             </button>

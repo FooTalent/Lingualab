@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
 export default function CreatedProgram({ onClose, logo, pathProgram, pathNewClass }) {
   const navigate = useNavigate();
 
@@ -12,27 +11,27 @@ export default function CreatedProgram({ onClose, logo, pathProgram, pathNewClas
       </div>
 
       <h2 className='text-xl text-center font-medium'>
-        ¿Desea crear la clase o ir al programa creado?
+        ¿Desea agregarle los recursos a la clase o ir al programa?
       </h2>
 
       <div className='grid grid-cols-2 gap-6'>
         <button
-          onClick={() => {
-            onClose();
-            navigate(pathProgram ||  "/");
-          }}
+          // onClick={() => {
+          //   onClose();
+          //   navigate(pathProgram || "/");
+          // }}
           className="border border-Purple bg-white hover:bg-Purple text-Purple hover:text-white font-extrabold py-3 px-8 rounded-lg mr-2 ease-linear duration-150"
         >
           Ir al programa
         </button>
         <button
-          onClick={() => {
-            onClose();
-            navigate(pathNewClass ||  "/");
-          }}
+          // onClick={() => {
+          //   onClose();
+          //   navigate(pathNewClass || "/");
+          // }}
           className="border border-Purple bg-Purple hover:bg-PurpleHover text-white font-extrabold py-3 px-8 rounded-lg ease-linear duration-150"
         >
-          Crear clase
+          Agregar
         </button>
       </div>
     </div>

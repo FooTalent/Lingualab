@@ -9,6 +9,9 @@ import { LEVELS_MAP } from '../../../../utils/valueLists';
 import BackButton from '../../../../components/BackButtom';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
+import CreatedClass from '../Class/CreatedClass'
+import logo from '/CreasteUnaClase.png';
+import ProgramInfo from './ProgramInfo';
 
 const ProgramDetail = () => {
   const { eid } = useParams();
@@ -18,6 +21,7 @@ const ProgramDetail = () => {
   const [error, setError] = useState(null);
   const [program, setProgram] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCreated, setIsCreated] = useState(false)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -86,20 +90,7 @@ const ProgramDetail = () => {
         </div>
       </div>
 
-      <div className="flex flex-nowrap justify-between">
-        <p className="w-3/12 flex gap-4">
-          <span className='font-semibold'>Idioma:</span>
-          {program.language}
-        </p>
-        <p className="w-3/12 flex gap-4">
-          <span className='font-semibold'>Profesor:</span>
-          {program.teacher.last_name}, {program.teacher.first_name}
-        </p>
-        <p className="w-3/12 flex gap-4 truncate">
-          <span className='font-semibold'>Alumno:</span>
-          { }
-        </p>
-      </div>
+      <ProgramInfo program={program}/>
 
       {program.classes.length > 0 ? (
         <div className="flex flex-col justify-evenly gap-6">
@@ -123,14 +114,14 @@ const ProgramDetail = () => {
         />
       </Modal>
 
-      {/* <Modal isOpen={isCreated} onClose={handleModalClose} modalSize={'small'}>
-        <CreatedProgram
-          onClose={handleModalClose}
+      <Modal isOpen={isCreated} onClose={() => setIsCreated(false)} modalSize={'small'}>
+        <CreatedClass
+          // onClose={handleModalClose}
           logo={logo}
-          pathProgram={`/workspace/programas/${newProgramId}`}
-          pathNewClass={`/workspace/programas/${newProgramId}`}
+          // pathProgram={`/workspace/programas/${newProgramId}`}
+          // pathNewClass={`/workspace/programas/${newProgramId}`}
         />
-      </Modal> */}
+      </Modal>
     </div>
   );
 };
