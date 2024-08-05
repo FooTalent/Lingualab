@@ -9,6 +9,9 @@
     td {
         @apply font-normal text-lg
     }
+    th {
+        @apply flex gap-2 font-semibold text-[18px]
+    }
     input {
         @apply font-normal text-[16px] w-full p-3 px-12 border-gray-300 border placeholder:text-Grey placeholder:text-[16px] rounded-lg;
     }

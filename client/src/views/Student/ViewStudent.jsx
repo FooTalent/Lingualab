@@ -39,7 +39,7 @@ const ViewStudent = () => {
   console.log(students)
 
   return (
-    <div className="mx-auto w-[1210px]">
+    <div className="mx-auto py-4 w-[1210px]">
       <div className="flex items-center justify-between mb-4">
         <div className="flex space-x-2">
           <button
@@ -82,31 +82,31 @@ const ViewStudent = () => {
         </div>
       </div>
 
-      <table className="min-w-[1210px] bg-white border gap-4 rounded-xl border-Purple">
-        <thead className='border rounded-xl border-Purple gap-6'>
+      <table className="flex flex-col w-full bg-white gap-4 mx-auto">
+        <thead className='border rounded-xl border-Purple mx-auto w-full gap-6'>
           <tr className='flex justify-between w-full py-6 px-4'>
             {showInfo ? (
               <>
-                <th className="">Nombre y Apellido</th>
-                <th className="">Programa</th>
-                <th className="">Nivel</th>
-                <th className="">Carga Horaria</th>
-                <th className="">Teléfono</th>
-                <th className="">Email</th>
+                <th>Nombre y Apellido</th>
+                <th>Programa</th>
+                <th>Nivel</th>
+                <th>Carga Horaria</th>
+                <th>Teléfono</th>
+                <th className='mr-40'>Email</th>
               </>
             ) : (
               <>
-                <th className="px-4 py-2 border-b rounded-tl-lg">Nombre y Apellido</th>
-                <th className="px-4 py-2 border-b">Nivel</th>
-                <th className="px-4 py-2 border-b">Oral</th>
-                <th className="px-4 py-2 border-b">Escrito</th>
-                <th className="px-4 py-2 border-b">Lectura</th>
-                <th className="px-4 py-2 border-b rounded-tr-lg">Info.</th>
+                <th>Nombre y Apellido</th>
+                <th>Nivel</th>
+                <th>Oral</th>
+                <th>Escrito</th>
+                <th>Lectura</th>
+                <th className=' mr-14'>Info.</th>
               </>
             )}
           </tr>
         </thead>
-        <tbody>
+        <tbody className='border rounded-xl border-Purple mx-auto w-full gap-6 px-4'>
           {loading ? (
             <tr>
               <td colSpan="6" className="text-center py-4">Cargando...</td>
@@ -122,12 +122,12 @@ const ViewStudent = () => {
               <tr
                 key={student.id}
                 className={`border-b ${index === 0 ? 'rounded-t-lg' : ''
-                  } ${index === students.length - 1 ? 'rounded-b-lg' : ''
-                  }`}
+                  } ${index === students.length - 1 ? 'border-none' : ''
+                  } flex justify-between items-center py-6 border-Purple`}
               >
                 {showInfo ? (
                   <>
-                    <td className='px-4 py-2 flex items-center gap-[16px] w-[250px]'>
+                    <td className='flex items-center gap-[16px] w-[250px]'>
                       {student.photo ? (
                         <img className='w-[50px] h-[50px] rounded-full' src={crearURLCompleta(student.photo)} />
                       ) : (
@@ -135,20 +135,27 @@ const ViewStudent = () => {
                       )}
                       <span>{student.first_name} {student.last_name}</span>
                     </td>
-                    <td className="px-4 py-2">{student.program}</td>
-                    <td className="px-4 py-2">{student.level}</td>
-                    <td className="px-4 py-2">{student.workload}</td>
-                    <td className="px-4 py-2">{student.phone}</td>
-                    <td className="px-4 py-2">{student.email}</td>
+                    <td>{student.program}</td>
+                    <td>{student.level}</td>
+                    <td>{student.workload}</td>
+                    <td>{student.phone}</td>
+                    <td>{student.email}</td>
                   </>
                 ) : (
                   <>
-                    <td className="px-4 py-2">{student.name}</td>
-                    <td className="px-4 py-2">{student.level}</td>
-                    <td className="px-4 py-2">{student.oral}</td>
-                    <td className="px-4 py-2">{student.written}</td>
-                    <td className="px-4 py-2">{student.reading}</td>
-                    <td className="px-4 py-2">
+                    <td className='flex items-center gap-[16px] w-[250px]'>
+                      {student.photo ? (
+                        <img className='w-[50px] h-[50px] rounded-full' src={crearURLCompleta(student.photo)} />
+                      ) : (
+                        <span className='flex justify-center items-center font-bold w-[50px] h-[50px] rounded-full bg-Yellow uppercase'>{student?.first_name?.charAt(0) + student?.last_name?.charAt(0)}</span>
+                      )}
+                      <span>{student.first_name} {student.last_name}</span>
+                    </td>
+                    <td>{student.level}</td>
+                    <td>{student.oral}</td>
+                    <td>{student.written}</td>
+                    <td>{student.reading}</td>
+                    <td>
                       <button className="bg-purple-600 text-white px-4 py-2 rounded-lg">
                         Ver más
                       </button>
