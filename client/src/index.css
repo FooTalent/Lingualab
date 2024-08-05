@@ -6,6 +6,9 @@
     body {
         @apply font-roboto;
     }
+    td {
+        @apply font-normal text-lg
+    }
     input {
         @apply font-normal text-[16px] w-full p-3 px-12 border-gray-300 border placeholder:text-Grey placeholder:text-[16px] rounded-lg;
     }

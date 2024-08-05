@@ -3,6 +3,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useEffect, useState } from 'react';
 import { useAppStore } from '../../store/useAppStore';
 import { getStudents } from '../../services/students.services';
+import { crearURLCompleta } from '../../utils/urifoto';
 
 const ViewStudent = () => {
   const { user, userDetail } = useAppStore();
@@ -35,27 +36,27 @@ const ViewStudent = () => {
   const handleShowInfo = () => setShowInfo(true);
   const handleShowGrades = () => setShowInfo(false);
 
+  console.log(students)
+
   return (
-    <div className="p-4 mx-4"> {/* Agregado margen a la izquierda y derecha */}
+    <div className="mx-auto w-[1210px]">
       <div className="flex items-center justify-between mb-4">
         <div className="flex space-x-2">
           <button
             onClick={handleShowInfo}
-            className={`px-4 py-2 rounded-lg ${
-              showInfo
-                ? 'bg-yellow-400 text-black font-bold'
-                : 'border border-yellow-400 text-black bg-yellow-100'
-            }`}
+            className={`px-4 py-2 rounded-lg ${showInfo
+              ? 'bg-yellow-400 text-black font-bold'
+              : 'border border-yellow-400 text-black bg-yellow-100'
+              }`}
           >
             Información Personal
           </button>
           <button
             onClick={handleShowGrades}
-            className={`px-4 py-2 rounded-lg ${
-              !showInfo
-                ? 'bg-yellow-400 text-black font-bold'
-                : 'border border-yellow-400 text-black bg-yellow-100'
-            }`}
+            className={`px-4 py-2 rounded-lg ${!showInfo
+              ? 'bg-yellow-400 text-black font-bold'
+              : 'border border-yellow-400 text-black bg-yellow-100'
+              }`}
           >
             Calificaciones
           </button>
@@ -81,17 +82,17 @@ const ViewStudent = () => {
         </div>
       </div>
 
-      <table className="min-w-full bg-white border border-gray-300">
-        <thead>
-          <tr>
+      <table className="min-w-[1210px] bg-white border gap-4 rounded-xl border-Purple">
+        <thead className='border rounded-xl border-Purple gap-6'>
+          <tr className='flex justify-between w-full py-6 px-4'>
             {showInfo ? (
               <>
-                <th className="px-4 py-2 border-b rounded-tl-lg">Nombre y Apellido</th>
-                <th className="px-4 py-2 border-b">Programa</th>
-                <th className="px-4 py-2 border-b">Nivel</th>
-                <th className="px-4 py-2 border-b">Carga Horaria</th>
-                <th className="px-4 py-2 border-b">Teléfono</th>
-                <th className="px-4 py-2 border-b rounded-tr-lg">Email</th>
+                <th className="">Nombre y Apellido</th>
+                <th className="">Programa</th>
+                <th className="">Nivel</th>
+                <th className="">Carga Horaria</th>
+                <th className="">Teléfono</th>
+                <th className="">Email</th>
               </>
             ) : (
               <>
@@ -120,15 +121,20 @@ const ViewStudent = () => {
             students.map((student, index) => (
               <tr
                 key={student.id}
-                className={`border-b ${
-                  index === 0 ? 'rounded-t-lg' : ''
-                } ${
-                  index === students.length - 1 ? 'rounded-b-lg' : ''
-                }`}
+                className={`border-b ${index === 0 ? 'rounded-t-lg' : ''
+                  } ${index === students.length - 1 ? 'rounded-b-lg' : ''
+                  }`}
               >
                 {showInfo ? (
                   <>
-                    <td className="px-4 py-2">{student.name}</td>
+                    <td className='px-4 py-2 flex items-center gap-[16px] w-[250px]'>
+                      {student.photo ? (
+                        <img className='w-[50px] h-[50px] rounded-full' src={crearURLCompleta(student.photo)} />
+                      ) : (
+                        <span className='flex justify-center items-center font-bold w-[50px] h-[50px] rounded-full bg-Yellow uppercase'>{student?.first_name?.charAt(0) + student?.last_name?.charAt(0)}</span>
+                      )}
+                      <span>{student.first_name} {student.last_name}</span>
+                    </td>
                     <td className="px-4 py-2">{student.program}</td>
                     <td className="px-4 py-2">{student.level}</td>
                     <td className="px-4 py-2">{student.workload}</td>
