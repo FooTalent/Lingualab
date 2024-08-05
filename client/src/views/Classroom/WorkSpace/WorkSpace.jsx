@@ -72,7 +72,7 @@ const WorkSpace = () => {
 
   return (
     <div className="container mx-auto flex flex-col gap-11">
-      <NavWorkSpace setModal={setIsModalOpen} buttonDescription={"Crear Programa"} />
+      <NavWorkSpace setModal={setIsModalOpen} buttonDescription={"Crear Programa"} route={'workspace'} />
 
       {
         loading ? (

@@ -31,19 +31,22 @@ const CreateProgramForm = ({ onSubmit, onClose }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="mb-4">
-        <label className="block text-gray-700">Título</label>
+    <form
+      onSubmit={handleSubmit}
+      className='flex flex-col gap-4 text-card justify-evenly'
+    >
+      <div className="flex flex-col gap-3">
+        <label className="p-0">Título</label>
         <input
           type="text"
           name="title"
           value={programData.title}
           onChange={handleInputChange}
-          className="w-full p-2 border rounded-md"
+          className="py-3 px-4 border rounded-md"
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-700">Descripción</label>
+        <label className="">Descripción</label>
         <input
           type="text"
           name="description"

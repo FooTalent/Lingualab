@@ -45,8 +45,6 @@ const VirtualClassRoom = () => {
     }
   }, [user, userDetail, refresh]);
 
-  console.log(programs);
-
   const handleCreateProgram = async (programData) => {
     try {
       const newProgram = await createVCRoom(user.token, userDetail._id, programData);
@@ -74,7 +72,7 @@ const VirtualClassRoom = () => {
 
   return (
     <div className="container mx-auto flex flex-col gap-11">
-      <NavWorkSpace setModal={setIsModalOpen} buttonDescription={"Crear Aula"} />
+      <NavWorkSpace setModal={setIsModalOpen} buttonDescription={"Crear Aula"} route={'aulavirtual'} />
 
       {loading ? (
         <p className="text-center">Cargando Datos...</p>
