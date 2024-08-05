@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getPrograms } from '../../../services/programs.services';
 import { getStudents } from '../../../services/students.services';
 import DropdownSelect from '../DropdownSelect';
@@ -6,10 +6,16 @@ import DropdownSelect from '../DropdownSelect';
 const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
   const [programData, setProgramData] = useState({
     studentIds: [],
+    daysOfWeek: [],
+    startDateTime: '',
   });
   const [programs, setPrograms] = useState([]);
   const [students, setStudents] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState('');
+
+  const days = [
+    'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'
+  ]
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,9 +33,17 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setProgramData({
-      ...programData,
-      [name]: value,
+    setProgramData((prevData) => {
+      const newData = { ...prevData, [name]: value };
+
+      if (name === 'startDate' || name === 'time') {
+        const date = newData.startDate || prevData.startDate;
+        const time = newData.time || prevData.time;
+        if (date && time) {
+          newData.startDateTime = `${date}T${time}`;
+        }
+      }
+      return newData;
     });
   };
 
@@ -61,9 +75,19 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
     });
   };
 
+  const handleDayChange = (day) => {
+    setProgramData((prevData) => {
+      const daysOfWeek = prevData.daysOfWeek.includes(day)
+        ? prevData.daysOfWeek.filter((d) => d !== day)
+        : [...prevData.daysOfWeek, day];
+      return { ...prevData, daysOfWeek };
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(programData);
+    console.log(programData)
+    onSubmit({ ...programData, startDateTime: programData.startDateTime });
   };
 
   return (
@@ -113,13 +137,47 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
       </div>
       <div className="mb-4">
         <label className="block text-gray-700">Fecha de inicio</label>
-        <input
-          type="date"
-          name="startDate"
-          value={programData.startDate}
-          onChange={handleInputChange}
-          className="w-full p-2 border rounded-md"
-        />
+        <div className='flex gap-10'>
+          <input
+            type="date"
+            name="startDate"
+            value={programData.startDate}
+            onChange={handleInputChange}
+            className="w-1/2 p-2 border rounded-md"
+          />
+          <input
+            type="time"
+            name="time"
+            value={programData.time}
+            onChange={handleInputChange}
+            className="w-1/2 p-2 border rounded-md"
+          />
+        </div>
+      </div>
+      <div className="mb-4">
+        <label className="block text-gray-700">Seleccione el dia</label>
+        <div className='flex flex-row gap-5'>
+          {days.map((day) => (
+            <div className='relative' key={day}>
+              <input
+                type="checkbox"
+                id={day}
+                name="daysOfWeek"
+                value={day}
+                onChange={() => handleDayChange(day)}
+                checked={programData.daysOfWeek.includes(day)}
+                className="hidden"
+              />
+              <label htmlFor={day}
+                className={`flex items-center justify-center w-10 h-10 border-2 rounded-full cursor-pointer font-medium ${programData.daysOfWeek.includes(day)
+                  ? 'bg-Purple text-white border-black'
+                  : 'bg-white text-gray-700 border-gray-300'
+                  }`}>
+                {day.charAt(0)}
+              </label>
+            </div>
+          ))}
+        </div>
       </div>
       <div className="flex justify-end">
         <button
