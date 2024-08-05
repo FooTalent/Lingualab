@@ -1,6 +1,4 @@
 import { useState } from "react"
-import { postResource } from "../../services/resources.services"
-import { Toast } from "../../utils/toast"
 import { LEVELS_MAP, RESOURCE_TYPES, LANGUAGES } from "../../utils/valueLists"
 
 
@@ -27,38 +25,19 @@ export default function CreateResourceForm({onSubmit, onCancel}) {
     }
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center min-h-screen bg-black bg-opacity-40">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl">
-                <h2 className="text-2xl font-bold mb-4">Crea un nuevo Recurso</h2>
+            <div>
                 <form onSubmit={handleSubmit}>
-                    <div className="mb-4 flex flex-row justify-between">
-                        <div className="w-full mr-2">
-                            <label htmlFor="level" className="block text-gray-700 font-bold mb-2">Nivel:</label>
-                            <select
-                                id="level"
-                                value={level}
-                                onChange={(e) => setLevel(e.target.value)}
-                                className="block w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-indigo-500"
-                                required
-                            >   
-                                <option value="" disabled>Elegir nivel</option>
-                                {
-                                    levelsArr.map((lvl, i) => (
-                                        <option key={i} value={lvl}>{lvl}</option>
-                                    ))
-                                }
-                            </select>
-                        </div>
-                        <div className="w-full">
-                            <label htmlFor="type" className="block text-gray-700 font-bold mb-2">Recurso:</label>
+                    <div className="mb-4 flex flex-row justify-between gap-6 justify-self-end self-stretch content-stretch">
+                        <div className="w-full flex flex-col justify-between">
+                            <label htmlFor="type" className="block text-gray-700 font-bold mb-2 px-0">Recurso:</label>
                             <select
                                 id="type"
                                 value={type}
                                 onChange={(e) => setType(e.target.value)}
-                                className="block w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-indigo-500"
+                                className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
                                 required
                             >
-                                <option value="" disabled>Elegir la categoría del recurso</option>
+                                <option value="" disabled>Seleccionar el recurso</option>
                                 {
                                     RESOURCE_TYPES.map((lvl, i) => (
                                         <option key={i} value={lvl}>{lvl}</option>
@@ -66,10 +45,44 @@ export default function CreateResourceForm({onSubmit, onCancel}) {
                                 }
                             </select>
                         </div>
+                        <div className="w-full flex flex-col justify-between">
+                            <label htmlFor="level" className="block text-gray-700 font-bold mb-2 px-0">Nivel:</label>
+                            <select
+                                id="level"
+                                value={level}
+                                onChange={(e) => setLevel(e.target.value)}
+                                className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                                required
+                            >   
+                                <option value="" disabled>Seleccionar el nivel</option>
+                                {
+                                    levelsArr.map((lvl, i) => (
+                                        <option key={i} value={lvl}>{lvl}</option>
+                                    ))
+                                }
+                            </select>
+                        </div>
+                        <div className="w-full flex flex-col justify-between">
+                            <label htmlFor="language" className="block text-gray-700 font-bold mb-2 px-0">Idioma:</label>
+                            <select
+                                id="language"
+                                value={language}
+                                onChange={(e) => setLanguage(e.target.value)}
+                                className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                                required
+                            >   
+                                <option value="" disabled>Seleccionar el idioma</option>
+                                {
+                                    LANGUAGES.map((lvl, i) => (
+                                        <option key={i} value={lvl}>{lvl}</option>
+                                    ))
+                                }
+                        </select>
+                        </div>
                     </div>
 
                     <div className="mb-4">
-                        <label htmlFor="title" className="block text-gray-700 font-bold mb-2">Nombre:</label>
+                        <label htmlFor="title" className="block text-gray-700 font-bold mb-2 px-0">Nombre del recurso:</label>
                         <input
                             type="text"
                             id="title"
@@ -80,27 +93,8 @@ export default function CreateResourceForm({onSubmit, onCancel}) {
                             required
                         />
                     </div>
-
-                    <div className="mb-4 w-full">
-                        <label htmlFor="language" className="block text-gray-700 font-bold mb-2">Idioma:</label>
-                        <select
-                            id="language"
-                            value={language}
-                            onChange={(e) => setLanguage(e.target.value)}
-                            className="block w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-indigo-500"
-                            required
-                        >
-                            <option value="" disabled>Elegir el idioma del recurso</option>
-                            {
-                                LANGUAGES.map((lvl, i) => (
-                                    <option key={i} value={lvl}>{lvl}</option>
-                                ))
-                            }
-                        </select>
-                    </div>
-
                     <div className="mb-4">
-                        <label htmlFor="url" className="block text-gray-700 font-bold mb-2">Link del Recurso:</label>
+                        <label htmlFor="url" className="block text-gray-700 font-bold mb-2 px-0">Link del Recurso:</label>
                         <input
                             type="url"
                             id="url"
@@ -113,32 +107,32 @@ export default function CreateResourceForm({onSubmit, onCancel}) {
                     </div>
 
                     <div className="mb-4">
-                        <label htmlFor="description" className="block text-gray-700 font-bold mb-2">Observaciones:</label>
+                        <label htmlFor="description" className="block text-gray-700 font-bold mb-2 px-0">Observaciones:</label>
                         <textarea
                             id="description"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                             className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+                            placeholder="Incluya comentarios adicionales sobre cómo utilizar este recurso."
                         />
                     </div>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-center gap-6">
                         <button
                             type="button"
                             onClick={onCancel}
-                            className="px-4 py-2 border border-Purple text-Purple  rounded-md hover:bg-purple-100"
+                            className="w-full px-4 py-2 border border-Purple text-Purple  rounded-md hover:bg-Purple hover:text-white"
                         >
                             Cancelar
                         </button>
                         <button
                             type="submit"
-                            className="px-4 py-2 bg-Purple text-white rounded-md hover:bg-purple-700"
+                            className="w-full px-4 py-2 bg-Purple text-white rounded-md hover:bg-PurpleHover"
                         >
                             Agregar Recurso
                         </button>
                     </div>
                 </form>
             </div>
-        </div>
     )
 }

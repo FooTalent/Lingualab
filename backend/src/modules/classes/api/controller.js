@@ -1,4 +1,5 @@
 import CustomController from "../../../libraries/customs/controller.js";
+import convertToUTC from "../../../libraries/utils/convertToUTC.js";
 import validateFields from "../../../libraries/utils/validatefiels.js";
 import Service from "../logic/service.js";
 
@@ -17,14 +18,8 @@ export default class Controller extends CustomController {
         filter.program = { $in: programsWithTeacher.map(p => p._id) };
       }
   
-      const convertToUTC = (dateString, isEndOfDay = false) => {
-        const time = isEndOfDay ? 'T23:59:59-03:00' : 'T00:00:00-03:00';
-        const date = new Date(`${dateString}${time}`);
-        return new Date(date.getTime() + date.getTimezoneOffset() * 60000);
-      }
-  
       if (startDate || endDate) {
-          const start = startDate ? convertToUTC(startDate) : undefined;
+          const start = startDate ? convertToUTConvertToUTC(startDate) : undefined;
           const end = endDate ? convertToUTC(endDate, true) : undefined;
   
           filter.daytime = {};

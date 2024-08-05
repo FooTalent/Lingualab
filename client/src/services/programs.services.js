@@ -54,6 +54,21 @@ export const getProgramById = async (token, programId) => {
     throw error;
   }
 };
+export const updateProgram = async (token, programsId, data ) => {
+  try {
+    const response = await axios.put(`${url}api/programs/${programsId}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      console.error('Acceso no autorizado - talvez token invalido');
+    }
+    throw error;
+  }
+}
 
 // PROGRANS CLASS  ( class     --> pasar query: isTemplate = true) ----------------------------------------------------------------
 export const getClassById = async (token, classId) => {

@@ -1,14 +1,6 @@
 import { Schema, model} from 'mongoose'
 import { CURRENCIES, GENDERS, LANGUAGES, ROLES, COUNTRIES } from '../../valueList.js';
 
-
-const reviewSchema = new Schema({
-  user:        { type: Schema.Types.ObjectId, ref: 'users',   required: true, },
-  created:     { type: Date,   default: Date.now,  immutable: true,},
-  comment:     { type: String, required: true, },
-  score:       { type: Number, required: true,   min: 1, max: 10, },
-}, { _id: false });
-
 const educationSchema = new Schema({
   title:       { type: String,},
   link:        { type: String,},
@@ -24,7 +16,6 @@ const userSchema = new Schema({
 
   // specific properties
   program:     [{ type: Schema.Types.ObjectId, ref: 'programs',}],
-  reviews:     { type: [reviewSchema], },
 
   // aditional properties
   photo:       { type: String,   },

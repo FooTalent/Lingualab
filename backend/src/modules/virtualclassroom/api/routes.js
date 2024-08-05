@@ -8,5 +8,6 @@ const controller = new Controller()
 
 router
 .post   ("/",     handleAuth(clients), controller.create )
+.put    ("/:eid", handleAuth(clients), controller.updateId)
 
 export default router

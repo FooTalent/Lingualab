@@ -7,6 +7,7 @@ import { Toast } from "../../utils/toast";
 import CategoryFilter from "../../components/Resources/CategoryFilter";
 import { LEVELS, RESOURCE_TYPES } from "../../utils/valueLists";
 import LevelFilter from "../../components/Resources/LevelFilter";
+import Modal from "../../components/Modal";
 
 export default function Resources({ onSelect, selected}) {
 
@@ -55,7 +56,7 @@ export default function Resources({ onSelect, selected}) {
 
   useEffect(() => {
     const fetchSelectedResources = async () => {
-      if (selected.length > 0) {
+      if (selected && selected.length > 0) {
         try {
           const fetchedResources = await Promise.all(
             selected.map((id) => fetchResourceById(user.token, id))
@@ -220,8 +221,9 @@ export default function Resources({ onSelect, selected}) {
                 )
             )}
             {
-              modalStatus &&
-              <CreateResourceForm onSubmit={handleSubmitCreate} onCancel={handleCancel} />
+              <Modal title={"Crea un nuevo Recurso"} onClose={handleCancel} isOpen={modalStatus}>
+                <CreateResourceForm onSubmit={handleSubmitCreate} onCancel={handleCancel} />
+              </Modal>
             }
           </div>
         </div>
