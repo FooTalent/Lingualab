@@ -4,11 +4,11 @@ import { createProgram, getPrograms } from '../../../services/programs.services'
 import { useNavigate } from 'react-router-dom';
 import Modal from '../../../components/Modal';
 import NavWorkSpace from '../NavWorkSpace';
-import CardList from '../CardList';
-import CreatedProgram from '../CreatedProgram';
-import CreateProgramForm from './CreateProgramForm';
+import CardList from './Class/CardList';
+import CreatedProgram from './Program/CreatedProgram';
 import logo from '/CreasteUnPrograma.png';
-import ProgramCard from './ProgramCard';
+import CreateProgramForm from './Program/CreateProgramForm';
+import ProgramCard from './Program/ProgramCard';
 
 const WorkSpace = () => {
   const [programs, setPrograms] = useState([]);

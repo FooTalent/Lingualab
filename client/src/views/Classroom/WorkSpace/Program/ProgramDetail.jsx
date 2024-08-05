@@ -61,7 +61,7 @@ const ProgramDetail = () => {
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto flex flex-col gap-8">
       <div className='flex justify-between items-center'>
         <BackButton />
 
@@ -86,16 +86,23 @@ const ProgramDetail = () => {
         </div>
       </div>
 
-      <div className="mt-6">
-        {program.description ? (
-          <p className="mb-2"><strong>Descripción:</strong> {program.description}</p>
-        ) : null}
-        <p className="mb-2"><strong>Idioma:</strong> {program.language}</p>
-        <p className="mb-4"><strong>Profesor:</strong> {program.teacher.last_name}, {program.teacher.first_name}</p>
+      <div className="flex flex-nowrap justify-between">
+        <p className="w-3/12 flex gap-4">
+          <span className='font-semibold'>Idioma:</span>
+          {program.language}
+        </p>
+        <p className="w-3/12 flex gap-4">
+          <span className='font-semibold'>Profesor:</span>
+          {program.teacher.last_name}, {program.teacher.first_name}
+        </p>
+        <p className="w-3/12 flex gap-4 truncate">
+          <span className='font-semibold'>Alumno:</span>
+          { }
+        </p>
       </div>
 
       {program.classes.length > 0 ? (
-        <div className="grid grid-cols-1 gap-4">
+        <div className="flex flex-col justify-evenly gap-6">
           {program.classes.map((classroom) => (
             <ClassroomCard
               key={classroom._id}
@@ -115,6 +122,15 @@ const ProgramDetail = () => {
           onClose={() => setIsModalOpen(false)}
         />
       </Modal>
+
+      {/* <Modal isOpen={isCreated} onClose={handleModalClose} modalSize={'small'}>
+        <CreatedProgram
+          onClose={handleModalClose}
+          logo={logo}
+          pathProgram={`/workspace/programas/${newProgramId}`}
+          pathNewClass={`/workspace/programas/${newProgramId}`}
+        />
+      </Modal> */}
     </div>
   );
 };
