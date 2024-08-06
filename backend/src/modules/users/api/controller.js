@@ -19,7 +19,8 @@ export default class Controller extends CustomController {
         'end',        // fecha hora fin
         'country',    // pais, usado para el timezone del horario
         'students'    // Un array de {email} Lista de asistentes
-      ]
+      ],
+      invite: ['email']
     }
   }
 
@@ -213,6 +214,22 @@ export default class Controller extends CustomController {
     }
   }
   inviteStudent = async (req, res, next) => {
-    
+    try{
+      const userData = validateFields(req.body, this.requieredfield.invite);
+      const {first_name, last_name, password} = req.body
+      userData.first_name = first_name || "Nombre" ;
+      userData.last_name = last_name || "Apellido" ;
+      const emailPassword = password || "12345"
+      userData.password = emailPassword ;
+      userData.role = 'Student'
+      userData.teacher = req.user._id
+
+      const newStudent = await this.service.register(userData)
+      await this.service.inviteStudent(req.user, newStudent, emailPassword)
+
+      res.sendCreated({}, "Invitacion exitoso")
+    } catch(error) {
+      next(error)
+    }
   }
 }

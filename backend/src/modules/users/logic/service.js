@@ -133,4 +133,19 @@ export default class Service extends CustomService {
 
     return event.data;
   }
+
+  // STUDENTS
+  inviteStudent = async (user, newStudent, password ) => {
+    const to = newStudent.email
+    const subject  = `Datos de acceso a Lingualab de parte del profesor ${user.last_name}`
+    const template = 'invitation'
+    const context = {
+      profesorNombre: user.first_name,
+      profesorApellido: user.last_name,
+      usuario: newStudent.email,
+      contrasena: password,
+      accesoURL: configEnv.cors_origin
+    }
+    return sendMail( to, subject, template, context)
+  }
 }
