@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { useAppStore } from '../../../../store/useAppStore';
 import { fetchResourceById } from '../../../../services/resources.services';
 
-const ClassroomCard = ({ classroom, buttonFunction }) => {
+const ClassroomCard = ({ classroom, buttonFunction, deleteButton }) => {
   const { level, title, students, daytime, duration_hours, _id } = classroom;
   const [resourcesClass, setResourcesClass] = useState([])
   const { user } = useAppStore();
@@ -29,9 +29,16 @@ const ClassroomCard = ({ classroom, buttonFunction }) => {
 
   return (
     <div className="bg-white shadow-md rounded-md p-4 mb-4">
-      <div className="flex items-center mb-2">
-        <span className="text-white px-2 py-1 rounded mr-2" style={{backgroundColor: LEVELS_MAP[level]}}>{level}</span>
-        <h2 className="text-xl font-semibold">{title}</h2>
+      <div className="flex items-center justify-between mb-2">
+        <div className='flex'>
+          <span className="text-white px-2 py-1 rounded mr-2" style={{backgroundColor: LEVELS_MAP[level]}}>{level}</span>
+          <h2 className="text-xl font-semibold">{title}</h2>
+        </div>
+        <button
+          onClick={() => deleteButton(_id)} 
+          className='bg-YellowDeselect font-extrabold  hover:bg-Yellow text-card border-2 border-Yellow rounded-lg py-3 px-4 ease-linear duration-150'>
+          Eliminar
+        </button>
       </div>
       <div className="text-gray-700 mb-2">
         <strong>Fecha:</strong> {daytime ? new Date(daytime).toLocaleString() : null }
