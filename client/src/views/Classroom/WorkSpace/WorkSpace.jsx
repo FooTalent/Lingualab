@@ -3,7 +3,7 @@ import { useAppStore } from '../../../store/useAppStore';
 import { createProgram, getPrograms } from '../../../services/programs.services';
 import { useNavigate } from 'react-router-dom';
 import Modal from '../../../components/Modal';
-import NavWorkSpace from '../NavWorkSpace';
+import NavWorkSpace from '../SubComponents/NavWorkSpace';
 import logo from '/CreasteUnPrograma.png';
 import ProgramCard from './Main/ProgramCard';
 import CreateProgramForm from './Main/CreateProgramForm';

@@ -12,8 +12,6 @@ import popUp from '/Popup_EliminarPrograma.png'
 import { deleteProgram, duplicateProgram } from '../../../../services/programs.services';
 import { useAppStore } from '../../../../store/useAppStore';
 
-
-
 const ProgramCard = ({ program, buttonFunction, refresh }) => {
   const { user } = useAppStore();
   const [state, setState] = useState(false)
@@ -42,7 +40,7 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
   const links = [
     { path: `/`, label: <><img src={crearAula} alt='Crear Aula' />Crear aula a partir de este programa</> },
     { path: `/`, label: <><ShareIcon />Compartir</> },
-    { path: `/`, label: <><img src={editarPrograma} alt='Editar Programa' />Editar programa</> },
+    { path: `/workspace/programas/${program._id}`, state: 'edit', label: <><img src={editarPrograma} alt='Editar Programa' />Editar programa</> },
     { path: `/`, label: <><img src={duplicar} alt='Duplicar Programa' />Duplicar programa</>, function: handleDuplicate },
     { path: `/`, label: <><DeleteIcon />Eliminar programa</>, function: handleDelete },
   ]
