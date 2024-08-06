@@ -200,6 +200,17 @@ export default class Controller extends CustomController {
       next(error)
     }
   }
+  getStudentbyId = async (req, res, next) => {
+    try{
+      const {sid} = req.params
+
+      const element = await this.service.getBy({_id: sid, role: 'Student'});
+      //const element = await this.service.get({_id: sid, teacher: tid});
+      res.sendSuccessOrNotFound(element);
+    } catch(error) {
+      next(error)
+    }
+  }
   updateStudent = async (req, res, next) => {
     try{
       const {sid} = req.params
