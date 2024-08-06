@@ -21,7 +21,7 @@ const reviewSchema = new Schema({
 
 reviewSchema.pre(['findOne', 'find'], function(next) {
   this
-  .populate({ path: 'student', select: 'first_name last_name' })
+  .populate({ path: 'student', select: 'first_name last_name level photo' })
   .populate({ path: 'teacher', select: 'first_name last_name' })
   .populate({ path: 'program', select: 'title' })
   .populate({ path: 'classes', select: 'title' })
