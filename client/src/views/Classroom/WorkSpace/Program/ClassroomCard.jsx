@@ -9,7 +9,7 @@ import CalendarIcon from '/Calendario.svg'
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-const ClassroomCard = ({ classroom, buttonFunction }) => {
+const ClassroomCard = ({ classroom, buttonFunction, deleteButton }) => {
   const { level, title, students, daytime, duration_hours, _id } = classroom;
   const [resourcesClass, setResourcesClass] = useState([])
   const [openResources, setOpenResources] = useState(true)
@@ -40,12 +40,19 @@ const ClassroomCard = ({ classroom, buttonFunction }) => {
           <h2 className="font-bold">{title}</h2>
         </div>
 
-        <button
-          className={`flex items-center gap-2 bg-Yellow hover:bg-card font-extrabold text-card hover:text-Yellow border-2 border-Yellow hover:border-card rounded-lg py-2 px-3 ease-linear duration-150`}
-          onClick={() => buttonFunction(_id)}
-        >
-          <EditIcon />Editar
-        </button>
+        <div className='flex justify-between gap-4'>
+          <button
+            className={`flex items-center gap-2 bg-Yellow hover:bg-card font-extrabold text-card hover:text-Yellow border-2 border-Yellow hover:border-card rounded-lg py-2 px-3 ease-linear duration-150`}
+            onClick={() => buttonFunction(_id)}
+          >
+            <EditIcon />Editar
+          </button>
+          <button
+            onClick={() => deleteButton(_id)}
+            className='flex items-center gap-2 bg-Yellow hover:bg-card font-extrabold text-card hover:text-Yellow border-2 border-Yellow hover:border-card rounded-lg py-2 px-3 ease-linear duration-150'>
+            Eliminar
+          </button>
+        </div>
       </div>
 
       <div className='flex flex-col gap-2'>

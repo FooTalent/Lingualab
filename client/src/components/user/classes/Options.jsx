@@ -1,6 +1,3 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-
 export default function Options({ state, id, links }) {
     return (
         <div
@@ -8,13 +5,13 @@ export default function Options({ state, id, links }) {
         >
             {
                 links.map((link, index) => (
-                    <Link
+                    <button
                         key={`${index}-${id}`}
-                        to={link.path}
+                        onClick={() => link.function(id)}
                         className='cursor-pointer py-1 px-2 rounded-md ease-linear duration-200 flex items-center gap-2 !text-card !no-underline hover:bg-yellowInput'
                     >
                         {link.label}
-                    </Link>
+                    </button>
                 ))
             }
         </div>

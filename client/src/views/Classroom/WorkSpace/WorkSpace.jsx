@@ -89,7 +89,7 @@ const WorkSpace = () => {
               Crear Programa
             </button>
           </div>
-        ) : <CardList data={programs} CardComponent={ProgramCard} buttonFunction={buttonFunction} />
+        ) : <CardList data={programs} CardComponent={ProgramCard} buttonFunction={buttonFunction} refresh={setRefresh}/>
       }
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Crear Programa" modalSize={'medium'}>

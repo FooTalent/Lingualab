@@ -73,7 +73,7 @@ export const updateProgram = async (token, programId, data ) => {
 
 export const duplicateProgram = async (token, programId) => {
   try {
-    const response = await axios.post(`${url}api/virtual/duplicate/:${programId}`, {
+    const response = await axios.post(`${url}api/virtual/duplicate/${programId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -86,6 +86,22 @@ export const duplicateProgram = async (token, programId) => {
     throw error;
   }
 };
+
+export const deleteProgram = async (token, programId) => {
+  try {
+    const response = await axios.delete(`${url}api/programs/${programId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    })
+    return response.data
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      console.error('Acceso no autorizado - talvez token invalido');
+    }
+    throw error
+  }
+}
 
 // PROGRANS CLASS  ( class     --> pasar query: isTemplate = true) ----------------------------------------------------------------
 export const getClassById = async (token, classId) => {
@@ -123,6 +139,22 @@ export const createClass = async (token, data) => {
 export const updateClass = async (token, classroomId, data ) => {
   try {
     const response = await axios.put(`${url}api/classes/${classroomId}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      console.error('Acceso no autorizado - talvez token invalido');
+    }
+    throw error;
+  }
+}
+
+export const deleteClass = async (token, classId) => {
+  try {
+    const response = await axios.delete(`${url}api/classes/${classId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppStore } from '../../../../store/useAppStore';
-import { createClass, getProgramById, updateProgram } from '../../../../services/programs.services';
+import { createClass, deleteClass, getProgramById, updateProgram } from '../../../../services/programs.services';
 import Modal from '../../../../components/Modal';
 import CreateClassForm from '../Class/CreateClassForm';
 import ClassroomCard from './ClassroomCard';
@@ -23,6 +23,8 @@ const ProgramDetail = () => {
   const [program, setProgram] = useState(null);
   const [newClassId, setNewClassId] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false)
+  const [idClass, setIdClass] = useState(false)
   const [isModalEditOpen, setIsModalEditOpen] = useState(false)
   const [isCreated, setIsCreated] = useState(false)
   const navigate = useNavigate();
@@ -77,6 +79,17 @@ const ProgramDetail = () => {
     navigate(`/workspace/class/${classroomId}`);
   };
 
+  const handleDeleteClass = (id) => {
+    setIdClass(id)
+    setDeleteModal(true)
+  }
+
+  const handleConfirmDelete = async () => {
+    const response = await deleteClass(user.token, idClass)
+    setDeleteModal(false)
+    setRefresh(prevRefresh => !prevRefresh)
+  }
+  
   if (loading) return <p className="text-center">Cargando datos...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
@@ -115,6 +128,7 @@ const ProgramDetail = () => {
               key={classroom._id}
               classroom={classroom}
               buttonFunction={handleEditClassroom}
+              deleteButton={handleDeleteClass}
             />
           ))}
         </div>
@@ -144,6 +158,20 @@ const ProgramDetail = () => {
           logo={logo}
           pathNewClass={`/workspace/class/${newClassId}`}
         />
+      </Modal>
+      <Modal modalSize={'Small'} isOpen={deleteModal}>
+        <div className='flex gap-4'>
+          <button
+            onClick={() => setDeleteModal(false)}
+            className="w-full px-4 py-2 border border-Purple text-Purple  rounded-md hover:bg-Purple hover:text-white">
+              Cancelar
+          </button>
+          <button
+            onClick={handleConfirmDelete}
+            className="w-full px-4 py-2 bg-Purple text-white rounded-md hover:bg-PurpleHover">
+            Eliminar clase
+          </button>
+        </div>
       </Modal>
     </div>
   );
