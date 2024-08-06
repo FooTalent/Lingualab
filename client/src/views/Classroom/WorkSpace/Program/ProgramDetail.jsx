@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAppStore } from '../../../../store/useAppStore';
 import { createClass, deleteClass, getProgramById, updateProgram } from '../../../../services/programs.services';
 import Modal from '../../../../components/Modal';
@@ -28,6 +28,7 @@ const ProgramDetail = () => {
   const [isModalEditOpen, setIsModalEditOpen] = useState(false)
   const [isCreated, setIsCreated] = useState(false)
   const navigate = useNavigate();
+  const location = useLocation()
 
   useEffect(() => {
     if (user && user.token) {
@@ -49,6 +50,13 @@ const ProgramDetail = () => {
       setLoading(false);
     }
   }, [user, eid, refresh]);
+
+  useEffect(() => {
+    if (location.state === 'edit') {
+      setIsModalEditOpen(true);
+      navigate(location.pathname, { replace: true });
+    }
+  }, [location]);
 
   const handleEditProgram = async (data) => {
     try {
@@ -89,7 +97,7 @@ const ProgramDetail = () => {
     setDeleteModal(false)
     setRefresh(prevRefresh => !prevRefresh)
   }
-  
+
   if (loading) return <p className="text-center">Cargando datos...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
@@ -164,7 +172,7 @@ const ProgramDetail = () => {
           <button
             onClick={() => setDeleteModal(false)}
             className="w-full px-4 py-2 border border-Purple text-Purple  rounded-md hover:bg-Purple hover:text-white">
-              Cancelar
+            Cancelar
           </button>
           <button
             onClick={handleConfirmDelete}
