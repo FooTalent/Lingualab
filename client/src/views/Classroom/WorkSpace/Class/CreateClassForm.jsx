@@ -108,7 +108,7 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
 
       <div className="grid grid-cols-2 gap-8">
         <ButtonModal buttonAction={onClose} type='prev' label='Cancelar' />
-        <ButtonModal buttonAction={onClose} type='next' label='Crear Clase' />
+        <ButtonModal buttonAction={onSubmit} type='next' label='Crear Clase' />
       </div>
     </form>
   );

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAppStore } from '../../../../store/useAppStore';
-import { getClassById, updateClass } from '../../../../services/programs.services';
+import { getClassById, updateClass, getProgramById } from '../../../../services/programs.services';
 import { LEVELS_MAP } from '../../../../utils/valueLists';
 import TextEditor from '../../../../components/TextEditor/TextEditor';
 import BackButton from '../../../../components/BackButtom';
@@ -17,6 +17,7 @@ const ClassDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [classData, setClassData] = useState(null);
+  const [program, setProgram] = useState(null)
   const [richText, setRichText] = useState('');
   const [showResourceModal, setShowResourceModal] = useState(false);
   const [selectedResources, setSelectedResources] = useState([]);
@@ -28,7 +29,9 @@ const ClassDetail = () => {
         try {
           setLoading(true);
           const response = await getClassById(user.token, eid);
+          const responseProgram = await getProgramById(user.token, response.program)
           setClassData(response);
+          setProgram(responseProgram);
           setSelectedResources(response.resources)
           setRichText(response.content || '');
         } catch (error) {
@@ -90,7 +93,7 @@ const ClassDetail = () => {
         </div>
       </div>
 
-      <ProgramInfo program={classData} />
+      <ProgramInfo program={program} />
 
       <div className='flex flex-col gap-5'>
         <h2 className="text-customSubTitle font-semibold">Edita el contenido de la clase</h2>

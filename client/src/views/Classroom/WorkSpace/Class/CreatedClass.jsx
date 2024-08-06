@@ -16,19 +16,16 @@ export default function CreatedProgram({ onClose, logo, pathProgram, pathNewClas
 
       <div className='grid grid-cols-2 gap-6'>
         <button
-          // onClick={() => {
-          //   onClose();
-          //   navigate(pathProgram || "/");
-          // }}
+          onClick={onClose}
           className="border border-Purple bg-white hover:bg-Purple text-Purple hover:text-white font-extrabold py-3 px-8 rounded-lg mr-2 ease-linear duration-150"
         >
           Ir al programa
         </button>
         <button
-          // onClick={() => {
-          //   onClose();
-          //   navigate(pathNewClass || "/");
-          // }}
+          onClick={() => {
+            onClose();
+            navigate(pathNewClass || "/");
+          }}
           className="border border-Purple bg-Purple hover:bg-PurpleHover text-white font-extrabold py-3 px-8 rounded-lg ease-linear duration-150"
         >
           Agregar

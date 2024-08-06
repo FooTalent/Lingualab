@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useAppStore } from '../../../../store/useAppStore';
 import { createClass, getProgramById, updateProgram } from '../../../../services/programs.services';
 import Modal from '../../../../components/Modal';
-import CreateClassForm from './CreateClassForm';
+import CreateClassForm from '../Class/CreateClassForm';
 import ClassroomCard from './ClassroomCard';
 import { LEVELS_MAP } from '../../../../utils/valueLists';
 import BackButton from '../../../../components/BackButtom';
@@ -21,12 +21,11 @@ const ProgramDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [program, setProgram] = useState(null);
+  const [newClassId, setNewClassId] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalEditOpen, setIsModalEditOpen] = useState(false)
   const [isCreated, setIsCreated] = useState(false)
   const navigate = useNavigate();
-
-  console.log(program)
 
   useEffect(() => {
     if (user && user.token) {
@@ -64,9 +63,10 @@ const ProgramDetail = () => {
   const handleCreateClass = async (classroomData) => {
     try {
       const newClassRoom = await createClass(user.token, classroomData);
-      console.log(newClassRoom);
+      setNewClassId(newClassRoom.data._id)
       setRefresh(!refresh);
       setIsModalOpen(false);
+      setIsCreated(true);
     } catch (error) {
       console.error('Error al crear la clase', error);
       setError(error.message);
@@ -140,10 +140,9 @@ const ProgramDetail = () => {
 
       <Modal isOpen={isCreated} onClose={() => setIsCreated(false)} modalSize={'small'}>
         <CreatedClass
-          // onClose={handleModalClose}
+          onClose={() => setIsCreated(false)}
           logo={logo}
-        // pathProgram={`/workspace/programas/${newProgramId}`}
-        // pathNewClass={`/workspace/programas/${newProgramId}`}
+          pathNewClass={`/workspace/class/${newClassId}`}
         />
       </Modal>
     </div>

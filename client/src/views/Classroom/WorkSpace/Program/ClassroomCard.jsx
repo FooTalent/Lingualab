@@ -15,8 +15,6 @@ const ClassroomCard = ({ classroom, buttonFunction }) => {
   const [openResources, setOpenResources] = useState(true)
   const { user } = useAppStore();
 
-  console.log(classroom)
-
   useEffect(() => {
     const fetchSelectedResources = async () => {
       if (classroom.resources.length > 0) {
@@ -51,8 +49,8 @@ const ClassroomCard = ({ classroom, buttonFunction }) => {
       </div>
 
       <div className='flex flex-col gap-2'>
-        <p className='flex gap-2'><img src={CalendarIcon} /> {daytime ? new Date(daytime).toLocaleString() : null}</p>
-        <p className='flex gap-2'><WatchLaterIcon />{duration_hours} horas</p>
+        <p className='flex gap-2'><img src={CalendarIcon} /> {daytime ? new Date(daytime).toLocaleString() : 'Sin fecha'}</p>
+        <p className='flex gap-2'><WatchLaterIcon />Sin horario</p>
       </div>
 
       <span className='border-t border-Grey'></span>
