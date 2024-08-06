@@ -3,12 +3,12 @@ import { useAppStore } from '../../../store/useAppStore';
 import { getVCRooms, createVCRoom } from '../../../services/programs.services';
 import { useNavigate } from 'react-router-dom';
 import Modal from '../../../components/Modal';
-import NavWorkSpace from '../NavWorkSpace';
-import CardList from '../WorkSpace/Class/CardList';
-import CreatedProgram from '../WorkSpace/Program/CreatedProgram';
-import CreateVCRForm from './CreateVCRForm';
+import NavWorkSpace from '../SubComponents/NavWorkSpace'
+import CardList from '../SubComponents/CardList';
+import CreatedProgram from '../SubComponents/CreatedProgram';
+import CreateVCRForm from './Main/CreateVCRForm';
 import logo from '/CreasteUnPrograma.png';
-import ProgramCard from './ProgramCard';
+import ProgramCard from './Main/ProgramCard';
 
 const VirtualClassRoom = () => {
   const [programs, setPrograms] = useState([]);

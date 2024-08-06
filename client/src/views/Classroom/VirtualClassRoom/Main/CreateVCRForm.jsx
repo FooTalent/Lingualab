@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { getPrograms } from '../../../services/programs.services';
-import { getStudents } from '../../../services/students.services';
-import DropdownSelect from '../DropdownSelect';
+import { getPrograms } from '../../../../services/programs.services';
+import { getStudents } from '../../../../services/students.services';
+import DropdownSelect from '../../SubComponents/DropdownSelect';
 
 const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
   const [programData, setProgramData] = useState({
