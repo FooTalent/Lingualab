@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const url = import.meta.env.VITE_BACKEND_URL
 
+// Estudiantes del profesor
 export const getStudents = async (token) => {
   try {
     const response = await axios.get(`${url}api/users/students/`, {
@@ -17,6 +18,8 @@ export const getStudents = async (token) => {
     throw error;
   }
 };
+
+// Actualizar estudiante de ese profesor (no te deja de otros)
 export const updateStudent = async (token, idStudent, data) => {
   try {
     const response = await axios.put(`${url}api/users/students/${idStudent}`, data, {
