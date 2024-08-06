@@ -34,7 +34,7 @@ const NavProfile = () => {
                     <ExpandMoreIcon className='text-white' />
                 </button>
                 {menuOpen && (
-                    <div className='absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg'>
+                    <div className='border border-Purple absolute top-full left-32 mt-4 w-48 bg-white rounded-lg shadow-lg'>
                         <ul className='py-1'
                             onClick={handleMenuClose}>
                             <li>
@@ -44,13 +44,6 @@ const NavProfile = () => {
                                 >
                                     Perfil
                                 </Link>
-                            </li>
-                            <li>
-                                <button
-                                    className='buttonNavProf'
-                                >
-                                    Configuración
-                                </button>
                             </li>
                             <li>
                                 <button

@@ -3,12 +3,12 @@ import { useAppStore } from '../../../store/useAppStore';
 import { createProgram, getPrograms } from '../../../services/programs.services';
 import { useNavigate } from 'react-router-dom';
 import Modal from '../../../components/Modal';
-import NavWorkSpace from '../NavWorkSpace';
-import CardList from '../CardList';
-import CreatedProgram from '../CreatedProgram';
-import CreateProgramForm from './CreateProgramForm';
+import NavWorkSpace from '../SubComponents/NavWorkSpace';
 import logo from '/CreasteUnPrograma.png';
-import ProgramCard from './ProgramCard';
+import ProgramCard from './Main/ProgramCard';
+import CreateProgramForm from './Main/CreateProgramForm';
+import CardList from '../SubComponents/CardList';
+import CreatedProgram from '../SubComponents/CreatedProgram';
 
 const WorkSpace = () => {
   const [programs, setPrograms] = useState([]);
@@ -72,7 +72,7 @@ const WorkSpace = () => {
 
   return (
     <div className="container mx-auto flex flex-col gap-11">
-      <NavWorkSpace setModal={setIsModalOpen} buttonDescription={"Crear Programa"} />
+      <NavWorkSpace setModal={setIsModalOpen} buttonDescription={"Crear Programa"} route={'workspace'} />
 
       {
         loading ? (
@@ -89,7 +89,7 @@ const WorkSpace = () => {
               Crear Programa
             </button>
           </div>
-        ) : <CardList data={programs} CardComponent={ProgramCard} buttonFunction={buttonFunction} />
+        ) : <CardList data={programs} CardComponent={ProgramCard} buttonFunction={buttonFunction} refresh={setRefresh}/>
       }
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Crear Programa" modalSize={'medium'}>

@@ -1,27 +1,47 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { LEVELS_MAP, RESOURCE_TYPES, LANGUAGES } from "../../utils/valueLists"
 
 
-export default function CreateResourceForm({onSubmit, onCancel}) {
-    const [level, setLevel] = useState('')
-    const [type, setType] = useState('')
-    const [title, setTitle] = useState('')
-    const [url, setUrl] = useState('')
-    const [description, setDescription] = useState('')
-    const [language, setLanguage] = useState('')
+export default function CreateResourceForm({onSubmit, onCancel, data}) {
+    
+    
+    const [formData, setFormData] = useState({
+        title: '',
+        type: '',
+        level: '',
+        language: '',
+        url: '',
+        description: ''
+    })
+
+    useEffect(() => {
+        if(data){
+            setFormData({
+                title: data.title || '',
+                type: data.type || '',
+                level: data.level || '',
+                language: data.language || '',
+                url: data.url || '',
+                description: data.description || ''
+            })
+        }
+    }, [data])
 
     const levelsArr = Object.keys(LEVELS_MAP)
 
-    const handleSubmit = async (e) => {
+    const handleChange = (e) => {
+        const {name, value} = e.target
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value
+        }))
+    }
+
+    const handleSubmit = (e) => {
         e.preventDefault();
-        onSubmit({
-            title,
-            type,
-            level,
-            language,
-            url,
-            description
-        })
+        if(onSubmit){
+            onSubmit(data._id, formData)
+        }
     }
 
     return (
@@ -32,15 +52,16 @@ export default function CreateResourceForm({onSubmit, onCancel}) {
                             <label htmlFor="type" className="block text-gray-700 font-bold mb-2 px-0">Recurso:</label>
                             <select
                                 id="type"
-                                value={type}
-                                onChange={(e) => setType(e.target.value)}
+                                name="type"
+                                value={formData.type}
+                                onChange={handleChange}
                                 className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
                                 required
                             >
                                 <option value="" disabled>Seleccionar el recurso</option>
                                 {
-                                    RESOURCE_TYPES.map((lvl, i) => (
-                                        <option key={i} value={lvl}>{lvl}</option>
+                                    RESOURCE_TYPES.map((type, i) => (
+                                        <option key={i} value={type}>{type}</option>
                                     ))
                                 }
                             </select>
@@ -49,8 +70,9 @@ export default function CreateResourceForm({onSubmit, onCancel}) {
                             <label htmlFor="level" className="block text-gray-700 font-bold mb-2 px-0">Nivel:</label>
                             <select
                                 id="level"
-                                value={level}
-                                onChange={(e) => setLevel(e.target.value)}
+                                name="level"
+                                value={formData.level}
+                                onChange={handleChange}
                                 className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
                                 required
                             >   
@@ -66,8 +88,9 @@ export default function CreateResourceForm({onSubmit, onCancel}) {
                             <label htmlFor="language" className="block text-gray-700 font-bold mb-2 px-0">Idioma:</label>
                             <select
                                 id="language"
-                                value={language}
-                                onChange={(e) => setLanguage(e.target.value)}
+                                name="language"
+                                value={formData.language}
+                                onChange={handleChange}
                                 className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
                                 required
                             >   
@@ -86,8 +109,9 @@ export default function CreateResourceForm({onSubmit, onCancel}) {
                         <input
                             type="text"
                             id="title"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
+                            name="title"
+                            value={formData.title}
+                            onChange={handleChange}
                             placeholder="Escribe el nombre del recurso..."
                             className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
                             required
@@ -98,8 +122,9 @@ export default function CreateResourceForm({onSubmit, onCancel}) {
                         <input
                             type="url"
                             id="url"
-                            value={url}
-                            onChange={(e) => setUrl(e.target.value)}
+                            name="url"
+                            value={formData.url}
+                            onChange={handleChange}
                             placeholder="https://..."
                             className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
                             required
@@ -110,8 +135,9 @@ export default function CreateResourceForm({onSubmit, onCancel}) {
                         <label htmlFor="description" className="block text-gray-700 font-bold mb-2 px-0">Observaciones:</label>
                         <textarea
                             id="description"
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
+                            name="description"
+                            value={formData.description}
+                            onChange={handleChange}
                             className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
                             placeholder="Incluya comentarios adicionales sobre cómo utilizar este recurso."
                         />
@@ -129,7 +155,7 @@ export default function CreateResourceForm({onSubmit, onCancel}) {
                             type="submit"
                             className="w-full px-4 py-2 bg-Purple text-white rounded-md hover:bg-PurpleHover"
                         >
-                            Agregar Recurso
+                            {data ? 'Editar Recurso' : 'Agregar Recurso'}
                         </button>
                     </div>
                 </form>

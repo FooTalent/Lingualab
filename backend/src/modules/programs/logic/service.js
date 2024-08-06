@@ -86,4 +86,21 @@ export default class Service extends CustomService {
       throw error;
     }
   }
+
+  delete = async (eid) => {
+    try {
+      const program = await this.dao.getBy({ _id: eid });
+        if (!program) {
+          throw new AppError('Programa no encontrado', 404);
+        }
+      const programId = program._id  
+      
+      if(program.classes.length > 0){ // Elimina las clases que componen el programa.
+        await this.classDao.deleteMany({program: programId})
+      }
+      return await this.dao.delete(eid)
+    } catch (error) {
+      throw error
+    }
+  }
 }

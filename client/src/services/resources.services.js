@@ -46,3 +46,12 @@ export const deleteResource = async (id, token) => {
     })
     return response.data
 }
+
+export const editResource = async (id, data, token) => {
+    const response = await axios.put(`${url}api/resources/${id}`, data, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+    return response.data
+}

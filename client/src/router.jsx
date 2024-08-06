@@ -19,6 +19,7 @@ import Landing from './views/Landing'
 import History from './views/History'
 import AboutUs from './views/AboutUs'
 import ViewStudent from './views/Student/ViewStudent'
+import DetailStudent from './views/Student/DetailStudent'
 
 export default function Router() {
     return (
@@ -35,7 +36,8 @@ export default function Router() {
                     <Route path='/recursos' element={<Recursos />} />
                     <Route path='/profile' element={<Profile />} />
                     <Route path='/calendario' element={<Calendario />} />
-                    <Route path='/alumnos' element={<ViewStudent />} />
+                    <Route path='/student' element={<ViewStudent />} />
+                    <Route path="/student/:studentId" element={<DetailStudent />} />
                 </Route>
 
                 <Route element={<AuthLayout />}>
