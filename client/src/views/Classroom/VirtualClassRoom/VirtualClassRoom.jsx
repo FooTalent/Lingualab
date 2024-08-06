@@ -3,7 +3,7 @@ import { useAppStore } from '../../../store/useAppStore';
 import { getVCRooms, createVCRoom } from '../../../services/programs.services';
 import { useNavigate } from 'react-router-dom';
 import Modal from '../../../components/Modal';
-import NavWorkSpace from '../NavWorkSpace';
+import NavWorkSpace from '../SubComponents/NavWorkSpace'
 import CardList from '../SubComponents/CardList';
 import CreatedProgram from '../SubComponents/CreatedProgram';
 import CreateVCRForm from './Main/CreateVCRForm';

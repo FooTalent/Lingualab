@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { LANGUAGES, LEVELS } from '../../../../utils/valueLists';
-import DropdownSelect from '../../DropdownSelect';
+import DropdownSelect from '../../SubComponents/DropdownSelect';
 import ButtonModal from '../../../../components/Form/ButtonModal';
 
 const EditProgramForm = ({ onSubmit, onClose, program }) => {
