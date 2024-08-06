@@ -1,11 +1,11 @@
 import { google } from 'googleapis'
 import CustomController from "../../../libraries/customs/controller.js";
-import AppError from "../../../config/AppError.js";
 import validateFields from "../../../libraries/utils/validatefiels.js";
 import { googleEnv } from "../../../config/env.js";
 import { oauth2Client, SCOPES } from "../../../libraries/google/googleAuth.js";
 import Service from "../logic/service.js";
 import { COUNTRY_TIMEZONES } from '../logic/timezoneMapping.js';
+import AppError from '../../../config/AppError.js';
 
 export default class Controller extends CustomController {
   constructor() {
@@ -57,15 +57,6 @@ export default class Controller extends CustomController {
     }
   }
 
-  logout = async (req, res) => {
-    try{
-      this.service.logout()
-      res.sendSuccess({},"Cerrado de Sesión existoso")
-    } catch(error) {
-      next(error)
-    }
-  }
-
   // RECUPERACION DE CONTRASEÑA
   userRecovery = async (req, res, next) => {   
     try{
@@ -87,18 +78,7 @@ export default class Controller extends CustomController {
     }
   }
 
-  // SUBIR FOTO PERFIL
-  uploadPhoto = async (req, res, next) => {
-    try {
-      const filePath = req.file ? req.file.path.split('public').join('') : null
-      await this.service.updatePhoto(req.user.id, filePath)
-      res.sendSuccess("Photo uploaded")
-    } catch (error) {
-      next(error)
-    }
-  }
-
-  // GOOGLE
+    // GOOGLE
   googleAuth = (req, res) => {  
     try{ 
       // Generar URL de autenticación
@@ -146,6 +126,18 @@ export default class Controller extends CustomController {
     }
   }
 
+  // SUBIR FOTO PERFIL
+  uploadPhoto = async (req, res, next) => {
+    try {
+      const filePath = req.file ? req.file.path.split('public').join('') : null
+      await this.service.updatePhoto(req.user.id, filePath)
+      res.sendSuccess("Photo uploaded")
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  // CREAR EVENTO GOOGLE
   createEvent = async (req, res, next) => {
     try{
       const userId = req.user._id;
@@ -194,13 +186,28 @@ export default class Controller extends CustomController {
     // res.sendSuccess(result.event, result.message);
   }
 
-  //STUDIANTES
+  // ESTUDIANTES
   getStudent = async (req, res, next) => {
     try{
-      const {tid} = req.params
+      const tid = req.user._id
 
       const element = await this.service.get({role: 'Student'});
+      // TODO
+      //const element = await this.service.get({teacher: tid});
       res.sendSuccessOrNotFound(element);
+    } catch(error) {
+      next(error)
+    }
+  }
+  updateStudent = async (req, res, next) => {
+    try{
+      const {sid} = req.params
+      const updateUser = req.body
+      const exist = await this.service.getBy({_id: sid, teacher: req.user._id})
+      if (!exist) throw new AppError("Id de Estudiante no hallado en este profesor",400)
+
+      const updatedUser = await this.service.update({_id: sid}, updateUser)
+      res.sendSuccess(updatedUser)
     } catch(error) {
       next(error)
     }
