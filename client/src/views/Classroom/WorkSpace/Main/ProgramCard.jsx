@@ -13,8 +13,9 @@ import { deleteProgram, duplicateProgram } from '../../../../services/programs.s
 import { useAppStore } from '../../../../store/useAppStore';
 
 
+
 const ProgramCard = ({ program, buttonFunction, refresh }) => {
-  const {user} = useAppStore()
+  const { user } = useAppStore();
   const [state, setState] = useState(false)
   const [deleteModal, setDeleteModal] = useState(false) 
   const [idProgram, setIdProgram] = useState('')
