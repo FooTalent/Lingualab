@@ -22,7 +22,7 @@ export default function Options({ state, id, links }) {
                     return (
                         <button
                             key={`${index}-${link.id}`}
-                            onClick={() => link.function(link.id)}
+                            onClick={() => link.function(id)}
                             className='cursor-pointer py-1 px-2 rounded-md ease-linear duration-200 flex items-center gap-2 !text-card !no-underline hover:bg-yellowInput'
                         >
                             {link.label}
