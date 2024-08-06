@@ -4,10 +4,15 @@ import IconSvg from '../../../../utils/SvgWrapper';
 import { Link } from 'react-router-dom';
 import { useAppStore } from '../../../../store/useAppStore';
 import { fetchResourceById } from '../../../../services/resources.services';
+import EditIcon from '@mui/icons-material/Edit';
+import CalendarIcon from '/Calendario.svg'
+import WatchLaterIcon from '@mui/icons-material/WatchLater';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const ClassroomCard = ({ classroom, buttonFunction, deleteButton }) => {
   const { level, title, students, daytime, duration_hours, _id } = classroom;
   const [resourcesClass, setResourcesClass] = useState([])
+  const [openResources, setOpenResources] = useState(true)
   const { user } = useAppStore();
 
   useEffect(() => {
@@ -28,40 +33,62 @@ const ClassroomCard = ({ classroom, buttonFunction, deleteButton }) => {
   }, [classroom]);
 
   return (
-    <div className="bg-white shadow-md rounded-md p-4 mb-4">
-      <div className="flex items-center justify-between mb-2">
-        <div className='flex'>
-          <span className="text-white px-2 py-1 rounded mr-2" style={{backgroundColor: LEVELS_MAP[level]}}>{level}</span>
-          <h2 className="text-xl font-semibold">{title}</h2>
+    <div className="flex flex-col p-4 gap-4 rounded-xl shadow-cardContainer text-card">
+      <div className='flex items-center justify-between'>
+        <div className='flex items-center gap-6 text-lg'>
+          <span className="text-white py-2 px-4 rounded-lg font-medium" style={{ backgroundColor: LEVELS_MAP[level] }}>{level}</span>
+          <h2 className="font-bold">{title}</h2>
         </div>
+
+        <button
+          className={`flex items-center gap-2 bg-Yellow hover:bg-card font-extrabold text-card hover:text-Yellow border-2 border-Yellow hover:border-card rounded-lg py-2 px-3 ease-linear duration-150`}
+          onClick={() => buttonFunction(_id)}
+        >
+          <EditIcon />Editar
+        </button>
         <button
           onClick={() => deleteButton(_id)} 
           className='bg-YellowDeselect font-extrabold  hover:bg-Yellow text-card border-2 border-Yellow rounded-lg py-3 px-4 ease-linear duration-150'>
           Eliminar
         </button>
       </div>
-      <div className="text-gray-700 mb-2">
-        <strong>Fecha:</strong> {daytime ? new Date(daytime).toLocaleString() : null }
+
+      <div className='flex flex-col gap-2'>
+        <p className='flex gap-2'><img src={CalendarIcon} /> {daytime ? new Date(daytime).toLocaleString() : 'Sin fecha'}</p>
+        <p className='flex gap-2'><WatchLaterIcon />Sin horario</p>
       </div>
-      <div className="text-gray-700">
-        <strong>Duración:</strong> {duration_hours} horas
-      </div>
-      <div className='flex flex-row justify-between'>
-        {resourcesClass?.length > 0 && (
-          <div className="my-4">
-            <p className="text-lg font-medium">Recursos:</p>
-            <ul className="list-disc pl-5 text-gray-700">
-              {resourcesClass.map((resource, index) => (
-                <div key={index} className='flex h-5'>
-                  <IconSvg category={resource.type}/>
-                  <Link to={resource.url}>{resource.title}</Link>
+
+      <span className='border-t border-Grey'></span>
+
+      <div className='flex items-center gap-6 text-sm'>
+        <button
+          onClick={() => setOpenResources(!openResources)}
+          className={`self-start ease-linear duration-150 ${openResources ? '-rotate-90' : ''}`}
+        >
+          <ExpandMoreIcon />
+        </button>
+
+        <div>
+          {
+            openResources ? (
+              <span className='block'>Recursos de la clase</span>
+            ) : (
+              resourcesClass?.length > 0 ? (
+                <div className="flex flex-col gap-2">
+                  {resourcesClass.map((resource, index) => (
+                    <div key={index} className='flex items-center truncate'>
+                      <IconSvg category={resource.type} />
+                      <Link to={resource.url}>{resource.title}</Link>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </ul>
-          </div>
-        )}
-        <button className="bg-blue-500 text-white px-2 py-1 rounded-md w-1/6" onClick={() => buttonFunction(_id)}>Modificar Clase</button>
-      </div>  
+              ) : (
+                <span className='block'>Sin recursos</span>
+              )
+            )
+          }
+        </div>
+      </div>
     </div>
   );
 };

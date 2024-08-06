@@ -4,8 +4,8 @@ import { getVCRooms, createVCRoom } from '../../../services/programs.services';
 import { useNavigate } from 'react-router-dom';
 import Modal from '../../../components/Modal';
 import NavWorkSpace from '../NavWorkSpace';
-import CardList from '../CardList';
-import CreatedProgram from '../CreatedProgram';
+import CardList from '../WorkSpace/Class/CardList';
+import CreatedProgram from '../WorkSpace/Program/CreatedProgram';
 import CreateVCRForm from './CreateVCRForm';
 import logo from '/CreasteUnPrograma.png';
 import ProgramCard from './ProgramCard';
@@ -45,8 +45,6 @@ const VirtualClassRoom = () => {
     }
   }, [user, userDetail, refresh]);
 
-  console.log(programs);
-
   const handleCreateProgram = async (programData) => {
     try {
       const newProgram = await createVCRoom(user.token, userDetail._id, programData);
@@ -74,7 +72,7 @@ const VirtualClassRoom = () => {
 
   return (
     <div className="container mx-auto flex flex-col gap-11">
-      <NavWorkSpace setModal={setIsModalOpen} buttonDescription={"Crear Aula"} />
+      <NavWorkSpace setModal={setIsModalOpen} buttonDescription={"Crear Aula"} route={'aulavirtual'} />
 
       {loading ? (
         <p className="text-center">Cargando Datos...</p>
