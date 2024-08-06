@@ -1,16 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LEVELS, LEVELS_MAP } from '../../../../utils/valueLists';
 import DropdownSelect from '../../SubComponents/DropdownSelect';
 import ButtonModal from '../../../../components/Form/ButtonModal';
+import { getPrograms } from '../../../../services/programs.services';
+import { useAppStore } from '../../../../store/useAppStore';
 
 const CreateClassForm = ({ programData, onSubmit, onClose }) => {
+  const { user } = useAppStore();
+  const [programs, setPrograms] = useState(null)
   const [classroomData, setClassroomData] = useState({
     duration_hours: 1,
     teacher: programData.teacher._id,
     language: programData.language,
     level: programData.level,
-    program: programData._id
+    program: programData.title
   });
+
+  useEffect(() => {
+    if (user && user.token) {
+      const fetchProgram = async () => {
+        try {
+          const response = await getPrograms(user.token);
+          console.log(response)
+          setPrograms(response);
+        } catch (error) {
+          console.error('Error buscando el programa', error);
+          setError(error.message);
+        }
+      };
+
+      fetchProgram();
+    } else {
+      setLoading(false);
+    }
+  }, [user]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -25,10 +48,6 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
     onSubmit(classroomData);
   };
 
-  const testPrograms = [
-
-  ]
-
   return (
     <form
       onSubmit={handleSubmit}
@@ -37,7 +56,7 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
       <div className='grid grid-cols-2 gap-4'>
         <DropdownSelect
           label="Programa"
-          options={testPrograms}
+          options={programs.map(program => program.title)}
           selectedOption={classroomData.program}
           onSelect={handleInputChange}
         />
