@@ -212,4 +212,7 @@ export default class Controller extends CustomController {
       next(error)
     }
   }
+  inviteStudent = async (req, res, next) => {
+    
+  }
 }

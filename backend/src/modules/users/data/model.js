@@ -1,5 +1,5 @@
 import { Schema, model} from 'mongoose'
-import { LANGUAGES, ROLES, COUNTRIES } from '../../valueList.js';
+import { LANGUAGES, ROLES, COUNTRIES, LEVELS } from '../../valueList.js';
 
 const educationSchema = new Schema({
   title:       { type: String,},
@@ -29,6 +29,7 @@ const userSchema = new Schema({
   languages:   [{ type: String, enum: LANGUAGES, }],
   country:     { type: String, enum: COUNTRIES},
   time_zone:   { type: Number,   },
+  level:       { type: String, enum: LEVELS, default: "A1-A2"},
 
   // google
   google_id:   { type: String,   },
