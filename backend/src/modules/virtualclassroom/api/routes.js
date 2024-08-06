@@ -9,5 +9,6 @@ const controller = new Controller()
 router
 .post   ("/",     handleAuth(clients), controller.create )
 .put    ("/:eid", handleAuth(clients), controller.updateId)
+.post   ("/duplicate/:pid", handleAuth(clients), controller.duplicateProgram )
 
 export default router

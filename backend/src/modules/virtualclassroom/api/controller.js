@@ -33,4 +33,14 @@ export default class Controller {
       next(error);
     }
   }
+
+  duplicateProgram = async (req, res, next) => {
+    try {
+      const { pid } = req.params;
+      const newProgram = await this.service.createProgram(pid, [], req.user, true )
+      res.sendSuccess(newProgram)
+    } catch (error) {
+      next(error);
+    }
+  }
 }

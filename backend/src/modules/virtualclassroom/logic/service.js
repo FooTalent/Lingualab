@@ -9,9 +9,13 @@ export default class CustomService {
     this.daoClass = new Classes();
   }
 
-  createCustomProgram = async (templateId, studentIds = [], first_class, daysOfWeek, user ) => {
+  createProgram = async (templateId, studentIds, user, isTemplate = false ) => {
+    // NOTA
+    // isTemplate = true = duplica programa
+    // isTemplate = false = crea un aula en base a un programa
+    // si templateId esta vacio, crea un programa vacio
 
-    // crea aula
+    // 1 - obtengo el progrma
     let templateProgram;
     if (templateId) {
       templateProgram = await this.daoProgram.getBy({ _id: templateId });
@@ -20,17 +24,22 @@ export default class CustomService {
       }
     }
 
-    const savedProgram = await this.daoProgram.create({
-      title: "PROBANDOO" + (templateId ? templateProgram.title : "Sin titulo"),//templateId ? templateProgram.title : "Sin titulo",
+    // 2 - preparo datos programa (o los creo vacios)
+    const dataNewProgram = {
+      title: templateId ? templateProgram.title : "Sin titulo",
       description: templateId ? templateProgram.description : "",
       teacher: user._id,
       language: templateId ? templateProgram.language : "Inglés",
       level: templateId ? templateProgram.level : "A1-A2",
-      isTemplate: false,
+      isTemplate,
       classes: [],
-      students: studentIds,
-    });
+    }
+    if (!isTemplate) dataNewProgram.students = studentIds;
 
+    // 3 - creo programa
+    const savedProgram = await this.daoProgram.create(dataNewProgram);
+
+    // 4 - Si el programa no es vacio, duplico sus clases, si es vacio lo ignoro
     if (templateId) {
       const newClassesPromises = templateProgram.classes.map(async (classTemplateId) => {
         const classTemplate = await this.daoClass.getBy({ _id: classTemplateId });
@@ -40,12 +49,11 @@ export default class CustomService {
           content: classTemplate.content,
           program: savedProgram._id,
           resources: classTemplate.resources ? classTemplate.resources : [],
-          // ! daytime: new Date(startDate.getTime() + classTemplate.duration_hours * 60 * 60 * 1000), // Example of setting date and time
           language: classTemplate.language,
           level: classTemplate.level,
           duration_hours: classTemplate.duration_hours,
           teacher: user._id,
-          isTemplate: false,
+          isTemplate,
         });
         return newClass;
       });
@@ -56,12 +64,10 @@ export default class CustomService {
       await this.daoProgram.update({ _id: savedProgram._id }, { classes: idClasses });
     }
 
-    const updatedProgram = await this.daoProgram.getBy({ _id: savedProgram._id });
+    const newProgram = await this.daoProgram.getBy({ _id: savedProgram._id });
     
-    // empieza a actualizar fechas
-    const updatedDaysProgram = await this.update(updatedProgram._id, { first_class, daysOfWeek })
 
-    return updatedDaysProgram;
+    return newProgram;
   }
 
   update = async (eid, elementUpdate) => {
@@ -140,5 +146,16 @@ export default class CustomService {
     } catch (error) {
       throw error;
     }
+  }
+
+  createCustomProgram = async (templateId, studentIds, first_class, daysOfWeek, user ) => {
+
+    // crea aula
+    const newProgram = this.createProgram(templateId, studentIds, user)
+    
+    // empieza a actualizar fechas
+    const updatedDaysProgram = await this.update(newProgram._id, { first_class, daysOfWeek })
+
+    return updatedDaysProgram;
   }
 }
