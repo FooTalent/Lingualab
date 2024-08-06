@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { LEVELS_MAP } from '../../../../utils/valueLists';
-import IconImage from '../../../../utils/IconImage';
+import IconSvg from '../../../../utils/SvgWrapper';
 import { Link } from 'react-router-dom';
 import { useAppStore } from '../../../../store/useAppStore';
 import { fetchResourceById } from '../../../../services/resources.services';
@@ -46,7 +46,7 @@ const ClassroomCard = ({ classroom, buttonFunction }) => {
             <ul className="list-disc pl-5 text-gray-700">
               {resourcesClass.map((resource, index) => (
                 <div key={index} className='flex h-5'>
-                  <IconImage category={resource.type} className={"fill-current"}/>
+                  <IconSvg category={resource.type}/>
                   <Link to={resource.url}>{resource.title}</Link>
                 </div>
               ))}

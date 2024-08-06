@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react"
 import { useAppStore } from "../../store/useAppStore"
-import { deleteResource, fetchResourcesWithFilter, postResource, fetchResourceById } from "../../services/resources.services"
-import CreateResourceForm from "../../components/Resources/CreateResourceForm";
+import { deleteResource, fetchResourcesWithFilter, postResource, fetchResourceById, editResource } from "../../services/resources.services"
+import ResourceForm from "../../components/Resources/ResourceForm";
 import ResourceCard from "./ResourceCard"
 import { Toast } from "../../utils/toast";
 import CategoryFilter from "../../components/Resources/CategoryFilter";
 import { LEVELS, RESOURCE_TYPES } from "../../utils/valueLists";
 import LevelFilter from "../../components/Resources/LevelFilter";
 import Modal from "../../components/Modal";
+import imgEliminarRecurso from "/EliminarRecurso.png"
+import RecursoNoEncontrado from "/RecursoNoEncontrado.png"
 
 export default function Resources({ onSelect, selected}) {
 
@@ -21,10 +23,14 @@ export default function Resources({ onSelect, selected}) {
   const [refreshCards, setRefreshCards] = useState(true)
   const [modalStatus, setModalStatus] = useState(false)
   const { user } = useAppStore()
+  const [deleteModal, setDeleteModal] = useState(false)
+  const [idCard, setIdCard] = useState('')
+  const [editModal, setEditModal] = useState(false)
 
   // Elementos usado para las classes + onSelect
   const [selectedResources, setSelectedResources] = useState([]);
 
+  //Llamado de Recursos
   useEffect(() => {
     if (user) {
       const getResources = async () => {
@@ -71,6 +77,7 @@ export default function Resources({ onSelect, selected}) {
     fetchSelectedResources();
   }, [selected]);
 
+  // Funciones para crear un nuevo recurso
   const handleCreateResource = async () => {
     setModalStatus(true)
   } 
@@ -94,21 +101,43 @@ export default function Resources({ onSelect, selected}) {
   }
   }
 
-  const handleCancel = () => {
-    setModalStatus(false)
+  // Funciones para editar un recurso
+  const handleSubmitEdit = async (id, data) => {
+    const editedResource = await editResource(id, data, user.token)
+    if(editedResource.isError === false) {
+      Toast.fire({
+        title: "Recurso editado",
+        icon: "success"
+      })
+      setEditModal(false)
+      setRefreshCards(!refreshCards)
+    }
   }
 
-  const handleDelete = async (id) => {
-    const response = await deleteResource(id, user.token)
+  const handleEdit = (id) => {
+    setEditModal(true)
+    setIdCard(id)
+  }
+
+  // Funciones para eliminar un recurso
+  const handleDelete = (id) => {
+    setDeleteModal(true)
+    setIdCard(id)
+  }
+
+  const handleConfirmDelete = async () => {
+    const response = await deleteResource(idCard, user.token)
     if (response.isError === false) {
       Toast.fire({
           title: "Recurso eliminado",
           icon: "warning"
       })
-      setRefreshCards(!refreshCards)  
+      setRefreshCards(!refreshCards)
+      setDeleteModal(false)  
     }
   }
 
+  // Funciones de filtrado
   const handleFilterLevel = (lvl) => {
     setSelectedLevel(prevLevel => (prevLevel === lvl ? "" : lvl))
     setRefreshCards(prev => !prev)
@@ -197,10 +226,8 @@ export default function Resources({ onSelect, selected}) {
                   </div>
                   ) : (
                     resources.length === 0 ? (
-                    <div className="text-center">
-                      <p className="text-center text-lg text-card">
-                        No hay elementos que coincidan con tu búsqueda.
-                      </p>
+                    <div className="flex justify-center">
+                      <img src={RecursoNoEncontrado} alt="imagen de recurso no encontrado" className="max-w-[400px]"/>
                     </div>
                     ) : ( 
                       resources.map((resource, i) => (
@@ -213,7 +240,11 @@ export default function Resources({ onSelect, selected}) {
                               className="w-1/12"
                             />
                           }
-                          <ResourceCard resource={resource} key={i} deleteFunc={handleDelete} />
+                          <ResourceCard
+                            resource={resource}
+                            key={i}
+                            deleteFunc={handleDelete}
+                            editFunc={handleEdit} />
                         </div>
                       ))
                     )
@@ -221,8 +252,41 @@ export default function Resources({ onSelect, selected}) {
                 )
             )}
             {
-              <Modal title={"Crea un nuevo Recurso"} onClose={handleCancel} isOpen={modalStatus}>
-                <CreateResourceForm onSubmit={handleSubmitCreate} onCancel={handleCancel} />
+              <Modal title={"Edita un Recurso"} onClose={() => setEditModal(false)} isOpen={editModal}>
+                <ResourceForm 
+                  onSubmit={handleSubmitEdit} 
+                  onCancel={() => setEditModal(false)} 
+                  data={resources.find(r => r._id === idCard)}/>
+              </Modal>
+            }
+            {
+              <Modal title={"Crea un nuevo Recurso"} onClose={(() => setModalStatus(false))} isOpen={modalStatus}>
+                <ResourceForm 
+                  onSubmit={handleSubmitCreate} 
+                  onCancel={() => setModalStatus(false)} />
+              </Modal>
+            }
+            {
+              <Modal isOpen={deleteModal} modalSize={"small"}>
+                <div className="flex justify-center ">
+                  <img src={imgEliminarRecurso} alt="quieres eliminar un recurso?" />
+                </div>
+                <div className="flex gap-4">
+                  <button
+                    type="button"
+                    onClick={() => setDeleteModal(false)}
+                    className="w-full px-4 py-2 border border-Purple text-Purple  rounded-md hover:bg-Purple hover:text-white"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    className="w-full px-4 py-2 bg-Purple text-white rounded-md hover:bg-PurpleHover"
+                    onClick={handleConfirmDelete}
+                  >
+                    Eliminar Recurso
+                  </button>
+                </div>
               </Modal>
             }
           </div>
