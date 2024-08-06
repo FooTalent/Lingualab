@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppStore } from '../../../../store/useAppStore';
-import { createClass, getProgramById } from '../../../../services/programs.services';
+import { createClass, getProgramById, updateProgram } from '../../../../services/programs.services';
 import Modal from '../../../../components/Modal';
 import CreateClassForm from './CreateClassForm';
 import ClassroomCard from './ClassroomCard';
@@ -12,6 +12,7 @@ import AddIcon from '@mui/icons-material/Add';
 import CreatedClass from '../Class/CreatedClass'
 import logo from '/CreasteUnaClase.png';
 import ProgramInfo from './ProgramInfo';
+import EditProgramForm from './EditProgramForm';
 
 const ProgramDetail = () => {
   const { eid } = useParams();
@@ -21,8 +22,11 @@ const ProgramDetail = () => {
   const [error, setError] = useState(null);
   const [program, setProgram] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalEditOpen, setIsModalEditOpen] = useState(false)
   const [isCreated, setIsCreated] = useState(false)
   const navigate = useNavigate();
+
+  console.log(program)
 
   useEffect(() => {
     if (user && user.token) {
@@ -44,6 +48,18 @@ const ProgramDetail = () => {
       setLoading(false);
     }
   }, [user, eid, refresh]);
+
+  const handleEditProgram = async (data) => {
+    try {
+      const editedProgram = Object.assign(program, data);
+      const newProgram = await updateProgram(user.token, program._id, editedProgram);
+      setProgram(newProgram)
+      setIsModalEditOpen(false)
+    } catch (error) {
+      console.error('Error al editar el programa', error)
+      setError(error.message)
+    }
+  }
 
   const handleCreateClass = async (classroomData) => {
     try {
@@ -77,7 +93,7 @@ const ProgramDetail = () => {
         <div className='flex items-center gap-6'>
           <button
             className={`flex items-center gap-4 bg-card hover:bg-Yellow font-extrabold text-Yellow hover:text-card border-2 border-card hover:border-Yellow rounded-lg py-3 px-4 ease-linear duration-150`}
-            onClick={undefined}
+            onClick={() => setIsModalEditOpen(true)}
           >
             Editar <EditIcon />
           </button>
@@ -90,7 +106,7 @@ const ProgramDetail = () => {
         </div>
       </div>
 
-      <ProgramInfo program={program}/>
+      <ProgramInfo program={program} />
 
       {program.classes.length > 0 ? (
         <div className="flex flex-col justify-evenly gap-6">
@@ -106,6 +122,14 @@ const ProgramDetail = () => {
         <p>No tiene clases cargadas</p>
       )}
 
+      <Modal isOpen={isModalEditOpen} onClose={() => setIsModalEditOpen(false)} title="Editar Programa">
+        <EditProgramForm
+          program={program}
+          onSubmit={handleEditProgram}
+          onClose={() => setIsModalEditOpen(false)}
+        />
+      </Modal>
+
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Crear Clase">
         <CreateClassForm
           programData={program}
@@ -118,8 +142,8 @@ const ProgramDetail = () => {
         <CreatedClass
           // onClose={handleModalClose}
           logo={logo}
-          // pathProgram={`/workspace/programas/${newProgramId}`}
-          // pathNewClass={`/workspace/programas/${newProgramId}`}
+        // pathProgram={`/workspace/programas/${newProgramId}`}
+        // pathNewClass={`/workspace/programas/${newProgramId}`}
         />
       </Modal>
     </div>

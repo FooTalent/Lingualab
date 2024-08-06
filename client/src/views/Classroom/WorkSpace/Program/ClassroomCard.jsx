@@ -15,6 +15,8 @@ const ClassroomCard = ({ classroom, buttonFunction }) => {
   const [openResources, setOpenResources] = useState(true)
   const { user } = useAppStore();
 
+  console.log(classroom)
+
   useEffect(() => {
     const fetchSelectedResources = async () => {
       if (classroom.resources.length > 0) {
