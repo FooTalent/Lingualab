@@ -36,7 +36,27 @@ export const updateStudent = async (token, idStudent, data) => {
   }
 };
 
+// Invitacion alumno (solo email obligatorio)
+export const ginviteStudent = async (token, email, first_name, last_name, password) => {
+  const data = {email}
+  if (first_name) data.first_name = first_name;
+  if (last_name)  data.last_name = last_name;
+  if (password)   data.password = password;
 
+  try {
+    const response = await axios.get(`${url}api/users/students/`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      console.error('Acceso no autorizado - talvez token invalido');
+    }
+    throw error;
+  }
+};
 
 // Reviews ---------------------------------------------------------------
 /* BODY:
