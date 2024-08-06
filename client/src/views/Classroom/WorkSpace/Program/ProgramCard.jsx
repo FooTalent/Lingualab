@@ -7,10 +7,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import crearAula from '/crearAulaCard.svg'
 import editarPrograma from '/editarPrograma.svg'
 import duplicar from '/duplicar.svg'
-import Modal from '../../../components/Modal';
+import Modal from '../../../../components/Modal';
 import popUp from '/Popup_EliminarPrograma.png'
-import { deleteProgram, duplicateProgram } from '../../../services/programs.services';
-import { useAppStore } from '../../../store/useAppStore';
+import { deleteProgram, duplicateProgram } from '../../../../services/programs.services';
+import { useAppStore } from '../../../../store/useAppStore';
 
 
 const ProgramCard = ({ program, buttonFunction, refresh }) => {
