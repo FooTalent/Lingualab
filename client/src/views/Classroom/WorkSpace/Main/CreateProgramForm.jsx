@@ -48,6 +48,18 @@ const CreateProgramForm = ({ onSubmit, onClose }) => {
         />
       </div>
 
+      <div className="flex flex-col gap-3 font-medium">
+        <label className="p-0 text-custom">Descripción</label>
+        <input
+          type="text"
+          name="description"
+          value={programData.description}
+          onChange={handleInputChange}
+          className="py-3 px-4 border border-Grey rounded-lg placeholder:text-Grey outline-none focus:border-card hover:border-card"
+          placeholder='Escribe una breve descripción...'
+        />
+      </div>
+
       <DropdownSelect
         label="Idioma"
         options={LANGUAGES}
@@ -61,18 +73,6 @@ const CreateProgramForm = ({ onSubmit, onClose }) => {
         selectedOption={programData.level}
         onSelect={(value) => handleSelectChange('level', value)}
       />
-
-      <div className="flex flex-col gap-3 font-medium">
-        <label className="p-0 text-custom">Descripción</label>
-        <input
-          type="text"
-          name="description"
-          value={programData.description}
-          onChange={handleInputChange}
-          className="py-3 px-4 border border-Grey rounded-lg placeholder:text-Grey outline-none focus:border-card hover:border-card"
-          placeholder='Escribe una breve descripción...'
-        />
-      </div>
 
       <div className="grid grid-cols-2 gap-8 mt-6">
         <ButtonModal buttonAction={onClose} type='prev' label='Cancelar' />

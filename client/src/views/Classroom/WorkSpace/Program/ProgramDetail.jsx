@@ -60,10 +60,9 @@ const ProgramDetail = () => {
 
   const handleEditProgram = async (data) => {
     try {
-      const editedProgram = Object.assign(program, data);
-      const newProgram = await updateProgram(user.token, program._id, editedProgram);
-      setProgram(newProgram)
+      await updateProgram(user.token, program._id, data);
       setIsModalEditOpen(false)
+      setRefresh(!refresh);
     } catch (error) {
       console.error('Error al editar el programa', error)
       setError(error.message)
@@ -129,7 +128,7 @@ const ProgramDetail = () => {
 
       <ProgramInfo program={program} />
 
-      {program.classes.length > 0 ? (
+      {program && program.classes && program.classes.length > 0 ? (
         <div className="flex flex-col justify-evenly gap-6">
           {program.classes.map((classroom) => (
             <ClassroomCard

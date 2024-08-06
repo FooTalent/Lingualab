@@ -12,8 +12,6 @@ import popUp from '/Popup_EliminarPrograma.png'
 import { deleteProgram, duplicateProgram } from '../../../../services/programs.services';
 import { useAppStore } from '../../../../store/useAppStore';
 
-
-
 const ProgramCard = ({ program, buttonFunction, refresh }) => {
   const { user } = useAppStore();
   const [state, setState] = useState(false)
