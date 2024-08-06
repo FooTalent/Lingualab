@@ -6,9 +6,10 @@ import { LEVELS_MAP } from '../../../../utils/valueLists';
 import TextEditor from '../../../../components/TextEditor/TextEditor';
 import BackButton from '../../../../components/BackButtom';
 import Resources from '../../../Resources/Resources';
-import IconImage from '../../../../utils/IconImage';
+import IconSvg from '../../../../utils/SvgWrapper';
 import ProgramInfo from '../Program/ProgramInfo';
 import ButtonModal from '../../../../components/Form/ButtonModal';
+
 
 const ClassDetail = () => {
   const { eid } = useParams();
@@ -106,7 +107,7 @@ const ClassDetail = () => {
             <ul className="list-disc pl-5 text-gray-700">
               {selectedResources.map((resource, index) => (
                 <div key={index} className='flex h-5'>
-                  <IconImage category={resource.type} className={"fill-current"} />
+                  <IconSvg category={resource.type}/>
                   <Link to={resource.url}>{resource.title}</Link>
                 </div>
               ))}

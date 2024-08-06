@@ -23,6 +23,7 @@ export default {
         b1b2: '#3A9FB6',
         c1c2: '#3C5A99',
         inputBg: '#F9F9F9',
+        darkGray: '#444444'
       },
       backgroundImage: {
         'fondo': "url('/fondoLogin.jpg')"
