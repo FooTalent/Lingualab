@@ -70,10 +70,11 @@ comment = comentarios (opcional) */
 export const getReviews = async (token, filter) => {
   try {
     const data = filter 
-    const response = await axios.get(`${url}api/reviews/`, data, {
+    const response = await axios.get(`${url}api/reviews/`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      params: data,
     });
     return response.data;
   } catch (error) {
