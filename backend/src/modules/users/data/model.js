@@ -1,5 +1,5 @@
 import { Schema, model} from 'mongoose'
-import { CURRENCIES, GENDERS, LANGUAGES, ROLES, COUNTRIES } from '../../valueList.js';
+import { LANGUAGES, ROLES, COUNTRIES } from '../../valueList.js';
 
 const educationSchema = new Schema({
   title:       { type: String,},
@@ -21,7 +21,6 @@ const userSchema = new Schema({
   photo:       { type: String,   },
   presentation:{ type: String,   },
   birthday:    { type: Date,     },
-  gender:      { type: String,   enum: GENDERS,},
   phone:       { type: String, maxLength: 20   },
   studies:     { type: [educationSchema], },
   certificate: { type: [educationSchema], },
@@ -36,15 +35,13 @@ const userSchema = new Schema({
   googleAccessToken: { type: String },
   googleRefreshToken: { type: String },
 
-  // only teacher
-  price_per_hour: { type: Number,},
-  currency:    { type: String,   default: "ARS", enum: CURRENCIES,},
+  // only Student
+  teacher:     { type: Schema.Types.ObjectId, ref: 'users',},
 
   // data of conection
   created:     { type: Date,   default: Date.now,  immutable: true, },
   updated:     { type: Date,   default: Date.now,  },
   connection:  { type: Date,   default: Date.now,  },
-
 }, {
   timestamps: {
     createdAt: 'created',

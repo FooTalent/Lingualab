@@ -26,7 +26,7 @@ teacher = id
 program = id
 classes = id
 score = calificacion a al 10
-comment = comentarios */
+comment = comentarios (opcional) */
 
 export const getReviews = async (token, filter) => {
   try {
