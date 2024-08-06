@@ -2,9 +2,9 @@ import axios from 'axios';
 
 const url = import.meta.env.VITE_BACKEND_URL
 
-export const getStudents = async (token, idTeacher) => {
+export const getStudents = async (token) => {
   try {
-    const response = await axios.get(`${url}api/users/students/${idTeacher}`, {
+    const response = await axios.get(`${url}api/users/students/`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -17,6 +17,22 @@ export const getStudents = async (token, idTeacher) => {
     throw error;
   }
 };
+export const updateStudent = async (token, idStudent, data) => {
+  try {
+    const response = await axios.put(`${url}api/users/students/${idStudent}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      console.error('Acceso no autorizado - talvez token invalido');
+    }
+    throw error;
+  }
+};
+
 
 
 // Reviews ---------------------------------------------------------------
