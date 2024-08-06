@@ -73,7 +73,7 @@ export const updateProgram = async (token, programId, data ) => {
 
 export const duplicateProgram = async (token, programId) => {
   try {
-    const response = await axios.post(`${url}api/virtual/duplicate/:${programId}`, {
+    const response = await axios.post(`${url}api/virtual/duplicate/${programId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
