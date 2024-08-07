@@ -142,7 +142,7 @@ export default class Controller extends CustomController {
   createEvent = async (req, res, next) => {
     try{
       const userId = req.user._id;
-      let eventDetails = validateFields(req.body, this.requieredfield.event); // devuelve los campos valdiados sino un error indicando los faltantes - no incluye extras
+      let eventDetails = validateFields(req.body, this.requieredfield.event);
       
       const timeZone = COUNTRY_TIMEZONES[eventDetails.country];
       if (!timeZone) {
@@ -170,7 +170,7 @@ export default class Controller extends CustomController {
             { method: 'popup', minutes: 15 },
           ],
         },
-        attendees: [{ email: req.user.email }],  //...eventDetails.students
+        attendees: [{ email: req.user.email }, ...eventDetails.students],  //...eventDetails.students
       };
 
       console.log(req.user);
