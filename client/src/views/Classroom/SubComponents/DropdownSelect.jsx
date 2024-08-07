@@ -21,7 +21,7 @@ export default function DropdownSelect({ label, icon, options, selectedOption, o
 
       <div className='w-full flex justify-between'>
         <div
-          className={`relative border ${icon ? 'w-10/12' : 'w-full'} flex justify-between items-center border-Grey ${selectedOption !== `Seleccionar ${label.toLowerCase()}` ? 'text-card' : 'text-Grey'} rounded-lg py-3 px-4 cursor-pointer  focus:border-card hover:border-card`}
+          className={`relative border ${icon ? 'w-11/12' : 'w-full'} flex justify-between items-center border-Grey ${selectedOption !== `Seleccionar ${label.toLowerCase()}` ? 'text-card' : 'text-Grey'} rounded-lg py-3 px-4 cursor-pointer  focus:border-card hover:border-card`}
           onClick={() => setIsOpen(!isOpen)}
         >
           <span>{selectedOption}</span>
