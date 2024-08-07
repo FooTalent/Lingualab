@@ -1,4 +1,3 @@
-
 import { register } from "../services";
 import { Toast } from "../utils/toast";
 
@@ -11,14 +10,13 @@ export const createRegisterSlice = (set) => ({
                 title: registerUser.message,
                 icon: "success"
             })
-            set(() => ({
-                complete: true
-            }))
+            set({ complete: true });
         } else {
             Toast.fire({
                 title: registerUser.message,
                 icon: 'error'
             })
         }
-    }
+    },
+    resetComplete: () => set({ complete: false })
 })
