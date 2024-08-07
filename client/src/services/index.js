@@ -1,9 +1,12 @@
 import axios from 'axios';
-
 const url = import.meta.env.VITE_BACKEND_URL
 
-
 // USER SESSION ----------------------------------------------------------------
+export const register = async (userData) => {
+  const newUser = await axios.post(`${url}api/users/register`, userData)
+  return newUser.data
+}
+
 export const login = async (userData) => {
     const loginUser = await axios.post(`${url}api/users/login`, userData)
     return loginUser.data
@@ -12,11 +15,6 @@ export const login = async (userData) => {
 export const forgotPass = async (email) => {
     const forgotUserPass = await axios.post(`${url}api/users/userrecovery`, email)
     return forgotUserPass.data
-}
-
-export const register = async (userData) => {
-    const newUser = await axios.post(`${url}api/users/register`, userData)
-    return newUser.data
 }
 
 export const newPass = async (password, token) => {
@@ -71,7 +69,6 @@ export const googleLoginUser = async () => {
   }
 };
 
-  
 // USER PROFILE ----------------------------------------------------------------
 export const getUserData = async (token) => {
   try {
@@ -105,6 +102,7 @@ export const userUpdate = async (token, userData) => {
       return null;
   }
 };
+
 export const userUpdatePhoto = async (token, photo) => {
   const formData = new FormData();
   formData.append('photo', photo);
@@ -114,7 +112,7 @@ export const userUpdatePhoto = async (token, photo) => {
       }
   }
   try {
-      const response = await axios.post(`${url}api/users/current/uploadphoto`, formData, auth);
+      const response = await axios.put(`${url}api/users/current/uploadphoto`, formData, auth);
       return response.data;
   } catch (error) {
       console.error('Error al actualizar la imagen:', error);
@@ -122,8 +120,7 @@ export const userUpdatePhoto = async (token, photo) => {
   }
 };
 
-
-// GET VALUES ---------------------------------------------------------------- // TODO aplicar a todos lados
+// GET VALUES ----------------------------------------------------------------
 export const getCountries = async () => {
   try {
       const response = await axios.get(`${url}api/values/countries`);
@@ -133,6 +130,7 @@ export const getCountries = async () => {
       return null;
   }
 };
+
 export const getLanguages = async () => {
   try {
       const response = await axios.get(`${url}api/values/languages`);

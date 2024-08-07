@@ -47,8 +47,6 @@ export default class Service extends CustomService {
     return {name: userFound.first_name, token}
   }
 
-  logout = async () => {}
-
   // RECUPERAICON DE CONTRASEÑA
   userRecovery = async (email) => {    
     const userFound = await this.dao.getBy({email});
@@ -68,11 +66,6 @@ export default class Service extends CustomService {
   updatePassword = async (uid, password) => {
     password = await createHashAsync(password)
     return await this.dao.update({_id: uid}, {password, update: Date.now()})
-  }
-
-  // ACTUALIZACION DE IMAGEN
-  updatePhoto = async (uid, path) => {
-    return await this.dao.update({_id: uid}, {photo: path})
   }
 
   // GOOGLE
@@ -111,6 +104,12 @@ export default class Service extends CustomService {
     return {name: userFound.first_name, token}
   }
 
+  // ACTUALIZACION DE IMAGEN
+  updatePhoto = async (uid, path) => {
+    return await this.dao.update({_id: uid}, {photo: path})
+  }
+
+  // CREAR EVENTO GOOGLE
   createEvent = async (uid, eventDetails) => {
     const user = await this.dao.getBy({_id: uid});
 
@@ -137,5 +136,20 @@ export default class Service extends CustomService {
     });
 
     return event.data;
+  }
+
+  // STUDENTS
+  inviteStudent = async (user, newStudent, password ) => {
+    const to = newStudent.email
+    const subject  = `Datos de acceso a Lingualab de parte del profesor ${user.last_name}`
+    const template = 'invitation'
+    const context = {
+      profesorNombre: user.first_name,
+      profesorApellido: user.last_name,
+      usuario: newStudent.email,
+      contrasena: password,
+      accesoURL: configEnv.cors_origin
+    }
+    return sendMail( to, subject, template, context)
   }
 }

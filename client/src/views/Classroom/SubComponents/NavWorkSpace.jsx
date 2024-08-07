@@ -3,7 +3,7 @@ import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
 
-export default function NavWorkSpace({ setModal, buttonDescription }) {
+export default function NavWorkSpace({ setModal, buttonDescription, route }) {
     const inputRef = useRef(null);
     const [isInputFocused, setIsInputFocused] = useState(false);
     const navigate = useNavigate();
@@ -16,18 +16,18 @@ export default function NavWorkSpace({ setModal, buttonDescription }) {
         <div className="flex justify-between items-center">
             <div className='flex gap-4 justify-evenly items-center'>
                 <button
-                    className={`${false ? 'bg-Yellow font-extrabold' : 'bg-YellowDeselect'} hover:bg-Yellow text-card border-2 border-Yellow rounded-lg py-3 px-4 ease-linear duration-150`}
+                    className={`${route === 'aulavirtual' ? 'bg-Yellow font-extrabold' : 'bg-YellowDeselect'} hover:bg-Yellow text-card border-2 border-Yellow rounded-lg py-3 px-4 ease-linear duration-150`}
                     onClick={() => navigate(`/aulavirtual`)}
                 >
                     Mis aulas
                 </button>
                 <button
-                    className={`${true ? 'bg-Yellow font-extrabold' : 'bg-YellowDeselect'} hover:bg-Yellow text-card border-2 border-Yellow rounded-lg py-3 px-4 ease-linear duration-150`}
+                    className={`${route === 'workspace' ? 'bg-Yellow font-extrabold' : 'bg-YellowDeselect'} hover:bg-Yellow text-card border-2 border-Yellow rounded-lg py-3 px-4 ease-linear duration-150`}
                     onClick={() => navigate(`/workspace/`)}
                 > Mis Programas
                 </button>
                 <button
-                    className={`${true ? '' : ''} bg-card hover:bg-Yellow font-extrabold text-Yellow hover:text-card border-2 border-card hover:border-Yellow rounded-lg py-3 px-4 ease-linear duration-150`}
+                    className={`bg-card hover:bg-Yellow font-extrabold text-Yellow hover:text-card border-2 border-card hover:border-Yellow rounded-lg py-3 px-4 ease-linear duration-150`}
                     onClick={handleModal}
                 > {buttonDescription} <AddIcon />
                 </button>

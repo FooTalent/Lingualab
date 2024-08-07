@@ -54,9 +54,10 @@ export const getProgramById = async (token, programId) => {
     throw error;
   }
 };
-export const updateProgram = async (token, programsId, data ) => {
+
+export const updateProgram = async (token, programId, data ) => {
   try {
-    const response = await axios.put(`${url}api/programs/${programsId}`, data, {
+    const response = await axios.put(`${url}api/programs/${programId}`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -67,6 +68,38 @@ export const updateProgram = async (token, programsId, data ) => {
       console.error('Acceso no autorizado - talvez token invalido');
     }
     throw error;
+  }
+};
+
+export const duplicateProgram = async (token, programId) => {
+  try {
+    const response = await axios.post(`${url}api/virtual/duplicate/${programId}`, {}, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      console.error('Acceso no autorizado - talvez token invalido');
+    }
+    throw error;
+  }
+};
+
+export const deleteProgram = async (token, programId) => {
+  try {
+    const response = await axios.delete(`${url}api/programs/${programId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    })
+    return response.data
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      console.error('Acceso no autorizado - talvez token invalido');
+    }
+    throw error
   }
 }
 
@@ -106,6 +139,22 @@ export const createClass = async (token, data) => {
 export const updateClass = async (token, classroomId, data ) => {
   try {
     const response = await axios.put(`${url}api/classes/${classroomId}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      console.error('Acceso no autorizado - talvez token invalido');
+    }
+    throw error;
+  }
+}
+
+export const deleteClass = async (token, classId) => {
+  try {
+    const response = await axios.delete(`${url}api/classes/${classId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

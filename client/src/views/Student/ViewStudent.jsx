@@ -1,15 +1,16 @@
 import SearchIcon from '@mui/icons-material/Search';
-import EditIcon from '@mui/icons-material/Edit';
 import { useEffect, useState } from 'react';
 import { useAppStore } from '../../store/useAppStore';
-import { getStudents } from '../../services/students.services';
+import { getReviews, getStudents } from '../../services/students.services';
 import { crearURLCompleta } from '../../utils/urifoto';
+import { Link } from 'react-router-dom';
 
 const ViewStudent = () => {
   const { user, userDetail } = useAppStore();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [students, setStudents] = useState([]);
+  const [score, setScore] = useState([])
   const [showInfo, setShowInfo] = useState(true);
 
   useEffect(() => {
@@ -17,8 +18,11 @@ const ViewStudent = () => {
       const fetchStudents = async () => {
         try {
           setLoading(true);
-          const response = await getStudents(user.token, userDetail._id);
+          const response = await getStudents(user.token);
           setStudents(response.data);
+          const filter = { eid: userDetail._id }
+          const res = await getReviews(user.token, filter)
+          setScore(res.data)
         } catch (error) {
           console.error('Error fetching students', error);
           setError(error.message);
@@ -36,7 +40,7 @@ const ViewStudent = () => {
   const handleShowInfo = () => setShowInfo(true);
   const handleShowGrades = () => setShowInfo(false);
 
-  console.log(students)
+  console.log(score)
 
   return (
     <div className="mx-auto py-4 w-[1210px]">
@@ -60,15 +64,9 @@ const ViewStudent = () => {
           >
             Calificaciones
           </button>
-          {!showInfo && (
-            <button className="ml-2 bg-black text-white px-4 py-2 rounded-lg flex items-center">
-              <EditIcon className="mr-2" />
-              Editar
-            </button>
-          )}
         </div>
-        <div className="flex items-center">
-          <div className="relative w-96">
+        <div className="flex items-center w-[664px]">
+          <div className="relative w-full">
             <input
               type="text"
               placeholder="¿Qué estás buscando?"
@@ -87,21 +85,19 @@ const ViewStudent = () => {
           <tr className='flex justify-between w-full py-6 px-4'>
             {showInfo ? (
               <>
-                <th>Nombre y Apellido</th>
-                <th>Programa</th>
-                <th>Nivel</th>
-                <th>Carga Horaria</th>
-                <th>Teléfono</th>
-                <th className='mr-40'>Email</th>
+                <th className='w-[250px]'>Nombre y Apellido</th>
+                <th className='w-[120px]'>Nivel</th>
+                <th className='w-[160px]'>Teléfono</th>
+                <th className='w-[300px]'>Email</th>
               </>
             ) : (
               <>
-                <th>Nombre y Apellido</th>
-                <th>Nivel</th>
-                <th>Oral</th>
-                <th>Escrito</th>
-                <th>Lectura</th>
-                <th className=' mr-14'>Info.</th>
+                <th className='w-[250px]'>Nombre y Apellido</th>
+                <th className='w-[160px]'>Nivel</th>
+                <th className='w-[160px]'>Oral</th>
+                <th className='w-[160px]'>Escrito</th>
+                <th className='w-[160px]'>Lectura</th>
+                <th className='w-[90px]'>Info.</th>
               </>
             )}
           </tr>
@@ -120,45 +116,45 @@ const ViewStudent = () => {
           ) : students.length > 0 ? (
             students.map((student, index) => (
               <tr
-                key={student.id}
-                className={`border-b ${index === 0 ? 'rounded-t-lg' : ''
+                key={student._id}
+                className={`border-b ${index === 0 ? 'rounded-t-xl' : ''
                   } ${index === students.length - 1 ? 'border-none' : ''
-                  } flex justify-between items-center py-6 border-Purple`}
+                  } flex justify-between items-center w-full py-6 border-Purple gap-6`}
               >
                 {showInfo ? (
                   <>
-                    <td className='flex items-center gap-[16px] w-[250px]'>
+                    <td className='w-[250px] gap-6'>
                       {student.photo ? (
-                        <img className='w-[50px] h-[50px] rounded-full' src={crearURLCompleta(student.photo)} />
+                        <img className='w-fit-[50px] h-fit-[50px] rounded-full' src={crearURLCompleta(student.photo)} />
                       ) : (
                         <span className='flex justify-center items-center font-bold w-[50px] h-[50px] rounded-full bg-Yellow uppercase'>{student?.first_name?.charAt(0) + student?.last_name?.charAt(0)}</span>
                       )}
-                      <span>{student.first_name} {student.last_name}</span>
+                      <span className='w-[184px]'>{student.first_name} {student.last_name}</span>
                     </td>
-                    <td>{student.program}</td>
-                    <td>{student.level}</td>
-                    <td>{student.workload}</td>
-                    <td>{student.phone}</td>
-                    <td>{student.email}</td>
+                    <td className='w-[120px]'>{student.level}</td>
+                    <td className='w-[160px]'>{student.phone}</td>
+                    <td className='w-[300px]'>{student.email}</td>
                   </>
                 ) : (
                   <>
-                    <td className='flex items-center gap-[16px] w-[250px]'>
+                    <td className='w-[250px] gap-6'>
                       {student.photo ? (
-                        <img className='w-[50px] h-[50px] rounded-full' src={crearURLCompleta(student.photo)} />
+                        <img className='w-fit-[50px] h-fit-[50px] rounded-full' src={crearURLCompleta(student.photo)} />
                       ) : (
                         <span className='flex justify-center items-center font-bold w-[50px] h-[50px] rounded-full bg-Yellow uppercase'>{student?.first_name?.charAt(0) + student?.last_name?.charAt(0)}</span>
                       )}
-                      <span>{student.first_name} {student.last_name}</span>
+                      <span className='w-[184px]'>{student.first_name} {student.last_name}</span>
                     </td>
-                    <td>{student.level}</td>
-                    <td>{student.oral}</td>
-                    <td>{student.written}</td>
-                    <td>{student.reading}</td>
-                    <td>
-                      <button className="bg-purple-600 text-white px-4 py-2 rounded-lg">
+                    <td className='w-[160px]'>{student.level}</td>
+                    <td className='w-[160px]'>{student.oral}</td>
+                    <td className='w-[160px]'>{student.written}</td>
+                    <td className='w-[160px]'>{student.reading}</td>
+                    <td className='w-[90px]'>
+                      <Link
+                        to={`/student/${student._id}`}
+                        className="bg-Purple font-extrabold text-[16px] text-white p-3 rounded-lg">
                         Ver más
-                      </button>
+                      </Link>
                     </td>
                   </>
                 )}
