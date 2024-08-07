@@ -106,10 +106,12 @@ export default class Service extends CustomService {
   }
 
   // CREAR EVENTO GOOGLE
-  createEvent = async (uid, eventDetails) => {
+  createEvent = async (uid, eventDetails, meet) => {
     const user = await this.dao.getBy({_id: uid});
-
-    if (!user) { throw new AppError('Usuario no encontrado', 400); }
+  
+    if (!user) {
+      throw new AppError('Usuario no encontrado', 400);
+    }
 
     // Configurar oauth2Client con los tokens del usuario
     const oauth2Client = new google.auth.OAuth2(
@@ -125,11 +127,16 @@ export default class Service extends CustomService {
     const calendar = google.calendar({ version: 'v3', auth: oauth2Client })
 
     // Crear el evento
-    const event = await calendar.events.insert({
+    const eventParams = {
       calendarId: 'primary',
       requestBody: eventDetails,
       sendUpdates: 'all',
-    });
+    };
+
+    if (meet) {
+      eventParams.conferenceDataVersion = 1;
+    }
+    const event = await calendar.events.insert(eventParams);
 
     return event.data;
   }

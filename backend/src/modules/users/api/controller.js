@@ -14,6 +14,7 @@ export default class Controller extends CustomController {
       register: ['first_name', 'last_name', 'email', 'password'],
       login: ['email', 'password'],
       event: [
+        'idClase',    // ID clase
         'summary',    // titulo
         'start',      // fecha hora de inicio
         'end',        // fecha hora fin
@@ -140,27 +141,27 @@ export default class Controller extends CustomController {
 
   // CREAR EVENTO GOOGLE
   createEvent = async (req, res, next) => {
-    try{
+    try {
       const userId = req.user._id;
-      let eventDetails = validateFields(req.body, this.requieredfield.event); // devuelve los campos valdiados sino un error indicando los faltantes - no incluye extras
-      
+      let eventDetails = validateFields(req.body, this.requieredfield.event);
+  
       const timeZone = COUNTRY_TIMEZONES[eventDetails.country];
       if (!timeZone) {
         throw new AppError(`País invalido: ${eventDetails.country}`, 400);
       }
-
-      const { description, location, reminders } = req.body;
+  
+      const { description, location, reminders, meet } = req.body;
       
       const newEvent = {
-        summary:      eventDetails.summary,
-        location:     location || '', // Ubicación por defecto vacía
-        description:  description || '', // Descripción por defecto vacía
+        summary: eventDetails.summary,
+        location: location || '', // Ubicación por defecto vacía
+        description: description || '', // Descripción por defecto vacía
         start: {
-          dateTime:   new Date(eventDetails.start).toISOString(),
+          dateTime: new Date(eventDetails.start).toISOString(),
           timeZone,
         },
         end: {
-          dateTime:   new Date(eventDetails.end).toISOString(),
+          dateTime: new Date(eventDetails.end).toISOString(),
           timeZone,
         },
         reminders: {
@@ -173,9 +174,20 @@ export default class Controller extends CustomController {
         attendees: [{ email: req.user.email }],  //...eventDetails.students
       };
 
-      console.log(req.user);
+      // Añadir datos de conferencia si meet es true
+      if (meet) {
+        newEvent.conferenceData = {
+          createRequest: {
+            requestId: eventDetails.idClase, // ID
+            conferenceSolutionKey: {
+              type: 'hangoutsMeet'
+            }
+          }
+        };
+      }
+
       try {
-        const event = await this.service.createEvent(userId, newEvent);
+        const event = await this.service.createEvent(userId, newEvent, meet);
         res.sendSuccess(event, 'Event created successfully');
       } catch (error) {
         next(new AppError(`Error al crear el evento: ${error.message}`, 500));
@@ -183,8 +195,6 @@ export default class Controller extends CustomController {
     } catch(error) {
       next(error)
     }
-    // const result = await insertEvent(newEvent);
-    // res.sendSuccess(result.event, result.message);
   }
 
   // ESTUDIANTES
