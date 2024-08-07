@@ -1,9 +1,7 @@
-import { useAppStore } from "../store/useAppStore";
+import { useAppStore } from "../../store/useAppStore";
 
 const Landing = () => {
-  const { status } = useAppStore();
 
-  if (status)
     return (
       <div className="text-black">
         <div className="relative">

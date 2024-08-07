@@ -1,8 +1,6 @@
-import { useAppStore } from "../store/useAppStore";
+import { useAppStore } from "../../store/useAppStore";
 
 const AboutUs = () => {
-  const { status } = useAppStore();
-  if (!status) return null;
 
   return (
     <div className="p-6">
