@@ -4,7 +4,6 @@ import validateFields from "../../../libraries/utils/validatefiels.js";
 import { googleEnv } from "../../../config/env.js";
 import { oauth2Client, SCOPES } from "../../../libraries/google/googleAuth.js";
 import Service from "../logic/service.js";
-import { COUNTRY_TIMEZONES } from '../logic/timezoneMapping.js';
 import AppError from '../../../config/AppError.js';
 
 export default class Controller extends CustomController {
@@ -13,14 +12,6 @@ export default class Controller extends CustomController {
     this.requieredfield = {
       register: ['first_name', 'last_name', 'email', 'password'],
       login: ['email', 'password'],
-      event: [
-        'idClase',    // ID clase
-        'summary',    // titulo
-        'start',      // fecha hora de inicio
-        'end',        // fecha hora fin
-        'country',    // pais, usado para el timezone del horario
-        'students'    // Un array de {email} Lista de asistentes
-      ],
       invite: ['email']
     }
   }
@@ -135,64 +126,6 @@ export default class Controller extends CustomController {
       await this.service.updatePhoto(req.user.id, filePath)
       res.sendSuccess("Photo uploaded")
     } catch (error) {
-      next(error)
-    }
-  }
-
-  // CREAR EVENTO GOOGLE
-  createEvent = async (req, res, next) => {
-    try {
-      const userId = req.user._id;
-      let eventDetails = validateFields(req.body, this.requieredfield.event);
-  
-      const timeZone = COUNTRY_TIMEZONES[eventDetails.country];
-      if (!timeZone) {
-        throw new AppError(`País invalido: ${eventDetails.country}`, 400);
-      }
-  
-      const { description, location, reminders, meet } = req.body;
-      
-      const newEvent = {
-        summary: eventDetails.summary,
-        location: location || '', // Ubicación por defecto vacía
-        description: description || '', // Descripción por defecto vacía
-        start: {
-          dateTime: new Date(eventDetails.start).toISOString(),
-          timeZone,
-        },
-        end: {
-          dateTime: new Date(eventDetails.end).toISOString(),
-          timeZone,
-        },
-        reminders: {
-          useDefault: false,
-          overrides: reminders || [
-            { method: 'email', minutes: 15 },
-            { method: 'popup', minutes: 15 },
-          ],
-        },
-        attendees: [{ email: req.user.email }],  //...eventDetails.students
-      };
-
-      // Añadir datos de conferencia si meet es true
-      if (meet) {
-        newEvent.conferenceData = {
-          createRequest: {
-            requestId: eventDetails.idClase, // ID
-            conferenceSolutionKey: {
-              type: 'hangoutsMeet'
-            }
-          }
-        };
-      }
-
-      try {
-        const event = await this.service.createEvent(userId, newEvent, meet);
-        res.sendSuccess(event, 'Event created successfully');
-      } catch (error) {
-        next(new AppError(`Error al crear el evento: ${error.message}`, 500));
-      }
-    } catch(error) {
       next(error)
     }
   }

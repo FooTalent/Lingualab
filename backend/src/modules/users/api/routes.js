@@ -26,10 +26,6 @@ router
         uploader('profiles', 5, ['image/jpeg', 'image/png']).single('photo'),
         controller.uploadPhoto)
 
-// TODO sacar de aqui
-router
-.post   ('/google/events', handleAuth(users),   controller.createEvent) // TODO FALTA TESTEAR
-
 // students
 router
 .get    ('/students/', handleAuth(clients), controller.getStudent)
