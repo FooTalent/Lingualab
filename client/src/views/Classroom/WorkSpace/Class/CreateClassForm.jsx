@@ -4,48 +4,71 @@ import DropdownSelect from '../../SubComponents/DropdownSelect';
 import ButtonModal from '../../../../components/Form/ButtonModal';
 import { getPrograms } from '../../../../services/programs.services';
 import { useAppStore } from '../../../../store/useAppStore';
+import InputField from '../../SubComponents/InputField';
 
 const CreateClassForm = ({ programData, onSubmit, onClose }) => {
-  const { user } = useAppStore();
-  const [programs, setPrograms] = useState(null)
+  const { user, userDetail } = useAppStore();
+  const [programs, setPrograms] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const durations = [1, 2, 3, 4];
   const [classroomData, setClassroomData] = useState({
-    duration_hours: 1,
+    title: '',
+    description: '',
+    duration_hours: durations[0],
     teacher: programData.teacher._id,
     language: programData.language,
     level: programData.level,
-    program: programData.title
+    program: { label: programData.title, value: programData._id },
   });
 
   useEffect(() => {
     if (user && user.token) {
-      const fetchProgram = async () => {
+      const fetchPrograms = async () => {
         try {
-          const response = await getPrograms(user.token);
-          console.log(response)
-          setPrograms(response);
+          const response = await getPrograms(user.token, userDetail._id);
+          setPrograms(response.data);
         } catch (error) {
-          console.error('Error buscando el programa', error);
           setError(error.message);
+        } finally {
+          setLoading(false);
         }
       };
 
-      fetchProgram();
-    } else {
-      setLoading(false);
+      fetchPrograms();
     }
   }, [user]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setClassroomData({
-      ...classroomData,
+    setClassroomData((prevData) => ({
+      ...prevData,
       [name]: value,
-    });
+    }));
+  };
+
+  const handleSelectChange = (field, value) => {
+    if (field === 'program') {
+      const selectedProgram = programs.find((program) => program._id === value);
+      setClassroomData((prevData) => ({
+        ...prevData,
+        [field]: { label: selectedProgram.title, value: selectedProgram._id },
+      }));
+    } else {
+      setClassroomData((prevData) => ({
+        ...prevData,
+        [field]: value,
+      }));
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(classroomData);
+    onSubmit({
+      ...classroomData,
+      program: classroomData.program.value,
+      title: classroomData.title || 'Sin título',
+    });
   };
 
   return (
@@ -53,82 +76,70 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
       onSubmit={handleSubmit}
       className='flex flex-col gap-2 text-card justify-evenly'
     >
-      <div className='grid grid-cols-2 gap-4'>
-        <DropdownSelect
-          label="Programa"
-          options={programs.map(program => program.title)}
-          selectedOption={classroomData.program}
-          onSelect={handleInputChange}
-        />
+      {loading ? (
+        <p>Cargando...</p>
+      ) : error ? (
+        <p>Error: {error}</p>
+      ) : (
+        <>
+          <div className='grid grid-cols-2 gap-4'>
+            <DropdownSelect
+              label="Programa"
+              options={programs.map((program) => ({ label: program.title, value: program._id }))}
+              selectedOption={classroomData.program.label}
+              onSelect={(value) => handleSelectChange('program', value)}
+            />
 
-        <DropdownSelect
-          label="Nivel"
-          name='level'
-          options={LEVELS.map(level => level.data)}
-          selectedOption={classroomData.level}
-          onSelect={handleInputChange}
-        />
-      </div>
+            <DropdownSelect
+              label="Nivel"
+              name='level'
+              options={LEVELS.map((level) => level.data)}
+              selectedOption={classroomData.level}
+              onSelect={(value) => handleSelectChange('level', value)}
+            />
+          </div>
 
-      <div className="flex flex-col gap-2 font-medium">
-        <label className="p-0 text-custom">Título</label>
-        <input
-          type="text"
-          name="title"
-          value={classroomData.title}
-          onChange={handleInputChange}
-          className="py-3 px-4 border border-Grey rounded-lg placeholder:text-Grey outline-none focus:border-card hover:border-card"
-          placeholder='Escribe el nombre de la clase...'
-        />
-      </div>
-
-      <div className="flex flex-col gap-2 font-medium">
-        <label className="p-0 text-custom">Descripción</label>
-        <input
-          type="text"
-          name="description"
-          value={classroomData.description}
-          onChange={handleInputChange}
-          className="py-3 px-4 border border-Grey rounded-lg placeholder:text-Grey outline-none focus:border-card hover:border-card"
-          placeholder='Escribe una breve descripción...'
-        />
-      </div>
-
-      <DropdownSelect
-        label="Estudiantes"
-        name='students'
-        icon={true}
-        options={[]}
-        selectedOption={classroomData.students}
-        onSelect={handleInputChange}
-      />
-
-      <div className='grid grid-cols-2 gap-4'>
-        <div className="flex flex-col gap-3 font-medium">
-          <label className="p-0 text-custom">Feccha inicio</label>
-          <input
-            type="date"
+          <InputField
+            label="Título"
             name="title"
             value={classroomData.title}
             onChange={handleInputChange}
-            className="py-3 px-4 border border-Grey rounded-lg placeholder:text-Grey outline-none focus:border-card hover:border-card"
             placeholder='Escribe el nombre de la clase...'
           />
-        </div>
 
-        <DropdownSelect
-          label="Duración (horas)"
-          name='duration_hours'
-          options={['1 Hora', '2 Horas', '3 Horas', '4 Horas']}
-          selectedOption={classroomData.duration_hours}
-          onSelect={handleInputChange}
-        />
-      </div>
+          <InputField
+            label="Descripción"
+            name="description"
+            value={classroomData.description}
+            onChange={handleInputChange}
+            placeholder='Escribe una breve descripción...'
+          />
 
-      <div className="grid grid-cols-2 gap-8">
-        <ButtonModal buttonAction={onClose} type='prev' label='Cancelar' />
-        <ButtonModal buttonAction={onSubmit} type='next' label='Crear Clase' />
-      </div>
+          <DropdownSelect
+            label="Estudiantes"
+            name='students'
+            icon={true}
+            options={[]}
+            selectedOption={classroomData.students}
+            onSelect={(value) => handleSelectChange('duration_hours', value)}
+          />
+
+          <div className='grid grid-cols-2 gap-4'>
+            <DropdownSelect
+              label="Duración (horas)"
+              name='duration_hours'
+              options={durations}
+              selectedOption={classroomData.duration_hours}
+              onSelect={(value) => handleSelectChange('duration_hours', value)}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-8">
+            <ButtonModal buttonAction={onClose} type='prev' label='Cancelar' />
+            <ButtonModal buttonAction={onSubmit} type='next' label='Crear Clase' />
+          </div>
+        </>
+      )}
     </form>
   );
 };
