@@ -19,6 +19,23 @@ export const getStudents = async (token) => {
   }
 };
 
+// obtener 1 estudiante
+export const getStudentsById = async (token, idStudent) => {
+  try {
+    const response = await axios.get(`${url}api/users/students/${idStudent}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      console.error('Acceso no autorizado - talvez token invalido');
+    }
+    throw error;
+  }
+};
+
 // Actualizar estudiante de ese profesor (no te deja de otros)
 export const updateStudent = async (token, idStudent, data) => {
   try {
