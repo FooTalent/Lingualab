@@ -93,9 +93,18 @@ const AboutUs = () => {
                 name: "María Mercedes Ramella",
                 role: "UX UI Designer",
                 links: [
-                  "/ImagesAboutUs/LinkedIn.svg",
-                  "/ImagesAboutUs/Be.svg",
-                  "/ImagesAboutUs/Github.svg",
+                  {
+                    src: "/ImagesAboutUs/LinkedIn.svg",
+                    url: "https://www.linkedin.com/in/mercedes-ramella/",
+                  }, // Enlace de ejemplo
+                  {
+                    src: "/ImagesAboutUs/Be.svg",
+                    url: "https://www.behance.net/maramramella/moodboards",
+                  },
+                  {
+                    src: "/ImagesAboutUs/Github.svg",
+                    url: "https://github.com/MechiRamella",
+                  },
                 ],
               },
               {
@@ -103,32 +112,47 @@ const AboutUs = () => {
                 name: "Paula Areal",
                 role: "UX UI Designer",
                 links: [
-                  "/ImagesAboutUs/LinkedIn.svg",
-                  "/ImagesAboutUs/Be.svg",
-                  "/ImagesAboutUs/Mundo.svg",
+                  {
+                    src: "/ImagesAboutUs/LinkedIn.svg",
+                    url: "https://www.linkedin.com/in/arealpaula/",
+                  },
+                  {
+                    src: "/ImagesAboutUs/Be.svg",
+                    url: "https://www.behance.net/arealpaula/projects",
+                  },
+                  {
+                    src: "/ImagesAboutUs/Mundo.svg",
+                    url: "https://arealpaula.myportfolio.com/",
+                  },
                 ],
               },
             ].map((card, index) => (
               <div
                 key={index}
-                className="w-[300px] h-[150px] p-4 rounded-lg border border-[#444444] bg-white shadow-md flex items-center gap-4"
+                className="w-[500px] h-[150px] mr-30 p-4 rounded-lg border border-[#444444] bg-white shadow-md flex items-center gap-4"
               >
                 <img
                   src={card.imgSrc}
                   alt={card.name}
-                  className="w-24 h-24 rounded-full"
+                  className="w-32 h-32 rounded-full"
                 />
                 <div className="text-[#444444]">
-                  <h4 className="text-md font-bold">{card.name}</h4>
-                  <p>{card.role}</p>
-                  <div className="flex space-x-2 mt-2">
+                  <h4 className="text-lg font-bold">{card.name}</h4>
+                  <p className="text-md">{card.role}</p>
+                  <div className="flex space-x-4 mt-2">
                     {card.links.map((link, i) => (
-                      <img
+                      <a
+                        href={link.url}
                         key={i}
-                        src={link}
-                        alt={`Icon ${i}`}
-                        className="w-8 h-8"
-                      />
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          src={link.src}
+                          alt={`Icon ${i}`}
+                          className="w-10 h-10"
+                        />
+                      </a>
                     ))}
                   </div>
                 </div>
@@ -142,38 +166,62 @@ const AboutUs = () => {
                 name: "Aylén Sol Martel",
                 role: "UX UI Designer",
                 links: [
-                  "/ImagesAboutUs/LinkedIn.svg",
-                  "/ImagesAboutUs/Be.svg",
-                  "/ImagesAboutUs/Github.svg",
+                  {
+                    src: "/ImagesAboutUs/LinkedIn.svg",
+                    url: "https://www.linkedin.com/in/aylen-sol-martel/",
+                  },
+                  {
+                    src: "/ImagesAboutUs/Be.svg",
+                    url: "https://www.behance.net/aylen-sol-martel",
+                  },
+                  {
+                    src: "/ImagesAboutUs/Github.svg",
+                    url: "https://github.com/MAAY7001",
+                  },
                 ],
               },
               {
                 imgSrc: "/ImagesAboutUs/Camila.png",
                 name: "Laura Camila Gonzalez",
                 role: "UX UI Designer",
-                links: ["/ImagesAboutUs/LinkedIn.svg", "/ImagesAboutUs/Be.svg"],
+                links: [
+                  {
+                    src: "/ImagesAboutUs/LinkedIn.svg",
+                    url: "https://www.linkedin.com/in/laura-c-gonzalez/",
+                  },
+                  {
+                    src: "/ImagesAboutUs/Be.svg",
+                    url: "https://www.behance.net/lauracgonzale5",
+                  },
+                ],
               },
             ].map((card, index) => (
               <div
                 key={index}
-                className="w-[300px] h-[150px] p-4 rounded-lg border border-[#444444] bg-white shadow-md flex items-center gap-4"
+                className="w-[500px] h-[150px] mr-30 p-4 rounded-lg border border-[#444444] bg-white shadow-md flex items-center gap-4"
               >
                 <img
                   src={card.imgSrc}
                   alt={card.name}
-                  className="w-24 h-24 rounded-full"
+                  className="w-32 h-32 rounded-full"
                 />
                 <div className="text-[#444444]">
-                  <h4 className="text-md font-bold">{card.name}</h4>
-                  <p>{card.role}</p>
-                  <div className="flex space-x-2 mt-2">
+                  <h4 className="text-lg font-bold">{card.name}</h4>
+                  <p className="text-md">{card.role}</p>
+                  <div className="flex space-x-4 mt-2">
                     {card.links.map((link, i) => (
-                      <img
+                      <a
+                        href={link.url}
                         key={i}
-                        src={link}
-                        alt={`Icon ${i}`}
-                        className="w-8 h-8"
-                      />
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          src={link.src}
+                          alt={`Icon ${i}`}
+                          className="w-10 h-10"
+                        />
+                      </a>
                     ))}
                   </div>
                 </div>
@@ -194,8 +242,14 @@ const AboutUs = () => {
                 name: "Pedro Gonzalez",
                 role: "Front Developer",
                 links: [
-                  "/ImagesAboutUs/LinkedIn.svg",
-                  "/ImagesAboutUs/Github.svg",
+                  {
+                    src: "/ImagesAboutUs/LinkedIn.svg",
+                    url: "https://www.linkedin.com/in/pedro-gonzalez-268321279/",
+                  },
+                  {
+                    src: "/ImagesAboutUs/Github.svg",
+                    url: "https://github.com/Simply92",
+                  },
                 ],
               },
               {
@@ -203,31 +257,59 @@ const AboutUs = () => {
                 name: "Mariano Torres Distefano",
                 role: "Front Developer",
                 links: [
-                  "/ImagesAboutUs/LinkedIn.svg",
-                  "/ImagesAboutUs/Github.svg",
+                  {
+                    src: "/ImagesAboutUs/LinkedIn.svg",
+                    url: "https://www.linkedin.com/in/mariano-torres-distefano/",
+                  },
+                  {
+                    src: "/ImagesAboutUs/Github.svg",
+                    url: "https://github.com/Marianotd",
+                  },
+                ],
+              },
+
+              {
+                imgSrc: "/ImagesAboutUs/Vanessa.png",
+                name: "Vanessa Sánchez Pulido",
+                role: "Front Developer",
+                links: [
+                  {
+                    src: "/ImagesAboutUs/LinkedIn.svg",
+                    url: "https://www.linkedin.com/in/dev-vanessan/",
+                  },
+                  {
+                    src: "/ImagesAboutUs/Github.svg",
+                    url: "https://github.com/vanessann-dev",
+                  },
                 ],
               },
             ].map((card, index) => (
               <div
                 key={index}
-                className="w-[300px] h-[150px] p-4 rounded-lg border border-[#444444] bg-white shadow-md flex items-center gap-4"
+                className="w-[500px] h-[150px] mr-30 p-4 rounded-lg border border-[#444444] bg-white shadow-md flex items-center gap-4"
               >
                 <img
                   src={card.imgSrc}
                   alt={card.name}
-                  className="w-24 h-24 rounded-full"
+                  className="w-32 h-32 rounded-full"
                 />
                 <div className="text-[#444444]">
-                  <h4 className="text-md font-bold">{card.name}</h4>
-                  <p>{card.role}</p>
-                  <div className="flex space-x-2 mt-2">
+                  <h4 className="text-lg font-bold">{card.name}</h4>
+                  <p className="text-md">{card.role}</p>
+                  <div className="flex space-x-4 mt-2">
                     {card.links.map((link, i) => (
-                      <img
+                      <a
+                        href={link.url}
                         key={i}
-                        src={link}
-                        alt={`Icon ${i}`}
-                        className="w-8 h-8"
-                      />
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          src={link.src}
+                          alt={`Icon ${i}`}
+                          className="w-10 h-10"
+                        />
+                      </a>
                     ))}
                   </div>
                 </div>
@@ -241,9 +323,18 @@ const AboutUs = () => {
                 name: "Gustavo Sírtori",
                 role: "Back Developer",
                 links: [
-                  "/ImagesAboutUs/LinkedIn.svg",
-                  "/ImagesAboutUs/Github.svg",
-                  "/ImagesAboutUs/Mundo.svg",
+                  {
+                    src: "/ImagesAboutUs/LinkedIn.svg",
+                    url: "https://www.linkedin.com/in/gustavoandressirtori/",
+                  },
+                  {
+                    src: "/ImagesAboutUs/Github.svg",
+                    url: "https://github.com/gustsirt",
+                  },
+                  {
+                    src: "/ImagesAboutUs/Mundo.svg",
+                    url: "https://gustsirt.github.io/pagina-resumen/",
+                  },
                 ],
               },
               {
@@ -251,31 +342,43 @@ const AboutUs = () => {
                 name: "Henryck Guaramato",
                 role: "Back Developer",
                 links: [
-                  "/ImagesAboutUs/LinkedIn.svg",
-                  "/ImagesAboutUs/Github.svg",
+                  {
+                    src: "/ImagesAboutUs/LinkedIn.svg",
+                    url: "https://www.linkedin.com/in/henryckg/",
+                  },
+                  {
+                    src: "/ImagesAboutUs/Github.svg",
+                    url: "https://github.com/henryckg",
+                  },
                 ],
               },
             ].map((card, index) => (
               <div
                 key={index}
-                className="w-[300px] h-[150px] p-4 rounded-lg border border-[#444444] bg-white shadow-md flex items-center gap-4"
+                className="w-[500px] h-[150px] mr-30 p-4 rounded-lg border border-[#444444] bg-white shadow-md flex items-center gap-4"
               >
                 <img
                   src={card.imgSrc}
                   alt={card.name}
-                  className="w-24 h-24 rounded-full"
+                  className="w-32 h-32 rounded-full"
                 />
                 <div className="text-[#444444]">
-                  <h4 className="text-md font-bold">{card.name}</h4>
-                  <p>{card.role}</p>
-                  <div className="flex space-x-2 mt-2">
+                  <h4 className="text-lg font-bold">{card.name}</h4>
+                  <p className="text-md">{card.role}</p>
+                  <div className="flex space-x-4 mt-2">
                     {card.links.map((link, i) => (
-                      <img
+                      <a
+                        href={link.url}
                         key={i}
-                        src={link}
-                        alt={`Icon ${i}`}
-                        className="w-8 h-8"
-                      />
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          src={link.src}
+                          alt={`Icon ${i}`}
+                          className="w-10 h-10"
+                        />
+                      </a>
                     ))}
                   </div>
                 </div>
@@ -294,42 +397,45 @@ const AboutUs = () => {
               {
                 imgSrc: "/ImagesAboutUs/Clara.png",
                 name: "Clara Carbonetti",
-                role: "Q&A Tester",
+                role: "Q&A Tester Manual",
                 links: [
-                  "/ImagesAboutUs/LinkedIn.svg",
-                  "/ImagesAboutUs/Github.svg",
-                ],
-              },
-              {
-                imgSrc: "/ImagesAboutUs/Vanessa.png",
-                name: "Vanessa Sánchez Pulido",
-                role: "Front Developer",
-                links: [
-                  "/ImagesAboutUs/LinkedIn.svg",
-                  "/ImagesAboutUs/Github.svg",
+                  {
+                    src: "/ImagesAboutUs/LinkedIn.svg",
+                    url: "https://www.linkedin.com/in/clara-carbonetti-76719a6/",
+                  },
+                  {
+                    src: "/ImagesAboutUs/Github.svg",
+                    url: "https://github.com/claruchis",
+                  },
                 ],
               },
             ].map((card, index) => (
               <div
                 key={index}
-                className="w-[300px] h-[150px] p-4 rounded-lg border border-[#444444] bg-white shadow-md flex items-center gap-4"
+                className="w-[500px] h-[150px] mr-30 p-4 rounded-lg border border-[#444444] bg-white shadow-md flex items-center gap-4"
               >
                 <img
                   src={card.imgSrc}
                   alt={card.name}
-                  className="w-24 h-24 rounded-full"
+                  className="w-32 h-32 rounded-full"
                 />
                 <div className="text-[#444444]">
-                  <h4 className="text-md font-bold">{card.name}</h4>
-                  <p>{card.role}</p>
-                  <div className="flex space-x-2 mt-2">
+                  <h4 className="text-lg font-bold">{card.name}</h4>
+                  <p className="text-md">{card.role}</p>
+                  <div className="flex space-x-4 mt-2">
                     {card.links.map((link, i) => (
-                      <img
+                      <a
+                        href={link.url}
                         key={i}
-                        src={link}
-                        alt={`Icon ${i}`}
-                        className="w-8 h-8"
-                      />
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          src={link.src}
+                          alt={`Icon ${i}`}
+                          className="w-10 h-10"
+                        />
+                      </a>
                     ))}
                   </div>
                 </div>
