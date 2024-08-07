@@ -31,7 +31,7 @@ export default function LandingLayout() {
                         <NavAuth />
                     </header>
                 </div>
-                <div className='flex flex-col mx-auto max-w-[1210px]'>
+                <div className='flex flex-col mx-auto max-w-full'>
                     <Outlet />
                 </div>
                 <footer className='bg-Purple mt-4'>
