@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido a nuestra aplicación</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            margin: 0;
+            color: #333;
+        }
+        .content {
+            line-height: 1.6;
+            color: #555;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #aaa;
+            font-size: 0.9em;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #6945FF;
+            color: #FFDC00;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Bienvenido a nuestra aplicación - LinguaLab</h1>
+        </div>
+        <div class="content">
+            <p>Hola, el profesor {{profesorNombre}} {{profesorApellido}} te ha registrado en nuestra aplicación. A continuación, encontrarás tus credenciales de acceso a LinguaLab:</p>
+            <p><strong>Usuario:</strong> {{usuario}}</p>
+            <p><strong>Contraseña:</strong> {{contrasena}}</p>
+            <p>Te recomendamos cambiar tu contraseña después de tu primer acceso.</p>
+            <p>Para acceder a la plataforma, haz clic en el siguiente enlace:</p>
+            <a href="{{accesoURL}}" class="button">Acceder a la plataforma</a>
+            <p>¡Esperamos que disfrutes de tu experiencia!</p>
+        </div>
+        <div class="footer">
+            <p>&copy; 2024 LinguaLab. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</body>
+</html>

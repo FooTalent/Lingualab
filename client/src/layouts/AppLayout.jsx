@@ -26,14 +26,16 @@ export default function AppLayout() {
 
     return (
         <>
-            <div className='min-h-screen'>
-                <header className='bg-Purple flex items-center justify-between w-full h-[80px] px-[115px] py-[16px]'>
-                    <LogoHeader />
-                    <NavBar />
-                    <NavProfile />
-                </header>
-                <CurrentTime />
-                <div className=''>
+            <div className='min-h-screen w-full'>
+                <div className='bg-Purple'>
+                    <header className='flex items-center justify-between max-w-[1210px] mx-auto h-[80px] py-[16px]'>
+                        <LogoHeader />
+                        <NavBar />
+                        <NavProfile />
+                    </header>
+                </div>
+                <div className='flex flex-col mx-auto max-w-[1210px]'>
+                    <CurrentTime />
                     <Outlet />
                 </div>
             </div>

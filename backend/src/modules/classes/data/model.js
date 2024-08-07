@@ -10,6 +10,7 @@ const classSchema = new Schema({
   program:        { type: Schema.Types.ObjectId, ref: 'programs', required: true,},
   resources:      [{ type: Schema.Types.ObjectId,  ref: 'resources', }],
   isTemplate:     { type: Boolean, default: true },
+  event:          { type: Schema.Types.ObjectId, ref: 'event',},
 
   // additional properties
   language:       { type: String, enum: LANGUAGES, required: true },
@@ -31,6 +32,15 @@ classSchema.post('save', async function(doc, next) {
   await model('programs').findByIdAndUpdate(doc.program, { $push: { classes: doc._id } });
   next();
 });
+
+classSchema.pre('findOne', function(next) {
+  this.populate({
+    path: 'resources',
+    select: '_id title type url',
+  })
+  .populate("event");
+  next();
+})
 
 const dataModel = model('classes', classSchema)
 

@@ -6,7 +6,7 @@ import ThisDaoMongo from "../data/dao.mongo.js";
 import { sendMail } from "../../../libraries/emails/sendMail.js";
 import generateRandomPassword from "../../../libraries/utils/generateRandomPassword.js";
 import AppError from "../../../config/AppError.js";
-import { google } from "googleapis";
+
 
 export default class Service extends CustomService {
   constructor() {
@@ -47,8 +47,6 @@ export default class Service extends CustomService {
     return {name: userFound.first_name, token}
   }
 
-  logout = async () => {}
-
   // RECUPERAICON DE CONTRASEÑA
   userRecovery = async (email) => {    
     const userFound = await this.dao.getBy({email});
@@ -68,11 +66,6 @@ export default class Service extends CustomService {
   updatePassword = async (uid, password) => {
     password = await createHashAsync(password)
     return await this.dao.update({_id: uid}, {password, update: Date.now()})
-  }
-
-  // ACTUALIZACION DE IMAGEN
-  updatePhoto = async (uid, path) => {
-    return await this.dao.update({_id: uid}, {photo: path})
   }
 
   // GOOGLE
@@ -107,31 +100,23 @@ export default class Service extends CustomService {
     return {name: userFound.first_name, token}
   }
 
-  createEvent = async (uid, eventDetails) => {
-    const user = await this.dao.getBy({_id: uid});
+  // ACTUALIZACION DE IMAGEN
+  updatePhoto = async (uid, path) => {
+    return await this.dao.update({_id: uid}, {photo: path})
+  }
 
-    if (!user) { throw new AppError('Usuario no encontrado', 400); }
-
-    // Configurar oauth2Client con los tokens del usuario
-    const oauth2Client = new google.auth.OAuth2(
-      googleEnv.clientId,
-      googleEnv.clientSecret,
-      googleEnv.redirecUri
-    );
-    oauth2Client.setCredentials({
-      access_token: user.googleAccessToken,
-      refresh_token: user.googleRefreshToken,
-    });
-
-    const calendar = google.calendar({ version: 'v3', auth: oauth2Client })
-
-    // Crear el evento
-    const event = await calendar.events.insert({
-      calendarId: 'primary',
-      requestBody: eventDetails,
-      sendUpdates: 'all',
-    });
-
-    return event.data;
+  // STUDENTS
+  inviteStudent = async (user, newStudent, password ) => {
+    const to = newStudent.email
+    const subject  = `Datos de acceso a Lingualab de parte del profesor ${user.last_name}`
+    const template = 'invitation'
+    const context = {
+      profesorNombre: user.first_name,
+      profesorApellido: user.last_name,
+      usuario: newStudent.email,
+      contrasena: password,
+      accesoURL: configEnv.cors_origin
+    }
+    return sendMail( to, subject, template, context)
   }
 }
