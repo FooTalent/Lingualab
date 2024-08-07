@@ -2,7 +2,9 @@ import { useAppStore } from "../store/useAppStore";
 import SearchIcon from "@mui/icons-material/Search";
 
 const Home = () => {
-  const { status } = useAppStore();
+
+    const { status, userDetail } = useAppStore()
+    console.log(userDetail);
 
   if (status)
     return (

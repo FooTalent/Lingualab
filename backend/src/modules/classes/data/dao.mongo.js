@@ -19,4 +19,9 @@ export default class ThisDaoMongo extends DaoMongo {
       .select('-students.password');
     return result;
   }
+
+  deleteMany = async (filter) => {
+    const result = await this.model.deleteMany(filter)
+    return result
+  }
 }

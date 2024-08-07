@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAppStore } from '../../../../store/useAppStore';
-import { createClass, getProgramById } from '../../../../services/programs.services';
+import { createClass, deleteClass, getProgramById, updateProgram } from '../../../../services/programs.services';
 import Modal from '../../../../components/Modal';
-import CreateClassForm from './CreateClassForm';
+import CreateClassForm from '../Class/CreateClassForm';
 import ClassroomCard from './ClassroomCard';
 import { LEVELS_MAP } from '../../../../utils/valueLists';
 import BackButton from '../../../../components/BackButtom';
+import EditIcon from '@mui/icons-material/Edit';
+import AddIcon from '@mui/icons-material/Add';
+import CreatedClass from '../Class/CreatedClass'
+import logo from '/CreasteUnaClase.png';
+import ProgramInfo from './ProgramInfo';
+import EditProgramForm from './EditProgramForm';
 
 const ProgramDetail = () => {
   const { eid } = useParams();
@@ -15,8 +21,14 @@ const ProgramDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [program, setProgram] = useState(null);
+  const [newClassId, setNewClassId] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false)
+  const [idClass, setIdClass] = useState(false)
+  const [isModalEditOpen, setIsModalEditOpen] = useState(false)
+  const [isCreated, setIsCreated] = useState(false)
   const navigate = useNavigate();
+  const location = useLocation()
 
   useEffect(() => {
     if (user && user.token) {
@@ -39,12 +51,31 @@ const ProgramDetail = () => {
     }
   }, [user, eid, refresh]);
 
+  useEffect(() => {
+    if (location.state === 'edit') {
+      setIsModalEditOpen(true);
+      navigate(location.pathname, { replace: true });
+    }
+  }, [location]);
+
+  const handleEditProgram = async (data) => {
+    try {
+      await updateProgram(user.token, program._id, data);
+      setIsModalEditOpen(false)
+      setRefresh(!refresh);
+    } catch (error) {
+      console.error('Error al editar el programa', error)
+      setError(error.message)
+    }
+  }
+
   const handleCreateClass = async (classroomData) => {
     try {
       const newClassRoom = await createClass(user.token, classroomData);
-      console.log(newClassRoom);
+      setNewClassId(newClassRoom.data._id)
       setRefresh(!refresh);
       setIsModalOpen(false);
+      setIsCreated(true);
     } catch (error) {
       console.error('Error al crear la clase', error);
       setError(error.message);
@@ -55,40 +86,56 @@ const ProgramDetail = () => {
     navigate(`/workspace/class/${classroomId}`);
   };
 
+  const handleDeleteClass = (id) => {
+    setIdClass(id)
+    setDeleteModal(true)
+  }
+
+  const handleConfirmDelete = async () => {
+    const response = await deleteClass(user.token, idClass)
+    setDeleteModal(false)
+    setRefresh(prevRefresh => !prevRefresh)
+  }
+
   if (loading) return <p className="text-center">Cargando datos...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (
-    <div className="container mx-auto p-4">
-      <div className='flex flex-row justify-between items-center mb-4'>
+    <div className="container mx-auto flex flex-col gap-8">
+      <div className='flex justify-between items-center'>
         <BackButton />
-        <div className="flex items-center">
-          <span className="text-white px-2 py-1 rounded mr-2" style={{backgroundColor: LEVELS_MAP[program.level]}}>{program.level}</span>
-          <h1 className="text-3xl font-bold mb-4">{program.title}</h1>
+
+        <div className="flex items-center gap-8">
+          <span className="text-white text-lg font-extrabold py-3 px-4 rounded-lg" style={{ backgroundColor: LEVELS_MAP[program.level] }}>{program.level}</span>
+          <h1 className="text-card text-customSubTitle font-semibold">{program.title}</h1>
         </div>
-        <button 
-          className="bg-blue-500 text-white px-4 py-2 rounded-md"
-          onClick={() => setIsModalOpen(true)}
-        >
-          Crear Clase
-        </button>
+
+        <div className='flex items-center gap-6'>
+          <button
+            className={`flex items-center gap-4 bg-card hover:bg-Yellow font-extrabold text-Yellow hover:text-card border-2 border-card hover:border-Yellow rounded-lg py-3 px-4 ease-linear duration-150`}
+            onClick={() => setIsModalEditOpen(true)}
+          >
+            Editar <EditIcon />
+          </button>
+          <button
+            className={`flex items-center gap-4 bg-Yellow hover:bg-card font-extrabold text-card hover:text-Yellow border-2 border-Yellow hover:border-card rounded-lg py-3 px-4 ease-linear duration-150`}
+            onClick={() => setIsModalOpen(true)}
+          >
+            Crear <AddIcon />
+          </button>
+        </div>
       </div>
 
-      <div className="mt-6">
-        {program.description ? (
-          <p className="mb-2"><strong>Descripción:</strong> {program.description}</p>
-        ) : null}
-        <p className="mb-2"><strong>Idioma:</strong> {program.language}</p>
-        <p className="mb-4"><strong>Profesor:</strong> {program.teacher.last_name}, {program.teacher.first_name}</p> 
-      </div>
+      <ProgramInfo program={program} />
 
-      {program.classes.length > 0 ? (
-        <div className="grid grid-cols-1 gap-4">
+      {program && program.classes && program.classes.length > 0 ? (
+        <div className="flex flex-col justify-evenly gap-6">
           {program.classes.map((classroom) => (
             <ClassroomCard
               key={classroom._id}
               classroom={classroom}
               buttonFunction={handleEditClassroom}
+              deleteButton={handleDeleteClass}
             />
           ))}
         </div>
@@ -96,12 +143,42 @@ const ProgramDetail = () => {
         <p>No tiene clases cargadas</p>
       )}
 
+      <Modal isOpen={isModalEditOpen} onClose={() => setIsModalEditOpen(false)} title="Editar Programa">
+        <EditProgramForm
+          program={program}
+          onSubmit={handleEditProgram}
+          onClose={() => setIsModalEditOpen(false)}
+        />
+      </Modal>
+
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Crear Clase">
         <CreateClassForm
           programData={program}
           onSubmit={handleCreateClass}
           onClose={() => setIsModalOpen(false)}
         />
+      </Modal>
+
+      <Modal isOpen={isCreated} onClose={() => setIsCreated(false)} modalSize={'small'}>
+        <CreatedClass
+          onClose={() => setIsCreated(false)}
+          logo={logo}
+          pathNewClass={`/workspace/class/${newClassId}`}
+        />
+      </Modal>
+      <Modal modalSize={'Small'} isOpen={deleteModal}>
+        <div className='flex gap-4'>
+          <button
+            onClick={() => setDeleteModal(false)}
+            className="w-full px-4 py-2 border border-Purple text-Purple  rounded-md hover:bg-Purple hover:text-white">
+            Cancelar
+          </button>
+          <button
+            onClick={handleConfirmDelete}
+            className="w-full px-4 py-2 bg-Purple text-white rounded-md hover:bg-PurpleHover">
+            Eliminar clase
+          </button>
+        </div>
       </Modal>
     </div>
   );

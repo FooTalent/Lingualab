@@ -23,7 +23,7 @@ const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       if (user && user.token) {
@@ -66,13 +66,14 @@ const Profile = () => {
   const handleSelectChange = (name, selectedOption) => {
     setProfileData(prevState => ({
       ...prevState,
-      [name]: selectedOption ? [selectedOption.value] : []
+      [name]: selectedOption ? selectedOption.value : ''
     }));
   };
 
   const handleUpdateProfile = async () => {
     try {
       const updatedUser = await userUpdate(user.token, profileData);
+      localStorage.setItem('userDetail', JSON.stringify(updatedUser))
       setProfileData(updatedUser);
       setRefresh(prevRefresh => !prevRefresh);
       setIsModalOpen(false);
@@ -114,12 +115,11 @@ const Profile = () => {
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
-  console.log(profileData);
 
   if (loading) {
     return <div>Loading...</div>;
   }
-  
+
   return (
     <div className="relative bg-white gap-[20px] flex items-center justify-center flex-col mx-auto mt-20 max-w-[1210px]">
       <div className="absolute top-[-50px] bg-white gap-[20px] flex items-center justify-center">
@@ -156,11 +156,22 @@ const Profile = () => {
           />
         </div>
         <div className="px-6 pb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Dropdown title="Datos personales" countryOptions={countryOptionsState} languageOptions={languageOptions} profileData={profileData} handleInputChange={handleInputChange} handleSelectChange={handleSelectChange} />
+          <Dropdown
+            title="Datos personales"
+            countryOptions={countryOptionsState}
+            languageOptions={languageOptions}
+            profileData={profileData}
+            handleInputChange={handleInputChange}
+            handleSelectChange={handleSelectChange}
+          />
           <Dropdown title="Formación" profileData={profileData} handleInputChange={handleInputChange} handleSelectChange={handleSelectChange} />
         </div>
         <div className="px-6 py-4 flex justify-center">
-          <button className="bg-purple-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={handleUpdateProfile}>
+          <button
+            className="bg-purple-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="button"
+            onClick={handleUpdateProfile}
+          >
             Confirmar edición
           </button>
         </div>
@@ -171,7 +182,11 @@ const Profile = () => {
             <img src={URL.createObjectURL(selectedFile)} alt="Selected Preview" className="w-48 h-48 object-cover rounded-full mb-4" />
           )}
           <input type="file" accept="image/*" onChange={handleImageChange} className="text-gray-700 py-2 px-3 rounded focus:outline-none focus:shadow-outline" />
-          <button className="bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4" type="button" onClick={handleUploadPhoto}>
+          <button
+            className="bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4"
+            type="button"
+            onClick={handleUploadPhoto}
+          >
             Subir foto
           </button>
         </div>
@@ -237,7 +252,7 @@ const Dropdown = ({ title, countryOptions, languageOptions, profileData, handleI
               <Select
                 className="w-full"
                 name="country"
-                value={countryOptions.find(option => option.value === profileData.country) || null}
+                value={countryOptions.find(option => option.value === profileData.country)}
                 options={countryOptions}
                 onChange={(selectedOption) => handleSelectChange('country', selectedOption)}
                 placeholder="Selecciona un país"

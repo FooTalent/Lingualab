@@ -1,13 +1,5 @@
 import { Schema, model} from 'mongoose'
-import { CURRENCIES, GENDERS, LANGUAGES, ROLES, COUNTRIES } from '../../valueList.js';
-
-
-const reviewSchema = new Schema({
-  user:        { type: Schema.Types.ObjectId, ref: 'users',   required: true, },
-  created:     { type: Date,   default: Date.now,  immutable: true,},
-  comment:     { type: String, required: true, },
-  score:       { type: Number, required: true,   min: 1, max: 10, },
-}, { _id: false });
+import { LANGUAGES, ROLES, COUNTRIES, LEVELS } from '../../valueList.js';
 
 const educationSchema = new Schema({
   title:       { type: String,},
@@ -24,13 +16,11 @@ const userSchema = new Schema({
 
   // specific properties
   program:     [{ type: Schema.Types.ObjectId, ref: 'programs',}],
-  reviews:     { type: [reviewSchema], },
 
   // aditional properties
   photo:       { type: String,   },
   presentation:{ type: String,   },
   birthday:    { type: Date,     },
-  gender:      { type: String,   enum: GENDERS,},
   phone:       { type: String, maxLength: 20   },
   studies:     { type: [educationSchema], },
   certificate: { type: [educationSchema], },
@@ -39,21 +29,20 @@ const userSchema = new Schema({
   languages:   [{ type: String, enum: LANGUAGES, }],
   country:     { type: String, enum: COUNTRIES},
   time_zone:   { type: Number,   },
+  level:       { type: String, enum: LEVELS, default: "A1-A2"},
 
   // google
   google_id:   { type: String,   },
   googleAccessToken: { type: String },
   googleRefreshToken: { type: String },
 
-  // only teacher
-  price_per_hour: { type: Number,},
-  currency:    { type: String,   default: "ARS", enum: CURRENCIES,},
+  // only Student
+  teacher:     { type: Schema.Types.ObjectId, ref: 'users',},
 
   // data of conection
   created:     { type: Date,   default: Date.now,  immutable: true, },
   updated:     { type: Date,   default: Date.now,  },
   connection:  { type: Date,   default: Date.now,  },
-
 }, {
   timestamps: {
     createdAt: 'created',
