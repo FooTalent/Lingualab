@@ -54,8 +54,8 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
           className="w-full p-2 border rounded-md"
           style={{ color: LEVELS_MAP[classroomData.level] }}
         >
-          {LEVELS.map((level) => (
-            <option key={level.key} value={level.data} style={{ color: level.color }}>
+          {LEVELS.map((level, i) => (
+            <option key={i} value={level.data} style={{ color: level.color }}>
               {level.data}
             </option>
           ))}

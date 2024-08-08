@@ -60,17 +60,18 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
     });
   };
 
-  const handleStudentChange = (value) => {
-    setSelectedStudent(value);
+  const handleStudentChange = (studentId) => {
+    const selected = students.find(student => student._id === studentId)
+    setSelectedStudent(selected);
   };
 
   const handleAddStudent = () => {
-    if (selectedStudent && !programData.studentIds.includes(selectedStudent)) {
+    if (selectedStudent && !programData.studentIds.includes(selectedStudent._id)) {
       setProgramData({
         ...programData,
-        studentIds: [...programData.studentIds, selectedStudent],
+        studentIds: [...programData.studentIds, selectedStudent._id],
       });
-      setSelectedStudent('');
+      setSelectedStudent(null);
     }
   };
 
@@ -117,17 +118,20 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
           <DropdownSelect
             label="Template"
             options={programs.map(program => ({ label: program.title, value: program._id }))}
-            selectedOption={programData.templateId || 'Seleccionar Template'}
+            selectedOption={
+              programData.templateId ? 
+              programs.find(program => program._id === programData.templateId).title
+              : 'Seleccionar Template'
+            }
             onSelect={(value) => handleSelectChange('templateId', value)}
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700">Estudiantes</label>
           <div className="flex items-center mb-2">
             <DropdownSelect
               label="Estudiante"
               options={students.map(student => ({ label: `${student.last_name}, ${student.first_name}`, value: student._id }))}
-              selectedOption={selectedStudent || 'Seleccionar Estudiante'}
+              selectedOption={selectedStudent ? `${selectedStudent.last_name}, ${selectedStudent.first_name}` : 'Seleccionar Estudiante'}
               onSelect={handleStudentChange}
             />
             <button
@@ -164,7 +168,7 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
           </div>
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700">Fecha de inicio</label>
+          <label className="block text-gray-700 px-0">Fecha de inicio</label>
           <div className='flex gap-10'>
             <input
               type="date"

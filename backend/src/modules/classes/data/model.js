@@ -6,7 +6,6 @@ const classSchema = new Schema({
   title:          { type: String, required: true },
   description:    { type: String, },
   content:        { type: String, },
-  duration_hours: { type: Number, min: 1, max: 10, },
   program:        { type: Schema.Types.ObjectId, ref: 'programs', required: true,},
   resources:      [{ type: Schema.Types.ObjectId,  ref: 'resources', }],
   isTemplate:     { type: Boolean, default: true },
