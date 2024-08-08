@@ -15,7 +15,7 @@ export default function LevelFilter({data, onClick, isSelected}) {
   return (
     <button 
       onClick={handleFilter}
-      className={`flex items-center rounded-lg py-3 px-6 border ${isSelected ? 'shadow-md' : ''}`}
+      className={`rounded-lg py-3 px-6 border text-lg leading-5 ease-out duration-600`}
       style={buttonStyle}
     >
       {data.data}

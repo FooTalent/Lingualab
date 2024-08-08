@@ -21,7 +21,7 @@ const Home = () => {
               <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#444444]" />
             </div>
 
-            <button className="bg-Purple tracking-wider hover:bg-PurpleHover text-white font-extrabold px-4 py-3 rounded-lg h-[48px] ease-linear duration-200">
+            <button className="bg-Purple tracking-wide hover:bg-PurpleHover text-white font-extrabold px-4 py-3 rounded-lg h-[48px] ease-out duration-600">
               Buscar
             </button>
           </div>
@@ -35,7 +35,7 @@ const Home = () => {
                 <p className="leading-custom">
                   Ingresa a ver más para acceder al instructivo de cómo crear tus programas, clases, y cómo agregar materiales. Encontrá recursos útiles, un recorrido completo por la página y descubre cómo gestionar a tus alumnos.
                 </p>
-                <button className="bg-card hover:bg-Yellow text-Yellow tracking-wider hover:text-card font-extrabold px-4 py-2 rounded-lg self-start ease-linear duration-200">
+                <button className="bg-card hover:bg-Yellow text-Yellow tracking-wide hover:text-card font-extrabold px-4 py-2 rounded-lg self-start ease-out duration-6000">
                   Ver más
                 </button>
               </div>

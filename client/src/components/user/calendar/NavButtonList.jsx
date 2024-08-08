@@ -7,9 +7,9 @@ export default function NavButtonList({ onNavigate, onView, today, view }) {
     const navButtons = [
         { label: <ArrowBackIosIcon fontSize='medium' />, action: () => onNavigate('PREV', view), },
         { label: <ArrowForwardIosIcon fontSize='medium' />, action: () => onNavigate('NEXT', view), },
-        { label: 'Día', action: () => onView('day'), },
-        { label: 'Semana', action: () => onView('week'), },
-        { label: 'Mes', action: () => onView('month'), },
+        { label: 'Día', action: () => onView('day')},
+        { label: 'Semana', action: () => onView('week')},
+        { label: 'Mes', action: () => onView('month')},
     ]
 
     return (

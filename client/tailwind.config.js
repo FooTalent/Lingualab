@@ -47,6 +47,9 @@ export default {
       lineHeight: {
         custom: '18.75px',
       },
+      transitionDuration: {
+        '600': '600ms',
+      }
     },
   },
   plugins: [
