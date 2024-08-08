@@ -35,6 +35,7 @@ Los principales usuarios de LinguaLab son docentes de idiomas de todos los nivel
 ### Tecnología UI/UX
 
 Tecnología | Figma |
+[![Figma](https://skillicons.dev/icons?i=figma)]
 | Tecnología | Descripción |
 |------------|-------------|
 | [![Figma](Link de figma) | Figma es una herramienta de diseño de interfaz de usuario basada en web que permite a los equipos de diseño colaborar en tiempo real. Es ampliamente utilizada para diseñar y prototipar aplicaciones y sitios web. |
