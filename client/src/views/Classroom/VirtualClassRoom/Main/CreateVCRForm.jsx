@@ -93,7 +93,6 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(programData)
     onSubmit({ ...programData, startDateTime: programData.startDateTime });
   };
 
