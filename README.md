@@ -1,4 +1,4 @@
-#¡Bienvenido a *LinguaLab!* 🚀
+# ¡Bienvenido a *LinguaLab!* 🚀
 
 LinguaLab es una plataforma web integral diseñada para docentes de idiomas.
 
@@ -21,9 +21,14 @@ Los principales usuarios de LinguaLab son docentes de idiomas de todos los nivel
 ## Funcionalidades Principales
 
 **Login:** Inicia sesión en tu cuenta para acceder a todas las funcionalidades.
-
-**Register:** Regístrate para acceder a toda las herramientas.
 <p align="center">
+  <img src="https://github.com/user-attachments/assets/8c98b2b1-51f1-4f25-ac9d-85046816cd69" width="250" alt="login">
+</p>
+
+**Register:** Si no tenes una cuenta crea una para acceder a la plataforma
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/609ea0a9-7d58-443c-9be3-4a109d6110d1" width="250" alt="register">
+</p>
 
 **Gestión de Clases:** Crear, programar, invitar a alumno y hacer seguimiento de clases.
 
