@@ -54,14 +54,9 @@ export const updateStudent = async (token, idStudent, data) => {
 };
 
 // Invitacion alumno (solo email obligatorio)
-export const ginviteStudent = async (token, email, first_name, last_name, password) => {
-  const data = {email}
-  if (first_name) data.first_name = first_name;
-  if (last_name)  data.last_name = last_name;
-  if (password)   data.password = password;
-
+export const inviteStudent = async (token, data) => {
   try {
-    const response = await axios.get(`${url}api/users/students/`, data, {
+    const response = await axios.post(`${url}api/users/inviteStudent`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
