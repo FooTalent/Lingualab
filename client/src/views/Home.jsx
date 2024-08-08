@@ -4,13 +4,12 @@ import SearchIcon from "@mui/icons-material/Search";
 const Home = () => {
 
   const { status, userDetail } = useAppStore()
-  console.log(userDetail);
 
   if (status)
     return (
       <div className="flex flex-col gap-12 text-card">
         <div className="flex justify-between items-center">
-          <h1 className="text-home font-semibold">¡Bienvenido Profesor!</h1>
+          <h1 className="text-home leading-9 font-semibold">¡Bienvenido Profesor!</h1>
 
           <div className="flex items-center gap-4">
             <div className="relative">
@@ -22,21 +21,21 @@ const Home = () => {
               <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#444444]" />
             </div>
 
-            <button className="bg-Purple hover:bg-PurpleHover text-white font-extrabold px-4 py-3 rounded-lg w-[82px] h-[48px] ease-linear duration-200">
+            <button className="bg-Purple tracking-wide hover:bg-PurpleHover text-white font-extrabold px-4 py-3 rounded-lg h-[48px] ease-out duration-600">
               Buscar
             </button>
           </div>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8">
-          <div className="flex flex-col gap-6 justify-between flex-1">
+          <div className="flex flex-col gap-4 justify-between flex-1">
             <div className="shadow-home rounded-xl py-6 px-8 flex items-center gap-6">
-              <div className="flex flex-col justify-between gap-2 flex-1">
-                <h2 className="text-xl font-semibold">¿Estás listo/a para empezar a dar clases?</h2>
-                <p>
+              <div className="flex flex-col justify-between gap-4 flex-1">
+                <h2 className="text-xl leading-6 font-semibold">¿Estás listo/a para empezar a dar clases?</h2>
+                <p className="leading-custom">
                   Ingresa a ver más para acceder al instructivo de cómo crear tus programas, clases, y cómo agregar materiales. Encontrá recursos útiles, un recorrido completo por la página y descubre cómo gestionar a tus alumnos.
                 </p>
-                <button className="bg-card hover:bg-Yellow text-Yellow hover:text-card font-extrabold px-4 py-2 rounded-lg self-start ease-linear duration-200">
+                <button className="bg-card hover:bg-Yellow text-Yellow tracking-wide hover:text-card font-extrabold px-4 py-2 rounded-lg self-start ease-out duration-6000">
                   Ver más
                 </button>
               </div>
@@ -55,8 +54,8 @@ const Home = () => {
                   alt="Total Programa"
                   className="w-[75px] h-auto rounded-lg"
                 />
-                <p className="text-xl font-semibold">15</p>
-                <p>Total de programas</p>
+                <p className="text-xl font-semibold leading-6">15</p>
+                <p className="leading-custom">Total de programas</p>
               </div>
 
               <div className="shadow-home rounded-xl py-6 px-8 flex flex-col gap-4">
@@ -65,8 +64,8 @@ const Home = () => {
                   alt="Programa Completo"
                   className="w-[75px] h-auto rounded-lg"
                 />
-                <p className="text-xl font-semibold">6</p>
-                <p>Programas completos</p>
+                <p className="text-xl font-semibold leading-6">6</p>
+                <p className="leading-custom">Programas completos</p>
               </div>
 
               <div className="shadow-home rounded-xl py-6 px-8 flex flex-col gap-4">
@@ -75,25 +74,25 @@ const Home = () => {
                   alt="Carga Horaria"
                   className="w-[75px] h-auto rounded-lg"
                 />
-                <p className="text-xl font-semibold">120 hrs</p>
-                <p>Total carga horaria</p>
+                <p className="text-xl font-semibold leading-6">120 hrs</p>
+                <p className="leading-custom">Total carga horaria</p>
               </div>
             </div>
 
             <div className="flex flex-col justify-between lg:grid lg:grid-cols-2 gap-14">
-              <div className="flex flex-col gap-4">
-                <h3 className="text-2xl font-semibold">Tu clase ahora</h3>
+              <div className="flex flex-col gap-6">
+                <h3 className="text-2xl leading-7 font-semibold">Tu clase ahora</h3>
 
-                <div className="shadow-cardContainer rounded-lg border border-card max-w-[357px] h-[192px] p-4 cursor-pointer">
+                <div className="shadow-cardContainer rounded-lg border border-card max-w-[357px] h-[145px] p-4 cursor-pointer">
                   <div className="flex flex-col justify-between h-full">
                   </div>
                 </div>
               </div>
 
-              <div className="flex flex-col gap-4">
-                <h3 className="text-2xl font-semibold">Tu próxima clase</h3>
+              <div className="flex flex-col gap-6">
+                <h3 className="text-2xl leading-7 font-semibold">Tu próxima clase</h3>
 
-                <div className="shadow-cardContainer rounded-lg border border-card max-w-[357px] h-[192px] p-4 cursor-pointer">
+                <div className="shadow-cardContainer rounded-lg border border-card max-w-[357px] h-[145px] p-4 cursor-pointer">
                   <div className="flex flex-col justify-between h-full">
                   </div>
                 </div>
@@ -106,17 +105,17 @@ const Home = () => {
               <img
                 src="/ImagesHome/creacionvideo.PNG"
                 alt="Creación Video"
-                className="object-cover rounded-lg"
+                className="object-cover rounded-lg max-h-[185px]"
               />
               <div className="flex flex-col gap-4">
-                <h2 className="text-xl font-semibold">Cómo crear tus clases</h2>
-                <p>Dale play al video para ver</p>
+                <h2 className="text-xl leading-6 font-semibold">Cómo crear tus clases</h2>
+                <p className="leading-custom">Dale play al video para ver</p>
               </div>
             </div>
 
             <div className="shadow-home rounded-xl py-6 px-8 flex flex-col gap-6 max-w-[390px]">
-              <h2 className="text-xl font-semibold">Últimas Novedades</h2>
-              <p>
+              <h2 className="text-xl leading-6 font-semibold">Últimas Novedades</h2>
+              <p className="leading-custom">
                 Mantente al día con las últimas actualizaciones y eventos. Descubre nuevos recursos disponibles para mejorar tus clases, tips para un mejor manejo de tus aulas virtuales, y noticias relevantes del mundo de la educación.
               </p>
               <img
