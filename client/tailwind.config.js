@@ -43,6 +43,12 @@ export default {
       },
       padding: {
         '8p': '8%',
+      },
+      lineHeight: {
+        custom: '18.75px',
+      },
+      transitionDuration: {
+        '600': '600ms',
       }
     },
   },

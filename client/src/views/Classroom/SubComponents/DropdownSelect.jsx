@@ -28,7 +28,7 @@ export default function DropdownSelect({ label, icon, options, selectedOption, o
           {!isOpen ? <ExpandMoreIcon fontSize='medium' /> : <ExpandLessIcon fontSize='medium' />}
           {isOpen && (
             <div className={`absolute top-full left-0 w-full rounded-b-md bg-white ring-1 ring-black ring-opacity-5 z-10`}>
-              <div className="p-1">
+              <div className="p-1 text-card">
                 {options.map((option) => {
                   const displayValue = isObjectArray ? option.label : option;
                   const optionValue = isObjectArray ? option.value : option;

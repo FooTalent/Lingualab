@@ -14,15 +14,15 @@ export default function AppLayout() {
         const initialize = async () => {
             if (!status) {
                 await localLogin();
-                // navigate('/auth/login')
             }
         };
         initialize();
+        if (!status) {
+            navigate('/auth/login');
+        }
     }, [status, localLogin, navigate]);
 
-    if (!status) {
-        navigate('/auth/login');
-    }
+
 
     return (
         <>
