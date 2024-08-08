@@ -76,7 +76,7 @@ export default class Controller extends CustomController {
     try{ 
       // Generar URL de autenticación
       const url = oauth2Client.generateAuthUrl({
-        access_type: 'offline', // Solicitar acceso sin conexión para recibir un token de actualización
+        access_type: 'offline',
         scope: SCOPES,
         redirect_uri: googleEnv.redirecUri
       });
@@ -98,7 +98,6 @@ export default class Controller extends CustomController {
         oauth2Client.setCredentials(tokens);
               
         try {
-          // Obtener información del perfil de Google y manejar el registro/login
           const oauth2 = google.oauth2({ version: 'v2', auth: oauth2Client });
           const { data } = await oauth2.userinfo.get();
           const {name, token} =  await this.service.googleLoginOrRegister(data, tokens);
@@ -135,9 +134,8 @@ export default class Controller extends CustomController {
     try{
       const tid = req.user._id
 
-      const element = await this.service.get({role: 'Student'});
-      // TODO
-      //const element = await this.service.get({teacher: tid});
+      //const element = await this.service.get({role: 'Student'});
+      const element = await this.service.get({teacher: tid});
       res.sendSuccessOrNotFound(element);
     } catch(error) {
       next(error)
@@ -147,8 +145,8 @@ export default class Controller extends CustomController {
     try{
       const {sid} = req.params
 
-      const element = await this.service.getBy({_id: sid, role: 'Student'});
-      //const element = await this.service.get({_id: sid, teacher: tid});
+      //const element = await this.service.getBy({_id: sid, role: 'Student'});
+      const element = await this.service.get({_id: sid, teacher: tid});
       res.sendSuccessOrNotFound(element);
     } catch(error) {
       next(error)
