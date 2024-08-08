@@ -7,15 +7,35 @@ import DeleteIcon from '@mui/icons-material/Delete';
 // import crearAula from '/crearAulaCard.svg'
 import editarPrograma from '/editarPrograma.svg'
 import duplicar from '/duplicar.svg'
+import { deleteProgram } from '../../../../services/programs.services';
+import { useAppStore } from '../../../../store/useAppStore';
+import Modal from '../../../../components/Modal';
+import popUp from '/Popup_EliminarPrograma.png'
 
-const ProgramCard = ({ program, buttonFunction }) => {
+
+
+const ProgramCard = ({ program, buttonFunction, refresh }) => {
+  const { user } = useAppStore();
   const [state, setState] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false)
+  const [idProgram, setIdProgram] = useState('')
+
+  const handleDelete = (id) => {
+    setState(!state)
+    setDeleteModal(true)  
+    setIdProgram(id)
+  }
+
+  const handleConfirmDelete = async () => {
+    const response = await deleteProgram(user.token, idProgram)
+    setDeleteModal(false)
+    refresh(prevRefresh => !prevRefresh)
+  }
 
   const links = [
-    //{ path: `/`, label: <><img src={crearAula} alt='Crear Aula' />Crear aula a partir de este programa</> },
     { path: `/`, label: <><ShareIcon />Compartir</> },
     { path: `/`, label: <><img src={editarPrograma} alt='Editar aula' />Editar aula</> },
-    { path: `/`, label: <><DeleteIcon />Eliminar programa</> },
+    { path: ``, label: <><DeleteIcon />Eliminar aula</>, function: handleDelete },
   ];
 
   const handleOptions = (e) => {
@@ -76,6 +96,27 @@ const ProgramCard = ({ program, buttonFunction }) => {
       </div>
 
       <Options id={program._id} state={state} links={links} />
+      <Modal modalSize={'small'} isOpen={deleteModal}>
+        <div className="flex justify-center ">
+          <img src={popUp} alt="Eliminar programa" />
+        </div>
+        <div className="flex gap-4">
+          <button
+            type="button"
+            onClick={() => setDeleteModal(false)}
+            className="w-full px-4 py-2 border border-Purple text-Purple  rounded-md hover:bg-Purple hover:text-white"
+          >
+            Cancelar
+          </button>
+          <button
+            type="button"
+            onClick={handleConfirmDelete}
+            className="w-full px-4 py-2 bg-Purple text-white rounded-md hover:bg-PurpleHover"
+          >
+            Eliminar programa
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 };
