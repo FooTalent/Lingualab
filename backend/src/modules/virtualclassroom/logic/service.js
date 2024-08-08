@@ -157,7 +157,7 @@ export default class CustomService {
 
     // crea aula
     const newProgram = await this.createProgram(templateId, studentIds, user)
-    console.log(newProgram)
+    
     // empieza a actualizar fechas
     const updatedDaysProgram = await this.update(newProgram._id, { first_class, daysOfWeek })
 
