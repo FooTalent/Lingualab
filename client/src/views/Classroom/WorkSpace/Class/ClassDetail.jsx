@@ -59,6 +59,7 @@ const ClassDetail = () => {
     } finally {
       setLoading(false);
       setRefresh(!refresh);
+      navigate(-1)
     }
   };
 
