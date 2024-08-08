@@ -7,7 +7,7 @@ import NavAuth from '../views/Landing/NavAuth'
 
 export default function LandingLayout() {
     const navigate = useNavigate()
-    const {status, localLogin} = useAppStore()
+    const { status, localLogin } = useAppStore()
 
     useEffect(() => {
         const initialize = async () => {
@@ -16,11 +16,11 @@ export default function LandingLayout() {
             }
         };
         initialize();
-        if(status){
+        if (status) {
             navigate('/')
         }
     }, [status, navigate])
-   
+
     return (
         <>
             <div className='min-h-screen w-full'>
