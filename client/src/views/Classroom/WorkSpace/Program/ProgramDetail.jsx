@@ -13,6 +13,7 @@ import CreatedClass from '../Class/CreatedClass'
 import logo from '/CreasteUnaClase.png';
 import ProgramInfo from './ProgramInfo';
 import EditProgramForm from './EditProgramForm';
+import popUp from '/Popup_EliminarClase.png'
 
 const ProgramDetail = () => {
   const { eid } = useParams();
@@ -166,19 +167,22 @@ const ProgramDetail = () => {
           pathNewClass={`/workspace/class/${newClassId}`}
         />
       </Modal>
-      <Modal modalSize={'Small'} isOpen={deleteModal}>
-        <div className='flex gap-4'>
-          <button
-            onClick={() => setDeleteModal(false)}
-            className="w-full px-4 py-2 border border-Purple text-Purple  rounded-md hover:bg-Purple hover:text-white">
-            Cancelar
-          </button>
-          <button
-            onClick={handleConfirmDelete}
-            className="w-full px-4 py-2 bg-Purple text-white rounded-md hover:bg-PurpleHover">
-            Eliminar clase
-          </button>
-        </div>
+      <Modal modalSize={'small'} isOpen={deleteModal}>
+          <div className="flex justify-center ">
+            <img src={popUp} alt="Eliminar clase" />
+          </div>
+          <div className='flex gap-4'>
+            <button
+              onClick={() => setDeleteModal(false)}
+              className="w-full px-4 py-2 border border-Purple text-Purple  rounded-md hover:bg-Purple hover:text-white">
+              Cancelar
+            </button>
+            <button
+              onClick={handleConfirmDelete}
+              className="w-full px-4 py-2 bg-Purple text-white rounded-md hover:bg-PurpleHover">
+              Eliminar clase
+            </button>
+          </div>
       </Modal>
     </div>
   );
