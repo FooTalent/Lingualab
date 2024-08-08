@@ -11,23 +11,30 @@ export default class Controller extends CustomController {
   }
   get = async (req, res, next) => {
     try {
-      const { teacherId, startDate, endDate, isTemplate } = req.query;
+      const { isTemplate } = req.query;
+
+      // Agrega el filtro isTemplate si es necesario
+      if (isTemplate !== undefined) {
+        elements = elements.filter(element => element.isTemplate === JSON.parse(isTemplate));
+      }
+
+      res.sendSuccessOrNotFound(elements);
+    } catch (error) {
+      next(error);
+    }
+  }
+  getClassCalendar = async (req, res, next) => {
+    try {
+      const { teacherId, startDate, endDate } = req.query;
 
       // Validar que se proporcione el teacherId
-      if (!teacherId) {
-        throw new AppError('Falta el ID del profesor',400);
-      }
+      if (!teacherId) { throw new AppError('Falta el ID del profesor',400); }
 
       // Convierte las fechas a UTC si es necesario
       const utcStartDate = startDate ? convertToUTC(startDate) : undefined;
       const utcEndDate = endDate ? convertToUTC(endDate, true) : undefined;
 
       const elements = await this.service.getClassesByTeacherIdAndDateRange(teacherId, utcStartDate, utcEndDate);
-
-      // Agrega el filtro isTemplate si es necesario
-      if (isTemplate !== undefined) {
-        elements = elements.filter(element => element.isTemplate === JSON.parse(isTemplate));
-      }
 
       res.sendSuccessOrNotFound(elements);
     } catch (error) {

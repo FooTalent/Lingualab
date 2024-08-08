@@ -209,7 +209,7 @@ export const createVCRoom = async (token, teacherId, data) => {
 
 export const getClassesByTeacherAndDate= async (token, teacherId, date ) => {
   try {
-    const response = await axios.get(`${url}api/classes/?teacherId=${teacherId}${date ? '&'+date : ''}`, {
+    const response = await axios.get(`${url}api/classes/calendar/get?teacherId=${teacherId}${date ? '&'+date : ''}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
