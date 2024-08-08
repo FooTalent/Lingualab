@@ -1,4 +1,4 @@
-# ¡Bienvenido a LinguaLab! 🚀
+#¡Bienvenido a **LinguaLab!** 🚀
 
 LinguaLab es una plataforma web integral diseñada para docentes de idiomas.
 
@@ -22,7 +22,8 @@ Los principales usuarios de LinguaLab son docentes de idiomas de todos los nivel
 
 **Login:** Inicia sesión en tu cuenta para acceder a todas las funcionalidades.
 
-**Register:** Regístrate.
+**Register:** Regístrate para acceder a toda las herramientas.
+<p align="center">
 
 **Gestión de Clases:** Crear, programar, invitar a alumno y hacer seguimiento de clases.
 
@@ -35,7 +36,7 @@ Los principales usuarios de LinguaLab son docentes de idiomas de todos los nivel
 ### Tecnología UI/UX
 
 Tecnología | Figma |
-[![Figma](https://skillicons.dev/icons?i=figma)]
+
 | Tecnología | Descripción |
 |------------|-------------|
 | [![Figma](Link de figma) | Figma es una herramienta de diseño de interfaz de usuario basada en web que permite a los equipos de diseño colaborar en tiempo real. Es ampliamente utilizada para diseñar y prototipar aplicaciones y sitios web. |
