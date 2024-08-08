@@ -11,11 +11,9 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
   const [programs, setPrograms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const durations = [1, 2, 3, 4];
   const [classroomData, setClassroomData] = useState({
     title: '',
     description: '',
-    duration_hours: durations[0],
     teacher: programData.teacher._id,
     language: programData.language,
     level: programData.level,
@@ -82,22 +80,12 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
         <p>Error: {error}</p>
       ) : (
         <>
-          <div className='grid grid-cols-2 gap-4'>
-            <DropdownSelect
-              label="Programa"
-              options={programs.map((program) => ({ label: program.title, value: program._id }))}
-              selectedOption={classroomData.program.label}
-              onSelect={(value) => handleSelectChange('program', value)}
-            />
-
-            <DropdownSelect
-              label="Nivel"
-              name='level'
-              options={LEVELS.map((level) => level.data)}
-              selectedOption={classroomData.level}
-              onSelect={(value) => handleSelectChange('level', value)}
-            />
-          </div>
+          <DropdownSelect
+            label="Programa"
+            options={programs.map((program) => ({ label: program.title, value: program._id }))}
+            selectedOption={classroomData.program.label}
+            onSelect={(value) => handleSelectChange('program', value)}
+          />
 
           <InputField
             label="Título"
@@ -114,25 +102,14 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
             onChange={handleInputChange}
             placeholder='Escribe una breve descripción...'
           />
-
+              
           <DropdownSelect
-            label="Estudiantes"
-            name='students'
-            icon={true}
-            options={[]}
-            selectedOption={classroomData.students}
-            onSelect={(value) => handleSelectChange('duration_hours', value)}
-          />
-
-          <div className='grid grid-cols-2 gap-4'>
-            <DropdownSelect
-              label="Duración (horas)"
-              name='duration_hours'
-              options={durations}
-              selectedOption={classroomData.duration_hours}
-              onSelect={(value) => handleSelectChange('duration_hours', value)}
-            />
-          </div>
+            label="Nivel"
+            name='level'
+            options={LEVELS.map((level) => level.data)}
+            selectedOption={classroomData.level}
+            onSelect={(value) => handleSelectChange('level', value)}
+          /> 
 
           <div className="grid grid-cols-2 gap-8">
             <ButtonModal buttonAction={onClose} type='prev' label='Cancelar' />
