@@ -1,4 +1,4 @@
-#¡Bienvenido a **LinguaLab!** 🚀
+#¡Bienvenido a *LinguaLab!* 🚀
 
 LinguaLab es una plataforma web integral diseñada para docentes de idiomas.
 
