@@ -116,20 +116,20 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <DropdownSelect
-            label="Template"
+            label="Programa"
             options={programs.map(program => ({ label: program.title, value: program._id }))}
             selectedOption={
               programData.templateId ? 
               programs.find(program => program._id === programData.templateId).title
-              : 'Seleccionar Template'
+              : 'Seleccionar programa'
             }
             onSelect={(value) => handleSelectChange('templateId', value)}
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-4 w-full">
           <div className="flex items-center mb-2">
             <DropdownSelect
-              label="Estudiante"
+              label="Estudiante/s"
               options={students.map(student => ({ label: `${student.last_name}, ${student.first_name}`, value: student._id }))}
               selectedOption={selectedStudent ? `${selectedStudent.last_name}, ${selectedStudent.first_name}` : 'Seleccionar Estudiante'}
               onSelect={handleStudentChange}
@@ -137,14 +137,14 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
             <button
               type="button"
               onClick={handleAddStudent}
-              className="ml-2 bg-blue-500 text-white px-4 py-2 rounded-md"
+              className="self-end ml-2 bg-Yellow text-darkGray px-5 py-3 rounded-md hover:bg-darkGray hover:text-Yellow duration-150"
             >
               +
             </button>
             <button
               type="button"
               onClick={handleModalOpen}
-              className="ml-2 bg-blue-500 text-white px-4 py-2 rounded-md"
+              className="self-end ml-2 bg-Yellow text-darkGray px-4 py-3 rounded-md hover:bg-darkGray hover:text-Yellow duration-150"
             >
               Invitar
             </button>
@@ -177,6 +177,7 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
               onChange={handleInputChange}
               className="w-1/2 p-2 border rounded-md"
             />
+
             <input
               type="time"
               name="time"
@@ -186,8 +187,17 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
             />
           </div>
         </div>
+        <div className='flex flex-col'>
+          <label className='px-0'>Hora fin</label>
+          <input
+              type="time"
+              name="endTime"
+              onChange={handleInputChange}
+              className="w-1/2 p-2 border rounded-md"
+            />
+        </div>
         <div className="mb-4">
-          <label className="block text-gray-700">Seleccione el dia</label>
+          <label className="block text-gray-700">Seleccionar Día/s</label>
           <div className='flex flex-row gap-5'>
             {days.map((day) => (
               <div className='relative' key={day}>
@@ -201,29 +211,29 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
                   className="hidden"
                 />
                 <label htmlFor={day}
-                  className={`flex items-center justify-center w-10 h-10 border-2 rounded-full cursor-pointer font-medium ${programData.daysOfWeek.includes(day)
+                  className={`flex items-center justify-center w-10 h-10 border-2 rounded-full cursor-pointer font-medium text-lg ${programData.daysOfWeek.includes(day)
                     ? 'bg-Purple text-white border-black'
                     : 'bg-white text-gray-700 border-gray-300'
                     }`}>
-                  {day.charAt(0)}
+                  {day.slice(0, 2).toUpperCase()}
                 </label>
               </div>
             ))}
           </div>
         </div>
-        <div className="flex justify-end">
+        <div className="flex justify-between">
           <button
             type="button"
-            className="bg-gray-500 text-white px-4 py-2 rounded-md mr-2"
+            className="w-full bg-transparent text-Purple border border-Purple px-4 py-2 rounded-md mr-2 hover:bg-Purple hover:text-white duration-150"
             onClick={onClose}
           >
             Cancelar
           </button>
           <button
             type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded-md"
+            className="w-full bg-Purple text-white px-4 py-2 rounded-md hover:bg-PurpleHover duration-150"
           >
-            Crear
+            Crear Aula
           </button>
         </div>
       </form>
