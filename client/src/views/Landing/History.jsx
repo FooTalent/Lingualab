@@ -1,8 +1,8 @@
-import { useAppStore } from "../store/useAppStore"
+
 
 const History = () => {
-    const { status } = useAppStore()
-    if (status) return (
+    
+    return (
         <div>
             <h1>History</h1>
 

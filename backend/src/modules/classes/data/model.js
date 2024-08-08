@@ -6,10 +6,10 @@ const classSchema = new Schema({
   title:          { type: String, required: true },
   description:    { type: String, },
   content:        { type: String, },
-  duration_hours: { type: Number, min: 1, max: 10, },
   program:        { type: Schema.Types.ObjectId, ref: 'programs', required: true,},
   resources:      [{ type: Schema.Types.ObjectId,  ref: 'resources', }],
   isTemplate:     { type: Boolean, default: true },
+  event:          { type: Schema.Types.ObjectId, ref: 'event',},
 
   // additional properties
   language:       { type: String, enum: LANGUAGES, required: true },
@@ -35,8 +35,9 @@ classSchema.post('save', async function(doc, next) {
 classSchema.pre('findOne', function(next) {
   this.populate({
     path: 'resources',
-    select: '_id title type url'
-  });
+    select: '_id title type url',
+  })
+  .populate("event");
   next();
 })
 

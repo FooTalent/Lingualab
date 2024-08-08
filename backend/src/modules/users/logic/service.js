@@ -6,7 +6,7 @@ import ThisDaoMongo from "../data/dao.mongo.js";
 import { sendMail } from "../../../libraries/emails/sendMail.js";
 import generateRandomPassword from "../../../libraries/utils/generateRandomPassword.js";
 import AppError from "../../../config/AppError.js";
-import { google } from "googleapis";
+
 
 export default class Service extends CustomService {
   constructor() {
@@ -107,35 +107,6 @@ export default class Service extends CustomService {
   // ACTUALIZACION DE IMAGEN
   updatePhoto = async (uid, path) => {
     return await this.dao.update({_id: uid}, {photo: path})
-  }
-
-  // CREAR EVENTO GOOGLE
-  createEvent = async (uid, eventDetails) => {
-    const user = await this.dao.getBy({_id: uid});
-
-    if (!user) { throw new AppError('Usuario no encontrado', 400); }
-
-    // Configurar oauth2Client con los tokens del usuario
-    const oauth2Client = new google.auth.OAuth2(
-      googleEnv.clientId,
-      googleEnv.clientSecret,
-      googleEnv.redirecUri
-    );
-    oauth2Client.setCredentials({
-      access_token: user.googleAccessToken,
-      refresh_token: user.googleRefreshToken,
-    });
-
-    const calendar = google.calendar({ version: 'v3', auth: oauth2Client })
-
-    // Crear el evento
-    const event = await calendar.events.insert({
-      calendarId: 'primary',
-      requestBody: eventDetails,
-      sendUpdates: 'all',
-    });
-
-    return event.data;
   }
 
   // STUDENTS

@@ -1,12 +1,17 @@
+import Event from "../data/dao.mongo.js";
 import Programs from '../../programs/data/dao.mongo.js'
 import Classes from '../../classes/data/dao.mongo.js'
+import Users from '../../users/data/dao.mongo.js'
 import AppError from '../../../config/AppError.js';
-
+import { google } from "googleapis";
+import { googleEnv } from '../../../config/env.js';
 
 export default class CustomService {
   constructor() {
     this.daoProgram = new Programs();
     this.daoClass = new Classes();
+    this.dauUser = new Users();
+    this.daoEvent = new Event();
   }
 
   createProgram = async (templateId, studentIds, user, isTemplate = false ) => {
@@ -158,4 +163,57 @@ export default class CustomService {
 
     return updatedDaysProgram;
   }
+
+  // CREAR EVENTO GOOGLE
+  createEvent = async (uid, eventDetails, meet) => {
+    const user = await this.dauUser.getBy({_id: uid});
+  
+    if (!user) {
+      throw new AppError('Usuario no encontrado', 400);
+    }
+
+    // Configurar oauth2Client con los tokens del usuario
+    const oauth2Client = new google.auth.OAuth2(
+      googleEnv.clientId,
+      googleEnv.clientSecret,
+      googleEnv.redirecUri
+    );
+    oauth2Client.setCredentials({
+      access_token: user.googleAccessToken,
+      refresh_token: user.googleRefreshToken,
+    });
+
+    const calendar = google.calendar({ version: 'v3', auth: oauth2Client })
+
+    // Crear el evento
+    const eventParams = {
+      calendarId: 'primary',
+      requestBody: eventDetails,
+      sendUpdates: 'all',
+    };
+
+    if (meet) { eventParams.conferenceDataVersion = 1; }
+    const event = await calendar.events.insert(eventParams);
+
+    const newEvent = await this.daoEvent.create({
+      eventDetails: {
+        id: event.data.id,
+        htmlLink: event.data.htmlLink,
+        hangoutLink: event.data.hangoutLink,
+        conferenceId: event.data.conferenceData?.conferenceId,
+        summary: event.data.summary,
+        description: event.data.description,
+        start: {
+          dateTime: event.data.start.dateTime,
+          timeZone: event.data.start.timeZone,
+        },
+        end: {
+          dateTime: event.data.end.dateTime,
+          timeZone: event.data.end.timeZone,
+        },
+      }
+    })
+    return {event: event.data, id: newEvent._id};
+  }
+  updateClassEvent = async (classId, eventId) => await this.daoClass.update({_id: classId}, {event: eventId});
 }

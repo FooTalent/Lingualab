@@ -28,11 +28,11 @@ export default class Controller extends CustomController {
   create = async (req, res, next) => {
     try {
       let newElement = validateFields(req.body, this.requiredFields);
-      const { description, isTemplate, first_class } = req.body;
+      const { description, isTemplate, duration_hours, first_class } = req.body;
       if (first_class) {
         newElement.first_class = toUTC(first_class);
       }
-      const element = await this.service.create({ ...newElement, description, isTemplate });
+      const element = await this.service.create({ ...newElement, description, duration_hours, isTemplate });
       res.sendSuccess(element);
     } catch (error) {
       next(error);

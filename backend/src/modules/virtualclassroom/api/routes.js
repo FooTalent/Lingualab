@@ -1,6 +1,6 @@
 import { Router } from "express";
 import Controller from "./controller.js";
-import { handleAuth, clients } from "../../../middleware/handlePolicies.js";
+import { handleAuth, clients, users } from "../../../middleware/handlePolicies.js";
 
 const router = Router();
 const controller = new Controller()
@@ -10,5 +10,10 @@ router
 .post   ("/",     handleAuth(clients), controller.create )
 .put    ("/:eid", handleAuth(clients), controller.updateId)
 .post   ("/duplicate/:pid", handleAuth(clients), controller.duplicateProgram )
+
+router
+.post   ('/gevent/', handleAuth(users),   controller.createEvent) 
+.post   ('/gevent/class/:cid', handleAuth(users),   controller.createEventClass) 
+//.post   ('/gevent/program/:pid', handleAuth(users),   controller.createEvent) 
 
 export default router
