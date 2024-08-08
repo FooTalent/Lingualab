@@ -87,7 +87,7 @@ export default class CustomService {
     };
 
     try {
-      if (!elementUpdate.first_class && !elementUpdate.daysOfWeek) {
+      if (!elementUpdate.first_class || !elementUpdate.daysOfWeek) {
         return await this.daoProgram.update({ _id: eid }, elementUpdate);
       }
 
@@ -158,8 +158,8 @@ export default class CustomService {
     // crea aula
     const newProgram = await this.createProgram(templateId, studentIds, user)
     
-    // empieza a actualizar fechas
-    const updatedDaysProgram = await this.update(newProgram._id, { first_class, daysOfWeek })
+    // empieza a actualizar fechas    
+    const updatedDaysProgram =await this.update(newProgram._id, { first_class, daysOfWeek })
 
     return updatedDaysProgram;
   }
