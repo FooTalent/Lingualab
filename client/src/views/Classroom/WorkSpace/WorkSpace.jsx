@@ -80,14 +80,8 @@ const WorkSpace = () => {
         ) : error ? (
           <p className="text-center text-red-500">Error: {error}</p>
         ) : programs.length === 0 ? (
-          <div className="text-center mt-8">
-            <p className="text-gray-700">No hay programas creados. ¡Crea uno ahora!</p>
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md"
-            >
-              Crear Programa
-            </button>
+          <div className="text-center mt-24 flex justify-center">
+            <p className="text-gray-700 text-4xl font-bold max-w-md">No hay programas creados. ¡Crea uno ahora!</p>
           </div>
         ) : <CardList data={programs} CardComponent={ProgramCard} buttonFunction={buttonFunction} refresh={setRefresh}/>
       }
@@ -112,5 +106,4 @@ const WorkSpace = () => {
     </div>
   );
 }
-// `/workspace/programas/${programId}/create-class`
 export default WorkSpace;
