@@ -31,11 +31,18 @@ Los principales usuarios de LinguaLab son docentes de idiomas de todos los nivel
 </p>
 
 **Gestión de Clases:** Crear, programar, invitar a alumno y hacer seguimiento de clases.
-
+<p align="center">
+ <img src="https://github.com/user-attachments/assets/940626c9-4ec4-4ef4-82d2-f5fc652edb35" width="250" alt="crear">
+ </p>
 **Almacenamiento Centralizado:** Guardar y organizar documentos, videos y otros recursos en un solo lugar.
-
+<p align="center">
+ <img src="https://github.com/user-attachments/assets/5ae2485d-8d47-43a4-97a3-40c291385443" width="250" alt="gestionar">
+ </p>
 **Creación de Contenido Educativo:** Recursos integrados para aprender, y otros materiales didácticos.
-
+<p align="center">
+ <img src="https://github.com/user-attachments/assets/6dc3ca58-fa29-4623-8725-5c2de4782c86" width="250" alt="recursos">
+ </p>
+   
 ## Tecnologías Utilizadas
 ## Etapa de Diseño
 ### Tecnología UI/UX
@@ -58,22 +65,25 @@ Tecnología | Figma |
 | [![Git](Link de Git) | Git es un sistema de control de versiones distribuido diseñado para manejar proyectos de cualquier tamaño con velocidad y eficiencia. |
 | [![GitHub](Link) | GitHub es una plataforma web basada en Git que ofrece alojamiento de código, seguimiento de problemas, gestión de proyectos y otras herramientas para la colaboración en proyectos de software. |
 
-### Tecnologías Front-end
-
-| Tecnología | Descripción |
-|------------|-------------|
-| [![JavaScript](Link) | JavaScript es un lenguaje de programación ampliamente utilizado en desarrollo web para agregar interactividad a las páginas web. |
-| [![React](Link) | React es una biblioteca de JavaScript para construir interfaces de usuario, desarrollada por Facebook. Permite crear componentes reutilizables para construir interfaces de usuario interactivas. |
-| [![Bootstrap](Link) | Bootstrap es un framework front-end de código abierto para desarrollar sitios web y aplicaciones web con CSS, JavaScript y HTML responsivos. Proporciona componentes preestilizados y un diseño adaptable. |
-| [![CSS3](Link)|  CSS (Cascading Style Sheets) es un lenguaje de hojas de estilo utilizado para describir la presentación de documentos HTML y XML. Define cómo se ven los elementos en una página web, incluyendo el diseño, colores y fuentes. |
-
 ### Tecnologías Back-end 
 
-| Tecnología | Descripción |
-|------------|-------------|
-| [![Nest.js](Link) | Nest.js es un framework para construir aplicaciones eficientes y escalables en Node.js. Está basado en los principios de Angular y proporciona una arquitectura robusta para aplicaciones back-end modernas. |
-| [![PostgreSQL](Link) | PostgreSQL es un sistema de gestión de bases de datos relacional y de código abierto. Es conocido por su robustez, características avanzadas y soporte para datos estructurados y no estructurados. |
-| [Socket.IO](Link) | Socket.IO es una biblioteca de JavaScript para aplicaciones web en tiempo real. Permite la comunicación bidireccional en tiempo real entre clientes web y servidores, facilitando la creación de aplicaciones colaborativas y de juegos en línea. |
+| Tecnología                                                                                           | Descripción                                                                                       |
+|------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
+| [![MongoDB](https://skillicons.dev/icons?i=mongodb)](https://www.mongodb.com/)  | MongoDB es una base de datos NoSQL orientada a documentos que almacena los datos en formato JSON.         |
+| [![Postman](https://skillicons.dev/icons?i=postman)](https://www.postman.com/)                     | Postman es una herramienta para probar y desarrollar APIs.                                                 |
+| [![Express.js](https://skillicons.dev/icons?i=express)](https://expressjs.com/)              | Express.js es un framework web para Node.js, diseñado para construir aplicaciones web y APIs.                 |
+| [![Node.js](https://skillicons.dev/icons?i=nodejs)](https://nodejs.org/)           | Node.js es un entorno de ejecución para JavaScript del lado del servidor.                                  |
+| [![Visual Studio Code](https://skillicons.dev/icons?i=vscode)](https://code.visualstudio.com/) | Visual Studio Code es un editor de código fuente ligero y potente, ideal para la programación.                          |
+
+### Tecnologías Front-end
+
+| Tecnología                                                                                           | Descripción                                                                                                  |
+|------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
+| [![Material-UI](https://skillicons.dev/icons?i=materialui)](https://mui.com/)                          | Material-UI es una biblioteca de componentes de interfaz de usuario para React, que sigue las directrices de diseño de Google Material. |
+| [![JavaScript](https://skillicons.dev/icons?i=javascript)](https://www.javascript.com/)               | JavaScript es un lenguaje de programación que se utiliza principalmente para crear contenido dinámico en las páginas web.          |
+| [![React](https://skillicons.dev/icons?i=react)](https://reactjs.org/)                                        | React es una biblioteca de JavaScript para construir interfaces de usuario, especialmente en aplicaciones de una sola página.      |
+| [![Tailwind CSS](https://skillicons.dev/icons?i=tailwind)](https://tailwindcss.com/)                 | Tailwind CSS es un framework CSS que proporciona utilidades predefinidas para diseñar interfaces web de manera rápida y eficiente.       |
+
 
 ### QA y Testeo:
 
