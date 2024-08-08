@@ -55,7 +55,6 @@ const ProgramDetail = () => {
     navigate(`/aulavirtual/clase/${classroomId}`);
   };
 
-  console.log(program);
   if (loading) return <p className="text-center">Cargando datos...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
