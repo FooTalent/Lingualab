@@ -80,19 +80,19 @@ const Home = () => {
             </div>
 
             <div className="flex flex-col justify-between lg:grid lg:grid-cols-2 gap-14">
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-6">
                 <h3 className="text-2xl leading-7 font-semibold">Tu clase ahora</h3>
 
-                <div className="shadow-cardContainer rounded-lg border border-card max-w-[357px] h-[192px] p-4 cursor-pointer">
+                <div className="shadow-cardContainer rounded-lg border border-card max-w-[357px] h-[145px] p-4 cursor-pointer">
                   <div className="flex flex-col justify-between h-full">
                   </div>
                 </div>
               </div>
 
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-6">
                 <h3 className="text-2xl leading-7 font-semibold">Tu próxima clase</h3>
 
-                <div className="shadow-cardContainer rounded-lg border border-card max-w-[357px] h-[192px] p-4 cursor-pointer">
+                <div className="shadow-cardContainer rounded-lg border border-card max-w-[357px] h-[145px] p-4 cursor-pointer">
                   <div className="flex flex-col justify-between h-full">
                   </div>
                 </div>

@@ -7,9 +7,9 @@ export default function NavButtonList({ onNavigate, onView, today, view }) {
     const navButtons = [
         { label: <ArrowBackIosIcon fontSize='medium' />, action: () => onNavigate('PREV', view), },
         { label: <ArrowForwardIosIcon fontSize='medium' />, action: () => onNavigate('NEXT', view), },
-        { label: 'Día', action: () => onView('day')},
-        { label: 'Semana', action: () => onView('week')},
-        { label: 'Mes', action: () => onView('month')},
+        { label: 'Día', action: () => onView('day'), view: 'day'},
+        { label: 'Semana', action: () => onView('week'), view: 'week'},
+        { label: 'Mes', action: () => onView('month'), view: 'month'},
     ]
 
     return (
@@ -23,7 +23,7 @@ export default function NavButtonList({ onNavigate, onView, today, view }) {
             <div className='flex items-center'>
                 {
                     navButtons.slice(2).map((item, index) => (
-                        <NavButton key={index} label={item.label} onClick={item.action} icon={item.icon} />
+                        <NavButton key={index} label={item.label} onClick={item.action} icon={item.icon} view={item.view} actualView={view} />
                     ))
                 }
             </div>
