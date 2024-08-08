@@ -19,7 +19,7 @@ export default function Calendario() {
 
     useEffect(() => {
         fetchTeacherClasses()
-    }, [])
+    }, [])    
 
     const fetchTeacherClasses = async () => {
         // startDate=2024-07-01&endDate=2024-08-01

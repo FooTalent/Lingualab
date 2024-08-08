@@ -33,13 +33,16 @@ classSchema.post('save', async function(doc, next) {
 });
 
 classSchema.pre('findOne', function(next) {
-  this.populate({
-    path: 'resources',
-    select: '_id title type url',
-  })
-  .populate("event");
+  this
+    .populate({
+      path: 'resources',
+      select: '_id title type url'
+    })
+    .populate({
+      path: 'event'
+    });
   next();
-})
+});
 
 const dataModel = model('classes', classSchema)
 
