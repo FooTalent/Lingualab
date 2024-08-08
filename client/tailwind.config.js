@@ -43,7 +43,10 @@ export default {
       },
       padding: {
         '8p': '8%',
-      }
+      },
+      lineHeight: {
+        custom: '18.75px',
+      },
     },
   },
   plugins: [
