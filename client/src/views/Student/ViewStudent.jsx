@@ -1,17 +1,21 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { useEffect, useState } from 'react';
 import { useAppStore } from '../../store/useAppStore';
-import { getReviews, getStudents } from '../../services/students.services';
+import { getReviews, getStudents, inviteStudent } from '../../services/students.services';
 import { crearURLCompleta } from '../../utils/urifoto';
 import { Link } from 'react-router-dom';
+import Modal from '../../components/Modal';
+import AddStudentForm from '../../components/AddStudentForm';
 
 const ViewStudent = () => {
   const { user, userDetail } = useAppStore();
+  const [refresh, setRefresh] = useState(true);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [students, setStudents] = useState([]);
   const [score, setScore] = useState([])
   const [showInfo, setShowInfo] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (user && user.token) {
@@ -35,12 +39,24 @@ const ViewStudent = () => {
     } else {
       setLoading(false);
     }
-  }, [user, userDetail]);
+  }, [user, userDetail, refresh]);
 
   const handleShowInfo = () => setShowInfo(true);
   const handleShowGrades = () => setShowInfo(false);
 
-  console.log(score)
+  const handleModalOpen = () => setIsModalOpen(true);
+  const handleModalClose = () => setIsModalOpen(false);
+
+  const handleAddStudent = async (newStudent) => {
+    try {
+      const addedStudent = await inviteStudent(user.token, newStudent);
+      setRefresh(!refresh);
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error('Error al agregar al alumno', error);
+      setError(error.message);
+    }
+  };
 
   return (
     <div className="mx-auto py-4 w-[1210px]">
@@ -167,6 +183,21 @@ const ViewStudent = () => {
           )}
         </tbody>
       </table>
+
+      <div className="flex justify-end mt-4">
+        <button
+          onClick={handleModalOpen}
+          className="bg-yellow-400 text-black font-bold px-4 py-2 rounded-lg"
+        >
+          Agregar alumno +
+        </button>
+      </div>
+      <Modal isOpen={isModalOpen} onClose={handleModalClose} title="Agregar Alumno" modalSize='medium'>
+        <AddStudentForm
+          onSubmit={handleAddStudent}
+          onClose={handleModalClose}
+        />
+      </Modal>
     </div>
   );
 };

@@ -1,7 +1,24 @@
 import Logo from '../components/Logo'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
+import { useAppStore } from '../store/useAppStore'
+import { useEffect } from 'react'
 
 export default function AuthLayout() {
+    const navigate = useNavigate()
+    const {status, localLogin} = useAppStore()
+
+    useEffect(() => {
+        const initialize = async () => {
+            if (!status) {
+                await localLogin();
+            }
+        };
+        initialize();
+        if(status){
+            navigate('/')
+        }
+    }, [status, navigate])
+
     return (
         <>
             <div className='flex bg-fondo bg-no-repeat bg-cover min-h-screen w-full'>

@@ -15,16 +15,23 @@ import ProgramDetail from './views/Classroom/WorkSpace/Program/ProgramDetail'
 import ClassDetail from './views/Classroom/WorkSpace/Class/ClassDetail'
 import Recursos from './views/Resources/Resources'
 import Calendario from './views/user/Calendario'
-import Landing from './views/Landing'
-import History from './views/History'
-import AboutUs from './views/AboutUs'
+import Landing from './views/Landing/Landing'
+import History from './views/Landing/History'
+import AboutUs from './views/Landing/AboutUs'
 import ViewStudent from './views/Student/ViewStudent'
 import DetailStudent from './views/Student/DetailStudent'
+import LandingLayout from './layouts/LandingLayout'
 
 export default function Router() {
     return (
         <BrowserRouter>
             <Routes>
+                <Route element={<LandingLayout />}>
+                    <Route path='/landing' element={<Landing />} />
+                    <Route path='/historia' element={<History />} />
+                    <Route path='/conocenos' element={<AboutUs />} />
+                </Route>
+                
                 <Route element={<AppLayout />}>
                     <Route path='/' element={<Home />} index />
                     <Route path='/aulavirtual' element={<VirtualClassRoom />} />
@@ -41,9 +48,6 @@ export default function Router() {
                 </Route>
 
                 <Route element={<AuthLayout />}>
-                    <Route path='/landing' element={<Landing />} />
-                    <Route path='/historia' element={<History />} />
-                    <Route path='/conocenos' element={<AboutUs />} />
                     <Route path='/auth/login' element={<Login />} />
                     <Route path='/auth/register' element={<Register />} />
                     <Route path='/auth/forgot-password' element={<ForgotPassword />} />
