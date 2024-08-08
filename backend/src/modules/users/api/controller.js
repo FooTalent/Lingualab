@@ -170,13 +170,16 @@ export default class Controller extends CustomController {
   inviteStudent = async (req, res, next) => {
     try{
       const userData = validateFields(req.body, this.requieredfield.invite);
-      const {first_name, last_name, password} = req.body
+      const {first_name, last_name, password, level, birthday, phone} = req.body
       userData.first_name = first_name || "Nombre" ;
       userData.last_name = last_name || "Apellido" ;
-      const emailPassword = password || "12345"
-      userData.password = emailPassword ;
-      userData.role = 'Student'
+      userData.level = level || "A1-A2" ;
+      birthday && (userData.birthday = birthday)
+      phone && (userData.phone = phone)
       userData.teacher = req.user._id
+      userData.role = 'Student'
+      const emailPassword = password || "12345";
+      userData.password = emailPassword ;
 
       const newStudent = await this.service.register(userData)
       await this.service.inviteStudent(req.user, newStudent, emailPassword)
