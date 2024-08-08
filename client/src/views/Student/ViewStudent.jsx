@@ -56,7 +56,6 @@ const ViewStudent = () => {
       console.error('Error al agregar al alumno', error);
       setError(error.message);
     }
-    console.log(newStudent);
   };
 
   return (
