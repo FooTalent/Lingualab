@@ -6,5 +6,9 @@ export default class ThisDaoMongo extends DaoMongo {
     super(dataModel);
 
   }
+
+  getProgramsByTeacherId = async (teacherId) => {
+    return await this.model.find({ teacher: teacherId }).select('_id');
+  };
 }
 
