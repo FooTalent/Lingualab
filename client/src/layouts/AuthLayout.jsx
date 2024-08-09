@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 
 export default function AuthLayout() {
     const navigate = useNavigate()
-    const {status, localLogin} = useAppStore()
+    const { status, localLogin } = useAppStore()
 
     useEffect(() => {
         const initialize = async () => {
@@ -14,7 +14,7 @@ export default function AuthLayout() {
             }
         };
         initialize();
-        if(status){
+        if (status) {
             navigate('/')
         }
     }, [status, navigate])
