@@ -1,10 +1,17 @@
+import { useEffect, useState } from "react"
 import IconSvg from "../../utils/SvgWrapper"
 
-export default function CategoryFilter({ onClick, resource, isSelected }) {
+export default function CategoryFilter({ onClick, resource, selectedCategories }) {
+  const [isSelected, setIsSelected] = useState(false)
+
+  useEffect(() => {
+    setIsSelected(selectedCategories.includes(resource))
+  }, [selectedCategories, resource])
 
   const handleFilter = () => {
     onClick(resource)
   }
+
   return (
     <button
       onClick={handleFilter}
