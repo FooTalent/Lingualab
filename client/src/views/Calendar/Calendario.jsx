@@ -24,7 +24,7 @@ export default function Calendario() {
     
     const fetchTeacherClasses = async () => {
         // startDate=2024-07-01&endDate=2024-08-01
-        const newClasses = await getClassesByTeacherAndDate(user.token, userDetail._id, '')
+        const newClasses = await getClassesByTeacherAndDate(user.token, userDetail._id, new Date())
         if (!newClasses.isError) {
             setClasses(newClasses.data);
             console.log('Clases obtenidas:', newClasses.data);

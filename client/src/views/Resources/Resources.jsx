@@ -239,7 +239,7 @@ export default function Resources({ onSelect, selected }) {
               </div>
             </form>
 
-            <div className="flex flex-col p-2 grow w-full gap-6 text-card max-h-[585px] overflow-y-scroll scrollbar">
+            <div className="flex flex-col p-2 grow w-full gap-6 text-card max-h-[585px] overflow-y-auto scrollbar">
               {
                 loading ? <p className="text-center">Cargando datos...</p> : (
                   error ? <p className="m-auto text-center">{error}</p> :

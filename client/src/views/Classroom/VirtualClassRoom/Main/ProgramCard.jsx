@@ -10,9 +10,8 @@ import duplicar from '/duplicar.svg'
 import { deleteProgram } from '../../../../services/programs.services';
 import { useAppStore } from '../../../../store/useAppStore';
 import Modal from '../../../../components/Modal';
-import popUp from '/Popup_EliminarPrograma.png'
-
-
+import popUp from '/ImagesVCR/EliminarAula.png'
+import ButtonModal from '../../../../components/Form/ButtonModal';
 
 const ProgramCard = ({ program, buttonFunction, refresh }) => {
   const { user } = useAppStore();
@@ -22,7 +21,7 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
 
   const handleDelete = (id) => {
     setState(!state)
-    setDeleteModal(true)  
+    setDeleteModal(true)
     setIdProgram(id)
   }
 
@@ -96,26 +95,15 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
       </div>
 
       <Options id={program._id} state={state} links={links} />
-      <Modal modalSize={'small'} isOpen={deleteModal}>
-        <div className="flex justify-center ">
-          <img src={popUp} alt="Eliminar programa" />
+      <Modal modalSize={'xsmall'} isOpen={deleteModal}>
+        <div className='flex flex-col gap-8'>
+          <img src={popUp} alt="Eliminar programa" className='object-cover' />
+          <div className="grid grid-cols-2 gap-6">
+            <ButtonModal buttonAction={() => setDeleteModal(false)} type={'prev'} label={'Cancelar'} />
+            <ButtonModal buttonAction={handleConfirmDelete} label={'Eliminar aula'} />
+          </div>
         </div>
-        <div className="flex gap-4">
-          <button
-            type="button"
-            onClick={() => setDeleteModal(false)}
-            className="w-full px-4 py-2 border border-Purple text-Purple  rounded-md hover:bg-Purple hover:text-white"
-          >
-            Cancelar
-          </button>
-          <button
-            type="button"
-            onClick={handleConfirmDelete}
-            className="w-full px-4 py-2 bg-Purple text-white rounded-md hover:bg-PurpleHover"
-          >
-            Eliminar programa
-          </button>
-        </div>
+
       </Modal>
     </div>
   );
