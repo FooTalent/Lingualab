@@ -18,7 +18,7 @@ export default function CreateResourceForm({ onSubmit, onCancel, data }) {
         try {
             const languages = await getLanguages();
             setLanguageOptions(languages.map(language => ({ value: language, label: language })));
-            setFormData({...formData, language: languages[0]});
+            setFormData(prev => ({...prev, language: languages[0].value || ''}));
         } catch (error) {
             console.error('Error fetching languages:', error);
         }
@@ -52,8 +52,10 @@ export default function CreateResourceForm({ onSubmit, onCancel, data }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (onSubmit) {
+        if (data) {
             onSubmit(data._id, formData)
+        } else {
+            onSubmit(formData)
         }
     }
 
@@ -82,8 +84,8 @@ export default function CreateResourceForm({ onSubmit, onCancel, data }) {
                         >
                             <option value="" disabled>Seleccionar el idioma</option>
                             {
-                                languageOptions.map((lvl, i) => (
-                                    <option key={i} value={lvl}>{lvl}</option>
+                                languageOptions.map((option, i) => (
+                                    <option key={i} value={option.value}>{option.value}</option>
                                 ))
                             }
                         </select>
