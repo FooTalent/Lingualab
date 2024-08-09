@@ -1,3 +1,4 @@
+
 import Carousel from "./Carousel";
 
 
@@ -41,173 +42,246 @@ const Landing = () => {
         </div>
       </div>
 
-      <div className="py-12 text-center">
-        <h2 className="text-3xl font-bold mb-8">¿Qué ofrecemos?</h2>
+
+      <div className="container mx-auto py-12 text-center px-4 md:px-8">
+        <h2 className="text-4xl font-bold mb-8 text-center">¿Qué ofrecemos?</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="rounded p-4">
-            <h3 className="text-xl font-bold mb-4">Recursos para Docentes</h3>
-            <div className="flex items-center mb-2">
+          <div className="rounded p-4 pl-28">
+            <h3 className="text-2xl font-bold mb-4 text-left">
+              Recursos para Docentes
+            </h3>
+            <div className="flex items-start mb-2">
+
               <img
                 src="/ImagesLanding/vistoMorado.svg"
                 alt="Check"
                 className="w-6 h-6"
               />
-              <p className="ml-2">
-                Accede a plantillas de clases, programas y recursos específicos para enseñar idiomas.
+
+              <p className="ml-2 text-left text-lg pl-8">
+                Accede a plantillas de clases, <br />
+                programas y recursos específicos para <br />
+                enseñar idiomas.
               </p>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-start">
+
               <img
                 src="/ImagesLanding/vistoMorado.svg"
                 alt="Check"
                 className="w-6 h-6"
               />
-              <p className="ml-2">
-                Crea programas de estudio personalizados para cada materia.
+
+              <p className="ml-2 text-left text-lg pl-8">
+                Crea programas de estudio <br />
+                personalizados para cada materia.
               </p>
             </div>
           </div>
-          <div className="rounded p-4">
-            <h3 className="text-xl font-bold mb-4">Seguimiento de Alumnos</h3>
-            <div className="flex items-center mb-2">
+          <div className="rounded p-4 pl-20">
+            <h3 className="text-2xl font-bold mb-4 text-left">
+              Seguimiento de Alumnos
+            </h3>
+            <div className="flex items-start mb-2">
               <img
                 src="/ImagesLanding/vistoMorado.svg"
                 alt="Check"
                 className="w-6 h-6"
               />
-              <p className="ml-2">
-                Visualiza la lista de tus alumnos, sus calificaciones y datos personales.
+              <p className="ml-2 text-left text-lg  pl-8">
+                Visualiza la lista de tus alumnos, sus <br />
+                calificaciones y datos personales.
               </p>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-start">
               <img
                 src="/ImagesLanding/vistoMorado.svg"
                 alt="Check"
                 className="w-6 h-6"
               />
-              <p className="ml-2">
-                Mantén un registro completo de su progreso.
+              <p className="ml-2 text-left text-lg  pl-8">
+                Mantén un registro completo de su <br />
+                progreso.
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="py-12 text-center">
-        <h2 className="text-3xl font-bold mb-8">¿Cómo funciona?</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="rounded p-4">
-            <h3 className="text-xl font-bold mb-4">Crea tus programas</h3>
-            <div className="flex items-center mb-2">
-              <img
-                src="/ImagesLanding/vistoMorado.svg"
-                alt="Check"
-                className="w-6 h-6"
-              />
-              <p className="ml-2">Diseña temarios y programas de estudio</p>
-            </div>
-            <div className="flex items-center">
-              <img
-                src="/ImagesLanding/vistoMorado.svg"
-                alt="Check"
-                className="w-6 h-6"
-              />
-              <p className="ml-2">
-                Invita a tus alumnos a unirse a tus programas
+      <div className="py-12 text-center relative">
+        <h2 className="text-3xl font-bold mb-14">¿Cómo funciona?</h2>
+        <div className="relative grid grid-cols-1 gap-8 items-center z-10">
+          <div className="bg-[#9747FF] rounded-lg p-6 text-white w-[600px] h-[150px] mx-auto z-20">
+            <div className="flex items-center h-full">
+              <h3 className="text-xl font-bold w-1/2 text-center">
+                Crea tus programas
+              </h3>
+              <p className="w-1/2 text-left">
+                Diseña temarios y programas de estudio
               </p>
             </div>
           </div>
-          <div className="rounded p-4">
-            <h3 className="text-xl font-bold mb-4">Imparte clases virtuales</h3>
-            <div className="flex items-center mb-2">
-              <img
-                src="/ImagesLanding/vistoMorado.svg"
-                alt="Check"
-                className="w-6 h-6"
-              />
-              <p className="ml-2">
-                Utiliza nuestras herramientas interactivas para enseñar en línea
-              </p>
-            </div>
-            <div className="flex items-center">
-              <img
-                src="/ImagesLanding/vistoMorado.svg"
-                alt="Check"
-                className="w-6 h-6"
-              />
-              <p className="ml-2">
-                Comparte recursos multimedia y actividades prácticas
-              </p>
+
+          <div className="bg-[#9747FF] rounded-lg p-6 text-white w-[600px] h-[150px] ml-[12rem] z-20">
+            <div className="flex flex-col h-full">
+              <div className="flex items-center">
+                <h3 className="text-xl font-bold w-1/2 text-center">
+                  Imparte clases <br />
+                  virtuales
+                </h3>
+                <div className="w-1/2">
+                  <p className=" mb-2 text-left">
+                    Utiliza nuestras herramientas interactivas para enseñar en
+                    línea
+                  </p>
+                  <p className="text-left">
+                    Comparte recursos multimedia y actividades prácticas
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      <div className="absolute right-[10rem] bottom-0 z-30">
+        <img
+          src="/ImagesLanding/comofunciona.png"
+          alt="Cómo funciona"
+          className="max-w-[450px]"
+        />
+      </div>
+
 
       <div className="py-12 text-center">
         <h2 className="text-3xl font-bold mb-8">
           Nunca fue fácil y rápido crear y compartir una clase
         </h2>
-        <img
-          src="/ImagesLanding/TaskFlow.png"
-          alt="Task Flow"
-          className="w-full h-auto mb-4"
-        />
-        <p className="text-xl font-bold">
-          Accede a recursos para facilitar tus clases
-        </p>
+        <div className="p-4 mx-auto max-w-6xl">
+          <img
+            src="/ImagesLanding/TaskFlow.png"
+            alt="Task Flow"
+            className="w-full h-auto"
+          />
+        </div>
       </div>
 
-
-      <div className="bg-[#9747FF] py-12">
-        <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="text-white">
-            <h3 className="text-2xl font-bold mb-4">Domina un nuevo idioma con</h3>
-            <h3 className="text-2xl font-bold mb-4">recursos interactivos.</h3>
-            <img src="/ImagesLanding/recursos.png" alt="Recursos" className="mt-4" />
+      <div className="bg-[#9747FF] py-12 px-4">
+        <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="text-white px-4">
+            <h3 className="text-2xl mb-4 pl-12 ">Domina un nuevo idioma con</h3>
+            <h3 className="text-2xl mb-4 pl-12 ">recursos interactivos.</h3>
+            <img
+              src="/ImagesLanding/dominarecursos.png"
+              alt="Recursos"
+              className="mt-4 w-4/5 h-auto pl-12 "
+            />
           </div>
-          <div className="grid grid-cols-2 gap-4">
-            <img src="/ImagesLanding/diccionario.png" alt="Diccionario" className="w-full h-auto" />
-            <img src="/ImagesLanding/juegos.png" alt="Juegos" className="w-full h-auto" />
-            <img src="/ImagesLanding/canciones.png" alt="Canciones" className="w-full h-auto" />
-            <img src="/ImagesLanding/series.png" alt="Series" className="w-full h-auto" />
-            <img src="/ImagesLanding/ejerciciogramatical.png" alt="Ejercicios Gramaticales" className="w-full h-auto" />
-            <img src="/ImagesLanding/libros.png" alt="Libros" className="w-full h-auto" />
+          <div className="grid grid-cols-2 gap-4 px-4">
+            <img
+              src="/ImagesLanding/diccionario.png"
+              alt="Diccionario"
+              className="w-44 h-auto"
+            />
+            <img
+              src="/ImagesLanding/juegos.png"
+              alt="Juegos"
+              className="w-44 h-auto"
+            />
+            <img
+              src="/ImagesLanding/canciones.png"
+              alt="Canciones"
+              className="w-44 h-auto"
+            />
+            <img
+              src="/ImagesLanding/series.png"
+              alt="Series"
+              className="w-44 h-auto"
+            />
+            <img
+              src="/ImagesLanding/ejerciciogramatical.png"
+              alt="Ejercicios Gramaticales"
+              className="w-44 h-auto"
+            />
+            <img
+              src="/ImagesLanding/libros.png"
+              alt="Libros"
+              className="w-44 h-auto"
+            />
           </div>
         </div>
       </div>
 
       <div className="py-12 text-center">
         <h2 className="text-3xl font-bold mb-8">Contamos con funciones como</h2>
-        <img
-          src="/ImagesLanding/funciones.png"
-          alt="Funciones"
-          className="w-full h-auto mb-4"
-        />
+        <div className="p-4 mx-auto max-w-6xl">
+          <img
+            src="/ImagesLanding/funciones.png"
+            alt="Task Flow"
+            className="w-4/5 h-auto mx-auto"
+          />
+        </div>
       </div>
-
 
       <div className="bg-[#FFDC00] w-full">
         <Carousel />
       </div>
 
-      <div className="py-12 text-center">
-        <h2 className="text-3xl font-bold mb-8">¿Por qué elegirnos?</h2>
-        <ul className="list-none space-y-4">
-          <li className="flex items-center">
-            <img src="/ImagesLanding/vistoMorado.svg" alt="Check" className="w-6 h-6 mr-2" />
-            <p><span className="font-bold">Flexibilidad:</span> Aprende y enseña desde cualquier lugar.</p>
-          </li>
-          <li className="flex items-center">
-            <img src="/ImagesLanding/vistoMorado.svg" alt="Check" className="w-6 h-6 mr-2" />
-            <p><span className="font-bold">Recursos:</span> Accede a canciones, ejercicios gramaticales, juegos y más.</p>
-          </li>
-          <li className="flex items-center">
-            <img src="/ImagesLanding/vistoMorado.svg" alt="Check" className="w-6 h-6 mr-2" />
-            <p><span className="font-bold">Gestión Simplificada:</span> Organiza tus clases de manera eficiente.</p>
-          </li>
-        </ul>
+      <div className="py-12">
+        <h2 className="text-3xl font-bold mb-8 text-center">
+          ¿Por qué elegirnos?
+        </h2>{" "}
+        <br />
+        <div className="px-64">
+          <ul className="list-none space-y-4">
+            <li className="flex items-start">
+              <img
+                src="/ImagesLanding/vistoMorado.svg"
+                alt="Check"
+                className="w-6 h-6 mr-3"
+              />
+              <div className="ml-4 text-lg ">
+                <p>
+                  <span className="font-bold">Flexibilidad:</span> Aprende y
+                  enseña desde cualquier lugar.
+                </p>{" "}
+                <br />
+              </div>
+            </li>
+            <li className="flex items-start">
+              <img
+                src="/ImagesLanding/vistoMorado.svg"
+                alt="Check"
+                className="w-6 h-6 mr-3"
+              />
+              <div className="ml-4 text-lg ">
+                <p>
+                  <span className="font-bold">Recursos:</span> Accede a
+                  canciones, ejercicios gramaticales, juegos y más.
+                </p>{" "}
+                <br />
+              </div>
+            </li>
+            <li className="flex items-start">
+              <img
+                src="/ImagesLanding/vistoMorado.svg"
+                alt="Check"
+                className="w-6 h-6 mr-3"
+              />
+              <div className="ml-4 text-lg ">
+                <p>
+                  <span className="font-bold ">Gestión Simplificada:</span>{" "}
+                  Organiza tus clases de manera eficiente.
+                </p>{" "}
+                <br />
+              </div>
+            </li>
+          </ul>
+        </div>
+
       </div>
     </div>
+
   );
 };
 

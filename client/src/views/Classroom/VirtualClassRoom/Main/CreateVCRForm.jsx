@@ -93,7 +93,7 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ ...programData, startDateTime: programData.startDateTime });
+    onSubmit({ ...programData, first_class: programData.startDateTime });
   };
 
   // MODAL STUDENT

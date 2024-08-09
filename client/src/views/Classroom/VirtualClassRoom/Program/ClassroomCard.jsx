@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { LEVELS_MAP } from '../../../../utils/valueLists';
-import IconImage from '../../../../utils/IconImage';
 import { Link } from 'react-router-dom';
 import { useAppStore } from '../../../../store/useAppStore';
 import { fetchResourceById } from '../../../../services/resources.services';
+import IconSvg from '../../../../utils/SvgWrapper';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const ClassroomCard = ({ classroom, buttonFunction }) => {
   const { level, title, students, daytime, duration_hours, _id } = classroom;
+  const [openResources, setOpenResources] = useState(true)
   const [resourcesClass, setResourcesClass] = useState([])
   const { user } = useAppStore();
 
@@ -28,10 +30,17 @@ const ClassroomCard = ({ classroom, buttonFunction }) => {
   }, [classroom]);
 
   return (
-    <div className="bg-white shadow-md rounded-md p-4 mb-4">
-      <div className="flex items-center mb-2">
-        <span className="text-white px-2 py-1 rounded mr-2" style={{backgroundColor: LEVELS_MAP[level]}}>{level}</span>
-        <h2 className="text-xl font-semibold">{title}</h2>
+    <div className="bg-white shadow-md rounded-md p-4 mb-4 text-card">
+      <div className="flex items-center justify-between">
+        <div className='flex'>
+          <span className="text-white px-2 py-1 rounded mr-2" style={{backgroundColor: LEVELS_MAP[level]}}>{level}</span>
+          <h2 className="text-xl font-semibold">{title}</h2>
+        </div>
+        <div className='flex justify-between gap-4'>
+          <button className="bg-blue-500 text-white px-2 py-1 rounded-md w-full" onClick={() => buttonFunction(_id)}>
+            Modificar Clase
+          </button>
+        </div>
       </div>
       <div className="text-gray-700 mb-2">
         <strong>Fecha:</strong> {daytime ? new Date(daytime).toLocaleString() : null }
@@ -39,22 +48,36 @@ const ClassroomCard = ({ classroom, buttonFunction }) => {
       <div className="text-gray-700">
         <strong>Duración:</strong> {duration_hours} horas
       </div>
-      <div className='flex flex-row justify-between'>
-        {resourcesClass?.length > 0 && (
-          <div className="my-4">
-            <p className="text-lg font-medium">Recursos:</p>
-            <ul className="list-disc pl-5 text-gray-700">
-              {resourcesClass.map((resource, index) => (
-                <div key={index} className='flex h-5'>
-                  <IconImage category={resource.type} className={"fill-current"}/>
-                  <Link to={resource.url}>{resource.title}</Link>
+      <div className='flex items-center gap-6 text-sm'>
+        <button
+          onClick={() => setOpenResources(!openResources)}
+          className={`self-start ease-linear duration-150 ${openResources ? '-rotate-90' : ''}`}
+        >
+          <ExpandMoreIcon />
+        </button>
+
+        <div>
+          {
+            openResources ? (
+              <span className='block'>Recursos de la clase</span>
+            ) : (
+              resourcesClass?.length > 0 ? (
+                <div className="flex flex-col gap-2">
+                  {resourcesClass.map((resource, index) => (
+                    <div key={index} className='flex items-center truncate'>
+                      <IconSvg category={resource.type} />
+                      <Link to={resource.url}>{resource.title}</Link>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </ul>
-          </div>
-        )}
-        <button className="bg-blue-500 text-white px-2 py-1 rounded-md w-1/6" onClick={() => buttonFunction(_id)}>Modificar Clase</button>
-      </div>  
+              ) : (
+                <span className='block'>Sin recursos</span>
+              )
+            )
+          }
+        </div>
+      </div>
+        
     </div>
   );
 };

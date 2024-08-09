@@ -90,7 +90,7 @@ export default function Modal({ open, setOpen, onNavigate, label, data, selected
           onNavigate={onNavigate}
         />
 
-        <div className='px-4 py-2 flex flex-col gap-6 h-4/6 overflow-y-scroll'>
+        <div className='px-4 py-2 flex flex-col gap-6 h-4/6 overflow-y-auto scrollbar'>
           {dayClasses.length ? (
             <ClassList
               dayClases={dayClasses}

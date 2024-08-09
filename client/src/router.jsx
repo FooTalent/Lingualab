@@ -14,7 +14,7 @@ import WorkSpace from './views/Classroom/WorkSpace/WorkSpace'
 import ProgramDetail from './views/Classroom/WorkSpace/Program/ProgramDetail'
 import ClassDetail from './views/Classroom/WorkSpace/Class/ClassDetail'
 import Recursos from './views/Resources/Resources'
-import Calendario from './views/user/Calendario'
+import Calendario from './views/Calendar/Calendario'
 import Landing from './views/Landing/Landing'
 import History from './views/Landing/History'
 import AboutUs from './views/Landing/AboutUs'
@@ -51,7 +51,7 @@ export default function Router() {
                     <Route path='/auth/login' element={<Login />} />
                     <Route path='/auth/register' element={<Register />} />
                     <Route path='/auth/forgot-password' element={<ForgotPassword />} />
-                    <Route path='/auth/new-password' element={<NewPassword />} />
+                    <Route path='/auth/newpassword' element={<NewPassword />} />
                 </Route>
             </Routes>
         </BrowserRouter>
