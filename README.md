@@ -63,16 +63,16 @@ Los principales usuarios de LinguaLab son docentes de idiomas de todos los nivel
 ## Etapas de diseño
 ### Tecnología UI/UX
 
-
 | Tecnología                                                                                           | Descripción                                                                                       |
 |------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
 | [![Figma](https://skillicons.dev/icons?i=figma)](https://www.figma.com/)  | Figma es una herramienta de diseño colaborativo en línea para crear interfaces de usuario y prototipos.         |
-|  <img src="https://github.com/user-attachments/assets/ca004c30-2929-45f4-89b8-857bf6682b1e" width="45" alt="Miro">  | Miro es una plataforma de pizarra en línea utilizada para la colaboración y el brainstorming visual.                                                 |
+| [<img src="https://github.com/user-attachments/assets/ca004c30-2929-45f4-89b8-857bf6682b1e" width="45" alt="Miro">](https://miro.com/)  | Miro es una plataforma de pizarra en línea utilizada para la colaboración y el brainstorming visual.                                                 |
 | [![Adobe XD](https://skillicons.dev/icons?i=xd)](https://www.adobe.com/products/xd.html)              | Adobe XD es una herramienta de diseño de experiencia de usuario para la creación de prototipos y wireframes.                 |
 | [![Illustrator](https://skillicons.dev/icons?i=ai)](https://www.adobe.com/products/illustrator.html)           | Adobe Illustrator es una aplicación de diseño gráfico basada en vectores utilizada para crear ilustraciones, logotipos y gráficos.                                  |
-| <img src="https://github.com/user-attachments/assets/24dc63c0-341d-4b0a-970c-c675c5bc932f" width="55" alt="Zeplin"> | Zeplin es una herramienta que facilita la colaboración entre diseñadores y desarrolladores, generando especificaciones de diseño detalladas.                          |
-## Etapa de Codificación
+| [<img src="https://github.com/user-attachments/assets/24dc63c0-341d-4b0a-970c-c675c5bc932f" width="55" alt="Zeplin">](https://zeplin.io/) | Zeplin es una herramienta que facilita la colaboración entre diseñadores y desarrolladores, generando especificaciones de diseño detalladas.                          |
 
+
+## Etapa de Codificación
 ### Tecnologías Back-end 
 
 | Tecnología                                                                                           | Descripción                                                                                       |
@@ -102,10 +102,9 @@ Los principales usuarios de LinguaLab son docentes de idiomas de todos los nivel
 
 
 ### QA y testeo:
-
 | Tecnología                                                                                           | Descripción                                                                                       |
 |------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
-|  <img src="https://github.com/user-attachments/assets/bb73fb4d-a77f-4ffd-87f0-75fccb30a625" width="45" alt="SQL"> | SQL es un lenguaje estándar para la gestión de bases de datos relacionales, utilizado para consultas y manipulación de datos.         |
+| [<img src="https://github.com/user-attachments/assets/bb73fb4d-a77f-4ffd-87f0-75fccb30a625" width="45" alt="SQL">](https://es.wikipedia.org/wiki/SQL) | SQL es un lenguaje estándar para la gestión de bases de datos relacionales, utilizado para consultas y manipulación de datos.         |
 
 ---
 
@@ -113,11 +112,11 @@ Los principales usuarios de LinguaLab son docentes de idiomas de todos los nivel
 
 | Tecnología                                                                                           | Descripción                                                                                       |
 |------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
-  <img src="https://github.com/user-attachments/assets/d8970bba-8b10-46b2-99dd-60d3d95e4987" width="45" alt="Slack"> | Slack es una plataforma de mensajería empresarial que facilita la comunicación en equipo a través de canales organizados.         |
-| [![GitHub](https://skillicons.dev/icons?i=github)](https://github.com/)                     | GitHub es una plataforma de desarrollo colaborativo que utiliza Git para control de versiones y gestión de código fuente.                                                 |               |
+| [<img src="https://github.com/user-attachments/assets/d8970bba-8b10-46b2-99dd-60d3d95e4987" width="45" alt="Slack">](https://slack.com) | Slack es una plataforma de mensajería empresarial que facilita la comunicación en equipo a través de canales organizados.         |
+| [![GitHub](https://skillicons.dev/icons?i=github)](https://github.com/)                     | GitHub es una plataforma de desarrollo colaborativo que utiliza Git para control de versiones y gestión de código fuente.                                                 |
 | [![Notion](https://skillicons.dev/icons?i=notion)](https://www.notion.so/)           | Notion es una herramienta de productividad que combina toma de notas, gestión de tareas y bases de conocimiento en un solo lugar.                                  |
-|  <img src="https://github.com/user-attachments/assets/f96cc131-fea7-42f2-9b50-c9f59545464e" width="45" alt="Whatsapp"> | WhatsApp es una aplicación de mensajería instantánea que permite la comunicación a través de texto, voz y video.                          |
-|   <img src="https://github.com/user-attachments/assets/5bff8618-abe3-4f8c-bed3-47c0fd37e3d2" width="45" alt="Jira">| Jira es una herramienta de gestión de proyectos utilizada para seguimiento de errores, tareas y gestión de proyectos ágiles.         |
+| [<img src="https://github.com/user-attachments/assets/f96cc131-fea7-42f2-9b50-c9f59545464e" width="45" alt="Whatsapp">](https://www.whatsapp.com) | WhatsApp es una aplicación de mensajería instantánea que permite la comunicación a través de texto, voz y video.                          |
+| [<img src="https://github.com/user-attachments/assets/5bff8618-abe3-4f8c-bed3-47c0fd37e3d2" width="45" alt="Jira">](https://www.atlassian.com/software/jira) | Jira es una herramienta de gestión de proyectos utilizada para seguimiento de errores, tareas y gestión de proyectos ágiles.         |
 | [![Discord](https://skillicons.dev/icons?i=discord)](https://discord.com/)                     | Discord es una plataforma de comunicación por voz, video y texto, diseñada originalmente para comunidades de videojuegos pero ampliamente utilizada para diversos grupos y equipos.                                                 |
 
 ---
