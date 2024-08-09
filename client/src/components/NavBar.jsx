@@ -13,7 +13,7 @@ const NavBar = () => {
     ]
 
     const navLanding = [
-        { text: "Landing", to: "/landing"},
+        { text: "Inicio", to: "/landing"},
         { text: "Historia", to: "/historia"},
         { text: "Conócenos", to: "/conocenos"}
     ]
@@ -44,4 +44,4 @@ const NavBar = () => {
     )
 }
 
-export default NavBar
+export default NavBar;
