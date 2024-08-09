@@ -5,7 +5,7 @@ export default function ResourceCard({ resource, deleteFunc, editFunc }) {
     const { _id } = resource
 
     return (
-        <article className="flex shadow-home px-8 py-6 gap-6 rounded-lg text-card">
+        <article className="flex w-full shadow-home px-8 py-6 gap-6 rounded-lg text-card">
             <div className="flex flex-col gap-4 w-full">
                 <div className="flex items-center gap-6">
                     <span
