@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppStore } from '../../../../store/useAppStore';
-import { createClass, getProgramById } from '../../../../services/programs.services';
+import { createClass, getProgramById, updateProgram } from '../../../../services/programs.services';
 import Modal from '../../../../components/Modal';
 import CreateClassForm from './CreateClassForm';
 import ClassroomCard from './ClassroomCard';
 import { LEVELS_MAP } from '../../../../utils/valueLists';
 import BackButton from '../../../../components/BackButtom';
+import EditIcon from '@mui/icons-material/Edit';
+import EditVCRForm from './EditVCRForm';
 
 const ProgramDetail = () => {
   const { eid } = useParams();
@@ -16,6 +18,7 @@ const ProgramDetail = () => {
   const [error, setError] = useState(null);
   const [program, setProgram] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,7 +41,7 @@ const ProgramDetail = () => {
       setLoading(false);
     }
   }, [user, eid, refresh]);
-
+  console.log(program);
   const handleCreateClass = async (classroomData) => {
     try {
       const newClassRoom = await createClass(user.token, classroomData);
@@ -51,6 +54,19 @@ const ProgramDetail = () => {
     }
   };
 
+  const handleEditProgram = async (newProgram) => {
+    try {
+      console.log(newProgram);
+      
+      const updatedProgram = await updateProgram(user.token, eid, newProgram);
+      setRefresh(!refresh);
+      setIsModalEditOpen(false);
+    } catch (error) {
+      console.error('Error al actualizar el programa', error);
+      setError(error.message);
+    }
+  };
+  
   const handleEditClassroom = (classroomId) => {
     navigate(`/aulavirtual/clase/${classroomId}`);
   };
@@ -66,12 +82,20 @@ const ProgramDetail = () => {
           <span className="text-white px-2 py-1 rounded mr-2" style={{backgroundColor: LEVELS_MAP[program.level]}}>{program.level}</span>
           <h1 className="text-3xl font-bold mb-4">{program.title}</h1>
         </div>
-        <button 
-          className="bg-blue-500 text-white px-4 py-2 rounded-md"
-          onClick={() => setIsModalOpen(true)}
-        >
-          Crear Clase
-        </button>
+        <div className='flex items-center gap-6'>
+          <button
+            className={`flex items-center gap-4 bg-card hover:bg-Yellow font-extrabold text-Yellow hover:text-card border-2 border-card hover:border-Yellow rounded-lg py-3 px-4 ease-linear duration-150`}
+            onClick={() => setIsModalEditOpen(true)}
+          >
+            Editar <EditIcon />
+          </button>
+          <button
+            className="bg-blue-500 text-white px-4 py-2 rounded-md"
+            onClick={() => setIsModalOpen(true)}
+          >
+            Crear Clase
+          </button>
+        </div>
       </div>
 
       <div className="mt-6">
@@ -111,6 +135,15 @@ const ProgramDetail = () => {
           programData={program}
           onSubmit={handleCreateClass}
           onClose={() => setIsModalOpen(false)}
+        />
+      </Modal>
+      <Modal isOpen={isModalEditOpen} onClose={() => setIsModalEditOpen(false)} title="Editar Programa">
+        <EditVCRForm
+          onSubmit={handleEditProgram}
+          program={program}
+          onClose={() => setIsModalEditOpen(false)}
+          teacherId={''}
+          token={user.token}
         />
       </Modal>
     </div>
