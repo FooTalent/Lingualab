@@ -22,106 +22,148 @@ Los principales usuarios de LinguaLab son docentes de idiomas de todos los nivel
 
 **Login:** Inicia sesión en tu cuenta para acceder a todas las funcionalidades.
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/8c98b2b1-51f1-4f25-ac9d-85046816cd69" width="250" alt="login">
+  <img src="https://github.com/user-attachments/assets/8c98b2b1-51f1-4f25-ac9d-85046816cd69" width="350" alt="login">
 </p>
 
 **Register:** Si no tenes una cuenta crea una para acceder a la plataforma
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/609ea0a9-7d58-443c-9be3-4a109d6110d1" width="250" alt="register">
+  <img src="https://github.com/user-attachments/assets/609ea0a9-7d58-443c-9be3-4a109d6110d1" width="350" alt="register">
 </p>
 
 **Gestión de Clases:** Crear, programar, invitar a alumno y hacer seguimiento de clases.
-
+<p align="center">
+ <img src="https://github.com/user-attachments/assets/940626c9-4ec4-4ef4-82d2-f5fc652edb35" width="350" alt="crear">
+ </p>
+ 
 **Almacenamiento Centralizado:** Guardar y organizar documentos, videos y otros recursos en un solo lugar.
-
+<p align="center">
+ <img src="https://github.com/user-attachments/assets/5ae2485d-8d47-43a4-97a3-40c291385443" width="350" alt="gestionar">
+ </p>
+ 
 **Creación de Contenido Educativo:** Recursos integrados para aprender, y otros materiales didácticos.
-
+<p align="center">
+ <img src="https://github.com/user-attachments/assets/6dc3ca58-fa29-4623-8725-5c2de4782c86" width="350" alt="recursos">
+ </p>
+   
 ## Tecnologías Utilizadas
-## Etapa de Diseño
+- ### Etapa de Diseño
+- ### Etapa de Programación 
+- ### Etapa de Deploy
+- ### Etapa de Testeo
+
+
+-------
+## Etapas de diseño
 ### Tecnología UI/UX
 
-Tecnología | Figma |
 
-| Tecnología | Descripción |
-|------------|-------------|
-| [![Figma](Link de figma) | Figma es una herramienta de diseño de interfaz de usuario basada en web que permite a los equipos de diseño colaborar en tiempo real. Es ampliamente utilizada para diseñar y prototipar aplicaciones y sitios web. |
-
-| Enlace de Prototipo de Alta Fidelidad |
-|:---------------------------:|
-| [![Prototipo](Link de prototipo) | Figma es una herramienta de diseño de interfaz de usuario basada en web que permite a los equipos de diseño colaborar en tiempo real. Es ampliamente utilizada para diseñar y prototipar aplicaciones y sitios web. |
-
+| Tecnología                                                                                           | Descripción                                                                                       |
+|------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
+| [![Figma](https://skillicons.dev/icons?i=figma)](https://www.figma.com/)  | Figma es una herramienta de diseño colaborativo en línea para crear interfaces de usuario y prototipos.         |
+| [![Miro](https://skillicons.dev/icons?i=miro)](https://miro.com/)                     | Miro es una plataforma de pizarra en línea utilizada para la colaboración y el brainstorming visual.                                                 |
+| [![Adobe XD](https://skillicons.dev/icons?i=xd)](https://www.adobe.com/products/xd.html)              | Adobe XD es una herramienta de diseño de experiencia de usuario para la creación de prototipos y wireframes.                 |
+| [![Illustrator](https://skillicons.dev/icons?i=ai)](https://www.adobe.com/products/illustrator.html)           | Adobe Illustrator es una aplicación de diseño gráfico basada en vectores utilizada para crear ilustraciones, logotipos y gráficos.                                  |
+| [![Zeplin](https://skillicons.dev/icons?i=zeplin)](https://zeplin.io/) | Zeplin es una herramienta que facilita la colaboración entre diseñadores y desarrolladores, generando especificaciones de diseño detalladas.                          |
 ## Etapa de Codificación
-### Control de Versiones (Git y GitHub)
-
-| Tecnología | Descripción |
-|------------|-------------|
-| [![Git](Link de Git) | Git es un sistema de control de versiones distribuido diseñado para manejar proyectos de cualquier tamaño con velocidad y eficiencia. |
-| [![GitHub](Link) | GitHub es una plataforma web basada en Git que ofrece alojamiento de código, seguimiento de problemas, gestión de proyectos y otras herramientas para la colaboración en proyectos de software. |
-
-### Tecnologías Front-end
-
-| Tecnología | Descripción |
-|------------|-------------|
-| [![JavaScript](Link) | JavaScript es un lenguaje de programación ampliamente utilizado en desarrollo web para agregar interactividad a las páginas web. |
-| [![React](Link) | React es una biblioteca de JavaScript para construir interfaces de usuario, desarrollada por Facebook. Permite crear componentes reutilizables para construir interfaces de usuario interactivas. |
-| [![Bootstrap](Link) | Bootstrap es un framework front-end de código abierto para desarrollar sitios web y aplicaciones web con CSS, JavaScript y HTML responsivos. Proporciona componentes preestilizados y un diseño adaptable. |
-| [![CSS3](Link)|  CSS (Cascading Style Sheets) es un lenguaje de hojas de estilo utilizado para describir la presentación de documentos HTML y XML. Define cómo se ven los elementos en una página web, incluyendo el diseño, colores y fuentes. |
 
 ### Tecnologías Back-end 
 
-| Tecnología | Descripción |
-|------------|-------------|
-| [![Nest.js](Link) | Nest.js es un framework para construir aplicaciones eficientes y escalables en Node.js. Está basado en los principios de Angular y proporciona una arquitectura robusta para aplicaciones back-end modernas. |
-| [![PostgreSQL](Link) | PostgreSQL es un sistema de gestión de bases de datos relacional y de código abierto. Es conocido por su robustez, características avanzadas y soporte para datos estructurados y no estructurados. |
-| [Socket.IO](Link) | Socket.IO es una biblioteca de JavaScript para aplicaciones web en tiempo real. Permite la comunicación bidireccional en tiempo real entre clientes web y servidores, facilitando la creación de aplicaciones colaborativas y de juegos en línea. |
+| Tecnología                                                                                           | Descripción                                                                                       |
+|------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
+| [![MongoDB](https://skillicons.dev/icons?i=mongodb)](https://www.mongodb.com/)  | MongoDB es una base de datos NoSQL orientada a documentos que almacena los datos en formato JSON.         |
+| [![Postman](https://skillicons.dev/icons?i=postman)](https://www.postman.com/)                     | Postman es una herramienta para probar y desarrollar APIs.                                                 |
+| [![Express.js](https://skillicons.dev/icons?i=express)](https://expressjs.com/)              | Express.js es un framework web para Node.js, diseñado para construir aplicaciones web y APIs.                 |
+| [![Node.js](https://skillicons.dev/icons?i=nodejs)](https://nodejs.org/)           | Node.js es un entorno de ejecución para JavaScript del lado del servidor.                                  |
+| [![Visual Studio Code](https://skillicons.dev/icons?i=vscode)](https://code.visualstudio.com/) | Visual Studio Code es un editor de código fuente ligero y potente, ideal para la programación.                          |
 
-### QA y Testeo:
+### Tecnologías Front-end
 
-| Tecnología | Descripción |
-|------------|-------------|
-| [Azure DevOps](Link) | Azure DevOps es un conjunto de herramientas de desarrollo colaborativo que incluye repositorios Git, pipelines de CI/CD, gestión ágil de proyectos y pruebas automatizadas. Es utilizado para planificar, desarrollar, probar y desplegar aplicaciones con facilidad y eficiencia en la nube de Microsoft Azure. |
-
-## Etapa de Deploy
-## Despliegue:
-
-### Frontend:
-| Tecnología | Descripción |
-|------------|-------------|
-| [Vercel](Link) | Vercel es una plataforma de despliegue para aplicaciones estáticas y de servidor. Especializada en despliegue rápido y automatizado de aplicaciones web frontend, ofreciendo escalabilidad y rendimiento optimizado. |
-
-### Backend:
-| Tecnología | Descripción |
-|------------|-------------|
-| Servidor Debian en Linode con Docker | Se utiliza un servidor Debian alojado en Linode con Docker para el despliegue de la parte backend de la aplicación. Docker facilita la creación, implementación y ejecución de aplicaciones en contenedores de software. |
-
-## Pruebas de Testeo
-
-Para asegurar la calidad del proyecto, hemos implementado pruebas de testeo utilizando Azure DevOps. Puedes ver los elementos de trabajo y las pruebas recientes en el siguiente enlace:
-
-[Pruebas de Azure DevOps](Link de pruebas)
-
-## Modelo de Negocio
-
-Nuestro modelo de negocio se basa en . . .
-
-<h2 align="left">Equipo de Trabajo</h2>
-
-### Back End
-| Integrante | Cargo                | LinkedIn                                               | GitHub                                        | Rol   |
-
-### Front End
-| Integrante | Cargo                | LinkedIn                                               | GitHub                                        | Rol   |
-
-### Diseño UX / UI
-
-| Integrante | Cargo                | LinkedIn                                               | GitHub                                        | Rol   |
-
-### QA y Testing
-
-| Integrante | Cargo   | LinkedIn                                               | GitHub                                   | Rol |
+| Tecnología                                                                                           | Descripción                                                                                                  |
+|------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
+| [![Material-UI](https://skillicons.dev/icons?i=materialui)](https://mui.com/)                          | Material-UI es una biblioteca de componentes de interfaz de usuario para React, que sigue las directrices de diseño de Google Material. |
+| [![JavaScript](https://skillicons.dev/icons?i=javascript)](https://www.javascript.com/)               | JavaScript es un lenguaje de programación que se utiliza principalmente para crear contenido dinámico en las páginas web.          |
+| [![React](https://skillicons.dev/icons?i=react)](https://reactjs.org/)                                        | React es una biblioteca de JavaScript para construir interfaces de usuario, especialmente en aplicaciones de una sola página.      |
+| [![Tailwind CSS](https://skillicons.dev/icons?i=tailwind)](https://tailwindcss.com/)                 | Tailwind CSS es un framework CSS que proporciona utilidades predefinidas para diseñar interfaces web de manera rápida y eficiente.       |
 
 
-**¡Gracias por visitar LinguaLab!**
+## Etapa de deploy
+### Frontend y Backend 
+### Despliegue
+
+| Tecnología                                                                                           | Descripción                                                                                       |
+|------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
+| ![Render](https://github.com/user-attachments/assets/0ea906a1-eb52-4961-8ecf-fab37aded21c) | Render es una plataforma de hosting que permite desplegar aplicaciones web, APIs y bases de datos de manera sencilla.         |
+
+
+### QA y testeo:
+
+| Tecnología                                                                                           | Descripción                                                                                       |
+|------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
+| [![SQL](https://skillicons.dev/icons?i=mysql)](https://www.mysql.com/)  | SQL es un lenguaje estándar para la gestión de bases de datos relacionales, utilizado para consultas y manipulación de datos.         |
+
+---
+
+## Comunicación que manejamos con el equipo
+
+| Tecnología                                                                                           | Descripción                                                                                       |
+|------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
+| [![Slack](https://skillicons.dev/icons?i=slack)](https://slack.com/)  | Slack es una plataforma de mensajería empresarial que facilita la comunicación en equipo a través de canales organizados.         |
+| [![GitHub](https://skillicons.dev/icons?i=github)](https://github.com/)                     | GitHub es una plataforma de desarrollo colaborativo que utiliza Git para control de versiones y gestión de código fuente.                                                 |               |
+| [![Notion](https://skillicons.dev/icons?i=notion)](https://www.notion.so/)           | Notion es una herramienta de productividad que combina toma de notas, gestión de tareas y bases de conocimiento en un solo lugar.                                  |
+| [![WhatsApp](https://skillicons.dev/icons?i=whatsapp)](https://www.whatsapp.com/) | WhatsApp es una aplicación de mensajería instantánea que permite la comunicación a través de texto, voz y video.                          |
+| [![Jira](https://skillicons.dev/icons?i=jira)](https://www.atlassian.com/software/jira)  | Jira es una herramienta de gestión de proyectos utilizada para seguimiento de errores, tareas y gestión de proyectos ágiles.         |
+| [![Discord](https://skillicons.dev/icons?i=discord)](https://discord.com/)                     | Discord es una plataforma de comunicación por voz, video y texto, diseñada originalmente para comunidades de videojuegos pero ampliamente utilizada para diversos grupos y equipos.                                                 |
+---
+
+
+## Modelo de negocio
+
+**LinguaLab** opera bajo un modelo de negocio freemium, que ofrece tanto una versión gratuita como una versión de pago con características adicionales: 
+
+### Versión gratuita
+- **Clases Limitadas:** Los usuarios pueden crear hasta **5 clases** de forma gratuita.
+- **Acceso a Recursos Básicos:** Incluye acceso a una selección de videos y ejercicios interactivos.
+- **Anuncios:** Esta versión contiene anuncios que ayudan a mantener la plataforma.
+
+### Versión de pago (Premium)
+- **Clases ilimitadas:** Permite a los usuarios crear un número **ilimitado de clases**.
+- **Acceso completo a Recursos:** Ofrece acceso a todo el contenido disponible, incluyendo recursos exclusivos.
+- **Sin anuncios:** Proporciona una experiencia sin interrupciones y libre de anuncios.
+- **Soporte Prioritario:** Los usuarios premium reciben soporte técnico prioritario para una resolución rápida de problemas.
+
+Este modelo freemium permite a los usuarios empezar a utilizar LinguaLab sin costo, mientras que aquellos que necesitan más funcionalidad y recursos pueden optar por la suscripción premium. Las fuentes de ingresos incluyen las suscripciones premium y los anuncios en la versión gratuita.
+
+
+## Equipo de trabajo</h2>
+
+| Nombre                         | Rol                       | LinkedIn                                                                                  | Behance                                                                                 | GitHub                                                               | Web                                               |
+|--------------------------------|---------------------------|-------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|----------------------------------------------------------------------|---------------------------------------------------|
+| Mercedes Ramella               | Project Management        | [LinkedIn](https://www.linkedin.com/in/mercedes-ramella/)                                 | [Behance](https://www.behance.net/maramramella/moodboards)                              | [GitHub](https://github.com/MechiRamella)                               | -                                                 |
+| Clara Carbonetti               | QA Manual                 | [LinkedIn](https://www.linkedin.com/in/clara-carbonetti-76719a6/)                         | -                                                                                       | [GitHub](https://github.com/claruchis)                                  | -                                                 |
+| Aylén Sol Martel               | Diseñadora UX UI          | [LinkedIn](https://www.linkedin.com/in/aylen-sol-martel/)                                 | [Behance](https://www.behance.net/aylen-sol-martel)                                     | [GitHub](https://github.com/MAAY7001)                                  | -                                                 |
+| Paula Cecilia Areal            | Diseñadora UX UI          | [LinkedIn](https://www.linkedin.com/in/arealpaula/)                                       | [Behance](https://www.behance.net/arealpaula/projects)                                  | -                                                                    | [Web](https://arealpaula.myportfolio.com/)         |
+| Camila Gonzalez                | Diseñadora UX UI          | [LinkedIn](https://www.linkedin.com/in/laura-c-gonzalez/)                                 | [Behance](https://www.behance.net/lauracgonzale5)                                       | [GitHub](https://github.com/Camila-Gon)                               | -                                                 |
+| Pedro Gonzalez                 | Front Developer           | [LinkedIn](https://www.linkedin.com/in/pedro-gonzalez-268321279/)                         | -                                                                                       | [GitHub](https://github.com/Simply92)                                   | -                                                 |
+| Gustavo Andrés Sírtori         | FullStack Developer       | [LinkedIn](https://www.linkedin.com/in/gustavoandressirtori/)                             | -                                                                                       | [GitHub](https://github.com/gustsirt)                                   | [Web](https://gustsirt.github.io/pagina-resumen/)  |
+| Mariano Torres Distefano       | Front Developer           | [LinkedIn](https://www.linkedin.com/in/mariano-torres-distefano/)                         | -                                                                                       | [GitHub](https://github.com/Marianotd)                                 | -                                                 |
+| Henryck Guaramato              | FullStack Developer       | [LinkedIn](https://www.linkedin.com/in/henryckg/)                                         | -                                                                                       | [GitHub](https://github.com/henryckg)                                   | -                                                 |
+| Vanessa Sánchez Pulido         | Front Developer           | [LinkedIn](https://www.linkedin.com/in/dev-vanessan/)                                     | -                                                                                       | [GitHub](https://github.com/vanessann-dev)                             | - ---
+## Mas información
+
+| Descripción                           | Enlace                                                                                                                      |
+|---------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| 🌐 *Deploy Front*                   | [LINK DEPLOY FRONT](https://team-22-front.onrender.com/)                                                                     |
+| 🌐 *Deploy Back*                    | [LINK DEPLOY BACK](https://team-22-bwbn.onrender.com/)                                                                       |
+| 🎨 *Figma Prototipo*                | [LINK FIGMA PROTOTIPO](https://www.figma.com/proto/6ExckQ1hkSbVy141KvKx6L/Foo-Talent-Group?page-id=1%3A3&n)                  |
+| 🎨 *Figma Diseño*                   | [LINK FIGMA](https://www.figma.com/design/6ExckQ1hkSbVy141KvKx6L/Foo-Talent-Group?node-id=0-1&t=I06iIVJoQvR4i7Bv-1)         |
+| ✔️ *Testeo*                         | [LINK TESTEO](https://docs.google.com/document/d/1aDC-3fxB5ygd84JPm_X0Za3cBtRhNRSo/edit?usp=sharing&ouid=100563133626782885656&rtpof=true&sd=true)  |
+| 📄 *PRD*                            | [LINK PRD](https://docs.google.com/document/d/1MYDGeFpIbIzBjmCsctT-foNc1qHjGMkCbSoL14upgKc/edit?usp=sharing)                |
+| 📸 *Instagram*                      | [LINK INSTAGRAM](https://www.instagram.com/p/C-bdaB5Nr4q/?igsh=azNydmFhdTFwZDl2)                                            |
+| 🚀 *Postman Workspace*              | [LINK POSTMAN](https://www.postman.com/spacecraft-geoscientist-33646457/workspace/public/overview)                           ||
+
+---
+
+## **¡Gracias por visitar LinguaLab!** ##
 
 ---
 
