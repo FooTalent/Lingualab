@@ -8,14 +8,16 @@ import editarPrograma from '/editarPrograma.svg'
 import duplicar from '/duplicar.svg'
 import Modal from '../../../../components/Modal';
 import popUp from '/Popup_EliminarPrograma.png'
-import { deleteProgram, duplicateProgram } from '../../../../services/programs.services';
+import { createVCRoom, deleteProgram, duplicateProgram } from '../../../../services/programs.services';
 import { useAppStore } from '../../../../store/useAppStore';
+import { useNavigate } from 'react-router-dom';
 
 const ProgramCard = ({ program, buttonFunction, refresh }) => {
-  const { user } = useAppStore();
+  const { user, userDetail } = useAppStore();
   const [state, setState] = useState(false)
   const [deleteModal, setDeleteModal] = useState(false) 
   const [idProgram, setIdProgram] = useState('')
+  const navigate = useNavigate()
 
   const handleDelete = (id) => {
     setState(!state)
@@ -35,9 +37,14 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
     refresh(prev => !prev)
   }
 
+  const handleCreateVCR = async (id) => {
+    const response = await createVCRoom(user.token, userDetail._id, {templateId: id})
+    navigate('/aulavirtual')
+  }
+
 
   const links = [
-    { path: `/`, label: <><img src={crearAula} alt='Crear Aula' />Crear aula a partir de este programa</> },
+    { path: ``, label: <><img src={crearAula} alt='Crear Aula' />Crear aula a partir de este programa</>, function: handleCreateVCR },
     { path: `/workspace/programas/${program._id}`, state: 'edit', label: <><img src={editarPrograma} alt='Editar Programa' />Editar programa</> },
     { path: ``, label: <><img src={duplicar} alt='Duplicar Programa' />Duplicar programa</>, function: handleDuplicate },
     { path: ``, label: <><DeleteIcon />Eliminar programa</>, function: handleDelete },
