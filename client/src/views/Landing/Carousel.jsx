@@ -1,5 +1,4 @@
 //HOOKS
-import { useEffect } from "react";
 import Slider from "react-slick";
 //SLICK
 import "slick-carousel/slick/slick.css";

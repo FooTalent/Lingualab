@@ -144,14 +144,14 @@ const Landing = () => {
         </div>
       </div>
 
-        <div className="absolute right-[10rem] bottom-0 z-30">
-          <img
-            src="/ImagesLanding/comofunciona.png"
-            alt="Cómo funciona"
-            className="max-w-[450px]"
-          />
-        </div>
+      <div className="absolute right-[10rem] bottom-0 z-30">
+        <img
+          src="/ImagesLanding/comofunciona.png"
+          alt="Cómo funciona"
+          className="max-w-[450px]"
+        />
       </div>
+
 
       <div className="py-12 text-center">
         <h2 className="text-3xl font-bold mb-8">
@@ -281,6 +281,7 @@ const Landing = () => {
 
       </div>
     </div>
+
   );
 };
 
