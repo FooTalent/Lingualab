@@ -59,52 +59,55 @@ const ViewStudent = () => {
   };
 
   return (
-    <div className="mx-auto py-4 w-[1210px]">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex space-x-2">
+    <div className="container mx-auto py-4 flex flex-col gap-14 text-card">
+      <div className="flex items-center justify-between">
+        <div className="flex gap-6">
           <button
             onClick={handleShowInfo}
-            className={`px-4 py-2 rounded-lg ${showInfo
-              ? 'bg-yellow-400 text-black font-bold'
-              : 'border border-yellow-400 text-black bg-yellow-100'
+            className={`w-[200px] border-2 px-4 py-3 rounded-lg leading-5 tracking-wide ease-out duration-600 hover:bg-Yellow hover:font-extrabold ${showInfo
+              ? 'border-Yellow bg-Yellow font-extrabold'
+              : 'border-Yellow text-black bg-YellowDeselect'
               }`}
           >
             Información Personal
           </button>
           <button
             onClick={handleShowGrades}
-            className={`px-4 py-2 rounded-lg ${!showInfo
-              ? 'bg-yellow-400 text-black font-bold'
-              : 'border border-yellow-400 text-black bg-yellow-100'
+            className={`w-[144px] border-2 px-4 py-3 rounded-lg leading-5 tracking-wide ease-out duration-600 hover:bg-Yellow hover:font-extrabold ${!showInfo
+              ? 'border-Yellow bg-Yellow font-extrabold'
+              : 'border-Yellow text-black bg-YellowDeselect'
               }`}
           >
             Calificaciones
           </button>
         </div>
-        <div className="flex items-center w-[664px]">
-          <div className="relative w-full">
+
+        <div className="flex items-center gap-4">
+          <div className="relative">
             <input
               type="text"
-              placeholder="¿Qué estás buscando?"
-              className="p-2 pl-10 w-full border border-gray-300 rounded-lg"
+              placeholder="¿Qué estas buscando?"
+              className="border border-Grey rounded-lg px-4 py-3 pl-11 w-[566px] h-[48px] bg-inputBg text-card placeholder:text-Grey outline-none focus:border-Purple hover:border-Purple"
             />
-            <SearchIcon className="absolute left-2 top-2 text-gray-500" />
+            <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#444444]" />
           </div>
-          <button className="ml-2 bg-purple-600 text-white px-4 py-2 rounded-lg">
+
+          <button className="bg-Purple tracking-wide hover:bg-PurpleHover text-white font-extrabold px-4 py-3 rounded-lg h-[48px] ease-out duration-600">
             Buscar
           </button>
         </div>
       </div>
 
-      <table className="flex flex-col w-full bg-white gap-4 mx-auto">
-        <thead className='border rounded-xl border-Purple mx-auto w-full gap-6'>
-          <tr className='flex justify-between w-full py-6 px-4'>
+      <table className="flex flex-col bg-white gap-4">
+        <thead className=' rounded-xl py-6 shadow-table flex items-center gap-6'>
+          <tr className='flex justify-between w-full px-4 text-tableHead text-lg leading-5'>
             {showInfo ? (
               <>
-                <th className='w-[250px]'>Nombre y Apellido</th>
-                <th className='w-[120px]'>Nivel</th>
-                <th className='w-[160px]'>Teléfono</th>
-                <th className='w-[300px]'>Email</th>
+                <th className='max-w-[250px]'>Nombre y Apellido</th>
+                <th className='max-w-[120px]'>Nivel</th>
+                <th className='max-w-[168px] whitespace-nowrap'>Fecha de Nacimiento</th>
+                <th className='max-w-[160px]'>Teléfono</th>
+                <th className='max-w-[300px]'>Email</th>
               </>
             ) : (
               <>
@@ -148,6 +151,7 @@ const ViewStudent = () => {
                       <span className='w-[184px]'>{student.first_name} {student.last_name}</span>
                     </td>
                     <td className='w-[120px]'>{student.level}</td>
+                    <th className='max-w-[168px] whitespace-nowrap'>{}</th>
                     <td className='w-[160px]'>{student.phone}</td>
                     <td className='w-[300px]'>{student.email}</td>
                   </>
