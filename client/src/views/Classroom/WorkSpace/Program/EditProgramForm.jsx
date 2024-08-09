@@ -1,15 +1,31 @@
-import React, { useState } from 'react';
-import { LANGUAGES, LEVELS } from '../../../../utils/valueLists';
+import React, { useEffect, useState } from 'react';
+import { LEVELS } from '../../../../utils/valueLists';
 import DropdownSelect from '../../SubComponents/DropdownSelect';
 import ButtonModal from '../../../../components/Form/ButtonModal';
+import { getLanguages } from '../../../../services';
 
 const EditProgramForm = ({ onSubmit, onClose, program }) => {
+  const [languageOptions, setLanguageOptions] = useState([]);
+  
   const [programData, setProgramData] = useState({
     title: program.title,
     description: program.description,
     language: program.language,
     level: program.level,
   });
+
+  useEffect(() => {
+    const fetchValues = async () => {
+      try {
+        const languages = await getLanguages();
+        setLanguageOptions(languages.map(language => ({ value: language, label: language })));
+      } catch (error) {
+        console.error('Error fetching languages:', error);
+      }
+    };
+
+    fetchValues();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -62,7 +78,7 @@ const EditProgramForm = ({ onSubmit, onClose, program }) => {
 
       <DropdownSelect
         label="Idioma"
-        options={LANGUAGES}
+        options={languageOptions}
         selectedOption={programData.language}
         onSelect={(value) => handleSelectChange('language', value)}
       />

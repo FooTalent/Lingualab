@@ -27,7 +27,7 @@ const Carousel = () => {
       <div className="w-full h-[166px]">
         <Slider {...settings}>
           {reseñas.map((reseña, index) => (
-            <div className="flex mx-6">
+            <div key={index} className="flex mx-6">
               <div
                 className="flex flex-row bg-white w-[420px] p-[20px] gap-[20px] rounded-2xl"
                 key={reseña.id}>
