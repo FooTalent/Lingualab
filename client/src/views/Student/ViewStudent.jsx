@@ -6,6 +6,8 @@ import { crearURLCompleta } from '../../utils/urifoto';
 import { Link } from 'react-router-dom';
 import Modal from '../../components/Modal';
 import AddStudentForm from '../../components/AddStudentForm';
+import { format } from 'date-fns';
+import AddIcon from '@mui/icons-material/Add';
 
 const ViewStudent = () => {
   const { user, userDetail } = useAppStore();
@@ -58,6 +60,12 @@ const ViewStudent = () => {
     }
   };
 
+  const handleBirthday = (date) => {
+    const parsedDate = new Date(date);
+    const formattedDate = format(parsedDate, 'dd/MM/yyyy');
+    return formattedDate;
+  }
+
   return (
     <div className="container mx-auto py-4 flex flex-col gap-14 text-card">
       <div className="flex items-center justify-between">
@@ -99,7 +107,7 @@ const ViewStudent = () => {
       </div>
 
       <table className="flex flex-col bg-white gap-4">
-        <thead className=' rounded-xl py-6 shadow-table flex items-center gap-6'>
+        <thead className='border border-Purple rounded-xl py-6 shadow-customTable flex items-center gap-6'>
           <tr className='flex justify-between w-full px-4 text-tableHead text-lg leading-5'>
             {showInfo ? (
               <>
@@ -121,7 +129,8 @@ const ViewStudent = () => {
             )}
           </tr>
         </thead>
-        <tbody className='border rounded-xl border-Purple mx-auto w-full gap-6 px-4'>
+
+        <tbody className='border border-Purple rounded-xl shadow-customTable p-4 flex flex-col items-center'>
           {loading ? (
             <tr>
               <td colSpan="6" className="text-center py-4">Cargando...</td>
@@ -136,13 +145,13 @@ const ViewStudent = () => {
             students.map((student, index) => (
               <tr
                 key={student._id}
-                className={`border-b ${index === 0 ? 'rounded-t-xl' : ''
-                  } ${index === students.length - 1 ? 'border-none' : ''
+                className={`border-b text-tableHead ${index === 0 ? 'pt-0' : ''
+                  } ${index === students.length - 1 ? 'border-none pb-0' : ''
                   } flex justify-between items-center w-full py-6 border-Purple gap-6`}
               >
                 {showInfo ? (
                   <>
-                    <td className='w-[250px] gap-6'>
+                    <td className='w-[250px] gap-4 items-center'>
                       {student.photo ? (
                         <img className='w-fit-[50px] h-fit-[50px] rounded-full' src={crearURLCompleta(student.photo)} />
                       ) : (
@@ -151,7 +160,7 @@ const ViewStudent = () => {
                       <span className='w-[184px]'>{student.first_name} {student.last_name}</span>
                     </td>
                     <td className='w-[120px]'>{student.level}</td>
-                    <th className='max-w-[168px] whitespace-nowrap'>{}</th>
+                    <td className='max-w-[168px] whitespace-nowrap'>{handleBirthday(student.birthday)}</td>
                     <td className='w-[160px]'>{student.phone}</td>
                     <td className='w-[300px]'>{student.email}</td>
                   </>
@@ -172,7 +181,7 @@ const ViewStudent = () => {
                     <td className='w-[90px]'>
                       <Link
                         to={`/student/${student._id}`}
-                        className="bg-Purple font-extrabold text-[16px] text-white p-3 rounded-lg">
+                        className="bg-Purple hover:bg-PurpleHover whitespace-nowrap font-extrabold text-base text-white py-3 px-4 rounded-lg ease-out duration-600">
                         Ver más
                       </Link>
                     </td>
@@ -191,9 +200,10 @@ const ViewStudent = () => {
       <div className="flex justify-end mt-4">
         <button
           onClick={handleModalOpen}
-          className="bg-yellow-400 text-black font-bold px-4 py-2 rounded-lg"
+          className="bg-Yellow hover:bg-card hover:text-Yellow font-extrabold tracking-wide flex gap-[10px] px-6 py-4 w-[370px] justify-center items-center rounded-lg text-xl leading-7 ease-out duration-600"
         >
-          Agregar alumno +
+          <span>Agregar alumno</span>
+          <AddIcon />
         </button>
       </div>
       <Modal isOpen={isModalOpen} onClose={handleModalClose} title="Agregar Alumno" modalSize='medium'>

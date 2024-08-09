@@ -35,7 +35,7 @@ export default {
         cardContainer: '0px 0px 8px 1px #00000026',
         modal: '0px 0px 12px 0px #00000080',
         home: '0px 0px 4px 1px #00000033',
-        table: '0px 0px 4px 1px #00000026',
+        customTable: '0px 0px 4px 1px #00000026',
       },
       fontSize: {
         customTitle: '28px',
