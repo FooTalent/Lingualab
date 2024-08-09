@@ -13,10 +13,10 @@ export default class Controller extends CustomController {
     try {
       const { isTemplate } = req.query;
 
+      let filter = {}
       // Agrega el filtro isTemplate si es necesario
-      if (isTemplate !== undefined) {
-        elements = elements.filter(element => element.isTemplate === JSON.parse(isTemplate));
-      }
+      filter.isTemplate = isTemplate === true || false
+      const elements = await this.service.get(filter)
 
       res.sendSuccessOrNotFound(elements);
     } catch (error) {
