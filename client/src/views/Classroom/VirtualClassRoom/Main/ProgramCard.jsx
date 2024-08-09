@@ -97,7 +97,9 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
       <Options id={program._id} state={state} links={links} />
       <Modal modalSize={'xsmall'} isOpen={deleteModal}>
         <div className='flex flex-col gap-8'>
-          <img src={popUp} alt="Eliminar programa" className='object-cover' />
+          <div className="flex justify-center ">
+            <img src={popUp} alt="Eliminar aula" />
+          </div>
           <div className="grid grid-cols-2 gap-6">
             <ButtonModal buttonAction={() => setDeleteModal(false)} type={'prev'} label={'Cancelar'} />
             <ButtonModal buttonAction={handleConfirmDelete} label={'Eliminar aula'} />

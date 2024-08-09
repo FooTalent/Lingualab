@@ -2,17 +2,17 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-export default function CreatedProgram({ onClose, logo, pathProgram, pathNewClass }) {
+export default function CreatedProgram({ onClose, logo, pathProgram, pathNewClass, label, closeLabel }) {
   const navigate = useNavigate();
 
   return (
     <div className='flex flex-col gap-8'>
       <div>
-        <img src={logo} alt="Programa creado" />
+        <img src={logo} alt="Programa creado" className='mx-auto max-h-[390px]' />
       </div>
 
       <h2 className='text-xl text-center font-medium'>
-        ¿Desea crear la clase o ir al programa creado?
+        {label}
       </h2>
 
       <div className='grid grid-cols-2 gap-6'>
@@ -23,7 +23,7 @@ export default function CreatedProgram({ onClose, logo, pathProgram, pathNewClas
           }}
           className="border border-Purple bg-white hover:bg-Purple text-Purple hover:text-white font-extrabold py-3 px-8 rounded-lg mr-2 ease-linear duration-150"
         >
-          Ir al programa
+          {closeLabel}
         </button>
         <button
           onClick={() => {
