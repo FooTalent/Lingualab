@@ -206,7 +206,7 @@ const ViewStudent = () => {
           <AddIcon />
         </button>
       </div>
-      <Modal isOpen={isModalOpen} onClose={handleModalClose} title="Agregar Alumno" modalSize='medium'>
+      <Modal isOpen={isModalOpen} onClose={handleModalClose} title="Agregar Alumno" modalSize='small'>
         <AddStudentForm
           onSubmit={handleAddStudent}
           onClose={handleModalClose}
