@@ -76,7 +76,7 @@ export default class Controller extends CustomController {
     try{ 
       // Generar URL de autenticación
       const url = oauth2Client.generateAuthUrl({
-        access_type: 'offline', // Solicitar acceso sin conexión para recibir un token de actualización
+        access_type: 'offline',
         scope: SCOPES,
         redirect_uri: googleEnv.redirecUri
       });
@@ -98,7 +98,6 @@ export default class Controller extends CustomController {
         oauth2Client.setCredentials(tokens);
               
         try {
-          // Obtener información del perfil de Google y manejar el registro/login
           const oauth2 = google.oauth2({ version: 'v2', auth: oauth2Client });
           const { data } = await oauth2.userinfo.get();
           const {name, token} =  await this.service.googleLoginOrRegister(data, tokens);
@@ -135,9 +134,8 @@ export default class Controller extends CustomController {
     try{
       const tid = req.user._id
 
-      const element = await this.service.get({role: 'Student'});
-      // TODO
-      //const element = await this.service.get({teacher: tid});
+      //const element = await this.service.get({role: 'Student'});
+      const element = await this.service.get({teacher: tid});
       res.sendSuccessOrNotFound(element);
     } catch(error) {
       next(error)
@@ -146,9 +144,10 @@ export default class Controller extends CustomController {
   getStudentbyId = async (req, res, next) => {
     try{
       const {sid} = req.params
+      const tid = req.user._id
 
-      const element = await this.service.getBy({_id: sid, role: 'Student'});
-      //const element = await this.service.get({_id: sid, teacher: tid});
+      const response = await this.service.get({_id: sid, teacher: tid, role: 'Student'});
+      const element = response.length > 0 ? response : false      
       res.sendSuccessOrNotFound(element);
     } catch(error) {
       next(error)
@@ -170,13 +169,16 @@ export default class Controller extends CustomController {
   inviteStudent = async (req, res, next) => {
     try{
       const userData = validateFields(req.body, this.requieredfield.invite);
-      const {first_name, last_name, password} = req.body
+      const {first_name, last_name, password, level, birthday, phone} = req.body
       userData.first_name = first_name || "Nombre" ;
       userData.last_name = last_name || "Apellido" ;
-      const emailPassword = password || "12345"
-      userData.password = emailPassword ;
-      userData.role = 'Student'
+      userData.level = level || "A1-A2" ;
+      birthday && (userData.birthday = birthday)
+      phone && (userData.phone = phone)
       userData.teacher = req.user._id
+      userData.role = 'Student'
+      const emailPassword = password || "12345";
+      userData.password = emailPassword ;
 
       const newStudent = await this.service.register(userData)
       await this.service.inviteStudent(req.user, newStudent, emailPassword)

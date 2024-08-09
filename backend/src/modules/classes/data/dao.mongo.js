@@ -12,10 +12,6 @@ export default class ThisDaoMongo extends DaoMongo {
         path: 'program',
         select: 'title'
       })
-      .populate({
-        path: 'students',
-        select: 'first_name, last_name'
-      })
       .select('-students.password');
     return result;
   }

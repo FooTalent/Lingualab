@@ -18,8 +18,6 @@ const NavBar = () => {
         { text: "Conócenos", to: "/conocenos"}
     ]
 
-    console.log(status)
-
     return (
         <div>
             <ul className="flex justify-center gap-[32px] w-[683px]">

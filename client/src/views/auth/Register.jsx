@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAppStore } from '../../store/useAppStore';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -6,7 +6,7 @@ import InputList from '../../components/Form/InputList'
 
 export default function Register() {
     const navigate = useNavigate();
-    const { userRegister, complete } = useAppStore();
+    const { userRegister, complete, resetComplete } = useAppStore();
 
     const initialValues = {
         first_name: '',
@@ -22,11 +22,15 @@ export default function Register() {
 
     const handleForm = async (formData) => {
         await userRegister(formData);
-        if (complete) {
-            navigate("/auth/login");
-        }
-        reset();
     };
+
+    useEffect(() => {
+        if (complete) {
+            navigate('/auth/login');
+            reset();
+            resetComplete();
+        }
+    }, [complete, navigate, reset, resetComplete]);
 
     const getInputConfig = (inputName) => {
         let params = {

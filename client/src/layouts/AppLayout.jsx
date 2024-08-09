@@ -14,15 +14,15 @@ export default function AppLayout() {
         const initialize = async () => {
             if (!status) {
                 await localLogin();
-                // navigate('/auth/login')
             }
         };
         initialize();
+        if (!status) {
+            navigate('/auth/login');
+        }
     }, [status, localLogin, navigate]);
 
-    if (!status) {
-        navigate('/auth/login');
-    }
+
 
     return (
         <>
@@ -34,7 +34,7 @@ export default function AppLayout() {
                         <NavProfile />
                     </header>
                 </div>
-                <div className='flex flex-col mx-auto max-w-[1210px]'>
+                <div className='flex flex-col mx-auto max-w-[1210px] px-8p box-content pb-10'>
                     <CurrentTime />
                     <Outlet />
                 </div>

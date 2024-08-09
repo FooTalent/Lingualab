@@ -33,12 +33,23 @@ export default {
         calendar: '0px 0px 4px 0.5px #00000026',
         cardContainer: '0px 0px 8px 1px #00000026',
         modal: '0px 0px 12px 0px #00000080',
+        home: '0px 0px 4px 1px #00000033',
       },
       fontSize: {
         customTitle: '28px',
         custom: '22px',
         customSubTitle: '26px',
+        home: '32px',
       },
+      padding: {
+        '8p': '8%',
+      },
+      lineHeight: {
+        custom: '18.75px',
+      },
+      transitionDuration: {
+        '600': '600ms',
+      }
     },
   },
   plugins: [

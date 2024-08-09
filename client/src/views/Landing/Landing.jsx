@@ -1,4 +1,9 @@
+
+import Carousel from "./Carousel";
+
+
 const Landing = () => {
+
   return (
     <div className="text-[#444444]">
       <div className="relative">
@@ -37,6 +42,7 @@ const Landing = () => {
         </div>
       </div>
 
+
       <div className="container mx-auto py-12 text-center px-4 md:px-8">
         <h2 className="text-4xl font-bold mb-8 text-center">¿Qué ofrecemos?</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -45,11 +51,13 @@ const Landing = () => {
               Recursos para Docentes
             </h3>
             <div className="flex items-start mb-2">
+
               <img
                 src="/ImagesLanding/vistoMorado.svg"
                 alt="Check"
                 className="w-6 h-6"
               />
+
               <p className="ml-2 text-left text-lg pl-8">
                 Accede a plantillas de clases, <br />
                 programas y recursos específicos para <br />
@@ -57,11 +65,13 @@ const Landing = () => {
               </p>
             </div>
             <div className="flex items-start">
+
               <img
                 src="/ImagesLanding/vistoMorado.svg"
                 alt="Check"
                 className="w-6 h-6"
               />
+
               <p className="ml-2 text-left text-lg pl-8">
                 Crea programas de estudio <br />
                 personalizados para cada materia.
@@ -132,6 +142,7 @@ const Landing = () => {
             </div>
           </div>
         </div>
+      </div>
 
         <div className="absolute right-[10rem] bottom-0 z-30">
           <img
@@ -212,24 +223,8 @@ const Landing = () => {
         </div>
       </div>
 
-      <div className="bg-[#FFDC00] py-12">
-        <div className="container mx-auto flex flex-wrap justify-between">
-          {[
-            "docente",
-            "docente",
-            "docente",
-            "docente",
-            "docente",
-            "docente",
-          ].map((property, index) => (
-            <div
-              key={index}
-              className="w-[calc(16.666%-1rem)] bg-white p-4 rounded-lg mb-4 shadow-md"
-            >
-              <h3 className="text-xl font-bold">{property}</h3>
-            </div>
-          ))}
-        </div>
+      <div className="bg-[#FFDC00] w-full">
+        <Carousel />
       </div>
 
       <div className="py-12">
@@ -283,6 +278,7 @@ const Landing = () => {
             </li>
           </ul>
         </div>
+
       </div>
     </div>
   );

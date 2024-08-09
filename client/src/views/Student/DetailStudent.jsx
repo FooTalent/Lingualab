@@ -11,6 +11,8 @@ const DetailStudent = () => {
     const { studentId } = useParams()
     const [student, setStudent] = useState({});
     const [info, setInfo] = useState([])
+    const [opcion, setOpcion] = useState("")
+    const [edit, setEdit] = useState(false)
 
     useEffect(() => {
         const fetchStudents = async () => {
@@ -22,6 +24,14 @@ const DetailStudent = () => {
         }
         fetchStudents();
     }, [user, studentId]);
+
+    const handleState = (e) => {
+        setOpcion(e.target.value);
+    };
+
+    const handleScore = () => {
+        setEdit(false)
+    }
 
     return (
         <div className='flex flex-col'>
@@ -46,10 +56,21 @@ const DetailStudent = () => {
                         <span className='text-lg font-normal'>{student.level}</span>
                     </div>
                 </div>
-                <button className="ml-2 bg-black text-white px-4 py-2 rounded-lg flex items-center">
-                    <EditIcon className="mr-2" />
-                    Editar
-                </button>
+                {edit === true ? (
+                    <button
+                        onClick={handleScore}
+                        className="ml-2 bg-black text-white px-4 py-2 rounded-lg flex items-center">
+                        <EditIcon className="mr-2" />
+                        Guardar
+                    </button>
+                ) : (
+                    <button
+                        onClick={() => setEdit(true)}
+                        className="ml-2 bg-black text-white px-4 py-2 rounded-lg flex items-center">
+                        <EditIcon className="mr-2" />
+                        Editar
+                    </button>
+                )}
             </div>
             <table className="flex flex-col w-full bg-white gap-4 mx-auto mt-10">
                 <thead className='border rounded-xl border-Purple mx-auto w-full gap-6'>
@@ -70,24 +91,45 @@ const DetailStudent = () => {
                                     } ${index === classes.length - 1 ? 'border-none' : ''
                                     } flex justify-between items-center w-full py-6 border-Purple gap-6`}
                             >
-                                <>
-                                    <td className='w-[160px]'>{classes.level}</td>
-                                    <td className='w-[160px]'>{classes.oral}</td>
-                                    <td className='w-[160px]'>{classes.written}</td>
-                                    <td className='w-[160px]'>{classes.reading}</td>
-                                    <td className='w-[90px]'>{classes.state}</td>
-                                </>
-
+                                {edit === true ? (
+                                    <>
+                                        <td className='w-[160px]'>{classes.level}</td>
+                                        <input className='w-[160px]'>{classes.oral}</input>
+                                        <input className='w-[160px]'>{classes.written}</input>
+                                        <input className='w-[160px]'>{classes.reading}</input>
+                                        <select
+                                            value={classes.state ? classes.state : opcion}
+                                            onChange={handleState}
+                                            className='w-[90px]'
+                                        >
+                                            <option value="" disabled>
+                                                Estado
+                                            </option>
+                                            <option value="Calificado">Calificado</option>
+                                            <option value="Entregado">Entregado</option>
+                                            <option value="Pendiente">Pendiente</option>
+                                            <option value="No Entregado">No entregado</option>
+                                        </select>
+                                    </>
+                                ) : (
+                                    <>
+                                        <td className='w-[160px]'>{classes.level}</td>
+                                        <td className='w-[160px]'>{classes.oral}</td>
+                                        <td className='w-[160px]'>{classes.written}</td>
+                                        <td className='w-[160px]'>{classes.reading}</td>
+                                        <td className='w-[90px]'>{classes.state ? classes.state : opcion}</td>
+                                    </>
+                                )}
                             </tr>
                         ))
                     ) : (
                         <tr className='flex justify-center items-center w-full py-6 px-4'>
-                            <td>No se encontraron ninguna clase asignada a este estudiante</td>
+                            <td>No se encontró ninguna clase asignada a este estudiante</td>
                         </tr>
                     )}
                 </tbody>
             </table>
-        </div>
+        </div >
     )
 }
 

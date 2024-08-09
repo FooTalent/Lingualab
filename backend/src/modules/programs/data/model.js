@@ -16,6 +16,7 @@ const thisSchema = new Schema({
   level:       { type: String, enum: LEVELS, required: true },
   link_meet:      { type: String, },
   first_class: { type: Date, },
+  duration_hours: { type: Number, min: 1, max: 10, default: 1},
   daysOfWeek:  [{ type: String, enum: DAYSOFWEEK,}],
 
   // data of update

@@ -12,5 +12,6 @@ router
 .post   ("/",     handleAuth(users), controller.create)
 .put    ("/:eid", handleAuth(users), controller.updateId)
 .delete ("/:eid", handleAuth(users), controller.deleteId)
+.get    ("/calendar/get",     handleAuth(users), controller.getClassCalendar)
 
 export default router

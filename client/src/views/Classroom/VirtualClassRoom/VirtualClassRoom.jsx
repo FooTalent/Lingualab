@@ -93,6 +93,7 @@ const VirtualClassRoom = () => {
           data={programs} 
           CardComponent={ProgramCard} 
           buttonFunction={buttonFunction} 
+          refresh={setRefresh}
         />
       )}
 
