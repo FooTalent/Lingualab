@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react"
-import { LEVELS_MAP, RESOURCE_TYPES, LANGUAGES } from "../../utils/valueLists"
+import { LEVELS_MAP, RESOURCE_TYPES } from "../../utils/valueLists"
+import { getLanguages } from "../../services";
 
 export default function CreateResourceForm({ onSubmit, onCancel, data }) {
+    const [languageOptions, setLanguageOptions] = useState([]);
     const [formData, setFormData] = useState({
         title: '',
         type: '',
@@ -10,6 +12,20 @@ export default function CreateResourceForm({ onSubmit, onCancel, data }) {
         url: '',
         description: ''
     })
+
+    useEffect(() => {
+        const fetchValues = async () => {
+        try {
+            const languages = await getLanguages();
+            setLanguageOptions(languages.map(language => ({ value: language, label: language })));
+            setFormData(prev => ({...prev, language: languages[0].value || ''}));
+        } catch (error) {
+            console.error('Error fetching languages:', error);
+        }
+    };
+
+    fetchValues();
+    }, []);
 
     useEffect(() => {
         if (data) {
@@ -36,8 +52,10 @@ export default function CreateResourceForm({ onSubmit, onCancel, data }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (onSubmit) {
+        if (data) {
             onSubmit(data._id, formData)
+        } else {
+            onSubmit(formData)
         }
     }
 
@@ -66,8 +84,8 @@ export default function CreateResourceForm({ onSubmit, onCancel, data }) {
                         >
                             <option value="" disabled>Seleccionar el idioma</option>
                             {
-                                LANGUAGES.map((lvl, i) => (
-                                    <option key={i} value={lvl}>{lvl}</option>
+                                languageOptions.map((option, i) => (
+                                    <option key={i} value={option.value}>{option.value}</option>
                                 ))
                             }
                         </select>

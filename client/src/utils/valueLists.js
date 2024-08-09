@@ -21,4 +21,3 @@ export const ROLES = ['Teacher', 'Student', 'Admin'];
 export const GENDERS = ['Masculino', 'Femenino', 'No binario', 'Prefiero no decirlo'];
 export const CURRENCIES = ['ARS', 'DOL', 'EUR'];
 export const RESOURCE_TYPES = ["Canción", "Ejercicio", "Juego", "Libro/Audio Libros", "Serie/Película", "Diccionario"];
-export const LANGUAGES = ['Inglés'];
