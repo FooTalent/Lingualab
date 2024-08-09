@@ -29,7 +29,7 @@ const AboutUs = () => {
         </h3>
       </div>
 
-      <div className="flex mt-8">
+      <div className="flex mt-8 mb-20">
         <div className="w-1/2 flex justify-center">
           <img
             src="/ImagesAboutUs/pcAboutUs.png"
@@ -38,8 +38,8 @@ const AboutUs = () => {
           />
         </div>
 
-        <div className="w-1/2 mt-12">
-          <div className="space-y-4">
+        <div className="w-1/2 mt-12 text-lg">
+          <div className="space-y-6">
             {[
               {
                 title: "Objetivo:",
@@ -72,7 +72,7 @@ const AboutUs = () => {
       </div>
 
       <div className="bg-[#F0ECFF] py-8 mt-8 text-center">
-        <h3 className="text-2xl font-bold text-[#444444] mb-4">
+        <h3 className="text-3xl font-bold text-[#444444] mt-10 mb-16">
           Nuestros Roles
         </h3>
 
@@ -96,8 +96,10 @@ const AboutUs = () => {
               />
               <div className="text-[#444444] flex flex-col justify-between">
                 <div>
-                  <h4 className="text-lg font-bold">María Mercedes Ramella</h4>
-                  <p className="text-md mt-1">PM - UX UI Designer</p>
+                  <h4 className="text-xl font-bold text-left ">
+                    María Mercedes Ramella
+                  </h4>
+                  <p className="text-xl mt-1 text-left ">PM - UX UI Designer</p>
                 </div>
                 <div className="flex space-x-4 mt-2">
                   <a
@@ -145,8 +147,10 @@ const AboutUs = () => {
               />
               <div className="text-[#444444] flex flex-col justify-between">
                 <div>
-                  <h4 className="text-lg font-bold">Clara Carbonetti</h4>
-                  <p className="text-md mt-1">Q&A Tester Manual</p>
+                  <h4 className="text-xl font-bold text-left ">
+                    Clara Carbonetti
+                  </h4>
+                  <p className="text-xl mt-1 text-left ">Q&A Tester Manual</p>
                 </div>
                 <div className="flex space-x-4 mt-2">
                   <a
@@ -181,7 +185,7 @@ const AboutUs = () => {
           Equipo UX UI Designer
         </button>
 
-        <div className="px-4 md:px-10 mt-10">
+        <div className="px-4 md:px-10 mt-10 text-left text-xl ">
           <div className="flex gap-6 pl-32">
             <div className="flex flex-col gap-4 items-center">
               {[
@@ -318,7 +322,7 @@ const AboutUs = () => {
           Equipo Devs
         </button>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-0 mb-12 mt-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-0 mb-12 mt-10 text-left text-xl">
           <div className="flex gap-6 pl-40">
             <div className="flex flex-col gap-4 items-center">
               {[
@@ -482,84 +486,108 @@ const AboutUs = () => {
           {[
             {
               title: "Diseño",
+              layout: "grid grid-cols-3 gap-4",
               images: [
-                "/ImagesAboutUs/figma.svg",
-                "/ImagesAboutUs/ilustrator.svg",
-                "/ImagesAboutUs/miro.svg",
-                "/ImagesAboutUs/ow.svg",
-                "/ImagesAboutUs/mora.svg",
+                { src: "/ImagesAboutUs/figma.svg", className: "col-start-1" },
+                { src: "/ImagesAboutUs/ow.svg", className: "col-start-2 row-span-2" },
+                { src: "/ImagesAboutUs/miro.svg", className: "col-start-3" },
+                { src: "/ImagesAboutUs/ilustrator.svg", className: "col-start-1 row-start-2" },
+                { src: "/ImagesAboutUs/mora.svg", className: "col-start-3 row-start-2" },
               ],
             },
             {
               title: "Desarrollo",
-              images: [
-                "/ImagesAboutUs/mongo.svg",
-                "/ImagesAboutUs/postman.svg",
-                "/ImagesAboutUs/express.svg",
-                "/ImagesAboutUs/jsb.svg",
-                "/ImagesAboutUs/materialui.svg",
-                "/ImagesAboutUs/jsf.svg",
-                "/ImagesAboutUs/react.svg",
-                "/ImagesAboutUs/vs.svg",
-                "/ImagesAboutUs/tailwind.svg",
+              layout: "grid grid-cols-5",
+              sections: [
+                {
+                  title: "Back",
+                  images: [
+                    { src: "/ImagesAboutUs/mongo.svg" },
+                    { src: "/ImagesAboutUs/express.svg" },
+                    { src: "/ImagesAboutUs/postman.svg" },
+                    { src: "/ImagesAboutUs/jsb.svg" },
+                  ],
+                },
+                {
+                  title: "Front",
+                  images: [
+                    { src: "/ImagesAboutUs/materialui.svg" },
+                    { src: "/ImagesAboutUs/vs.svg" },
+                    { src: "/ImagesAboutUs/react.svg" },
+                    { src: "/ImagesAboutUs/jsf.svg" },
+                    { src: "/ImagesAboutUs/tailwind.svg" },
+                  ],
+                },
               ],
             },
             {
               title: "QA",
-              images: ["/ImagesAboutUs/sql.svg"],
+              layout: "flex justify-center items-center",
+              images: [{ src: "/ImagesAboutUs/sql.svg" }],
             },
             {
               title: "Comunicación",
+              layout: "grid grid-cols-3",
               images: [
-                "/ImagesAboutUs/slack.svg",
-                "/ImagesAboutUs/githubi.svg",
-                "/ImagesAboutUs/meet.svg",
-                "/ImagesAboutUs/notion.svg",
-                "/ImagesAboutUs/discord.svg",
-                "/ImagesAboutUs/jira.svg",
-                "/ImagesAboutUs/excel.svg",
-                "/ImagesAboutUs/whatsapp.svg",
+                { src: "/ImagesAboutUs/slack.svg" },
+                { src: "/ImagesAboutUs/meet.svg" },
+                { src: "/ImagesAboutUs/jira.svg" },
+                { src: "/ImagesAboutUs/excel.svg" },
+                { src: "/ImagesAboutUs/whatsapp.svg" },
+                { src: "/ImagesAboutUs/githubi.svg" },
+                { src: "/ImagesAboutUs/notion.svg" },
+                { src: "/ImagesAboutUs/discord.svg" },
               ],
             },
           ].map((tech, index) => (
             <div
               key={index}
-              className={`flex flex-col justify-center items-center p-4 rounded-lg shadow-md border ${
-                tech.title === "QA" ? "w-16 h-32" : "w-56 h-56"
-              }`}
+              className="flex flex-col justify-center items-center p-4 rounded-lg shadow-md border w-56 h-auto"
             >
-              <p className="text-xl font-semibold text-[#444444]">
+              <p className="text-xl font-semibold text-[#444444] mb-4">
                 {tech.title}
               </p>
-              <div
-                className={`flex flex-wrap justify-center items-center gap-4 mt-2 ${
-                  tech.title === "Desarrollo"
-                    ? "grid grid-cols-2"
-                    : tech.title === "Comunicación"
-                    ? "grid grid-cols-2"
-                    : "flex"
-                }`}
-              >
-                {tech.images.map((src, imgIndex) => (
-                  <img
-                    key={imgIndex}
-                    src={src}
-                    alt={`Icon ${tech.title} ${imgIndex}`}
-                    className="w-8 h-8"
-                  />
-                ))}
-              </div>
+              {tech.sections ? (
+                tech.sections.map((section, secIndex) => (
+                  <div key={secIndex} className="w-full mb-4">
+                    <p className="text-md font-medium text-center text-[#444444] mb-2">
+                      {section.title}
+                    </p>
+                    <div className={`grid grid-cols-5 gap-2`}>
+                      {section.images.map((img, imgIndex) => (
+                        <img
+                          key={imgIndex}
+                          src={img.src}
+                          alt={`Icon ${section.title} ${imgIndex}`}
+                          className="w-8 h-8 mx-auto"
+                        />
+                      ))}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className={tech.layout}>
+                  {tech.images.map((img, imgIndex) => (
+                    <img
+                      key={imgIndex}
+                      src={img.src}
+                      alt={`Icon ${tech.title} ${imgIndex}`}
+                      className="w-8 h-8 mx-auto"
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </div>
       </div>
 
       <div className="relative p-0 m-0 w-full">
-        <div className="relative">
+        <div className="relative -mb-4">
           <img
             src="/ImagesAboutUs/graciasbanner.png"
             alt="Banner Conocenos"
-            className="w-screen h-auto object-cover"
+            className="w-screen h-auto object-cover first-line:block"
           />
         </div>
       </div>

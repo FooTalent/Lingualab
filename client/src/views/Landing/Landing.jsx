@@ -99,48 +99,48 @@ const Landing = () => {
       </div>
 
       <div className="py-12 text-center relative">
-  <h2 className="text-3xl font-bold mb-14">¿Cómo funciona?</h2>
-  <div className="relative grid grid-cols-1 gap-8 items-center z-10">
-    <div className="bg-[#9747FF] rounded-lg p-6 text-white w-[600px] h-[150px] mx-auto z-20">
-      <div className="flex items-center h-full">
-        <h3 className="text-xl font-bold w-1/2 text-center">
-          Crea tus programas
-        </h3>
-        <p className="w-1/2 text-left">
-          Diseña temarios y programas de estudio 
-        </p>
-      </div>
-    </div>
+        <h2 className="text-3xl font-bold mb-14">¿Cómo funciona?</h2>
+        <div className="relative grid grid-cols-1 gap-8 items-center z-10">
+          <div className="bg-[#9747FF] rounded-lg p-6 text-white w-[600px] h-[150px] mx-auto z-20">
+            <div className="flex items-center h-full">
+              <h3 className="text-xl font-bold w-1/2 text-center">
+                Crea tus programas
+              </h3>
+              <p className="w-1/2 text-left">
+                Diseña temarios y programas de estudio
+              </p>
+            </div>
+          </div>
 
-    <div className="bg-[#9747FF] rounded-lg p-6 text-white w-[600px] h-[150px] ml-[12rem] z-20">
-      <div className="flex flex-col h-full">
-        <div className="flex items-center">
-          <h3 className="text-xl font-bold w-1/2 text-center">
-            Imparte clases <br />
-            virtuales
-          </h3>
-          <div className="w-1/2">
-            <p className=" mb-2 text-left">
-              Utiliza nuestras herramientas interactivas para enseñar en línea
-            </p>
-            <p className="text-left">
-              Comparte recursos multimedia y actividades prácticas
-            </p>
+          <div className="bg-[#9747FF] rounded-lg p-6 text-white w-[600px] h-[150px] ml-[12rem] z-20">
+            <div className="flex flex-col h-full">
+              <div className="flex items-center">
+                <h3 className="text-xl font-bold w-1/2 text-center">
+                  Imparte clases <br />
+                  virtuales
+                </h3>
+                <div className="w-1/2">
+                  <p className=" mb-2 text-left">
+                    Utiliza nuestras herramientas interactivas para enseñar en
+                    línea
+                  </p>
+                  <p className="text-left">
+                    Comparte recursos multimedia y actividades prácticas
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+
+        <div className="absolute right-[10rem] bottom-0 z-30">
+          <img
+            src="/ImagesLanding/comofunciona.png"
+            alt="Cómo funciona"
+            className="max-w-[450px]"
+          />
+        </div>
       </div>
-    </div>
-  </div>
-
-  <div className="absolute right-[10rem] bottom-0 z-30">
-    <img src="/ImagesLanding/comofunciona.png" alt="Cómo funciona" className="max-w-[450px]" />
-  </div>
-</div>
-
-
-
-
-
 
       <div className="py-12 text-center">
         <h2 className="text-3xl font-bold mb-8">

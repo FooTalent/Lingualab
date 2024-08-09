@@ -28,7 +28,7 @@ const History = () => {
 
       <div className="flex mb-10 text-[#444444] justify-center mt-16">
         <img src="/ImagesHistory/1paso.png" alt="Paso 1" className="mr-10" />
-        <div className="w-[650px] h-[200px] p-5 border border-[#444444] rounded-[20px]">
+        <div className="w-[650px] h-[200px] p-5 border border-[#444444] rounded-[20px] mt-10 mb-10">
           <h2 className="text-3xl font-bold mb-2">
             La problemática detectada ...
           </h2>
@@ -43,7 +43,7 @@ const History = () => {
       </div>
 
       <div className="flex mb-10 text-[#444444] justify-center">
-        <div className="w-[650px] h-[200px] p-5 border border-[#000] rounded-[20px] mr-10">
+        <div className="w-[650px] h-[200px] p-5 border border-[#000] rounded-[20px] mr-10 mt-10">
           <h2 className="text-3xl font-bold mb-2">
             Nuestro público objetivo ...
           </h2>
@@ -59,7 +59,7 @@ const History = () => {
 
       <div className="flex mb-10 text-[#444444] justify-center">
         <img src="/ImagesHistory/3paso.png" alt="Paso 3" className="mr-10" />
-        <div className="w-[650px] h-[260px] p-5 border border-[#000] rounded-[20px]">
+        <div className="mt-10 w-[650px] h-[260px] p-5 border border-[#000] rounded-[20px]">
           <h2 className="text-3xl font-bold mb-2">
             Cuáles son las necesidades a desarrollar?
           </h2>
@@ -79,7 +79,7 @@ const History = () => {
       </div>
 
       <div className=" mt-20 flex mb-10 text-[#444444] justify-center">
-        <div className="w-[650px] h-[200px] p-5 border border-[#000] rounded-[20px] mr-10">
+        <div className="w-[650px] h-[200px] p-5 border border-[#000] rounded-[20px] mr-10 mt-10 ">
           <h2 className="text-3xl font-bold mb-2">
             En qué consiste nuestra propuesta?
           </h2>
