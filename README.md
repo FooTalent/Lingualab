@@ -98,7 +98,7 @@ Los principales usuarios de LinguaLab son docentes de idiomas de todos los nivel
 
 | Tecnología                                                                                           | Descripción                                                                                       |
 |------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
-| ![Render](https://github.com/user-attachments/assets/0ea906a1-eb52-4961-8ecf-fab37aded21c) | Render es una plataforma de hosting que permite desplegar aplicaciones web, APIs y bases de datos de manera sencilla.         |
+| [![Render](https://github.com/user-attachments/assets/0ea906a1-eb52-4961-8ecf-fab37aded21c)](https://dashboard.render.com/) | Render es una plataforma de hosting que permite desplegar aplicaciones web, APIs y bases de datos de manera sencilla.         |
 
 
 ### QA y testeo:
