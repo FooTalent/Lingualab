@@ -92,7 +92,7 @@ const EditProgramForm = ({ onSubmit, onClose, program }) => {
 
       <div className="grid grid-cols-2 gap-8 mt-6">
         <ButtonModal buttonAction={onClose} type='prev' label='Cancelar' />
-        <ButtonModal buttonAction={onSubmit} type='next' label='Crear Programa' />
+        <ButtonModal buttonAction={onSubmit} type='next' label='Guardar Edición' />
       </div>
     </form>
   );

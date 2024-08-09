@@ -9,6 +9,7 @@ import ProgramCard from './Main/ProgramCard';
 import CreateProgramForm from './Main/CreateProgramForm';
 import CardList from '../SubComponents/CardList';
 import CreatedProgram from '../SubComponents/CreatedProgram';
+import sinProgramas from '/ImagesWorkspace/NoHayProgramas.png'
 
 const WorkSpace = () => {
   const [programs, setPrograms] = useState([]);
@@ -80,10 +81,10 @@ const WorkSpace = () => {
         ) : error ? (
           <p className="text-center text-red-500">Error: {error}</p>
         ) : programs.length === 0 ? (
-          <div className="text-center mt-24 flex justify-center">
-            <p className="text-gray-700 text-4xl font-bold max-w-md">No hay programas creados. ¡Crea uno ahora!</p>
+          <div className="min-h-screen flex">
+            <img src={sinProgramas} alt="No hay programas creados" className='m-auto' />
           </div>
-        ) : <CardList data={programs} CardComponent={ProgramCard} buttonFunction={buttonFunction} refresh={setRefresh}/>
+        ) : <CardList data={programs} CardComponent={ProgramCard} buttonFunction={buttonFunction} refresh={setRefresh} />
       }
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Crear Programa" modalSize={'medium'}>
@@ -101,6 +102,8 @@ const WorkSpace = () => {
           logo={logo}
           pathProgram={`/workspace/programas/${newProgramId}`}
           pathNewClass={`/workspace/programas/${newProgramId}`}
+          label={'¿Desea crear la clase o ir al programa creado?'}
+          closeLabel={'Ir al programa'}
         />
       </Modal>
     </div>
