@@ -4,6 +4,7 @@ import NavBar from '../components/NavBar'
 import { useAppStore } from '../store/useAppStore'
 import { useEffect } from 'react'
 import NavAuth from '../views/Landing/NavAuth'
+import Footer from '../views/Landing/Footer'
 
 export default function LandingLayout() {
     const navigate = useNavigate()
@@ -34,8 +35,8 @@ export default function LandingLayout() {
                 <div className='flex flex-col mx-auto max-w-full'>
                     <Outlet />
                 </div>
-                <footer className='bg-Purple mt-4'>
-                    FOOTER
+               < footer className='bg-Purple mt-4'>
+                    <Footer />
                 </footer>
             </div>
         </>
