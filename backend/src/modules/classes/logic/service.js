@@ -37,7 +37,9 @@ export default class Service extends CustomService {
 
       // Define el filtro para las clases
       const filter = {
-        program: { $in: programIds }
+        program: { $in: programIds },
+        isTemplate: false,
+        daytime: { $exists: true, $ne: null }
       };
 
       if (startDate || endDate) {
