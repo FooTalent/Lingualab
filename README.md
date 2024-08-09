@@ -109,7 +109,7 @@ Los principales usuarios de LinguaLab son docentes de idiomas de todos los nivel
 
 | Tecnología                                                                                           | Descripción                                                                                       |
 |------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
-| [![Slack](https://skillicons.dev/icons?i=slack)](https://slack.com/)  | Slack es una plataforma de mensajería empresarial que facilita la comunicación en equipo a través de canales organizados.         |
+| [![Slack](https://github.com/user-attachments/assets/62126fee-78fd-42bf-80f8-65c8ad9f1b86)  | Slack es una plataforma de mensajería empresarial que facilita la comunicación en equipo a través de canales organizados.         |
 | [![GitHub](https://skillicons.dev/icons?i=github)](https://github.com/)                     | GitHub es una plataforma de desarrollo colaborativo que utiliza Git para control de versiones y gestión de código fuente.                                                 |               |
 | [![Notion](https://skillicons.dev/icons?i=notion)](https://www.notion.so/)           | Notion es una herramienta de productividad que combina toma de notas, gestión de tareas y bases de conocimiento en un solo lugar.                                  |
 | [![WhatsApp](https://skillicons.dev/icons?i=whatsapp)](https://www.whatsapp.com/) | WhatsApp es una aplicación de mensajería instantánea que permite la comunicación a través de texto, voz y video.                          |
