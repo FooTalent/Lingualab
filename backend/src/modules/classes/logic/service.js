@@ -12,14 +12,14 @@ export default class Service extends CustomService {
   delete = async (eid) => {
     try {
       const classToDelete = await this.getBy(eid)
-      if(!classToDelete){
+      if (!classToDelete) {
         throw new AppError(`Clase con ID ${eid} no encontrada`, 404)
       }
       const classId = classToDelete._id
       const programId = classToDelete.program
-      
+
       await this.programDao.update(programId, {
-        $pull: {classes: classId}
+        $pull: { classes: classId }
       })
 
       return await this.dao.delete(eid)

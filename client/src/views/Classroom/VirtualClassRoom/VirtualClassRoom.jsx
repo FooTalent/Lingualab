@@ -7,8 +7,9 @@ import NavWorkSpace from '../SubComponents/NavWorkSpace'
 import CardList from '../SubComponents/CardList';
 import CreatedProgram from '../SubComponents/CreatedProgram';
 import CreateVCRForm from './Main/CreateVCRForm';
-import logo from '/CreasteUnPrograma.png';
+import logo from '/ImagesVCR/CreasteUnAula.png';
 import ProgramCard from './Main/ProgramCard';
+import sinAulas from '/ImagesVCR/NoHayAulas.png'
 
 const VirtualClassRoom = () => {
   const [programs, setPrograms] = useState([]);
@@ -79,14 +80,8 @@ const VirtualClassRoom = () => {
       ) : error ? (
         <p className="text-center text-red-500">Error: {error}</p>
       ) : programs.length === 0 ? (
-        <div className="text-center mt-8">
-          <p className="text-gray-700">No hay aulas virtuales creadas. ¡Crea una ahora!</p>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md"
-          >
-            Crear Aula
-          </button>
+        <div className="min-h-screen flex">
+          <img src={sinAulas} alt="No hay aulas creadas" className='m-auto'/>
         </div>
       ) : (
         <CardList 
@@ -112,6 +107,8 @@ const VirtualClassRoom = () => {
           logo={logo}
           pathProgram={`/aulavirtual/aula/${newProgramId}`}
           pathNewClass={`/aulavirtual/aula/${newProgramId}`}
+          label={'¿Desea crear la clase o ir al aula creada?'}
+          closeLabel={'Ir al aula'}
         />
       </Modal>
     </div>
