@@ -47,12 +47,28 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
     buttonFunction(program._id);
   }
 
+  const gettingHourClass = (date, duration) => {
+    let startDate = new Date(date)
+
+    const options = {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: false
+    }
+
+    const start = startDate.toLocaleTimeString('en-EN', options)
+    startDate.setHours(startDate.getHours() + duration)
+    const end = startDate.toLocaleTimeString('en-EN', options)
+
+    return `${start} - ${end}`
+  }
+
   return (
     <div
       className="relative flex flex-nowrap justify-between shadow-cardContainer rounded-xl p-4"
       onClick={() => setState(false)}
     >
-      <div className='flex flex-col gap-4 w-9/12'>
+      <div className='flex flex-col gap-3 w-9/12'>
         <div className="flex items-center gap-6 text-lg">
           <div
             className="flex items-center text-white py-2 px-4 rounded-lg font-medium"
@@ -68,15 +84,31 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
           </h2>
         </div>
 
-        {program.students.map((student) => (
-          <p key={student._id} className='flex gap-2'>
-            {student.last_name}, {student.first_name}
-          </p>
-        ))}
+        <p className='flex gap-2'>
+          <span className='font-semibold'>Alumno/s:</span>
+            {
+              program.students.length > 0 ?
+                (program.students.map((student) => 
+                  student ? (
+                  `${student.last_name}, ${student.first_name}; `
+                  ) : (
+                  '-'
+                  )
+                )) : '-'
+            }
+        </p>
 
         <p className='flex gap-4'>
           <span className='font-semibold'>Fecha Inicio:</span>
-          {program.first_class || '-'}
+          {program.first_class ? new Date(program.first_class).toLocaleDateString() : '-'}
+        </p>
+        <p className='flex gap-4'>
+          <span className='font-semibold'>Hora:</span>
+          {
+            program.first_class ?
+            gettingHourClass(program.first_class, program.duration_hours) :
+            '-'
+          }
         </p>
       </div>
 
