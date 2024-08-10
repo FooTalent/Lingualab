@@ -39,7 +39,8 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
 
   const handleCreateVCR = async (id) => {
     const response = await createVCRoom(user.token, userDetail._id, {templateId: id})
-    navigate('/aulavirtual')
+    const data = response.data
+    navigate(`/aulavirtual/aula/${data._id}`)
   }
 
 
