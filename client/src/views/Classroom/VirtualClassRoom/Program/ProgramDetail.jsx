@@ -137,7 +137,7 @@ const ProgramDetail = () => {
           onClose={() => setIsModalOpen(false)}
         />
       </Modal>
-      <Modal isOpen={isModalEditOpen} onClose={() => setIsModalEditOpen(false)} title="Editar Programa">
+      <Modal isOpen={isModalEditOpen} onClose={() => setIsModalEditOpen(false)} title="Editar Aula">
         <EditVCRForm
           onSubmit={handleEditProgram}
           program={program}
