@@ -56,8 +56,6 @@ const ProgramDetail = () => {
 
   const handleEditProgram = async (newProgram) => {
     try {
-      console.log(newProgram);
-      
       const updatedProgram = await updateProgram(user.token, eid, newProgram);
       setRefresh(!refresh);
       setIsModalEditOpen(false);

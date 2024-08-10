@@ -43,10 +43,7 @@ const ClassroomCard = ({ classroom, buttonFunction }) => {
         </div>
       </div>
       <div className="text-gray-700 mb-2">
-        <strong>Fecha:</strong> {daytime ? new Date(daytime).toLocaleString() : null }
-      </div>
-      <div className="text-gray-700">
-        <strong>Duración:</strong> {duration_hours} horas
+        <strong>Fecha:</strong> {daytime ? new Date(daytime).toLocaleString('es-ES') : null }
       </div>
       <div className='flex items-center gap-6 text-sm'>
         <button

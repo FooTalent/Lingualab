@@ -56,7 +56,7 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
 
   return (
     <div className="relative flex flex-nowrap justify-between shadow-cardContainer rounded-xl p-4">
-      <div className='flex flex-col gap-4 w-9/12'>
+      <div className='flex flex-col gap-3 w-9/12'>
         <div className="flex items-center gap-6 text-lg">
           <div
             className="flex items-center text-white py-2 px-4 rounded-lg font-medium"
