@@ -41,7 +41,7 @@ const ProgramDetail = () => {
       setLoading(false);
     }
   }, [user, eid, refresh]);
-  console.log(program);
+
   const handleCreateClass = async (classroomData) => {
     try {
       const newClassRoom = await createClass(user.token, classroomData);
@@ -137,7 +137,7 @@ const ProgramDetail = () => {
           onClose={() => setIsModalOpen(false)}
         />
       </Modal>
-      <Modal isOpen={isModalEditOpen} onClose={() => setIsModalEditOpen(false)} title="Editar Programa">
+      <Modal isOpen={isModalEditOpen} onClose={() => setIsModalEditOpen(false)} title="Editar Aula">
         <EditVCRForm
           onSubmit={handleEditProgram}
           program={program}

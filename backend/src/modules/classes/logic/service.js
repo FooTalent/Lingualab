@@ -31,11 +31,9 @@ export default class Service extends CustomService {
 
   getClassesByTeacherIdAndDateRange = async (teacherId, startDate, endDate) => {
     try {
-      // Obtén los programas del profesor
       const programsWithTeacher = await this.programDao.getProgramsByTeacherId(teacherId);
       const programIds = programsWithTeacher.map(p => p._id);
 
-      // Define el filtro para las clases
       const filter = {
         program: { $in: programIds },
         isTemplate: false,

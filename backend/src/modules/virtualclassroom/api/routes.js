@@ -8,12 +8,12 @@ const controller = new Controller()
 
 router
 .post   ("/",     handleAuth(clients), controller.create )
-.put    ("/:eid", handleAuth(clients), controller.updateId)
+// .put    ("/:eid", handleAuth(clients), controller.updateId) // --> En desarrollo
 .post   ("/duplicate/:pid", handleAuth(clients), controller.duplicateProgram )
 
 router
 .post   ('/gevent/', handleAuth(users),   controller.createEvent) 
-.post   ('/gevent/class/:cid', handleAuth(users),   controller.createEventClass) 
-//.post   ('/gevent/program/:pid', handleAuth(users),   controller.createEvent) 
+//.post   ('/gevent/class/:cid', handleAuth(users),   controller.createEventClass) // --> En desarrollo
+//.post   ('/gevent/program/:pid', handleAuth(users),   controller.createEvent) // --> En desarrollo
 
 export default router

@@ -42,6 +42,9 @@
     .formUser {
         @apply flex flex-col md:gap-[8px] md:w-[404px]
     }
+    .imgLogoTech {
+        @apply w-12 h-12
+    }
 }
 
 @layer utilities {

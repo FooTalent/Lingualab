@@ -41,7 +41,7 @@ export const sendMail = ( to, subject, template, context = {}) => {
     to,
     subject,
     template, // nombre del archivo de la plantilla sin extensión
-    context // otros datos que quieras pasar a la plantilla
+    context // datos adicionales para pasar a la plantilla
   }
 
   transport.sendMail(mailOptions, (error, info) => {
