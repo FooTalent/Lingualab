@@ -11,10 +11,6 @@ export default function ProgramInfo({ program }) {
                 <span className='font-semibold'>Profesor:</span>
                 {program.teacher.last_name}, {program.teacher.first_name}
             </p>
-            <p className="w-3/12 flex gap-4 truncate">
-                <span className='font-semibold'>Alumno:</span>
-                { }
-            </p>
         </div>
     )
 }

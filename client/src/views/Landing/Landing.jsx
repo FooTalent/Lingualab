@@ -1,6 +1,15 @@
+import { useRef } from "react";
 import Carousel from "./Carousel";
 
 const Landing = () => {
+
+  const targetRef = useRef(null)
+  
+  const handleScroll = () => {
+    if(targetRef.current){
+      targetRef.current.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
   return (
     <div className="text-[#444444]">
       <div className="relative">
@@ -33,13 +42,13 @@ const Landing = () => {
             <br />
             <br />
           </p>
-          <button className="bg-[#FFDC00] text-[#444444] font-bold text-[22px] mt-12 rounded-md px-2 py-3 w-[320px] h-[60px] flex items-center justify-center">
+          <button onClick={handleScroll} className="bg-[#FFDC00] text-[#444444] font-bold text-[22px] mt-12 rounded-md px-2 py-3 w-[320px] h-[60px] flex items-center justify-center">
             Ver más información
           </button>
         </div>
       </div>
 
-      <div className="container mx-auto py-12 text-center px-4 md:px-8">
+      <div className="container mx-auto py-12 text-center px-4 md:px-8" ref={targetRef}>
         <h2 className="text-4xl font-bold mb-8 text-center">¿Qué ofrecemos?</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="rounded p-4 pl-28">
