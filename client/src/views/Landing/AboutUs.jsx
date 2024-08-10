@@ -1,3 +1,5 @@
+import AboutComponent from "../../components/AboutComponent";
+
 const AboutUs = () => {
   return (
     <div className="">
@@ -478,109 +480,7 @@ const AboutUs = () => {
         </div>
       </div>
 
-      <div className="flex flex-col items-center my-16">
-        <h2 className="text-3xl font-bold text-[#444444] mb-8">
-          Tecnologías Utilizadas
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 w-full max-w-6xl">
-          {[
-            {
-              title: "Diseño",
-              layout: "grid grid-cols-3 gap-4",
-              images: [
-                { src: "/ImagesAboutUs/figma.svg", className: "col-start-1" },
-                { src: "/ImagesAboutUs/ow.svg", className: "col-start-2 row-span-2" },
-                { src: "/ImagesAboutUs/miro.svg", className: "col-start-3" },
-                { src: "/ImagesAboutUs/ilustrator.svg", className: "col-start-1 row-start-2" },
-                { src: "/ImagesAboutUs/mora.svg", className: "col-start-3 row-start-2" },
-              ],
-            },
-            {
-              title: "Desarrollo",
-              layout: "grid grid-cols-5",
-              sections: [
-                {
-                  title: "Back",
-                  images: [
-                    { src: "/ImagesAboutUs/mongo.svg" },
-                    { src: "/ImagesAboutUs/express.svg" },
-                    { src: "/ImagesAboutUs/postman.svg" },
-                    { src: "/ImagesAboutUs/jsb.svg" },
-                  ],
-                },
-                {
-                  title: "Front",
-                  images: [
-                    { src: "/ImagesAboutUs/materialui.svg" },
-                    { src: "/ImagesAboutUs/vs.svg" },
-                    { src: "/ImagesAboutUs/react.svg" },
-                    { src: "/ImagesAboutUs/jsf.svg" },
-                    { src: "/ImagesAboutUs/tailwind.svg" },
-                  ],
-                },
-              ],
-            },
-            {
-              title: "QA",
-              layout: "flex justify-center items-center",
-              images: [{ src: "/ImagesAboutUs/sql.svg" }],
-            },
-            {
-              title: "Comunicación",
-              layout: "grid grid-cols-3",
-              images: [
-                { src: "/ImagesAboutUs/slack.svg" },
-                { src: "/ImagesAboutUs/meet.svg" },
-                { src: "/ImagesAboutUs/jira.svg" },
-                { src: "/ImagesAboutUs/excel.svg" },
-                { src: "/ImagesAboutUs/whatsapp.svg" },
-                { src: "/ImagesAboutUs/githubi.svg" },
-                { src: "/ImagesAboutUs/notion.svg" },
-                { src: "/ImagesAboutUs/discord.svg" },
-              ],
-            },
-          ].map((tech, index) => (
-            <div
-              key={index}
-              className="flex flex-col justify-center items-center p-4 rounded-lg shadow-md border w-56 h-auto"
-            >
-              <p className="text-xl font-semibold text-[#444444] mb-4">
-                {tech.title}
-              </p>
-              {tech.sections ? (
-                tech.sections.map((section, secIndex) => (
-                  <div key={secIndex} className="w-full mb-4">
-                    <p className="text-md font-medium text-center text-[#444444] mb-2">
-                      {section.title}
-                    </p>
-                    <div className={`grid grid-cols-5 gap-2`}>
-                      {section.images.map((img, imgIndex) => (
-                        <img
-                          key={imgIndex}
-                          src={img.src}
-                          alt={`Icon ${section.title} ${imgIndex}`}
-                          className="w-8 h-8 mx-auto"
-                        />
-                      ))}
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className={tech.layout}>
-                  {tech.images.map((img, imgIndex) => (
-                    <img
-                      key={imgIndex}
-                      src={img.src}
-                      alt={`Icon ${tech.title} ${imgIndex}`}
-                      className="w-8 h-8 mx-auto"
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
+      <AboutComponent />
 
       <div className="relative p-0 m-0 w-full">
         <div className="relative -mb-4">
