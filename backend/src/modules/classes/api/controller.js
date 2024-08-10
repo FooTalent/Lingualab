@@ -14,7 +14,6 @@ export default class Controller extends CustomController {
       const { isTemplate } = req.query;
 
       let filter = {}
-      // Agrega el filtro isTemplate si es necesario
       filter.isTemplate = isTemplate === true || false
       const elements = await this.service.get(filter)
 
@@ -27,10 +26,8 @@ export default class Controller extends CustomController {
     try {
       const { teacherId, startDate, endDate } = req.query;
 
-      // Validar que se proporcione el teacherId
       if (!teacherId) { throw new AppError('Falta el ID del profesor',400); }
 
-      // Convierte las fechas a UTC si es necesario
       const utcStartDate = startDate ? convertToUTC(startDate) : undefined;
       const utcEndDate = endDate ? convertToUTC(endDate, true) : undefined;
 

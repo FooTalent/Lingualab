@@ -51,13 +51,10 @@ export const googleLoginUser = async () => {
   
         if (event.data && event.data.token) {
   
-          // Limpia el listener
           window.removeEventListener('message', handleMessage);
   
-          // Cierra la ventana emergente
           popup.close();
   
-          // Resuelve la promesa con el token
           resolve({ token: event.data.token });
         }
       };
