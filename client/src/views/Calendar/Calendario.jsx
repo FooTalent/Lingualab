@@ -26,7 +26,6 @@ export default function Calendario() {
         const newClasses = await getClassesByTeacherAndDate(user.token, userDetail._id, new Date())
         if (!newClasses.isError) {
             setClasses(newClasses.data);
-            console.log('Clases obtenidas:', newClasses.data);
         } else {
             Toast.fire({
                 title: 'No ha sido posible obtener las clases',

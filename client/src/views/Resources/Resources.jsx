@@ -180,13 +180,13 @@ export default function Resources({ onSelect, selected }) {
   // los priemros 2 div son usadas para las classes
   return (
     <div className={onSelect ? "fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50" : ""}>
-      <div className={onSelect ? "bg-white max-h-[95%] flex flex-col gap-6 shadow-modal w-9/12 p-5 rounded-3xl" : ""}>
+      <div className={onSelect ? "bg-white max-h-[95%] flex flex-col gap-6 shadow-modal w-11/12 py-5 px-8 rounded-3xl overflow-y-auto scrollbar" : ""}>
         {
           onSelect
             ? <div><BackButton /></div>
             : <></>
         }
-        <section className={`flex justify-between gap-[70px] `}>
+        <section className={`flex ${onSelect ? 'justify-center' : 'justify-between'} gap-[70px] `}>
           <aside>
             <div className="flex flex-col gap-8">
               <div className={`grid grid-cols-3 items-center ${onSelect ? 'mb-4' : 'mb-8'} justify-between gap-6`}>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ClassList from '../classes/ClassList';
 import ModalHeader from './ModalHeader';
 import dayjs from 'dayjs';
+import sinClases from '/ImagesCalendar/SinClasesCalendario.png'
 
 export default function Modal({ open, setOpen, onNavigate, label, data, selectedDay }) {
   const [dayClasses, setDayClasses] = useState([]);
@@ -34,30 +35,24 @@ export default function Modal({ open, setOpen, onNavigate, label, data, selected
 
     if (clases.length) {
       clases.forEach((clase) => {
-        let formattedDate = dayjs(clase.daytime).format('DD/MM/YYYY');
-        let formattedSelectedDay = dayjs(selectedDay).format('DD/MM/YYYY');
+        let formattedDate = dayjs(clase.daytime).format('YYYY/MM/DD');
+        let formattedSelectedDay = dayjs(selectedDay).format('YYYY/MM/DD');
 
         if (formattedDate === formattedSelectedDay) {
-          const start = dayjs(clase.daytime);
-          const durationHours = Math.trunc(clase.duration_hours);
-          const durationMinutes = (clase.duration_hours - durationHours) * 60;
-          const end = start.add(durationHours, 'hour').add(durationMinutes, 'minute');
-
-          const minutesToStart = start.diff(now, 'minute');
-          const minutesToEnd = end.diff(now, 'minute');
-
-          const checkIsNow = (minutesToStart <= 30 && minutesToStart >= 0) || (minutesToEnd >= 0 && minutesToStart <= 0);
+          const start = new Date(clase.daytime)
+          const end = new Date(start)
+          end.setHours(start.getHours() + 1)
 
           clase.duration_card = handleDate(clase);
           clase.isNow = checkIsNow;
 
           newClasses.push(clase);
         }
+
       });
     }
 
     setDayClasses(newClasses);
-    return newClasses.length > 0;
   };
 
   const handleOpen = () => {
@@ -91,14 +86,14 @@ export default function Modal({ open, setOpen, onNavigate, label, data, selected
         />
 
         <div className='px-4 py-2 flex flex-col gap-6 h-4/6 overflow-y-auto scrollbar'>
-          {dayClasses.length ? (
+          {dayClasses && dayClasses.length > 0 ? (
             <ClassList
-              dayClases={dayClasses}
+              dayClasses={dayClasses}
               toggleOptions={toggleOptions}
               stateOption={openOptions}
             />
           ) : (
-            <h4 className='m-auto py-10'>No hay clases para el día seleccionado</h4>
+            <img src={sinClases} alt="No tienes clases programadas" className='m-auto' />
           )}
         </div>
       </div>
