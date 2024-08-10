@@ -13,7 +13,7 @@ router
 
 router
 .post   ('/gevent/', handleAuth(users),   controller.createEvent) 
-// .post   ('/gevent/class/:cid', handleAuth(users),   controller.createEventClass) // --> En desarrollo
-//.post   ('/gevent/program/:pid', handleAuth(users),   controller.createEvent) 
+//.post   ('/gevent/class/:cid', handleAuth(users),   controller.createEventClass) // --> En desarrollo
+//.post   ('/gevent/program/:pid', handleAuth(users),   controller.createEvent) // --> En desarrollo
 
 export default router

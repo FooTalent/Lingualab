@@ -41,7 +41,7 @@ const ProgramDetail = () => {
       setLoading(false);
     }
   }, [user, eid, refresh]);
-  console.log(program);
+
   const handleCreateClass = async (classroomData) => {
     try {
       const newClassRoom = await createClass(user.token, classroomData);
