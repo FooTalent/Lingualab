@@ -156,12 +156,15 @@ export default class CustomService {
   createCustomProgram = async (templateId, studentIds, first_class, daysOfWeek, user ) => {
 
     // crea aula
-    const newProgram = await this.createProgram(templateId, studentIds, user)
-    
-    // empieza a actualizar fechas    
-    const updatedDaysProgram =await this.update(newProgram._id, { first_class, daysOfWeek })
+    const newProgram = await this.createProgram(
+      templateId,
+      studentIds,
+      user,
+      false,
+      { first_class, daysOfWeek }
+    );
 
-    return updatedDaysProgram;
+    return newProgram;
   }
 
   // CREAR EVENTO GOOGLE
