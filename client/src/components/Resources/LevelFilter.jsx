@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function LevelFilter({data, onClick, isSelected}) {
+export default function LevelFilter({ data, onClick, isSelected, onSelect }) {
 
   // const [isSelected, setIsSelected] = useState(false)
 
@@ -8,14 +8,14 @@ export default function LevelFilter({data, onClick, isSelected}) {
     onClick(data.data)
   }
 
-  const buttonStyle = isSelected 
-    ? { backgroundColor: data.color, color: 'white' } 
+  const buttonStyle = isSelected
+    ? { backgroundColor: data.color, color: 'white' }
     : { backgroundColor: 'transparent', color: data.inactive, borderColor: data.inactive }
 
   return (
-    <button 
+    <button
       onClick={handleFilter}
-      className={`rounded-lg py-3 px-6 border text-lg leading-5 ease-out duration-600`}
+      className={`rounded-lg border text-lg leading-5 ${onSelect ? 'px-4 py-2' : 'px-6 py-3'} whitespace-nowrap text-center ease-out duration-600`}
       style={buttonStyle}
     >
       {data.data}

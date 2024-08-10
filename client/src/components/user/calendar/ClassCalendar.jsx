@@ -18,14 +18,9 @@ export default function ClassCalendar({ localizer, date, handleNavigate, handleS
         let newEvents = [];
         classes.forEach(item => {
             if (item.title && item.daytime) {
-                const start = dayjs(item.daytime).toDate();
-                const durationHours = Math.trunc(item.duration_hours);
-                const durationMinutes = (item.duration_hours - durationHours) * 60;
-
-                const end = dayjs(item.daytime)
-                    .add(durationHours, 'hour')
-                    .add(durationMinutes, 'minute')
-                    .toDate();
+                const start = new Date(item.daytime)
+                const end = new Date(start)
+                end.setHours(start.getHours() + 1)
 
                 newEvents.push({ title: item.title, start: start, end: end, level: item.level });
             }

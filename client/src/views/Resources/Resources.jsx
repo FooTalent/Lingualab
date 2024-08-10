@@ -11,6 +11,8 @@ import Modal from "../../components/Modal";
 import imgEliminarRecurso from "/EliminarRecurso.png"
 import RecursoNoEncontrado from "/RecursoNoEncontrado.png"
 import SearchIcon from "@mui/icons-material/Search";
+import ButtonModal from "../../components/Form/ButtonModal";
+import BackButton from "../../components/BackButtom";
 
 export default function Resources({ onSelect, selected }) {
 
@@ -178,42 +180,51 @@ export default function Resources({ onSelect, selected }) {
   // los priemros 2 div son usadas para las classes
   return (
     <div className={onSelect ? "fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50" : ""}>
-      <div className={onSelect ? "bg-white flex flex-col gap-4 shadow-modal w-11/12 p-10 rounded-3xl" : ""}>
-        <section className="flex justify-between gap-[70px]">
+      <div className={onSelect ? "bg-white max-h-[95%] flex flex-col gap-6 shadow-modal w-11/12 py-5 px-8 rounded-3xl overflow-y-auto scrollbar" : ""}>
+        {
+          onSelect
+            ? <div><BackButton /></div>
+            : <></>
+        }
+        <section className={`flex ${onSelect ? 'justify-center' : 'justify-between'} gap-[70px] `}>
           <aside>
             <div className="flex flex-col gap-8">
-              <div className="grid grid-cols-3 items-center mb-8 gap-8">
+              <div className={`grid grid-cols-3 items-center ${onSelect ? 'mb-4' : 'mb-8'} justify-between gap-6`}>
                 {
                   LEVELS.map((lvl, i) => (
                     <LevelFilter
                       key={i}
                       data={lvl}
                       onClick={handleFilterLevel}
-                      isSelected={selectedLevel === lvl.data} />
+                      isSelected={selectedLevel === lvl.data}
+                      onSelect={onSelect}
+                    />
                   ))
                 }
               </div>
 
-              <div className="flex flex-col gap-6">
+              <div className={`flex flex-col ${onSelect ? 'gap-4' : 'gap-6'}`}>
                 {
                   RESOURCE_TYPES.map((resource, i) => (
                     <CategoryFilter
                       key={i}
                       onClick={handleFilterCategory}
                       resource={resource}
-                      selectedCategories={selectedCat}/>
+                      selectedCategories={selectedCat}
+                      onSelect={onSelect}
+                    />
                   ))
                 }
                 <button
                   onClick={handleCreateResource}
-                  className="bg-Yellow hover:bg-card hover:text-Yellow text-xl font-extrabold text-card tracking-wide py-4 px-6 rounded-md ease-out duration-600"
+                  className="bg-Yellow hover:bg-card hover:text-Yellow text-xl font-extrabold text-card tracking-wide py-4 px-6 mt-2 rounded-lg ease-out duration-600"
                 >
                   Agregar recurso +
                 </button>
                 {onSelect &&
                   <button
                     onClick={handleConfirmSelection}
-                    className="bg-Yellow hover:bg-card hover:text-Yellow text-xl font-extrabold text-card tracking-wide py-4 px-6 rounded-md ease-out duration-600"
+                    className="bg-card hover:bg-Yellow hover:text-card text-xl font-extrabold text-Yellow tracking-wide py-4 px-6 mt-2 rounded-lg ease-out duration-600"
                   >
                     Insertar
                   </button>
@@ -222,7 +233,7 @@ export default function Resources({ onSelect, selected }) {
             </div>
           </aside>
 
-          <div className="flex flex-col gap-14 justify-between">
+          <div className={`flex flex-col ${onSelect ? 'gap-8' : 'gap-14'} justify-between`}>
             <form onSubmit={handleSearch}>
               <div className="flex items-center gap-4">
                 <div className="relative">
@@ -258,12 +269,14 @@ export default function Resources({ onSelect, selected }) {
                         resources.map((resource, i) => (
                           <div key={i} className={onSelect && "flex items-center"}>
                             {onSelect &&
-                              <input
-                                type="checkbox"
-                                onChange={() => handleSelect(resource)}
-                                checked={selectedResources.includes(resource)}
-                                className="w-1/12"
-                              />
+                              <div className="w-1/12 flex items-center me-2">
+                                <input
+                                  type="checkbox"
+                                  onChange={() => handleSelect(resource)}
+                                  checked={selectedResources.includes(resource)}
+                                  className="appearance-none p-0 w-8 h-8 border-2 rounded-lg bg-white checked:bg-Purple checked:border-Purple hover:bg-Purple hover:border-Purple ease-out duration-600"
+                                />
+                              </div>
                             }
                             <ResourceCard
                               resource={resource}
@@ -293,24 +306,12 @@ export default function Resources({ onSelect, selected }) {
               }
               {
                 <Modal isOpen={deleteModal} modalSize={"small"}>
-                  <div className="flex justify-center ">
+                  <div className="flex justify-center">
                     <img src={imgEliminarRecurso} alt="quieres eliminar un recurso?" />
                   </div>
-                  <div className="flex gap-4">
-                    <button
-                      type="button"
-                      onClick={() => setDeleteModal(false)}
-                      className="w-full px-4 py-2 border border-Purple text-Purple  rounded-md hover:bg-Purple hover:text-white"
-                    >
-                      Cancelar
-                    </button>
-                    <button
-                      type="submit"
-                      className="w-full px-4 py-2 bg-Purple text-white rounded-md hover:bg-PurpleHover"
-                      onClick={handleConfirmDelete}
-                    >
-                      Eliminar Recurso
-                    </button>
+                  <div className="grid grid-cols-2 gap-4">
+                    <ButtonModal buttonAction={() => setDeleteModal(false)} type='prev' label={'Cancelar'} />
+                    <ButtonModal buttonAction={handleConfirmDelete} type={'next'} label={'Eliminar Recurso'} />
                   </div>
                 </Modal>
               }

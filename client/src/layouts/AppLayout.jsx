@@ -18,7 +18,7 @@ export default function AppLayout() {
         };
         initialize();
         if (!status) {
-            navigate('/auth/login');
+            navigate('/landing');
         }
     }, [status, localLogin, navigate]);
 

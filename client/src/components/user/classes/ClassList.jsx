@@ -2,6 +2,7 @@ import React from 'react';
 import ClassCard from './ClassCard';
 
 export default function ClassList({ dayClases, toggleOptions, stateOption }) {
+    console.log(dayClases)
     return (
         dayClases.map(clase => (
             <ClassCard
