@@ -6,7 +6,7 @@ export default function CreatedProgram({ onClose, logo, pathProgram, pathNewClas
 
   return (
     <div className='flex flex-col gap-8'>
-      <div>
+      <div className='flex justify-center items-center'>
         <img src={logo} alt="Programa creado" />
       </div>
 
