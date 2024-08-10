@@ -45,7 +45,6 @@ const ProgramDetail = () => {
   const handleCreateClass = async (classroomData) => {
     try {
       const newClassRoom = await createClass(user.token, classroomData);
-      console.log(newClassRoom);
       setRefresh(!refresh);
       setIsModalOpen(false);
     } catch (error) {

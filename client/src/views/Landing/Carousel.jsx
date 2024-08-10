@@ -1,6 +1,4 @@
-//HOOKS
 import Slider from "react-slick";
-//SLICK
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { reseñas } from "../../utils/reseñas";

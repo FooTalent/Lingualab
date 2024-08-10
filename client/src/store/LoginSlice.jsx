@@ -113,7 +113,6 @@ export const createUserSlice = (set, get) => ({
         }
     },
     newPassword: async (password, token) => {
-        console.log(password, token)
         const newP = await newPass(password, token)
         if (newP) {
             Toast.fire({

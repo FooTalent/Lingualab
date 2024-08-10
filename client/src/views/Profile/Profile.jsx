@@ -99,9 +99,6 @@ const Profile = () => {
     }
 
     try {
-      // const formData = new FormData();
-      // formData.append('photo', selectedFile);
-
       await userUpdatePhoto(user.token, selectedFile);
       setSelectedFile(null);
       setIsModalOpen(false);

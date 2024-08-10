@@ -4,7 +4,6 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Options from '../../../../components/user/classes/Options';
 import ShareIcon from '@mui/icons-material/Share';
 import DeleteIcon from '@mui/icons-material/Delete';
-// import crearAula from '/crearAulaCard.svg'
 import editarPrograma from '/editarPrograma.svg'
 import duplicar from '/duplicar.svg'
 import { deleteProgram } from '../../../../services/programs.services';

@@ -107,7 +107,6 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
     } catch (error) {
       console.error('Error al agregar al alumno', error);
     }
-    console.log(newStudent);
   };
 
   return (
