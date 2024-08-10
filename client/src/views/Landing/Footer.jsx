@@ -8,8 +8,8 @@ const Footer = () => {
     { text: "Inicio", to: "/landing" },
     { text: "Historia", to: "/historia" },
     { text: "Conócenos", to: "/conocenos" },
-    { text: "Iniciar Sesión", to: "/login" },
-    { text: "Registrarse", to: "/signup" },
+    { text: "Iniciar Sesión", to: "/auth/login" },
+    { text: "Registrarse", to: "/auth/register" },
   ];
 
   return (
@@ -20,11 +20,10 @@ const Footer = () => {
           {navLinks.map((item, index) => (
             <li
               key={index}
-              className={`${
-                pathname === item.to
+              className={`${pathname === item.to
                   ? "text-Yellow font-extrabold"
                   : "text-white font-normal"
-              } text-[22px] px-2 gap-6`}
+                } text-[22px] px-2 gap-6`}
             >
               <Link to={item.to}>{item.text}</Link>
             </li>
