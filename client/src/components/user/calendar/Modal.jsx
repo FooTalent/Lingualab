@@ -5,13 +5,36 @@ import dayjs from 'dayjs';
 import sinClases from '/ImagesCalendar/SinClasesCalendario.png'
 
 export default function Modal({ open, setOpen, onNavigate, label, data, selectedDay }) {
-  const [dayClasses, setDayClasses] = useState([]);
+  const [dayClasses, setDayClasses] = useState(null);
   const [openOptions, setOpenOptions] = useState(null);
-  const now = dayjs();
 
   useEffect(() => {
-    isToday(data);
-  }, [selectedDay]);
+    const filterClassesByDate = () => {
+      let newClasses = [];
+
+      if (data && data.length) {
+        newClasses = data.filter((clase) => {
+          const formattedDate = dayjs(clase.daytime).format('YYYY/MM/DD');
+          const formattedSelectedDay = dayjs(selectedDay).format('YYYY/MM/DD');
+          return formattedDate === formattedSelectedDay;
+        }).map((clase) => {
+          const start = new Date(clase.daytime);
+          const end = new Date(start);
+          end.setHours(start.getHours() + 1);
+          return {
+            ...clase,
+            duration_card: handleDate(start, end),
+          };
+        });
+      }
+
+      setDayClasses(newClasses);
+    };
+
+    filterClassesByDate();
+  }, [data, selectedDay]);
+
+
 
   useEffect(() => {
     if (open) {
@@ -21,38 +44,11 @@ export default function Modal({ open, setOpen, onNavigate, label, data, selected
     }
   }, [open]);
 
-  const handleDate = (item) => {
-    const start = dayjs(item.daytime);
-    const durationHours = Math.trunc(item.duration_hours);
-    const durationMinutes = (item.duration_hours - durationHours) * 60;
-    const end = start.add(durationHours, 'hour').add(durationMinutes, 'minute');
+  const handleDate = (start, end) => {
+    let formattedStart = dayjs(start)
+    let formattedEnd = dayjs(end)
 
-    return `${start.format('HH:mm')} hs : ${end.format('HH:mm')} hs`;
-  };
-
-  const isToday = (clases) => {
-    let newClasses = [];
-
-    if (clases.length) {
-      clases.forEach((clase) => {
-        let formattedDate = dayjs(clase.daytime).format('YYYY/MM/DD');
-        let formattedSelectedDay = dayjs(selectedDay).format('YYYY/MM/DD');
-
-        if (formattedDate === formattedSelectedDay) {
-          const start = new Date(clase.daytime)
-          const end = new Date(start)
-          end.setHours(start.getHours() + 1)
-
-          clase.duration_card = handleDate(clase);
-          clase.isNow = checkIsNow;
-
-          newClasses.push(clase);
-        }
-
-      });
-    }
-
-    setDayClasses(newClasses);
+    return `${formattedStart.format('HH:mm')} hs : ${formattedEnd.format('HH:mm')} hs`;
   };
 
   const handleOpen = () => {
@@ -78,7 +74,7 @@ export default function Modal({ open, setOpen, onNavigate, label, data, selected
         className='absolute inset-0 bg-card bg-opacity-50'
         onClick={handleOutsideClick}
       ></div>
-      <div className='m-auto z-10 p-6 bg-white shadow-modal rounded-2xl w-4/12 h-4/6'>
+      <div className='m-auto flex flex-col gap-6 z-10 p-6 bg-white shadow-modal rounded-2xl w-4/12 h-4/6'>
         <ModalHeader
           handleOpen={handleOpen}
           label={label}
@@ -88,7 +84,7 @@ export default function Modal({ open, setOpen, onNavigate, label, data, selected
         <div className='px-4 py-2 flex flex-col gap-6 h-4/6 overflow-y-auto scrollbar'>
           {dayClasses && dayClasses.length > 0 ? (
             <ClassList
-              dayClasses={dayClasses}
+              data={dayClasses}
               toggleOptions={toggleOptions}
               stateOption={openOptions}
             />

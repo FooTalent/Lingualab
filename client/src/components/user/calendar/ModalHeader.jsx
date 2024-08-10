@@ -5,7 +5,7 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 export default function ModalHeader({ handleOpen, label, onNavigate }) {
     return (
-        <div className='flex flex-col gap-4 px-4 h-2/6'>
+        <div className='flex flex-col gap-4 px-4'>
             <button
                 onClick={handleOpen}
                 className='self-end text-Purple'
