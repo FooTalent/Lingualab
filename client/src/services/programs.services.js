@@ -222,3 +222,20 @@ export const getClassesByTeacherAndDate= async (token, teacherId, date ) => {
     throw error;
   }
 };
+
+export const getNextNClassesByTeacher= async (token, limit ) => {
+  try {
+    const textlimit = limit ? "?limit="+limit : ''
+    const response = await axios.get(`${url}api/classes/calendar/next-clases${textlimit}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      console.error('Acceso no autorizado - talvez token invalido');
+    }
+    throw error;
+  }
+};
