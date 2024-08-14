@@ -35,7 +35,7 @@ export default function LandingLayout() {
                 <div className='flex flex-col mx-auto max-w-full'>
                     <Outlet />
                 </div>
-               < footer className='bg-Purple mt-4'>
+                < footer className='bg-Purple mt-4'>
                     <Footer />
                 </footer>
             </div>

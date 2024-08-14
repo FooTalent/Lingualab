@@ -21,6 +21,7 @@ import AboutUs from './views/Landing/AboutUs'
 import ViewStudent from './views/Student/ViewStudent'
 import DetailStudent from './views/Student/DetailStudent'
 import LandingLayout from './layouts/LandingLayout'
+import Error404 from './views/Error/404'
 
 export default function Router() {
     return (
@@ -53,6 +54,9 @@ export default function Router() {
                     <Route path='/auth/forgot-password' element={<ForgotPassword />} />
                     <Route path='/auth/newpassword' element={<NewPassword />} />
                 </Route>
+
+                <Route path='*' element={<Error404 />} />
+                
             </Routes>
         </BrowserRouter>
     )
