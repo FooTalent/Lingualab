@@ -22,6 +22,20 @@ export default class Controller extends CustomController {
       next(error);
     }
   }
+  getNextClasses = async (req, res, next) => {
+    try {
+      const { limit = 1 } = req.query;
+      const teacherId = req.user._id
+      if (!teacherId) { throw new AppError('Falta el ID del profesor',400); }
+
+      const nextClasses = await this.service.getNextClasses(teacherId, parseInt(limit));
+      res.sendSuccessOrNotFound(nextClasses);
+
+    } catch (error) {
+      next(error);
+    }
+  }
+
   getClassCalendar = async (req, res, next) => {
     try {
       const { teacherId, startDate, endDate } = req.query;

@@ -1,9 +1,42 @@
-import { useAppStore } from "../store/useAppStore";
+import { useEffect, useState } from "react";
+import { useAppStore } from "../../store/useAppStore";
 import SearchIcon from "@mui/icons-material/Search";
+import { getNextNClassesByTeacher } from "../../services/programs.services";
+import DisplayNextClasses from "./DisplayNextClasses";
 
 const Home = () => {
 
-  const { status, userDetail } = useAppStore()
+  const { user, status, userDetail } = useAppStore()
+
+  const [classes, setClasses] = useState([])
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  console.log(classes);
+  
+  useEffect(() => {
+    if (user && user.token) {
+      const fetchClasses = async () => {
+        try {
+          setLoading(true);
+          const response = await getNextNClassesByTeacher(user.token, 2);
+          if (response.isError) {
+            throw new Error(response.message);
+          }
+          setClasses(response.data);
+        } catch (error) {
+          console.error('Error al cargar los Programas', error);
+          setError(error.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchClasses();
+    } else {
+      setLoading(false);
+    }
+  }, [user, userDetail]);
 
   if (status)
     return (
@@ -78,26 +111,7 @@ const Home = () => {
                 <p className="leading-custom">Total carga horaria</p>
               </div>
             </div>
-
-            <div className="flex flex-col justify-between lg:grid lg:grid-cols-2 gap-14">
-              <div className="flex flex-col gap-6">
-                <h3 className="text-2xl leading-7 font-semibold">Tu clase ahora</h3>
-
-                <div className="shadow-home rounded-lg max-w-[357px] h-[145px] p-4 cursor-pointer">
-                  <div className="flex flex-col justify-between h-full">
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-6">
-                <h3 className="text-2xl leading-7 font-semibold">Tu próxima clase</h3>
-
-                <div className="shadow-home rounded-lg max-w-[357px] h-[145px] p-4 cursor-pointer">
-                  <div className="flex flex-col justify-between h-full">
-                  </div>
-                </div>
-              </div>
-            </div>
+            <DisplayNextClasses classes={classes} loading={loading} error={error}/>
           </div>
 
           <div className="flex flex-col justify-between gap-8 lg:max-w-[390px]">

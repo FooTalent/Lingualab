@@ -6,9 +6,28 @@ export default class ThisDaoMongo extends DaoMongo {
     super(dataModel);
 
   }
+  get = async (filter = {}) => await this.model.find(filter).populate({
+    path: 'teacher',
+    select: '-password'
+  })
+  .populate('classes')
+  .populate({
+    path: 'students',
+    select: '_id first_name last_name'
+  });
+
+  getBy = async (filter) => await this.model.findOne(filter).populate({
+    path: 'teacher',
+    select: '-password'
+  })
+  .populate('classes')
+  .populate({
+    path: 'students',
+    select: '_id first_name last_name'
+  });
 
   getProgramsByTeacherId = async (teacherId) => {
-    return await this.model.find({ teacher: teacherId }).select('_id');
+    return await this.model.find({ teacher: teacherId, isTemplate: false }).select('_id');
   };
 }
 
