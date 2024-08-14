@@ -43,8 +43,6 @@ thisSchema.pre(['findOne', 'find'], function(next) {
   next();
 });
 
-// TODO usar en la ruta .populate('classes')
-
 const dataModel = model('programs', thisSchema)
 
 export default dataModel

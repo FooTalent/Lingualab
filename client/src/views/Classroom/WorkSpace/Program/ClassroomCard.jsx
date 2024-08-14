@@ -55,11 +55,6 @@ const ClassroomCard = ({ classroom, buttonFunction, deleteButton }) => {
         </div>
       </div>
 
-      <div className='flex flex-col gap-2'>
-        <p className='flex gap-2'><img src={CalendarIcon} /> {daytime ? new Date(daytime).toLocaleString() : 'Sin fecha'}</p>
-        <p className='flex gap-2'><WatchLaterIcon />Sin horario</p>
-      </div>
-
       <span className='border-t border-Grey'></span>
 
       <div className='flex items-center gap-6 text-sm'>

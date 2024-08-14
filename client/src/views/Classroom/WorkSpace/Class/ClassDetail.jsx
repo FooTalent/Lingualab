@@ -105,12 +105,12 @@ const ClassDetail = () => {
         {selectedResources.length > 0 && (
           <div className="my-4">
             <p className="text-lg font-medium">Recursos:</p>
-            <ul className="list-disc pl-5 text-gray-700">
+            <ul className="list-disc pl-5 text-gray-700 flex flex-col gap-6">
               {selectedResources.map((resource, index) => (
-                <div key={index} className='flex h-5'>
+                <li key={index} className='flex h-5'>
                   <IconSvg category={resource.type}/>
                   <Link to={resource.url}>{resource.title}</Link>
-                </div>
+                </li>
               ))}
             </ul>
           </div>

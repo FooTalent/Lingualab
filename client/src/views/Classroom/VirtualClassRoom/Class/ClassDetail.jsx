@@ -6,7 +6,7 @@ import { LEVELS_MAP } from '../../../../utils/valueLists';
 import TextEditor from '../../../../components/TextEditor/TextEditor';
 import BackButton from '../../../../components/BackButtom';
 import Resources from '../../../Resources/Resources';
-import IconImage from '../../../../utils/IconImage';
+import IconSvg from '../../../../utils/SvgWrapper';
 
 const VCRClassDetail = () => {
   const { eid } = useParams();
@@ -102,12 +102,12 @@ const VCRClassDetail = () => {
         {selectedResources.length > 0 && (
           <div className="my-4">
             <p className="text-lg font-medium">Recursos:</p>
-            <ul className="list-disc pl-5 text-gray-700">
+            <ul className="list-disc pl-5 text-gray-700 flex flex-col gap-6 mb-6">
               {selectedResources.map((resource, index) => (
-                <div key={index} className='flex h-5'>
-                  <IconImage category={resource.type} className={"fill-current"}/>
+                <li key={index} className='flex h-5'>
+                  <IconSvg category={resource.type} className={"fill-current"}/>
                   <Link to={resource.url}>{resource.title}</Link>
-                </div>
+                </li>
               ))}
             </ul>
           </div>

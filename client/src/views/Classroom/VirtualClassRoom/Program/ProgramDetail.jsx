@@ -41,11 +41,10 @@ const ProgramDetail = () => {
       setLoading(false);
     }
   }, [user, eid, refresh]);
-  console.log(program);
+
   const handleCreateClass = async (classroomData) => {
     try {
       const newClassRoom = await createClass(user.token, classroomData);
-      console.log(newClassRoom);
       setRefresh(!refresh);
       setIsModalOpen(false);
     } catch (error) {
@@ -56,8 +55,6 @@ const ProgramDetail = () => {
 
   const handleEditProgram = async (newProgram) => {
     try {
-      console.log(newProgram);
-      
       const updatedProgram = await updateProgram(user.token, eid, newProgram);
       setRefresh(!refresh);
       setIsModalEditOpen(false);
@@ -137,7 +134,7 @@ const ProgramDetail = () => {
           onClose={() => setIsModalOpen(false)}
         />
       </Modal>
-      <Modal isOpen={isModalEditOpen} onClose={() => setIsModalEditOpen(false)} title="Editar Programa">
+      <Modal isOpen={isModalEditOpen} onClose={() => setIsModalEditOpen(false)} title="Editar Aula">
         <EditVCRForm
           onSubmit={handleEditProgram}
           program={program}

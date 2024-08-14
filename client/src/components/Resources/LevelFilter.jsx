@@ -1,8 +1,4 @@
-import { useState } from "react"
-
 export default function LevelFilter({ data, onClick, isSelected, onSelect }) {
-
-  // const [isSelected, setIsSelected] = useState(false)
 
   const handleFilter = () => {
     onClick(data.data)

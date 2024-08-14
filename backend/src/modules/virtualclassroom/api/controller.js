@@ -3,7 +3,6 @@ import { toUTC } from "../../../libraries/utils/convertToUTC.js";
 import validateFields from "../../../libraries/utils/validatefiels.js";
 import Service from "../logic/service.js";
 import { COUNTRY_TIMEZONES } from "../logic/timezoneMapping.js";
-import { oauth2Client, SCOPES } from "../../../libraries/google/googleAuth.js";
 
 export default class Controller {
   constructor() {
@@ -70,8 +69,8 @@ export default class Controller {
   
     const newEvent = {
       summary: eventDetails.summary,
-      location: location || '', // Ubicación por defecto vacía
-      description: description || '', // Descripción por defecto vacía
+      location: location || '',
+      description: description || '',
       start: {
         dateTime: new Date(eventDetails.start).toISOString(),
         timeZone,

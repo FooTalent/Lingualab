@@ -44,18 +44,6 @@ const TextEditor = ({ value, onChange }) => {
     };
   }, [onChange]);
 
-  // useEffect(() => {
-  //   if (quillRef.current) {
-  //     // Preserve the cursor position while updating content
-  //     const range = quillRef.current.getSelection();
-  //     const delta = quillRef.current.getContents();
-  //     quillRef.current.setContents(delta, 'silent');
-  //     if (range) {
-  //       quillRef.current.setSelection(range.index, range.length);
-  //     }
-  //   }
-  // }, [value]);
-
   useEffect(() => {
     if (quillRef.current && value !== quillRef.current.root.innerHTML) {
       quillRef.current.clipboard.dangerouslyPasteHTML(value);
