@@ -5,6 +5,9 @@ const Home = () => {
 
   const { status, userDetail } = useAppStore()
 
+  
+
+
   if (status)
     return (
       <div className="flex flex-col gap-12 text-card">

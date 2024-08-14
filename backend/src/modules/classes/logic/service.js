@@ -29,6 +29,25 @@ export default class Service extends CustomService {
     }
   }
 
+  getNextClasses = async (teacherId, limit) => {
+    try {
+      const programsWithTeacher = await this.programDao.getProgramsByTeacherId(teacherId);
+      const programIds = programsWithTeacher.map(p => p._id);
+      console.log(programIds);
+      
+  
+      const filter = {
+        program: { $in: programIds },
+        isTemplate: false,
+        daytime: { $exists: true, $ne: null, $gte: new Date() },
+      };
+  
+      return await this.dao.get(filter, { limit: limit, sort: { daytime: 1 } });
+    } catch (error) {
+      throw error;
+    }
+  }
+
   getClassesByTeacherIdAndDateRange = async (teacherId, startDate, endDate) => {
     try {
       const programsWithTeacher = await this.programDao.getProgramsByTeacherId(teacherId);

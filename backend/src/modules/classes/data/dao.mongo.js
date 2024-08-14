@@ -6,15 +6,28 @@ export default class ThisDaoMongo extends DaoMongo {
     super(dataModel);
   }
 
-  get = async (filter = {}) => {
+  get = async (filter = {}, options = {}) => {
     const result = await this.model.find(filter)
-      .populate({
-        path: 'program',
-        select: 'title'
-      })
-      .select('-students.password');
-    return result;
-  }
+    .sort(options.sort || {})
+    .limit(options.limit || 0)
+    .populate({
+      path: 'program',
+      select: 'title teacher students',
+      populate: {
+        path: 'students',
+        select: 'first_name last_name',  
+        options: { maxDepth: 1 } 
+      },
+      populate: {
+        path: 'teacher',
+        select: '_id first_name last_name',  
+        options: { maxDepth: 1 } 
+      },
+      options: { maxDepth: 1 }
+    })
+    .select('-students.password');
+    return result;
+  }
 
   deleteMany = async (filter) => {
     const result = await this.model.deleteMany(filter)
