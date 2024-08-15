@@ -17,7 +17,7 @@ const ClassroomCard = ({ classroom, buttonFunction, deleteButton }) => {
 
   useEffect(() => {
     const fetchSelectedResources = async () => {
-      if (classroom.resources.length > 0) {
+      if (classroom?.resources?.length > 0) {
         try {
           const fetchedResources = await Promise.all(
             classroom.resources.map((id) => fetchResourceById(user.token, id))

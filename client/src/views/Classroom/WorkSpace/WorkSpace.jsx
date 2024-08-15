@@ -48,10 +48,12 @@ const WorkSpace = () => {
 
   const handleCreateProgram = async (programData) => {
     try {
-      const newProgram = await createProgram(user.token, userDetail._id, programData);
-      setNewProgramId(newProgram.data._id);
-      setIsCreated(true);
-      setIsModalOpen(false);
+      if (programData ) {
+        const newProgram = await createProgram(user.token, userDetail._id, programData);
+        setNewProgramId(newProgram.data._id);
+        setIsCreated(true);
+        setIsModalOpen(false);
+      }
     } catch (error) {
       console.error('Error al crear el programa', error);
       setError(error.message);

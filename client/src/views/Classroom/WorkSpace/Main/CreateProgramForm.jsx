@@ -12,7 +12,7 @@ const CreateProgramForm = ({ onSubmit, onClose }) => {
     language: '',
     level: LEVELS[0].data,
   });
-
+  
   useEffect(() => {
     const fetchValues = async () => {
       try {
