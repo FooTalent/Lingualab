@@ -18,17 +18,19 @@ export default function CreateResourceForm({ onSubmit, onCancel, data }) {
         try {
             const languages = await getLanguages();
             setLanguageOptions(languages.map(language => ({ value: language, label: language })));
-            setFormData(prev => ({...prev, language: languages[0].value || ''}));
+            if(!data){
+                setFormData(prev => ({...prev, language: languages[0]?.value || ''}))
+            }
         } catch (error) {
             console.error('Error fetching languages:', error);
         }
     };
 
     fetchValues();
-    }, []);
+    }, [data]);
 
     useEffect(() => {
-        if (data) {
+        if (data && languageOptions.length > 0) {
             setFormData({
                 title: data.title || '',
                 type: data.type || '',
@@ -38,7 +40,7 @@ export default function CreateResourceForm({ onSubmit, onCancel, data }) {
                 description: data.description || ''
             })
         }
-    }, [data])
+    }, [data, languageOptions])
 
     const levelsArr = Object.keys(LEVELS_MAP)
 
@@ -182,7 +184,7 @@ export default function CreateResourceForm({ onSubmit, onCancel, data }) {
                         type="submit"
                         className={`outline-none border rounded-lg py-3 px-8 text-xl font-extrabold ease-out duration-600 tracking-wide border-Purple bg-Purple text-white hover:border-PurpleHover hover:bg-PurpleHover focus:border-PurpleHover`}
                         >
-                        {data ? 'Editar Recurso' : 'Agregar Recurso'}
+                        {data ? 'Guardar edición' : 'Agregar Recurso'}
                     </button>
                 </div>
             </form>
