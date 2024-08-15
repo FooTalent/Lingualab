@@ -21,8 +21,8 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
 
   const days = [
     'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'
-  ]
-
+  ]  
+  
   useEffect(() => {
     const fetchData = async () => {
       try {

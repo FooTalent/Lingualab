@@ -22,14 +22,14 @@ const ProgramDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [program, setProgram] = useState(null);
-  const [newClassId, setNewClassId] = useState(null)
+  const [newClassId, setNewClassId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [deleteModal, setDeleteModal] = useState(false)
-  const [idClass, setIdClass] = useState(false)
-  const [isModalEditOpen, setIsModalEditOpen] = useState(false)
-  const [isCreated, setIsCreated] = useState(false)
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [idClass, setIdClass] = useState(false);
+  const [isModalEditOpen, setIsModalEditOpen] = useState(false);
+  const [isCreated, setIsCreated] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation()
+  const location = useLocation();
 
   useEffect(() => {
     if (user && user.token) {
@@ -59,17 +59,6 @@ const ProgramDetail = () => {
     }
   }, [location]);
 
-  const handleEditProgram = async (data) => {
-    try {
-      await updateProgram(user.token, program._id, data);
-      setIsModalEditOpen(false)
-      setRefresh(!refresh);
-    } catch (error) {
-      console.error('Error al editar el programa', error)
-      setError(error.message)
-    }
-  }
-
   const handleCreateClass = async (classroomData) => {
     try {
       const newClassRoom = await createClass(user.token, classroomData);
@@ -83,8 +72,19 @@ const ProgramDetail = () => {
     }
   };
 
-  const handleEditClassroom = (classroomId) => {
-    navigate(`/workspace/class/${classroomId}`);
+  const handleEditProgram = async (data) => {
+    try {
+      await updateProgram(user.token, program._id, data);
+      setIsModalEditOpen(false)
+      setRefresh(!refresh);
+    } catch (error) {
+      console.error('Error al editar el programa', error)
+      setError(error.message)
+    }
+  }
+
+  const handleEditClass = (classId) => {
+    navigate(`/workspace/class/${classId}`);
   };
 
   const handleDeleteClass = (id) => {
@@ -93,7 +93,7 @@ const ProgramDetail = () => {
   }
 
   const handleConfirmDelete = async () => {
-    const response = await deleteClass(user.token, idClass)
+    await deleteClass(user.token, idClass)
     setDeleteModal(false)
     setRefresh(prevRefresh => !prevRefresh)
   }
@@ -135,7 +135,7 @@ const ProgramDetail = () => {
             <ClassroomCard
               key={classroom._id}
               classroom={classroom}
-              buttonFunction={handleEditClassroom}
+              buttonFunction={handleEditClass}
               deleteButton={handleDeleteClass}
             />
           ))}

@@ -14,6 +14,7 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
     const { name, value } = e.target;
     setClassroomData({
       ...classroomData,
+      isTemplate: false,
       [name]: value,
     });
   };

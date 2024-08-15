@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppStore } from '../../../../store/useAppStore';
-import { createClass, getProgramById, updateProgram } from '../../../../services/programs.services';
+import { createClass, deleteClass, getProgramById, updateProgram } from '../../../../services/programs.services';
 import Modal from '../../../../components/Modal';
 import CreateClassForm from './CreateClassForm';
 import ClassroomCard from './ClassroomCard';
@@ -9,6 +9,7 @@ import { LEVELS_MAP } from '../../../../utils/valueLists';
 import BackButton from '../../../../components/BackButtom';
 import EditIcon from '@mui/icons-material/Edit';
 import EditVCRForm from './EditVCRForm';
+import popUp from '/Popup_EliminarClase.png'
 
 const ProgramDetail = () => {
   const { eid } = useParams();
@@ -18,6 +19,8 @@ const ProgramDetail = () => {
   const [error, setError] = useState(null);
   const [program, setProgram] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [idClass, setIdClass] = useState(false);
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -44,7 +47,7 @@ const ProgramDetail = () => {
 
   const handleCreateClass = async (classroomData) => {
     try {
-      const newClassRoom = await createClass(user.token, classroomData);
+      await createClass(user.token, classroomData);
       setRefresh(!refresh);
       setIsModalOpen(false);
     } catch (error) {
@@ -55,7 +58,7 @@ const ProgramDetail = () => {
 
   const handleEditProgram = async (newProgram) => {
     try {
-      const updatedProgram = await updateProgram(user.token, eid, newProgram);
+      await updateProgram(user.token, eid, newProgram);
       setRefresh(!refresh);
       setIsModalEditOpen(false);
     } catch (error) {
@@ -64,9 +67,20 @@ const ProgramDetail = () => {
     }
   };
   
-  const handleEditClassroom = (classroomId) => {
-    navigate(`/aulavirtual/clase/${classroomId}`);
+  const handleEditClass = (classId) => {
+    navigate(`/aulavirtual/clase/${classId}`);
   };
+
+  const handleDeleteClass = (id) => {
+    setIdClass(id)
+    setDeleteModal(true)
+  }
+
+  const handleConfirmDelete = async () => {
+    await deleteClass(user.token, idClass)
+    setDeleteModal(false)
+    setRefresh(prevRefresh => !prevRefresh)
+  }
 
   if (loading) return <p className="text-center">Cargando datos...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
@@ -119,7 +133,8 @@ const ProgramDetail = () => {
             <ClassroomCard
               key={classroom._id}
               classroom={classroom}
-              buttonFunction={handleEditClassroom}
+              buttonFunction={handleEditClass}
+              deleteButton={handleDeleteClass}
             />
           ))}
         </div>
@@ -142,6 +157,23 @@ const ProgramDetail = () => {
           teacherId={''}
           token={user.token}
         />
+      </Modal>
+      <Modal modalSize={'small'} isOpen={deleteModal}>
+          <div className="flex justify-center ">
+            <img src={popUp} alt="Eliminar clase" />
+          </div>
+          <div className='flex gap-4'>
+            <button
+              onClick={() => setDeleteModal(false)}
+              className="w-full px-4 py-2 border border-Purple text-Purple  rounded-md hover:bg-Purple hover:text-white">
+              Cancelar
+            </button>
+            <button
+              onClick={handleConfirmDelete}
+              className="w-full px-4 py-2 bg-Purple text-white rounded-md hover:bg-PurpleHover">
+              Eliminar clase
+            </button>
+          </div>
       </Modal>
     </div>
   );

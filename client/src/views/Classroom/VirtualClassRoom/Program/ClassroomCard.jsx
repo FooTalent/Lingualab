@@ -3,10 +3,11 @@ import { LEVELS_MAP } from '../../../../utils/valueLists';
 import { Link } from 'react-router-dom';
 import { useAppStore } from '../../../../store/useAppStore';
 import { fetchResourceById } from '../../../../services/resources.services';
+import EditIcon from '@mui/icons-material/Edit';
 import IconSvg from '../../../../utils/SvgWrapper';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-const ClassroomCard = ({ classroom, buttonFunction }) => {
+const ClassroomCard = ({ classroom, buttonFunction, deleteButton }) => {
   const { level, title, students, daytime, duration_hours, _id } = classroom;
   const [openResources, setOpenResources] = useState(true)
   const [resourcesClass, setResourcesClass] = useState([])
@@ -37,8 +38,16 @@ const ClassroomCard = ({ classroom, buttonFunction }) => {
           <h2 className="text-xl font-semibold">{title}</h2>
         </div>
         <div className='flex justify-between gap-4'>
-          <button className="bg-blue-500 text-white px-2 py-1 rounded-md w-full" onClick={() => buttonFunction(_id)}>
-            Modificar Clase
+          <button
+            className={`flex items-center gap-2 bg-Yellow hover:bg-card font-extrabold text-card hover:text-Yellow border-2 border-Yellow hover:border-card rounded-lg py-2 px-3 ease-linear duration-150`}
+            onClick={() => buttonFunction(_id)}
+          >
+            <EditIcon />Editar
+          </button>
+          <button
+            onClick={() => deleteButton(_id)}
+            className='flex items-center gap-2 bg-Yellow hover:bg-card font-extrabold text-card hover:text-Yellow border-2 border-Yellow hover:border-card rounded-lg py-2 px-3 ease-linear duration-150'>
+            Eliminar
           </button>
         </div>
       </div>
