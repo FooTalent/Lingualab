@@ -4,8 +4,8 @@ export default function IconSvg({category, className}) {
   const SvgComponent = ICONS[category]
 
   return (
-    <div className={className}>
-        {SvgComponent && <SvgComponent/>}
+    <div>
+        {SvgComponent && <SvgComponent className={className}/>}
     </div>
   )
 }
