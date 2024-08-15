@@ -26,6 +26,7 @@ const ViewStudent = () => {
           setLoading(true);
           const response = await getStudents(user.token);
           setStudents(response.data);
+          
           const filter = { eid: userDetail._id }
           const res = await getReviews(user.token, filter)
           setScore(res.data)
@@ -217,10 +218,3 @@ const ViewStudent = () => {
 };
 
 export default ViewStudent;
-
-
-
-
-
-
-

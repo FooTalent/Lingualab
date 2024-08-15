@@ -3,7 +3,7 @@ import { devtools } from "zustand/middleware";
 import { createUserSlice } from "./LoginSlice";
 import { createRegisterSlice } from "./RegisterSlice";
 
-export const useAppStore = create()(devtools((...a) => ({
-    ...createUserSlice(...a),
-    ...createRegisterSlice(...a),
-}))) 
+export const useAppStore = create(devtools((set, get, api) => ({
+    ...createUserSlice(set, get, api),
+    ...createRegisterSlice(set, get, api),
+})));
