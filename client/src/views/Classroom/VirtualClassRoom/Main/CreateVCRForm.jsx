@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import { getPrograms } from '../../../../services/programs.services';
 import { getStudents, inviteStudent } from '../../../../services/students.services';
 import DropdownSelect from '../../SubComponents/DropdownSelect';
 import { useAppStore } from '../../../../store/useAppStore';
 import Modal from '../../../../components/Modal';
 import AddStudentForm from '../../../../components/AddStudentForm';
+import ErrorMessage from '../../../../components/ErrorMessage';
 
 const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
   const { user } = useAppStore();
+  const { register, handleSubmit, control, formState: { errors }, setValue, clearErrors, trigger } = useForm();
   const [programData, setProgramData] = useState({
     studentIds: [],
     daysOfWeek: [],
@@ -21,8 +24,14 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
 
   const days = [
     'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'
-  ]  
-  
+  ]
+
+  useEffect(() => {
+    register('daysOfWeek', {
+      validate: value => value.length > 0 || 'Debe seleccionar al menos un día',
+    });
+  }, [register]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -87,13 +96,10 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
       const daysOfWeek = prevData.daysOfWeek.includes(day)
         ? prevData.daysOfWeek.filter((d) => d !== day)
         : [...prevData.daysOfWeek, day];
+      setValue('daysOfWeek', daysOfWeek);
+      clearErrors('daysOfWeek');
       return { ...prevData, daysOfWeek };
     });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit({ ...programData, first_class: programData.startDateTime });
   };
 
   // MODAL STUDENT
@@ -109,20 +115,41 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
     }
   };
 
+  const onFormSubmit = async (data) => {
+    console.log(data)
+    const isValid = await trigger('daysOfWeek');
+    if (isValid) {
+      onSubmit({ ...data, first_class: programData.startDateTime });
+    }
+  };
+
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onFormSubmit)}>
         <div className="mb-4">
-          <DropdownSelect
-            label="Programa"
-            options={programs.map(program => ({ label: program.title, value: program._id }))}
-            selectedOption={
-              programData.templateId ? 
-              programs.find(program => program._id === programData.templateId).title
-              : 'Seleccionar programa'
-            }
-            onSelect={(value) => handleSelectChange('templateId', value)}
+          <Controller
+            name='templateId'
+            control={control}
+            rules={{ required: 'El programa es obligatorio' }}
+            render={({ field }) => (
+              <DropdownSelect
+                label="Programa"
+                options={programs.map(program => ({ label: program.title, value: program._id }))}
+                selectedOption={
+                  field.value
+                    ? programs.find(program => program._id === field.value)?.title
+                    : 'Seleccionar programa'
+                }
+                onSelect={(value) => {
+                  field.onChange(value)
+                  handleSelectChange('templateId', value)
+                }}
+              />
+            )}
           />
+          {errors.templateId && (
+            <ErrorMessage>{errors.templateId.message}</ErrorMessage>
+          )}
         </div>
         <div className="mb-4 w-full">
           <div className="flex items-center mb-2">
@@ -165,60 +192,85 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
             })}
           </div>
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 px-0">Fecha de inicio</label>
-          <div className='flex gap-10'>
+        <div className='flex flex-row w-full mb-4 gap-4'>
+          <div className="flex flex-col w-1/2">
+            <label className="block text-gray-700 px-0">Fecha de inicio</label>
             <input
               type="date"
               name="startDate"
               value={programData.startDate}
+              {...register("startDate", { required: "La fecha de inicio es obligatoria" })}
               onChange={handleInputChange}
-              className="w-1/2 p-2 border rounded-md"
+              className="w-full p-2 border rounded-md h-full"
             />
+            {errors.startDate && (
+              <ErrorMessage>{errors.startDate.message}</ErrorMessage>
+            )}
+          </div>
+          <div className="flex flex-col w-1/2">
+            <label className="block text-gray-700 px-0">Seleccionar Día/s</label>
+            <div className='flex flex-row justify-between w-full'>
+              {days.map((day) => (
+                <div className='relative' key={day}>
+                  <input
+                    type="checkbox"
+                    id={day}
+                    name="daysOfWeek"
+                    value={day}
+                    onChange={() => handleDayChange(day)}
+                    checked={programData.daysOfWeek.includes(day)}
+                    className="hidden"
+                  />
+                  <label htmlFor={day}
+                    className={`flex items-center justify-center w-10 h-10 border-2 rounded-full cursor-pointer font-medium text-lg ${programData.daysOfWeek.includes(day)
+                      ? 'bg-Purple text-white border-black'
+                      : 'bg-white text-gray-700 border-gray-300'
+                      }`}>
+                    {day.slice(0, 2).toUpperCase()}
+                  </label>
+                </div>
+              ))}
+            </div>
+            {errors.daysOfWeek && (
+              <ErrorMessage>{errors.daysOfWeek.message}</ErrorMessage>
+            )}
+          </div>
 
+        </div>
+
+        <div className='flex flex-row w-full mb-4 gap-4'>
+          <div className='flex flex-col w-full'>
+            <label className='px-0'>Hora de Inicio</label>
             <input
               type="time"
               name="time"
               value={programData.time}
+              {...register("time", { required: "La hora de inicio es obligatoria" })}
               onChange={handleInputChange}
-              className="w-1/2 p-2 border rounded-md"
+              className="p-2 border rounded-md"
             />
+            {errors.time && (
+              <ErrorMessage>{errors.time.message}</ErrorMessage>
+            )}
           </div>
-        </div>
-        <div className='flex flex-col'>
-          <label className='px-0'>Hora fin</label>
-          <input
+          <div className='flex flex-col w-full'>
+            <label className='px-0'>Hora fin</label>
+            <input
               type="time"
               name="endTime"
+              {...register("endTime", { required: "La hora de finalización es obligatoria" })}
+              value={programData.endTime}
               onChange={handleInputChange}
-              className="w-1/2 p-2 border rounded-md"
+              className="p-2 border rounded-md"
             />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Seleccionar Día/s</label>
-          <div className='flex flex-row gap-5'>
-            {days.map((day) => (
-              <div className='relative' key={day}>
-                <input
-                  type="checkbox"
-                  id={day}
-                  name="daysOfWeek"
-                  value={day}
-                  onChange={() => handleDayChange(day)}
-                  checked={programData.daysOfWeek.includes(day)}
-                  className="hidden"
-                />
-                <label htmlFor={day}
-                  className={`flex items-center justify-center w-10 h-10 border-2 rounded-full cursor-pointer font-medium text-lg ${programData.daysOfWeek.includes(day)
-                    ? 'bg-Purple text-white border-black'
-                    : 'bg-white text-gray-700 border-gray-300'
-                    }`}>
-                  {day.slice(0, 2).toUpperCase()}
-                </label>
-              </div>
-            ))}
+            {errors.endTime && (
+              <ErrorMessage>{errors.endTime.message}</ErrorMessage>
+            )}
           </div>
+
         </div>
+
+
         <div className="flex justify-between">
           <button
             type="button"
