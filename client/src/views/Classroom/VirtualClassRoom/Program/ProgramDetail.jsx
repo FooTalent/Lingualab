@@ -7,22 +7,31 @@ import CreateClassForm from './CreateClassForm';
 import ClassroomCard from './ClassroomCard';
 import { LEVELS_MAP } from '../../../../utils/valueLists';
 import BackButton from '../../../../components/BackButtom';
+import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import EditVCRForm from './EditVCRForm';
+import CreatedClass from '../Class/CreatedClass'
+import logo from '/CreasteUnaClase.png';
 import popUp from '/Popup_EliminarClase.png'
 
 const ProgramDetail = () => {
   const { eid } = useParams();
   const { user } = useAppStore();
+  const navigate = useNavigate();
   const [refresh, setRefresh] = useState(true);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+    // Edit Program
   const [program, setProgram] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [idClass, setIdClass] = useState(false);
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
-  const navigate = useNavigate();
+  // Create Class
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCreated, setIsCreated] = useState(false);
+  const [newClassId, setNewClassId] = useState(null);
+    // Delete Class
+    const [idClass, setIdClass] = useState(false);
+    const [deleteModal, setDeleteModal] = useState(false);
 
   useEffect(() => {
     if (user && user.token) {
@@ -45,17 +54,6 @@ const ProgramDetail = () => {
     }
   }, [user, eid, refresh]);
 
-  const handleCreateClass = async (classroomData) => {
-    try {
-      await createClass(user.token, classroomData);
-      setRefresh(!refresh);
-      setIsModalOpen(false);
-    } catch (error) {
-      console.error('Error al crear la clase', error);
-      setError(error.message);
-    }
-  };
-
   const handleEditProgram = async (newProgram) => {
     try {
       await updateProgram(user.token, eid, newProgram);
@@ -66,9 +64,18 @@ const ProgramDetail = () => {
       setError(error.message);
     }
   };
-  
-  const handleEditClass = (classId) => {
-    navigate(`/aulavirtual/clase/${classId}`);
+
+  const handleCreateClass = async (classData) => {
+    try {
+      const newClass = await createClass(user.token, classData);
+      setNewClassId(newClass.data._id)
+      setRefresh(!refresh);
+      setIsModalOpen(false);
+      setIsCreated(true);
+    } catch (error) {
+      console.error('Error al crear la clase', error);
+      setError(error.message);
+    }
   };
 
   const handleDeleteClass = (id) => {
@@ -81,6 +88,10 @@ const ProgramDetail = () => {
     setDeleteModal(false)
     setRefresh(prevRefresh => !prevRefresh)
   }
+
+  const handleEditClass = (classId) => {
+    navigate(`/aulavirtual/clase/${classId}`);
+  };
 
   if (loading) return <p className="text-center">Cargando datos...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
@@ -101,10 +112,10 @@ const ProgramDetail = () => {
             Editar <EditIcon />
           </button>
           <button
-            className="bg-blue-500 text-white px-4 py-2 rounded-md"
+            className={`flex items-center gap-4 bg-Yellow hover:bg-card font-extrabold text-card hover:text-Yellow border-2 border-Yellow hover:border-card rounded-lg py-3 px-4 ease-linear duration-150`}
             onClick={() => setIsModalOpen(true)}
           >
-            Crear Clase
+            Crear <AddIcon />
           </button>
         </div>
       </div>
@@ -156,6 +167,13 @@ const ProgramDetail = () => {
           onClose={() => setIsModalEditOpen(false)}
           teacherId={''}
           token={user.token}
+        />
+      </Modal>
+      <Modal isOpen={isCreated} onClose={() => setIsCreated(false)} modalSize={'small'}>
+        <CreatedClass
+          onClose={() => setIsCreated(false)}
+          logo={logo}
+          pathNewClass={`/workspace/class/${newClassId}`}
         />
       </Modal>
       <Modal modalSize={'small'} isOpen={deleteModal}>
