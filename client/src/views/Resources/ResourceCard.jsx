@@ -17,9 +17,9 @@ export default function ResourceCard({ resource, deleteFunc, editFunc }) {
                     </span>
                     <h2 className="text-xl leading-6 font-semibold text-[#444]">{resource.title}</h2>
                 </div>
-                <div>
-                    <p className="text-sm leading-4 flex items-center gap-3">
-                        <IconSvg category={resource.type} className={'w-6'}/>
+                <div className="flex items-center gap-3">
+                    <IconSvg category={resource.type} className={'w-6'}/>
+                    <p className="text-sm leading-4">
                         <Link to={resource.url} className="hover:underline">
                             {resource.url}
                         </Link>
