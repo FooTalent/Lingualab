@@ -12,17 +12,24 @@ import { useAppStore } from '../../store/useAppStore';
 import Modal from '../../components/Modal';
 import { userUpdate, userUpdatePhoto, getUserData, getCountries, getLanguages } from '../../services/index';
 import { crearURLCompleta } from '../../utils/urifoto';
+import logo from '/Popup_SeGuardoExitosamente.png'
 
 const Profile = () => {
   const { userDetail, user } = useAppStore();
+  const [loading, setLoading] = useState(true);
   const [refresh, setRefresh] = useState(false);
+  const [error, setError] = useState(null);
+  const [originalProfileData, setOriginalProfileData] = useState(userDetail);
+
+  // edit
   const [profileData, setProfileData] = useState(userDetail);
-  const [selectedFile, setSelectedFile] = useState(null);
   const [countryOptionsState, setCountryOptionsState] = useState([]);
   const [languageOptions, setLanguageOptions] = useState([]);
+
+  // Modals
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,6 +37,7 @@ const Profile = () => {
         try {
           const data = await getUserData(user.token);
           setProfileData(data);
+          setOriginalProfileData(data);
           setLoading(false);
         } catch (error) {
           console.error('Error fetching user data:', error);
@@ -75,12 +83,20 @@ const Profile = () => {
       const updatedUser = await userUpdate(user.token, profileData);
       localStorage.setItem('userDetail', JSON.stringify(updatedUser))
       setProfileData(updatedUser);
+      setIsSuccessModalOpen(true); 
       setRefresh(prevRefresh => !prevRefresh);
-      setIsModalOpen(false);
     } catch (error) {
       console.error('Error updating user data:', error);
       setError(error.message);
     }
+  };
+
+  const handleCancel = () => {
+    setProfileData(originalProfileData);
+  };
+
+  const handleSuccessModalClose = () => {
+    setIsSuccessModalOpen(false);
   };
 
   // Fotografía
@@ -113,9 +129,7 @@ const Profile = () => {
     setIsModalOpen(false);
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  if (loading) { return <div>Loading...</div>; }
 
   return (
     <div className="relative bg-white gap-[20px] flex items-center justify-center flex-col mx-auto mt-20 max-w-[1210px]">
@@ -163,9 +177,16 @@ const Profile = () => {
           />
           <Dropdown title="Formación" profileData={profileData} handleInputChange={handleInputChange} handleSelectChange={handleSelectChange} />
         </div>
-        <div className="px-6 py-4 flex justify-center">
+        <div className="px-6 py-4 flex justify-center gap-6">
+        <button
+            className="w-52 bg-white text-purple-500 border-purple-500 border-solid border-2 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="button"
+            onClick={handleCancel}
+          >
+            Cancelar
+          </button>
           <button
-            className="bg-purple-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="w-52 bg-purple-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
             onClick={handleUpdateProfile}
           >
@@ -174,18 +195,23 @@ const Profile = () => {
         </div>
       </div>
       <Modal isOpen={isModalOpen} onClose={handleModalClose} title="Elegir nueva foto de perfil">
-        <div className="flex flex-col items-center justify-center py-4">
+        <div className="flex flex-col gap-6 items-center justify-center py-4">
           {selectedFile && (
             <img src={URL.createObjectURL(selectedFile)} alt="Selected Preview" className="w-48 h-48 object-cover rounded-full mb-4" />
           )}
           <input type="file" accept="image/*" onChange={handleImageChange} className="text-gray-700 py-2 px-3 rounded focus:outline-none focus:shadow-outline" />
           <button
-            className="bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4"
+            className=" bg-purple-500 text-white font-bold py-3 px-8 rounded focus:outline-none focus:shadow-outline"
             type="button"
             onClick={handleUploadPhoto}
           >
             Subir foto
           </button>
+        </div>
+      </Modal>
+      <Modal isOpen={isSuccessModalOpen} onClose={handleSuccessModalClose} modalSize="small">
+        <div className="flex flex-col items-center justify-center py-4">
+          <button onClick={handleSuccessModalClose}><img src={logo} alt="Éxito" className="" /></button>
         </div>
       </Modal>
     </div>
