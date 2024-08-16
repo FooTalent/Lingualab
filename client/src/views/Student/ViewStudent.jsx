@@ -1,5 +1,5 @@
 import SearchIcon from '@mui/icons-material/Search';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAppStore } from '../../store/useAppStore';
 import { getReviews, getStudents, inviteStudent } from '../../services/students.services';
 import { crearURLCompleta } from '../../utils/urifoto';
@@ -8,6 +8,7 @@ import Modal from '../../components/Modal';
 import AddStudentForm from '../../components/AddStudentForm';
 import { format } from 'date-fns';
 import AddIcon from '@mui/icons-material/Add';
+import { removeAccents } from '../../utils/removeAccents';
 
 const ViewStudent = () => {
   const { user, userDetail } = useAppStore();
@@ -15,9 +16,11 @@ const ViewStudent = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [students, setStudents] = useState([]);
+  const [allStudents, setAllStudents] = useState([])
   const [score, setScore] = useState([])
   const [showInfo, setShowInfo] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const inputRef = useRef(null)
 
   useEffect(() => {
     if (user && user.token) {
@@ -26,6 +29,7 @@ const ViewStudent = () => {
           setLoading(true);
           const response = await getStudents(user.token);
           setStudents(response.data);
+          setAllStudents(response.data)
           
           const filter = { eid: userDetail._id }
           const res = await getReviews(user.token, filter)
@@ -67,6 +71,21 @@ const ViewStudent = () => {
     return formattedDate;
   }
 
+  const handleSearchStudents = () => {
+    const searched = inputRef.current.value.trim().toLowerCase()
+    const normalizedSearched = removeAccents(searched)
+
+    if(!searched){
+      setRefresh(!refresh)
+    }
+    const filteredStudents = allStudents.filter(student => {
+      const normalizedFullName = removeAccents(`${student.first_name} ${student.last_name}`).toLowerCase()
+
+      return normalizedFullName.includes(normalizedSearched) || student.email.includes(normalizedSearched)
+    })
+    setStudents(filteredStudents)
+  }
+
   return (
     <div className="container mx-auto py-4 flex flex-col gap-14 text-card">
       <div className="flex items-center justify-between">
@@ -94,6 +113,7 @@ const ViewStudent = () => {
         <div className="flex items-center gap-4">
           <div className="relative">
             <input
+              ref={inputRef}
               type="text"
               placeholder="¿Qué estas buscando?"
               className="border border-Grey rounded-lg px-4 py-3 pl-11 w-[566px] h-[48px] bg-inputBg text-card placeholder:text-Grey outline-none focus:border-Purple hover:border-Purple"
@@ -101,7 +121,9 @@ const ViewStudent = () => {
             <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#444444]" />
           </div>
 
-          <button className="bg-Purple tracking-wide hover:bg-PurpleHover text-white font-extrabold px-4 py-3 rounded-lg h-[48px] ease-out duration-600">
+          <button 
+            onClick={handleSearchStudents}
+            className="bg-Purple tracking-wide hover:bg-PurpleHover text-white font-extrabold px-4 py-3 rounded-lg h-[48px] ease-out duration-600">
             Buscar
           </button>
         </div>

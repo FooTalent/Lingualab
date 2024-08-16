@@ -2,14 +2,22 @@ import React, { useRef, useState } from 'react'
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
+import { removeAccents } from '../../../utils/removeAccents';
 
-export default function NavWorkSpace({ setModal, buttonDescription, route }) {
+export default function NavWorkSpace({ setModal, buttonDescription, route, onSearch }) {
     const inputRef = useRef(null);
     const [isInputFocused, setIsInputFocused] = useState(false);
     const navigate = useNavigate();
 
+
     const handleModal = () => {
         setModal(true)
+    }
+
+    const handleSearch = () => {
+        const search = inputRef.current.value.trim()
+        const normalizedSearch = removeAccents(search)
+        onSearch(normalizedSearch)
     }
 
     return (
@@ -19,7 +27,7 @@ export default function NavWorkSpace({ setModal, buttonDescription, route }) {
                     className={`${route === 'aulavirtual' ? 'bg-Yellow font-extrabold' : 'bg-YellowDeselect'} hover:bg-Yellow text-card border-2 border-Yellow rounded-lg py-3 px-4 ease-linear duration-150`}
                     onClick={() => navigate(`/aulavirtual`)}
                 >
-                    Mis aulas
+                    Mis aulas   
                 </button>
                 <button
                     className={`${route === 'workspace' ? 'bg-Yellow font-extrabold' : 'bg-YellowDeselect'} hover:bg-Yellow text-card border-2 border-Yellow rounded-lg py-3 px-4 ease-linear duration-150`}
@@ -50,6 +58,7 @@ export default function NavWorkSpace({ setModal, buttonDescription, route }) {
                 </div>
 
                 <button
+                    onClick={handleSearch}
                     className='py-3 px-4 bg-Purple hover:bg-PurpleHover rounded-lg text-white font-extrabold ease-linear duration-150'
                 >
                     Buscar
