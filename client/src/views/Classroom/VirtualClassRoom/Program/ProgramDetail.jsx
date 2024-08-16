@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAppStore } from '../../../../store/useAppStore';
 import { createClass, deleteClass, getProgramById, updateProgram } from '../../../../services/programs.services';
 import Modal from '../../../../components/Modal';
@@ -17,6 +17,7 @@ import popUp from '/Popup_EliminarClase.png'
 const ProgramDetail = () => {
   const { eid } = useParams();
   const { user } = useAppStore();
+  const location = useLocation();
   const navigate = useNavigate();
   const [refresh, setRefresh] = useState(true);
   const [loading, setLoading] = useState(true);
@@ -53,6 +54,13 @@ const ProgramDetail = () => {
       setLoading(false);
     }
   }, [user, eid, refresh]);
+
+  useEffect(() => {
+    if (location.state === 'edit') {
+      setIsModalEditOpen(true);
+      navigate(location.pathname, { replace: true });
+    }
+  }, [location]);
 
   const handleEditProgram = async (newProgram) => {
     try {
