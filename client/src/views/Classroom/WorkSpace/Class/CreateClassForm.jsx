@@ -102,14 +102,14 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
             onChange={handleInputChange}
             placeholder='Escribe una breve descripción...'
           />
-              
+
           <DropdownSelect
             label="Nivel"
             name='level'
             options={LEVELS.map((level) => level.data)}
             selectedOption={classroomData.level}
             onSelect={(value) => handleSelectChange('level', value)}
-          /> 
+          />
 
           <div className="grid grid-cols-2 gap-8">
             <ButtonModal buttonAction={onClose} type='prev' label='Cancelar' />

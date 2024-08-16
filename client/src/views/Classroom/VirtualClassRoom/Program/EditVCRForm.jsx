@@ -4,11 +4,15 @@ import DropdownSelect from '../../SubComponents/DropdownSelect';
 import { useAppStore } from '../../../../store/useAppStore';
 import Modal from '../../../../components/Modal';
 import AddStudentForm from '../../../../components/AddStudentForm';
+import { useForm } from 'react-hook-form';
+import ErrorMessage from '../../../../components/ErrorMessage';
 
 const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 
 const EditVCRForm = ({ program, onSubmit, onClose, teacherId, token }) => {
   const { user } = useAppStore();
+  console.log(program)
+  const { register, handleSubmit, formState: { errors }, setValue, clearErrors } = useForm();
   const [programData, setProgramData] = useState({
     title: program.title || '',
     students: program.students.map(student => student._id) || [],
@@ -18,7 +22,7 @@ const EditVCRForm = ({ program, onSubmit, onClose, teacherId, token }) => {
     time: program.first_class ? program.first_class.split('T')[1].slice(0, 5) : '',
     endTime: '',
   });
-
+  const today = new Date().toISOString().split("T")[0];
   const [students, setStudents] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -83,7 +87,7 @@ const EditVCRForm = ({ program, onSubmit, onClose, teacherId, token }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
     onSubmit({ ...programData });
   };
@@ -103,19 +107,33 @@ const EditVCRForm = ({ program, onSubmit, onClose, teacherId, token }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(handleFormSubmit)}>
         <div className="mb-4">
           <input
             type="text"
             name="title"
             value={programData.title}
-            onChange={handleInputChange}
+            {...register("title", {
+              required: "Escriba un titulo",
+              onChange: (e) => {
+                handleInputChange(e);
+                clearErrors("title");
+              }
+            })}
             className="w-1/2 p-2 border rounded-md"
           />
+          {errors.title && (
+            <ErrorMessage>{errors.title.message}</ErrorMessage>
+          )}
         </div>
         <div className="mb-4 w-full">
           <div className="flex items-center mb-2">
             <DropdownSelect
+              setValue={setValue}
+              name="studentsId"
+              errors={errors}
+              clearErrors={clearErrors}
+              register={register("studentsId", { required: "Debe invitar al menos un alumno" })}
               label="Estudiante/s"
               options={students.map(student => ({ label: `${student.last_name}, ${student.first_name}`, value: student._id }))}
               selectedOption={selectedStudent ? `${selectedStudent.last_name}, ${selectedStudent.first_name}` : 'Seleccionar Estudiante'}
@@ -154,64 +172,99 @@ const EditVCRForm = ({ program, onSubmit, onClose, teacherId, token }) => {
             })}
           </div>
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 px-0">Fecha de inicio</label>
-          <div className='flex gap-10'>
+        <div className='flex flex-row w-full mb-4 gap-4'>
+          <div className="flex flex-col w-1/2">
+            <label className="block text-gray-700 px-0">Fecha de inicio</label>
             <input
               type="date"
               name="startDate"
+              min={today}
               value={programData.startDate}
-              onChange={handleInputChange}
-              className="w-1/2 p-2 border rounded-md"
+              {...register("startDate", {
+                required: "La fecha de inicio es obligatoria",
+                onChange: (e) => {
+                  handleInputChange(e);
+                  clearErrors("startDate");
+                }
+              })}
+              className="w-full p-2 border rounded-md h-auto"
             />
-
+            {errors.startDate && (
+              <ErrorMessage>{errors.startDate.message}</ErrorMessage>
+            )}
+          </div>
+          <div className="flex flex-col w-1/2">
+            <label className="block text-gray-700 px-0">Seleccionar Día/s</label>
+            <div className='flex flex-row justify-between w-full mb-1'>
+              {days.map((day) => (
+                <div className='relative' key={day}>
+                  <input
+                    type="checkbox"
+                    id={day}
+                    name="daysOfWeek"
+                    value={day}
+                    {...register("daysOfWeek", { required: "Debe seleccionar al menos un día" })}
+                    onChange={() => handleDayChange(day)}
+                    checked={programData.daysOfWeek.includes(day)}
+                    className="hidden"
+                  />
+                  <label htmlFor={day}
+                    className={`flex items-center justify-center w-10 h-10 border-2 rounded-full cursor-pointer font-medium text-lg ${programData.daysOfWeek.includes(day)
+                      ? 'bg-Purple text-white border-black'
+                      : 'bg-white text-gray-700 border-gray-300'
+                      }`}>
+                    {day.slice(0, 2).toUpperCase()}
+                  </label>
+                </div>
+              ))}
+            </div>
+            {errors.daysOfWeek && (
+              <ErrorMessage>{errors.daysOfWeek.message}</ErrorMessage>
+            )}
+          </div>
+        </div>
+        <div className='flex flex-row w-full mb-4 gap-4'>
+          <div className='flex flex-col w-full'>
+            <label className='px-0'>Hora de Inicio</label>
             <input
               type="time"
               name="time"
               value={programData.time}
-              onChange={handleInputChange}
-              className="w-1/2 p-2 border rounded-md"
+              {...register("time", {
+                required: "La hora de inicio es obligatoria",
+                onChange: (e) => {
+                  handleInputChange(e);
+                  clearErrors("time");
+                }
+              })}
+              className="p-2 border rounded-md"
             />
+            {errors.time && (
+              <ErrorMessage>{errors.time.message}</ErrorMessage>
+            )}
           </div>
-        </div>
-        <div className='flex flex-col'>
-          <label className='px-0'>Hora fin</label>
-          <input
-            type="time"
-            name="endTime"
-            value={programData.endTime}
-            onChange={handleInputChange}
-            className="w-1/2 p-2 border rounded-md"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Seleccionar Día/s</label>
-          <div className='flex flex-row gap-5'>
-            {days.map((day) => (
-              <div className='relative' key={day}>
-                <input
-                  type="checkbox"
-                  id={day}
-                  name="daysOfWeek"
-                  value={day}
-                  onChange={() => handleDayChange(day)}
-                  checked={programData.daysOfWeek.includes(day)}
-                  className="hidden"
-                />
-                <label
-                  htmlFor={day}
-                  className={`flex items-center justify-center w-10 h-10 border-2 rounded-full cursor-pointer font-medium text-lg 
-                    ${programData.daysOfWeek.includes(day)
-                      ? 'bg-Purple text-white border-black'
-                      : 'bg-white text-gray-700 border-gray-300'
-                    }`}
-                >
-                  {day.slice(0, 2).toUpperCase()}
-                </label>
-              </div>
-            ))}
+          <div className='flex flex-col w-full'>
+            <label className='px-0'>Hora fin</label>
+            <input
+              type="time"
+              name="endTime"
+              value={programData.endTime}
+              {...register("endTime", {
+                required: "La hora de finalización es obligatoria",
+                onChange: (e) => {
+                  handleInputChange(e);
+                  clearErrors("endTime");
+                }
+              })}
+              className="p-2 border rounded-md"
+            />
+            {errors.endTime && (
+              <ErrorMessage>{errors.endTime.message}</ErrorMessage>
+            )}
           </div>
+
         </div>
+
 
         <div className="flex justify-between">
           <button
