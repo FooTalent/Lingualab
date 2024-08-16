@@ -1,7 +1,7 @@
 import React from 'react';
 import ClassCard from './ClassCard';
 
-export default function ClassList({ data, toggleOptions, stateOption, openModal, confirmDelete }) {
+export default function ClassList({ data, toggleOptions, stateOption, openModalDelete, openModalInvite }) {
     return (
         data.map(clase => (
             <ClassCard
@@ -15,8 +15,8 @@ export default function ClassList({ data, toggleOptions, stateOption, openModal,
                 program={clase.program}
                 toggleOptions={toggleOptions}
                 stateOption={stateOption}
-                openModal={openModal}
-                confirmDelete={confirmDelete}
+                openModalDelete={openModalDelete}
+                openModalInvite={openModalInvite}
             />
         ))
     );

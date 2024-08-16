@@ -4,7 +4,7 @@ import ModalHeader from './ModalHeader';
 import dayjs from 'dayjs';
 import sinClases from '/ImagesCalendar/SinClasesCalendario.png'
 
-export default function ModalCalendar({ open, setOpen, onNavigate, label, data, selectedDay, openModalDelete, confirmDelete }) {
+export default function ModalCalendar({ open, setOpen, onNavigate, label, data, selectedDay, openModalDelete, openModalInvite }) {
   const [dayClasses, setDayClasses] = useState(null);
   const [openOptions, setOpenOptions] = useState(null);
 
@@ -85,8 +85,8 @@ export default function ModalCalendar({ open, setOpen, onNavigate, label, data, 
               data={dayClasses}
               toggleOptions={toggleOptions}
               stateOption={openOptions}
-              openModal={openModalDelete}
-              confirmDelete={confirmDelete}
+              openModalDelete={openModalDelete}
+              openModalInvite={openModalInvite}
             />
           ) : (
             <img src={sinClases} alt="No tienes clases programadas" className='m-auto' />

@@ -11,14 +11,14 @@ import dayjs from 'dayjs';
 import { getStudentsById } from '../../../services/students.services';
 import { useAppStore } from '../../../store/useAppStore';
 
-export default function ClassCard({ id, title, students, duration, date, program, toggleOptions, stateOption, openModal, confirmDelete }) {
+export default function ClassCard({ id, title, students, duration, date, program, toggleOptions, stateOption, openModalDelete, openModalInvite }) {
     const { user } = useAppStore()
     const [stringStudents, setStringStudents] = useState('-');
     const links = [
-        { path: `/classroom/${id}`, label: <><PersonAddIcon /> Invitar al/los alumno/s</> },
+        { function: () => openModalInvite(id), label: <><PersonAddIcon /> Invitar al/los alumno/s</> },
         { path: `/aulavirtual/aula/${program._id}`, label: <><WatchLaterIcon /> Editar fecha y hora</> },
         { path: `/classroom/${id}`, label: <><ShareIcon /> Compartir</> },
-        { path: ``, label: <><DeleteIcon /> Eliminar clase</>, function: () => openModal(id) },
+        { function: () => openModalDelete(id), label: <><DeleteIcon /> Eliminar clase</> },
     ]
 
     useEffect(() => {

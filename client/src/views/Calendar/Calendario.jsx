@@ -10,6 +10,9 @@ import { deleteClass, getClassesByTeacherAndDate } from '../../services/programs
 import popUp from '/ImagesVCR/EliminarAula.png'
 import ButtonModal from '../../components/Form/ButtonModal';
 import Modal from '../../components/Modal';
+import AddStudentForm from '../../components/AddStudentForm';
+import { inviteStudent } from '../../services/students.services';
+import NewStudent from '/ImagesStudent/AgregasteUnAlumno.png'
 
 dayjs.locale('es');
 const localizer = dayjsLocalizer(dayjs);
@@ -20,6 +23,8 @@ export default function Calendario() {
     const [date, setDate] = useState(new Date());
     const [open, setOpen] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false);
+    const [inviteModal, setInviteModal] = useState(false);
+    const [modalNewStudent, setModalNewStudent] = useState(false)
     const [classIdToDelete, setClassIdToDelete] = useState(null);
 
     useEffect(() => {
@@ -64,8 +69,19 @@ export default function Calendario() {
         setClassIdToDelete(classId);
     }
 
+    const handleInvite = (classId) => {
+        setOpen(false);
+        setInviteModal(true);
+        setClassIdToDelete(classId);
+    }
+
     const handleCancelDelete = () => {
         setDeleteModal(false)
+        setOpen(true)
+    }
+
+    const handleCancelInvite = () => {
+        setInviteModal(false)
         setOpen(true)
     }
 
@@ -96,6 +112,22 @@ export default function Calendario() {
         }
     }
 
+    const handleAddOneMoreStudent = async (newStudent) => {
+        try {
+            const addedStudent = await inviteStudent(user.token, newStudent);
+            if (addedStudent.isError === false) {
+                setModalNewStudent(true)
+                setTimeout(() => {
+                    setModalNewStudent(false)
+                    setOpen(true)
+                }, 2000)
+            }
+            setInviteModal(false);
+        } catch (error) {
+            console.error('Error al agregar al alumno', error);
+        }
+    };
+
     return (
         <>
             <main className='container mx-auto flex flex-col gap-5'>
@@ -117,7 +149,7 @@ export default function Calendario() {
                 data={classes}
                 selectedDay={date}
                 openModalDelete={handleDelete}
-                confirmDelete={handleConfirmDelete}
+                openModalInvite={handleInvite}
             />
 
             <Modal modalSize={'xsmall'} isOpen={deleteModal}>
@@ -130,7 +162,19 @@ export default function Calendario() {
                         <ButtonModal buttonAction={handleConfirmDelete} label={'Eliminar aula'} />
                     </div>
                 </div>
+            </Modal>
 
+            <Modal isOpen={inviteModal} onClose={handleCancelInvite} title="Agregar Alumno" modalSize='small'>
+                <AddStudentForm
+                    onSubmit={handleAddOneMoreStudent}
+                    onClose={handleCancelInvite}
+                />
+            </Modal>
+
+            <Modal isOpen={modalNewStudent} modalSize='xsmall'>
+                <div className="flex justify-center">
+                    <img src={NewStudent} alt="Agregaste un alumno" />
+                </div>
             </Modal>
         </>
     );
