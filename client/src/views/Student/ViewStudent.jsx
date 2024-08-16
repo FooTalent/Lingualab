@@ -9,6 +9,7 @@ import AddStudentForm from '../../components/AddStudentForm';
 import { format } from 'date-fns';
 import AddIcon from '@mui/icons-material/Add';
 import { removeAccents } from '../../utils/removeAccents';
+import NewStudent from "/ImagesStudent/AgregasteUnAlumno.png"
 
 const ViewStudent = () => {
   const { user, userDetail } = useAppStore();
@@ -21,6 +22,7 @@ const ViewStudent = () => {
   const [showInfo, setShowInfo] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const inputRef = useRef(null)
+  const [modalNewStudent, setModalNewStudent] = useState(false)
 
   useEffect(() => {
     if (user && user.token) {
@@ -57,6 +59,12 @@ const ViewStudent = () => {
   const handleAddStudent = async (newStudent) => {
     try {
       const addedStudent = await inviteStudent(user.token, newStudent);
+      if (addedStudent.isError === false){
+        setModalNewStudent(true)
+        setTimeout(() => {
+          setModalNewStudent(false)
+        }, 2000)
+      }
       setRefresh(!refresh);
       setIsModalOpen(false);
     } catch (error) {
@@ -234,6 +242,11 @@ const ViewStudent = () => {
           onSubmit={handleAddStudent}
           onClose={handleModalClose}
         />
+      </Modal>
+      <Modal isOpen={modalNewStudent} modalSize='xsmall'>
+        <div className="flex justify-center">
+          <img src={NewStudent} alt="Agregaste un alumno" />
+        </div>
       </Modal>
     </div>
   );

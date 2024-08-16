@@ -7,6 +7,7 @@ import { useAppStore } from '../../../../store/useAppStore';
 import Modal from '../../../../components/Modal';
 import AddStudentForm from '../../../../components/AddStudentForm';
 import ErrorMessage from '../../../../components/ErrorMessage';
+import NewStudent from '/ImagesStudent/AgregasteUnAlumno.png'
 
 const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
   const { user } = useAppStore();
@@ -21,6 +22,7 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
   const [students, setStudents] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalNewStudent, setModalNewStudent] = useState(false)
 
   const days = [
     'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'
@@ -108,6 +110,12 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
   const handleAddOneMoreStudent = async (newStudent) => {
     try {
       const addedStudent = await inviteStudent(user.token, newStudent);
+      if (addedStudent.isError === false){
+        setModalNewStudent(true)
+        setTimeout(() => {
+          setModalNewStudent(false)
+        }, 2000)
+      }
       setRefresh(!refresh);
       setIsModalOpen(false);
     } catch (error) {
@@ -292,6 +300,11 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
           onSubmit={handleAddOneMoreStudent}
           onClose={handleModalClose}
         />
+      </Modal>
+      <Modal isOpen={modalNewStudent} modalSize='xsmall'>
+        <div className="flex justify-center">
+          <img src={NewStudent} alt="Agregaste un alumno" />
+        </div>
       </Modal>
     </>
   );
