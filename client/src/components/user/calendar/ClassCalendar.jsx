@@ -6,6 +6,7 @@ import Month from './Month';
 import { Calendar } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import dayjs from 'dayjs';
+import EventContainerWrapper from './EventContainerWrapper';
 
 export default function ClassCalendar({ localizer, date, handleNavigate, handleSelectSlot, handleDate, data }) {
     const [view, setView] = useState('month');
@@ -65,7 +66,16 @@ export default function ClassCalendar({ localizer, date, handleNavigate, handleS
                     />
                 ),
                 eventWrapper: EventWrapper,
-                dateCellWrapper: DateCellWrapper,
+                dateCellWrapper: ({ children }) => (
+                    <DateCellWrapper view={view}>
+                        {children}
+                    </DateCellWrapper>
+                ),
+                eventContainerWrapper: ({ children }) => (
+                    <EventContainerWrapper view={view}>
+                        {children}
+                    </EventContainerWrapper>
+                ),
                 month: {
                     header: ({ label }) => {
                         const formattedDate = dayjs(date).format('dddd').slice(0, 2).charAt(0).toUpperCase() + dayjs(date).format('dddd').slice(1, 3);

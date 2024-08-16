@@ -4,7 +4,7 @@ import ModalHeader from './ModalHeader';
 import dayjs from 'dayjs';
 import sinClases from '/ImagesCalendar/SinClasesCalendario.png'
 
-export default function Modal({ open, setOpen, onNavigate, label, data, selectedDay }) {
+export default function ModalCalendar({ open, setOpen, onNavigate, label, data, selectedDay, openModalDelete, openModalInvite }) {
   const [dayClasses, setDayClasses] = useState(null);
   const [openOptions, setOpenOptions] = useState(null);
 
@@ -33,8 +33,6 @@ export default function Modal({ open, setOpen, onNavigate, label, data, selected
 
     filterClassesByDate();
   }, [data, selectedDay]);
-
-
 
   useEffect(() => {
     if (open) {
@@ -69,12 +67,12 @@ export default function Modal({ open, setOpen, onNavigate, label, data, selected
   if (!open) return null;
 
   return (
-    <div className='fixed z-10 inset-0 flex items-center justify-center py-5'>
+    <div className='fixed z-20 inset-0 flex items-center justify-center py-5'>
       <div
         className='absolute inset-0 bg-card bg-opacity-50'
         onClick={handleOutsideClick}
       ></div>
-      <div className='m-auto flex flex-col gap-6 z-10 p-6 bg-white shadow-modal rounded-2xl w-4/12 h-4/6'>
+      <div className='m-auto flex flex-col gap-6 z-20 p-6 bg-white shadow-modal rounded-2xl w-4/12 h-4/6'>
         <ModalHeader
           handleOpen={handleOpen}
           label={label}
@@ -87,6 +85,8 @@ export default function Modal({ open, setOpen, onNavigate, label, data, selected
               data={dayClasses}
               toggleOptions={toggleOptions}
               stateOption={openOptions}
+              openModalDelete={openModalDelete}
+              openModalInvite={openModalInvite}
             />
           ) : (
             <img src={sinClases} alt="No tienes clases programadas" className='m-auto' />
