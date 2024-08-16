@@ -11,7 +11,7 @@ import NewStudent from '/ImagesStudent/AgregasteUnAlumno.png'
 
 const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
   const { user } = useAppStore();
-  const { register, handleSubmit, control, formState: { errors }, setValue, clearErrors, trigger } = useForm();
+  const { register, handleSubmit, formState: { errors }, setValue, clearErrors } = useForm();
   const [programData, setProgramData] = useState({
     studentIds: [],
     daysOfWeek: [],
@@ -28,11 +28,7 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
     'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'
   ]
 
-  useEffect(() => {
-    register('daysOfWeek', {
-      validate: value => value.length > 0 || 'Debe seleccionar al menos un día',
-    });
-  }, [register]);
+  const today = new Date().toISOString().split("T")[0];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -110,7 +106,7 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
   const handleAddOneMoreStudent = async (newStudent) => {
     try {
       const addedStudent = await inviteStudent(user.token, newStudent);
-      if (addedStudent.isError === false){
+      if (addedStudent.isError === false) {
         setModalNewStudent(true)
         setTimeout(() => {
           setModalNewStudent(false)
@@ -125,63 +121,62 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
 
   const onFormSubmit = async (data) => {
     console.log(data)
-    const isValid = await trigger('daysOfWeek');
-    if (isValid) {
-      onSubmit({ ...data, first_class: programData.startDateTime });
-    }
+    onSubmit({ ...data, first_class: programData.startDateTime });
   };
 
   return (
     <>
       <form onSubmit={handleSubmit(onFormSubmit)}>
         <div className="mb-4">
-          <Controller
-            name='templateId'
-            control={control}
-            rules={{ required: 'El programa es obligatorio' }}
-            render={({ field }) => (
-              <DropdownSelect
-                label="Programa"
-                options={programs.map(program => ({ label: program.title, value: program._id }))}
-                selectedOption={
-                  field.value
-                    ? programs.find(program => program._id === field.value)?.title
-                    : 'Seleccionar programa'
-                }
-                onSelect={(value) => {
-                  field.onChange(value)
-                  handleSelectChange('templateId', value)
-                }}
-              />
-            )}
+          <DropdownSelect
+            setValue={setValue}
+            name="templateId"
+            errors={errors}
+            clearErrors={clearErrors}
+            register={register("templateId", { required: "El programa es obligatorio" })}
+            label="Programa"
+            options={programs.map(program => ({ label: program.title, value: program._id }))}
+            selectedOption={
+              programData.templateId ?
+                programs.find(program => program._id === programData.templateId).title
+                : 'Seleccionar programa'
+            }
+            onSelect={(value) => handleSelectChange('templateId', value)}
           />
-          {errors.templateId && (
-            <ErrorMessage>{errors.templateId.message}</ErrorMessage>
-          )}
         </div>
-        <div className="mb-4 w-full">
-          <div className="flex items-center mb-2">
-            <DropdownSelect
-              label="Estudiante/s"
-              options={students.map(student => ({ label: `${student.last_name}, ${student.first_name}`, value: student._id }))}
-              selectedOption={selectedStudent ? `${selectedStudent.last_name}, ${selectedStudent.first_name}` : 'Seleccionar Estudiante'}
-              onSelect={handleStudentChange}
-            />
-            <button
-              type="button"
-              onClick={handleAddStudent}
-              className="self-end ml-2 bg-Yellow text-darkGray px-5 py-3 rounded-md hover:bg-darkGray hover:text-Yellow duration-150"
-            >
-              +
-            </button>
-            <button
-              type="button"
-              onClick={handleModalOpen}
-              className="self-end ml-2 bg-Yellow text-darkGray px-4 py-3 rounded-md hover:bg-darkGray hover:text-Yellow duration-150"
-            >
-              Invitar
-            </button>
+        <div className="mb-4">
+          <div className='flex flex-row gap-4'>
+            <div className="mb-2">
+              <DropdownSelect
+                setValue={setValue}
+                name="studentsId"
+                errors={errors}
+                clearErrors={clearErrors}
+                register={register("studentsId", { required: "Debe invitar al menos un alumno" })}
+                label="Estudiante/s"
+                options={students.map(student => ({ label: `${student.last_name}, ${student.first_name}`, value: student._id }))}
+                selectedOption={selectedStudent ? `${selectedStudent.last_name}, ${selectedStudent.first_name}` : 'Seleccionar Estudiante'}
+                onSelect={handleStudentChange}
+              />
+            </div>
+            <div className='flex flex-row h-full gap-4 mt-10'>
+              <button
+                type="button"
+                onClick={handleAddStudent}
+                className="flex gap-4 text-xl font-extrabold text-black border border-Yellow px-4 py-3 rounded-lg bg-YellowDeselect "
+              >
+                +
+              </button>
+              <button
+                type="button"
+                onClick={handleModalOpen}
+                className="flex gap-[10px] text-xl font-extrabold text-Yellow bg-darkGray py-3 px-8 rounded-lg"
+              >
+                Invitar
+              </button>
+            </div>
           </div>
+
           <div className="flex flex-col">
             {programData.studentIds.map((studentId) => {
               const student = students.find((s) => s._id === studentId);
@@ -206,10 +201,16 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
             <input
               type="date"
               name="startDate"
+              min={today}
               value={programData.startDate}
-              {...register("startDate", { required: "La fecha de inicio es obligatoria" })}
-              onChange={handleInputChange}
-              className="w-full p-2 border rounded-md h-full"
+              {...register("startDate", {
+                required: "La fecha de inicio es obligatoria",
+                onChange: (e) => {
+                  handleInputChange(e);
+                  clearErrors("startDate");
+                }
+              })}
+              className="w-full p-2 border rounded-md h-auto"
             />
             {errors.startDate && (
               <ErrorMessage>{errors.startDate.message}</ErrorMessage>
@@ -217,7 +218,7 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
           </div>
           <div className="flex flex-col w-1/2">
             <label className="block text-gray-700 px-0">Seleccionar Día/s</label>
-            <div className='flex flex-row justify-between w-full'>
+            <div className='flex flex-row justify-between w-full mb-1'>
               {days.map((day) => (
                 <div className='relative' key={day}>
                   <input
@@ -225,6 +226,7 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
                     id={day}
                     name="daysOfWeek"
                     value={day}
+                    {...register("daysOfWeek", { required: "Debe seleccionar al menos un día" })}
                     onChange={() => handleDayChange(day)}
                     checked={programData.daysOfWeek.includes(day)}
                     className="hidden"
@@ -243,9 +245,7 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
               <ErrorMessage>{errors.daysOfWeek.message}</ErrorMessage>
             )}
           </div>
-
         </div>
-
         <div className='flex flex-row w-full mb-4 gap-4'>
           <div className='flex flex-col w-full'>
             <label className='px-0'>Hora de Inicio</label>
@@ -253,8 +253,13 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
               type="time"
               name="time"
               value={programData.time}
-              {...register("time", { required: "La hora de inicio es obligatoria" })}
-              onChange={handleInputChange}
+              {...register("time", {
+                required: "La hora de inicio es obligatoria",
+                onChange: (e) => {
+                  handleInputChange(e);
+                  clearErrors("time");
+                }
+              })}
               className="p-2 border rounded-md"
             />
             {errors.time && (
@@ -266,9 +271,14 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
             <input
               type="time"
               name="endTime"
-              {...register("endTime", { required: "La hora de finalización es obligatoria" })}
               value={programData.endTime}
-              onChange={handleInputChange}
+              {...register("endTime", {
+                required: "La hora de finalización es obligatoria",
+                onChange: (e) => {
+                  handleInputChange(e);
+                  clearErrors("endTime");
+                }
+              })}
               className="p-2 border rounded-md"
             />
             {errors.endTime && (
