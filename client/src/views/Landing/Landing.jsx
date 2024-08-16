@@ -21,11 +21,12 @@ const Landing = () => {
         <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-start items-start p-12 space-y-6">
           <div className="space-y-4">
             <h1
-              className="text-[53px] font-bold text-white"
+              className="text-[53px] font-bold text-white text-center"
               style={{ marginTop: "-18px" }}
             >
               <br />
-              ¡Bienvenido a LinguaLab!
+              ¡Te damos la bienvenida <br />
+              a LinguaLab!
             </h1>
             <h2
               className="text-[36px] font-bold text-white"
@@ -36,7 +37,7 @@ const Landing = () => {
           </div>
           <p className="text-[22px] text-white mt-6 max-w-lg">
             Descubre todo lo que necesitas para enseñar y <br />
-            aprender idiomas en nuestra plataforma. Gestiona <br />
+            aprender idiomas en nuestra plataforma. Gestioná <br />
             tus clases, accede a recursos y crea contenido.
             <br />
             <br />
@@ -153,7 +154,7 @@ const Landing = () => {
 
       <div className="py-12 text-center">
         <h2 className="text-3xl font-bold mb-8">
-          Nunca fue fácil y rápido crear y compartir una clase
+          Nunca fue tan fácil y rápido crear y compartir una clase
         </h2>
         <div className="p-4 mx-auto max-w-6xl">
           <img
@@ -165,50 +166,55 @@ const Landing = () => {
       </div>
 
       <div className="bg-[#9747FF] py-12 px-4">
-        <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="text-white px-4">
-            <h3 className="text-2xl mb-4 pl-12 ">Domina un nuevo idioma con</h3>
-            <h3 className="text-2xl mb-4 pl-12 ">recursos interactivos.</h3>
-            <img
-              src="/ImagesLanding/dominarecursos.png"
-              alt="Recursos"
-              className="mt-4 w-4/5 h-auto pl-12 "
-            />
-          </div>
-          <div className="grid grid-cols-2 gap-4 px-4">
-            <img
-              src="/ImagesLanding/diccionario.png"
-              alt="Diccionario"
-              className="w-44 h-auto"
-            />
-            <img
-              src="/ImagesLanding/juegos.png"
-              alt="Juegos"
-              className="w-44 h-auto"
-            />
-            <img
-              src="/ImagesLanding/canciones.png"
-              alt="Canciones"
-              className="w-44 h-auto"
-            />
-            <img
-              src="/ImagesLanding/series.png"
-              alt="Series"
-              className="w-44 h-auto"
-            />
-            <img
-              src="/ImagesLanding/ejerciciogramatical.png"
-              alt="Ejercicios Gramaticales"
-              className="w-44 h-auto"
-            />
-            <img
-              src="/ImagesLanding/libros.png"
-              alt="Libros"
-              className="w-44 h-auto"
-            />
-          </div>
-        </div>
-      </div>
+  <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
+    
+    <div className="md:col-span-2 text-white flex flex-col items-center">
+      <h3 className="text-center text-3xl mb-4">Domina un nuevo idioma con recursos interactivos</h3>
+    </div>
+    
+    <div className="flex justify-center md:justify-start items-center px-4">
+      <img
+        src="/ImagesLanding/dominarecursos.png"
+        alt="Recursos"
+        className="mt-4 w-4/5 h-auto"
+      />
+    </div>
+    
+    <div className="grid grid-cols-2 gap-4 px-4">
+      <img
+        src="/ImagesLanding/diccionario.png"
+        alt="Diccionario"
+        className="w-44 h-auto"
+      />
+      <img
+        src="/ImagesLanding/juegos.png"
+        alt="Juegos"
+        className="w-44 h-auto"
+      />
+      <img
+        src="/ImagesLanding/canciones.png"
+        alt="Canciones"
+        className="w-44 h-auto"
+      />
+      <img
+        src="/ImagesLanding/series.png"
+        alt="Series"
+        className="w-44 h-auto"
+      />
+      <img
+        src="/ImagesLanding/ejerciciogramatical.png"
+        alt="Ejercicios Gramaticales"
+        className="w-44 h-auto"
+      />
+      <img
+        src="/ImagesLanding/libros.png"
+        alt="Libros"
+        className="w-44 h-auto"
+      />
+    </div>
+  </div>
+</div>
+
 
       <div className="py-12 text-center">
         <h2 className="text-3xl font-bold mb-8">Contamos con funciones como</h2>

@@ -10,9 +10,11 @@ import CreateProgramForm from './Main/CreateProgramForm';
 import CardList from '../SubComponents/CardList';
 import CreatedProgram from '../SubComponents/CreatedProgram';
 import sinProgramas from '/ImagesWorkspace/NoHayProgramas.png'
+import { removeAccents } from '../../../utils/removeAccents';
 
 const WorkSpace = () => {
   const [programs, setPrograms] = useState([]);
+  const [allPrograms, setAllPrograms] = useState([])
   const [loading, setLoading] = useState(true);
   const [refresh, setRefresh] = useState(false);
   const [error, setError] = useState(null);
@@ -32,6 +34,7 @@ const WorkSpace = () => {
             throw new Error(response.message);
           }
           setPrograms(response.data);
+          setAllPrograms(response.data);
         } catch (error) {
           console.error('Error al cargar los Programas', error);
           setError(error.message);
@@ -73,9 +76,24 @@ const WorkSpace = () => {
     setRefresh(prevRefresh => !prevRefresh);
   };
 
+  const handleSearchPrograms = (term) => {
+    if (!term){
+      setRefresh(prevRefresh => !prevRefresh)
+    }
+    const filteredPrograms = allPrograms.filter(program => {
+      const normalizedTitle = removeAccents(program.title.toLowerCase()) 
+      return normalizedTitle.includes(term.toLowerCase())
+    })
+    setPrograms(filteredPrograms)
+  }
+
   return (
     <div className="container mx-auto flex flex-col gap-11">
-      <NavWorkSpace setModal={setIsModalOpen} buttonDescription={"Crear Programa"} route={'workspace'} />
+      <NavWorkSpace 
+        setModal={setIsModalOpen} 
+        buttonDescription={"Crear Programa"} 
+        route={'workspace'} 
+        onSearch={handleSearchPrograms}/>
 
       {
         loading ? (
