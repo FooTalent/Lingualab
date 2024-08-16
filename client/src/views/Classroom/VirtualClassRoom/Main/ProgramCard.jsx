@@ -32,7 +32,7 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
 
   const links = [
     { path: `/`, label: <><ShareIcon />Compartir</> },
-    { path: `/`, label: <><img src={editarPrograma} alt='Editar aula' />Editar aula</> },
+    { path: `/aulavirtual/aula/${program._id}`, state: 'edit', label: <><img src={editarPrograma} alt='Editar aula' />Editar aula</> },
     { path: ``, label: <><DeleteIcon />Eliminar aula</>, function: handleDelete },
   ];
 
