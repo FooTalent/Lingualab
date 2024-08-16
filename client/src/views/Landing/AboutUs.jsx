@@ -12,7 +12,7 @@ const AboutUs = () => {
           />
           <div className="absolute top-0 left-0 p-4">
             <h2 className="mt-20 ml-16 text-7xl font-bold text-[#444444]">
-              Hola!
+              ¡Hola!
             </h2>
             <p className="mt-2 ml-16 text-3xl text-[#444444]">
               <br />
