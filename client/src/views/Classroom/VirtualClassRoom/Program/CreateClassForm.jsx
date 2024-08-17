@@ -1,59 +1,59 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import { LEVELS, LEVELS_MAP } from '../../../../utils/valueLists';
+import ErrorMessage from '../../../../components/ErrorMessage';
 
 const CreateClassForm = ({ programData, onSubmit, onClose }) => {
-  const [classroomData, setClassroomData] = useState({
-    duration_hours: 1,
-    teacher: programData.teacher._id,
-    language: programData.language,
-    level: programData.level,
-    program: programData._id
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    mode: "onChange",
+    defaultValues: {
+      duration_hours: 1,
+      teacher: programData.teacher._id,
+      language: programData.language,
+      level: programData.level,
+      program: programData._id,
+      title: '',
+      description: ''
+    }
   });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setClassroomData({
-      ...classroomData,
-      isTemplate: false,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(classroomData);
+  const onFormSubmit = (data) => {
+    onSubmit(data);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onFormSubmit)}>
       <div className="mb-4">
         <label className="block text-gray-700">Título</label>
         <input
           type="text"
-          name="title"
-          value={classroomData.title}
-          onChange={handleInputChange}
-          className="w-full p-2 border rounded-md"
+          {...register("title", { required: "Este campo es obligatorio" })}
+          className={`w-full p-2 border rounded-md ${errors.title ? 'border-red-500' : ''}`}
         />
+        {errors.title && (
+          <ErrorMessage>{errors.title.message}</ErrorMessage>
+        )}
       </div>
+
       <div className="mb-4">
         <label className="block text-gray-700">Descripción</label>
         <input
           type="text"
-          name="description"
-          value={classroomData.description}
-          onChange={handleInputChange}
-          className="w-full p-2 border rounded-md"
+          {...register("description", { required: "Este campo es obligatorio" })}
+          className={`w-full p-2 border rounded-md ${errors.description ? 'border-red-500' : ''}`}
         />
+        {errors.description && (
+          <ErrorMessage>{errors.description.message}</ErrorMessage>
+        )}
       </div>
+
       <div className="mb-4">
         <label className="block text-gray-700">Nivel</label>
         <select
-          name="level"
-          value={classroomData.level}
-          onChange={handleInputChange}
-          className="w-full p-2 border rounded-md"
-          style={{ color: LEVELS_MAP[classroomData.level] }}
+          id='level'
+          {...register("level", { required: "Este campo es obligatorio" })}
+          className={`w-full p-2 border rounded-md ${errors.level ? 'border-red-500' : ''}`}
+          style={{ color: LEVELS_MAP[programData.level] }}
         >
           {LEVELS.map((level, i) => (
             <option key={i} value={level.data} style={{ color: level.color }}>
@@ -61,17 +61,22 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
             </option>
           ))}
         </select>
+        {errors.level && (
+          <ErrorMessage>{errors.level.message}</ErrorMessage>
+        )}
       </div>
+
       <div className="mb-4">
         <label className="block text-gray-700">Duración (horas)</label>
         <input
           type="number"
-          name="duration_hours"
-          value={classroomData.duration_hours}
-          onChange={handleInputChange}
-          className="w-full p-2 border rounded-md"
+          {...register("duration_hours", { required: "Este campo es obligatorio", min: { value: 1, message: "La duración debe ser al menos 1 hora" } })}
+          className={`w-full p-2 border rounded-md ${errors.duration_hours ? 'border-red-500' : ''}`}
         />
+        {errors.duration_hours && (
+          <ErrorMessage>{errors.duration_hours.message}</ErrorMessage>)}
       </div>
+
       <div className="flex justify-end">
         <button
           type="button"
