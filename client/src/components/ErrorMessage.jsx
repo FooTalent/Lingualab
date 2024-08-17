@@ -1,7 +1,10 @@
+import { IoAlertCircleOutline } from "react-icons/io5";
+
 export default function ErrorMessage({ children }) {
     return (
-        <div className="text-center my-2 bg-red-100 text-red-600 font-bold p-3 uppercase text-sm">
+        <div className="flex items-center gap-[10px] w-full px-4 py-2 font-normal text-redError text-sm">
             {children}
+            <IoAlertCircleOutline className="h-5 w-5" />
         </div>
     )
 }
