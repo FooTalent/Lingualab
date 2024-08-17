@@ -3,9 +3,11 @@ import { useAppStore } from "../../store/useAppStore";
 import SearchIcon from "@mui/icons-material/Search";
 import { getNextNClassesByTeacher } from "../../services/programs.services";
 import DisplayNextClasses from "./DisplayNextClasses";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const { user, status, userDetail } = useAppStore();
+  const navigate = useNavigate(); 
 
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -180,7 +182,10 @@ const Home = () => {
                   className="object-cover rounded-lg max-h-[185px]"
                 />
                 <div className="flex flex-col justify-between gap-4">
-                  <button className="bg-Purple tracking-wide text-white font-extrabold px-4 py-2 rounded-lg ease-out duration-6000">
+                <button
+                    onClick={() => navigate("/questions")} 
+                    className="bg-Purple tracking-wide text-white font-extrabold px-4 py-2 rounded-lg ease-out duration-6000"
+                  >
                     Ver preguntas
                   </button>
                 </div>
