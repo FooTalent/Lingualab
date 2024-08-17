@@ -64,7 +64,8 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
     e.preventDefault();
     onSubmit({
       ...classroomData,
-      program: classroomData.program.value,
+      program: programData._id,
+      level: programData.level,
       title: classroomData.title || 'Sin título',
     });
   };
@@ -72,7 +73,7 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className='flex flex-col gap-2 text-card justify-evenly'
+      className='flex flex-col gap-4 text-card justify-evenly'
     >
       {loading ? (
         <p>Cargando...</p>
@@ -80,13 +81,6 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
         <p>Error: {error}</p>
       ) : (
         <>
-          <DropdownSelect
-            label="Programa"
-            options={programs.map((program) => ({ label: program.title, value: program._id }))}
-            selectedOption={classroomData.program.label}
-            onSelect={(value) => handleSelectChange('program', value)}
-          />
-
           <InputField
             label="Título"
             name="title"
@@ -102,16 +96,8 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
             onChange={handleInputChange}
             placeholder='Escribe una breve descripción...'
           />
-              
-          <DropdownSelect
-            label="Nivel"
-            name='level'
-            options={LEVELS.map((level) => level.data)}
-            selectedOption={classroomData.level}
-            onSelect={(value) => handleSelectChange('level', value)}
-          /> 
 
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid grid-cols-2 gap-8 mt-9">
             <ButtonModal buttonAction={onClose} type='prev' label='Cancelar' />
             <ButtonModal buttonAction={onSubmit} type='submit' label='Crear Clase' />
           </div>
