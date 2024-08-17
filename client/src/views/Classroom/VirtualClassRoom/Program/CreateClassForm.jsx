@@ -1,4 +1,3 @@
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import ErrorMessage from '../../../../components/ErrorMessage';
 
@@ -24,6 +23,7 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
       <div className="mb-4">
         <label className="block text-gray-700">Título</label>
         <input
+          id='title'
           type="text"
           {...register("title", { required: "Este campo es obligatorio" })}
           className={`w-full p-2 border rounded-md ${errors.title ? 'border-red-500' : ''}`}
@@ -36,14 +36,22 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
       <div className="mb-4">
         <label className="block text-gray-700">Descripción</label>
         <input
+          id='description'
           type="text"
-          {...register("description", { required: "Este campo es obligatorio" })}
+          {...register("description", {
+            required: "Este campo es obligatorio",
+            minLength: {
+              value: 10,
+              message: "La descripción debe tener al menos 10 caracteres"
+            }
+          })}
           className={`w-full p-2 border rounded-md ${errors.description ? 'border-red-500' : ''}`}
         />
         {errors.description && (
           <ErrorMessage>{errors.description.message}</ErrorMessage>
         )}
       </div>
+
       <div className="flex justify-end">
         <button
           type="button"
