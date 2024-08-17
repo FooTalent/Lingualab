@@ -110,7 +110,7 @@ const ProgramDetail = () => {
         <BackButton />
         <div className="flex items-center">
           <span className="text-white px-2 py-1 rounded mr-2" style={{backgroundColor: LEVELS_MAP[program.level]}}>{program.level}</span>
-          <h1 className="text-3xl font-bold mb-4">{program.title}</h1>
+          <h1 className="text-3xl font-bold">{program.title}</h1>
         </div>
         <div className='flex items-center gap-6'>
           <button
@@ -123,7 +123,7 @@ const ProgramDetail = () => {
             className={`flex items-center gap-4 bg-Yellow hover:bg-card font-extrabold text-card hover:text-Yellow border-2 border-Yellow hover:border-card rounded-lg py-3 px-4 ease-linear duration-150`}
             onClick={() => setIsModalOpen(true)}
           >
-            Crear <AddIcon />
+            Crear clase<AddIcon />
           </button>
         </div>
       </div>

@@ -108,8 +108,12 @@ const ProgramDetail = () => {
   return (
     <div className="container mx-auto flex flex-col gap-8">
       <div className='flex justify-between items-center'>
-        <BackButton />
-
+        <div className='flex gap-6'>
+          <BackButton />
+          <div className='bg-card text-white rounded-lg text-xl px-4 py-3 italic font-black tracking-normal'>
+            Modelo
+          </div>
+        </div>
         <div className="flex items-center gap-8">
           <span className="text-white text-lg font-extrabold py-3 px-4 rounded-lg" style={{ backgroundColor: LEVELS_MAP[program.level] }}>{program.level}</span>
           <h1 className="text-card text-customSubTitle font-semibold">{program.title}</h1>
@@ -126,7 +130,7 @@ const ProgramDetail = () => {
             className={`flex items-center gap-4 bg-Yellow hover:bg-card font-extrabold text-card hover:text-Yellow border-2 border-Yellow hover:border-card rounded-lg py-3 px-4 ease-linear duration-150`}
             onClick={() => setIsModalOpen(true)}
           >
-            Crear <AddIcon />
+            Crear clase <AddIcon />
           </button>
         </div>
       </div>

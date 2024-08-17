@@ -95,7 +95,7 @@ const ClassDetail = () => {
         </div>
       </div>
 
-      <ProgramInfo program={program} />
+      <ProgramInfo program={classData} />
 
       <div className='flex flex-col gap-5'>
         <h2 className="text-customSubTitle font-semibold">Edita el contenido de la clase</h2>

@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { LEVELS_MAP } from '../../../../utils/valueLists';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import Options from '../../../../components/user/classes/Options';
-import ShareIcon from '@mui/icons-material/Share';
+import Options from '../../../../components/user/classes/Options';  
 import DeleteIcon from '@mui/icons-material/Delete';
 import editarPrograma from '/editarPrograma.svg'
-import duplicar from '/duplicar.svg'
 import { deleteProgram } from '../../../../services/programs.services';
 import { useAppStore } from '../../../../store/useAppStore';
 import Modal from '../../../../components/Modal';
@@ -31,7 +29,6 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
   }
 
   const links = [
-    { path: `/`, label: <><ShareIcon />Compartir</> },
     { path: `/aulavirtual/aula/${program._id}`, state: 'edit', label: <><img src={editarPrograma} alt='Editar aula' />Editar aula</> },
     { path: ``, label: <><DeleteIcon />Eliminar aula</>, function: handleDelete },
   ];
