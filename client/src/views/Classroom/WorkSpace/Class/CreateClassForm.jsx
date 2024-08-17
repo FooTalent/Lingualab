@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { LEVELS, LEVELS_MAP } from '../../../../utils/valueLists';
-import DropdownSelect from '../../SubComponents/DropdownSelect';
 import ButtonModal from '../../../../components/Form/ButtonModal';
 import { getPrograms } from '../../../../services/programs.services';
 import { useAppStore } from '../../../../store/useAppStore';
@@ -17,7 +15,7 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
     teacher: programData.teacher._id,
     language: programData.language,
     level: programData.level,
-    program: { label: programData.title, value: programData._id },
+    program: programData._id ,
   });
 
   useEffect(() => {
@@ -64,8 +62,6 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
     e.preventDefault();
     onSubmit({
       ...classroomData,
-      program: programData._id,
-      level: programData.level,
       title: classroomData.title || 'Sin título',
     });
   };
