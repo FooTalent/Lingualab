@@ -1,13 +1,13 @@
 
 export default function SwitchRegister({ inputName, register }) {
   const roles = ['Student', 'Teacher']
-  
+
   return (
     <div className='flex flex-row md:w-[404px] md:gap-[32px] gap-[10px]'>
       {
         roles.map((role) => {
           const isDisabled = role === 'Student';
-          
+
           return (
             <div key={role} className='flex py-[15px]'>
               <input
@@ -17,6 +17,7 @@ export default function SwitchRegister({ inputName, register }) {
                 value={role}
                 {...register(inputName)}
                 disabled={isDisabled}
+                defaultChecked={role === 'Teacher'}
               />
               <label
                 htmlFor={role}

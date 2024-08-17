@@ -22,7 +22,7 @@ export default class Service extends CustomService {
   register = async (userData) => {
     userData.password = await createHashAsync(userData.password)
     const userFound = await this.dao.getBy({email: userData.email});
-    if (userFound) throw new AppError(`Ya existe un usuario con ese email. pruebe con otro`, 400)
+    if (userFound) throw new AppError(`Ya existe un usuario con ese email. pruebe con otro`, 203)
     return await this.dao.create(userData)
   }
 
