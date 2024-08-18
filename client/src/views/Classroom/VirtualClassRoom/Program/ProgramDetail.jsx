@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAppStore } from '../../../../store/useAppStore';
-import { createClass, deleteClass, getProgramById, updateProgram } from '../../../../services/programs.services';
+import { createClass, deleteClass, getProgramById, updateClass, updateProgram } from '../../../../services/programs.services';
 import Modal from '../../../../components/Modal';
 import CreateClassForm from './CreateClassForm';
 import ClassroomCard from './ClassroomCard';
@@ -13,6 +13,7 @@ import EditVCRForm from './EditVCRForm';
 import CreatedClass from '../Class/CreatedClass'
 import logo from '/CreasteUnaClase.png';
 import popUp from '/Popup_EliminarClase.png'
+import EditClassForm from './EditClassForm';
 
 const ProgramDetail = () => {
   const { eid } = useParams();
@@ -27,13 +28,18 @@ const ProgramDetail = () => {
   const [program, setProgram] = useState(null);
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   // Create Class
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isCreated, setIsCreated] = useState(false);
+  const [isCreateClassModalOpen, setIsCreateClassModalOpen] = useState(false);
+  const [isCreatedClass, setIsCreatedClass] = useState(false);
   const [newClassId, setNewClassId] = useState(null);
-    // Delete Class
-    const [idClass, setIdClass] = useState(false);
-    const [deleteModal, setDeleteModal] = useState(false);
+  // Edit Class
+  const [isEditClassModalsOpen, setIsEditClassModalsOpen] = useState(false);
+  const [editClass, setEditClass] = useState(null);
+  const [isEditClass, setIsEditClass] = useState(false);
+  // Delete Class
+  const [idDeleteClass, setIdDeleteClass] = useState(false);
+  const [deleteClassModal, setDeleteClassModal] = useState(false);
 
+  // Load data
   useEffect(() => {
     if (user && user.token) {
       const fetchProgram = async () => {
@@ -62,6 +68,7 @@ const ProgramDetail = () => {
     }
   }, [location]);
 
+  // Functions
   const handleEditProgram = async (newProgram) => {
     try {
       await updateProgram(user.token, eid, newProgram);
@@ -78,26 +85,43 @@ const ProgramDetail = () => {
       const newClass = await createClass(user.token, classData);
       setNewClassId(newClass.data._id)
       setRefresh(!refresh);
-      setIsModalOpen(false);
-      setIsCreated(true);
+      setIsCreateClassModalOpen(false);
+      setIsCreatedClass(true);
     } catch (error) {
       console.error('Error al crear la clase', error);
       setError(error.message);
     }
   };
 
+  const handleShowEditClass = (editClassId) => {
+    const classToEdit = program.classes.find(cls => cls._id === editClassId)
+    setEditClass(classToEdit)
+    if( editClass ) setIsEditClassModalsOpen(true);
+  };
+  
+  const handleEditClass = async (classId, classData) => {
+    try {
+      setIsEditClassModalsOpen(false);
+      await updateClass(user.token, classId, classData);
+      setRefresh(!refresh);
+    } catch (error) {
+      console.error('Error al actualizar la clase', error);
+      setError(error.message);
+    }
+  };
+
   const handleDeleteClass = (id) => {
-    setIdClass(id)
-    setDeleteModal(true)
+    setIdDeleteClass(id)
+    setDeleteClassModal(true)
   }
 
   const handleConfirmDelete = async () => {
-    await deleteClass(user.token, idClass)
-    setDeleteModal(false)
+    await deleteClass(user.token, idDeleteClass)
+    setDeleteClassModal(false)
     setRefresh(prevRefresh => !prevRefresh)
   }
 
-  const handleEditClass = (classId) => {
+  const handleEditContentClass = (classId) => {
     navigate(`/aulavirtual/clase/${classId}`);
   };
 
@@ -121,7 +145,7 @@ const ProgramDetail = () => {
           </button>
           <button
             className={`flex items-center gap-4 bg-Yellow hover:bg-card font-extrabold text-card hover:text-Yellow border-2 border-Yellow hover:border-card rounded-lg py-3 px-4 ease-linear duration-150`}
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => setIsCreateClassModalOpen(true)}
           >
             Crear clase<AddIcon />
           </button>
@@ -152,8 +176,9 @@ const ProgramDetail = () => {
             <ClassroomCard
               key={classroom._id}
               classroom={classroom}
-              buttonFunction={handleEditClass}
-              deleteButton={handleDeleteClass}
+              editFunction={handleShowEditClass}
+              deleteFunction={handleEditContentClass}
+              editContentFunction={handleDeleteClass}
             />
           ))}
         </div>
@@ -161,13 +186,7 @@ const ProgramDetail = () => {
         <p>No tiene clases cargadas</p>
       )}
 
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Crear Clase">
-        <CreateClassForm
-          programData={program}
-          onSubmit={handleCreateClass}
-          onClose={() => setIsModalOpen(false)}
-        />
-      </Modal>
+      {/* Edit Program Modal */}
       <Modal isOpen={isModalEditOpen} onClose={() => setIsModalEditOpen(false)} title="Editar Aula">
         <EditVCRForm
           onSubmit={handleEditProgram}
@@ -177,20 +196,42 @@ const ProgramDetail = () => {
           token={user.token}
         />
       </Modal>
-      <Modal isOpen={isCreated} onClose={() => setIsCreated(false)} modalSize={'small'}>
+
+      {/* Create Class Modal */}
+      <Modal isOpen={isCreateClassModalOpen} onClose={() => setIsCreateClassModalOpen(false)} title="Crear Clase">
+        <CreateClassForm
+          programData={program}
+          onSubmit={handleCreateClass}
+          onClose={() => setIsCreateClassModalOpen(false)}
+        />
+      </Modal>
+
+      {/* Confirmation Modal for created class */}
+      <Modal isOpen={isCreatedClass} onClose={() => setIsCreatedClass(false)} modalSize={'small'}>
         <CreatedClass
-          onClose={() => setIsCreated(false)}
+          onClose={() => setIsCreatedClass(false)}
           logo={logo}
           pathNewClass={`/workspace/class/${newClassId}`}
         />
       </Modal>
-      <Modal modalSize={'small'} isOpen={deleteModal}>
+
+      {/* Edit Class Modal */}
+      <Modal isOpen={isEditClassModalsOpen} onClose={() => setIsEditClassModalsOpen(false)} title="Modificar Clase">
+        <EditClassForm
+          classData={editClass}
+          onSubmit={handleEditClass}
+          onClose={() => setIsEditClassModalsOpen(false)}
+        />
+      </Modal>
+
+      {/* Confirmation Modal for deleted class */}
+      <Modal modalSize={'small'} isOpen={deleteClassModal}>
           <div className="flex justify-center ">
             <img src={popUp} alt="Eliminar clase" />
           </div>
           <div className='flex gap-4'>
             <button
-              onClick={() => setDeleteModal(false)}
+              onClick={() => setDeleteClassModal(false)}
               className="w-full px-4 py-2 border border-Purple text-Purple  rounded-md hover:bg-Purple hover:text-white">
               Cancelar
             </button>

@@ -36,7 +36,6 @@ const ProgramDetail = () => {
   const [isEditClassModalsOpen, setIsEditClassModalsOpen] = useState(false);
   const [editClass, setEditClass] = useState(null);
   const [isEditClass, setIsEditClass] = useState(false);
-
   // Delete Class
   const [idDeleteClass, setIdDeleteClass] = useState(false);
   const [deleteClassModal, setDeleteClassModal] = useState(false);
@@ -100,6 +99,7 @@ const ProgramDetail = () => {
     setEditClass(classToEdit)
     if( editClass ) setIsEditClassModalsOpen(true);
   };
+  
   const handleEditClass = async (classId, classData) => {
     try {
       setIsEditClassModalsOpen(false);
