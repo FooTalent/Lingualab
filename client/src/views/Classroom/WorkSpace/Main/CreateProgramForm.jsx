@@ -45,8 +45,7 @@ const CreateProgramForm = ({ onSubmit, onClose }) => {
     });
   };
 
-  const handleForm = (e) => {
-    e.preventDefault();
+  const handleForm = () => {
     onSubmit(programData);
   };
 
