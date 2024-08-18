@@ -49,14 +49,14 @@ const Questions = () => {
   return (
     <div className="relative p-6">
       <button
-        className="absolute top-4 left-4 flex items-center w-28 h-12 bg-transparent text-gray-700 border border-gray-700 rounded-md"
+        className="absolute top-4 left-4 flex items-center w-28 h-12 bg-transparent text-gray-700 border border-gray-700 rounded-md text-xl p-1"
         onClick={handleGoBack} 
       >
         <ArrowBackIcon className="mr-2" />
         Volver
       </button>
 
-      <h1 className="mt-16 ml-4 text-gray-700 text-3xl font-semibold">
+      <h1 className="mt-16 mr-2 text-gray-700 text-3xl font-semibold ">
         Preguntas Frecuentes
       </h1>
 
