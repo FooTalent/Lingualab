@@ -3,7 +3,7 @@ const History = () => {
     <div className="w-full min-h-screen">
       <div className="bg-[#FFF8CC] p-10" style={{ fontSize: "23px" }}>
         <h1 className="text-center text-4xl font-bold mb-6 text-[#444444]">
-          Cómo nace LinguaLab?
+          ¿Cómo nace LinguaLab?
         </h1>
         <div className="mt-16 flex flex-col items-center">
           <div className="text-justify max-w-5xl mx-auto">
@@ -61,7 +61,7 @@ const History = () => {
         <img src="/ImagesHistory/3paso.png" alt="Paso 3" className="mr-10" />
         <div className="mt-10 w-[650px] h-[260px] p-5 border border-[#000] rounded-[20px]">
           <h2 className="text-3xl font-bold mb-2">
-            Cuáles son las necesidades a desarrollar?
+            ¿Cuáles son las necesidades a desarrollar?
           </h2>
           <ul className="list-disc pl-5 ml-8">
             <li className="mt-5" style={{ fontSize: "19px" }}>
@@ -81,7 +81,7 @@ const History = () => {
       <div className=" mt-20 flex mb-10 text-[#444444] justify-center">
         <div className="w-[650px] h-[200px] p-5 border border-[#000] rounded-[20px] mr-10 mt-10 ">
           <h2 className="text-3xl font-bold mb-2">
-            En qué consiste nuestra propuesta?
+            ¿En qué consiste nuestra propuesta?
           </h2>
           <p className="mt-5" style={{ fontSize: "19px" }}>
             Desarrollar una página web dedicada a ayudar a los docentes a
