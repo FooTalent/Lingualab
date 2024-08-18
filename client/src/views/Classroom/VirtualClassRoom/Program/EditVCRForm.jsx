@@ -11,7 +11,6 @@ const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', '
 
 const EditVCRForm = ({ program, onSubmit, onClose, teacherId, token }) => {
   const { user } = useAppStore();
-  console.log(program)
   const { register, handleSubmit, formState: { errors }, setValue, clearErrors } = useForm();
   const [programData, setProgramData] = useState({
     title: program.title || '',
@@ -88,7 +87,6 @@ const EditVCRForm = ({ program, onSubmit, onClose, teacherId, token }) => {
   };
 
   const handleFormSubmit = (e) => {
-    e.preventDefault();
     onSubmit({ ...programData });
   };
 
