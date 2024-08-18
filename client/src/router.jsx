@@ -52,6 +52,9 @@ import { useAxiosInterceptor } from "./hooks/useAxiosInterceptor";
 //Views: Questions
 import Questions from './views/HomeAnex/Questions';
 
+//Views: Video Tutorial
+import VideoTutorial from './views/Tutorial/VideoTutorial';
+
 
 export default function Router() {
     useAxiosInterceptor();
@@ -79,6 +82,7 @@ export default function Router() {
                     <Route path='/student' element={<ViewStudent />} />
                     <Route path="/student/:studentId" element={<DetailStudent />} />
                     <Route path='/questions' element={<Questions />} />
+                    <Route path='/videotutorial' element={<VideoTutorial />} />
                 </Route>
 
                 <Route element={<AuthLayout />}>

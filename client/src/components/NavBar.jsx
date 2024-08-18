@@ -9,7 +9,7 @@ const NavBar = () => {
         { text: "Aula Virtual", to: "/aulavirtual" },
         { text: "Calendario", to: "/calendario" },
         { text: "Recursos", to: "/recursos" },
-        { text: "Alumnos", to: "/student" },
+        { text: "Estudiantes", to: "/student" },
     ]
 
     const navLanding = [
@@ -20,7 +20,7 @@ const NavBar = () => {
 
     return (
         <div>
-            <ul className="flex justify-center gap-[32px] w-[683px]">
+            <ul className="flex justify-center gap-[30px] w-[683px]">
                 { status === true ? 
                 navPages.map((item, text) => (
                     <li key={text} className={`${pathname === item.to ? "text-Yellow font-extrabold" : "text-white font-normal"} text-[22px] px-2 gap-6`}>

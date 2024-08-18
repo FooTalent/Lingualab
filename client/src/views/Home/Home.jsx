@@ -84,7 +84,9 @@ const Home = () => {
                   recursos útiles, un recorrido completo por la página y
                   descubre cómo gestionar a tus alumnos.
                 </p>
-                <button className="bg-card hover:bg-Yellow text-Yellow tracking-wide hover:text-card font-extrabold px-4 py-2 rounded-lg self-start ease-out duration-6000">
+                <button
+                 onClick={() => navigate("/videotutorial")}  
+                className="bg-card hover:bg-Yellow text-Yellow tracking-wide hover:text-card font-extrabold px-4 py-2 rounded-lg self-start ease-out duration-6000">
                   Tutorial
                 </button>
               </div>
