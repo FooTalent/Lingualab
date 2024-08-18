@@ -11,7 +11,7 @@ import Options from '../../../../components/user/classes/Options';
 import DeleteIcon from '@mui/icons-material/Delete';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 
-const ClassroomCard = ({ classroom, buttonFunction, deleteButton }) => {
+const ClassroomCard = ({ classroom, editFunction, deleteFunction, editContentFunction }) => {
   const { level, title, students, daytime, duration_hours, _id } = classroom;
   const [resourcesClass, setResourcesClass] = useState([])
   const [openResources, setOpenResources] = useState(true)
@@ -36,25 +36,23 @@ const ClassroomCard = ({ classroom, buttonFunction, deleteButton }) => {
   }, [classroom]);
 
   const links = [
-    { path: ``, label: <><NoteAddIcon />Agregar contenido</>, function: buttonFunction },
-    { path: ``, state: 'edit', label: <><EditIcon /> Editar clase</> },
-    { path: ``, label: <><DeleteIcon />Eliminar clase</>, function: deleteButton },
+    { path: ``, label: <><NoteAddIcon />Agregar contenido</>, function: editContentFunction },
+    { label: <><EditIcon /> Editar clase</>, function: editFunction },
+    { path: ``, label: <><DeleteIcon />Eliminar clase</>, function: deleteFunction },
   ]
-
+  
   const handleOptions = () => {
     setState(!state)
   }
 
   return (
-    <div className="flex flex-col p-4 gap-4 rounded-xl shadow-cardContainer text-card">
+    <div className="flex flex-col p-4 gap-4 rounded-xl shadow-cardContainer text-card relative">
       <div className='flex items-center justify-between'>
         <div className='flex items-center gap-6 text-lg'>
           <span className="text-white py-2 px-4 rounded-lg font-medium" style={{ backgroundColor: LEVELS_MAP[level] }}>{level}</span>
           <h2 className="font-bold">{title}</h2>
         </div>
-        <button
-          onClick={handleOptions}
-        >
+        <button onClick={handleOptions}>
           <MoreVertIcon className='text-Purple' />
         </button>
         <Options id={_id} state={state} links={links} />
