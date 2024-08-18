@@ -11,7 +11,7 @@ import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Options from '../../../../components/user/classes/Options';
 
-const ClassroomCard = ({ classroom, buttonFunction, deleteButton }) => {
+const ClassroomCard = ({ classroom, editFunction, deleteFunction, editContentFunction }) => {
   const { level, title, students, daytime, duration_hours, _id } = classroom;
   const [openResources, setOpenResources] = useState(true)
   const [resourcesClass, setResourcesClass] = useState([])
@@ -36,9 +36,9 @@ const ClassroomCard = ({ classroom, buttonFunction, deleteButton }) => {
   }, [classroom]);
 
   const links = [
-    { path: ``, label: <><NoteAddIcon />Agregar contenido</>, function: buttonFunction },
-    { path: ``, state: 'edit', label: <><EditIcon /> Editar clase</> },
-    { path: ``, label: <><DeleteIcon />Eliminar clase</>, function: deleteButton },
+    { path: ``, label: <><NoteAddIcon />Agregar contenido</>, function: editContentFunction },
+    { label: <><EditIcon /> Editar clase</>, function: editFunction },
+    { path: ``, label: <><DeleteIcon />Eliminar clase</>, function: deleteFunction },
   ]
 
   const handleOptions = () => {
