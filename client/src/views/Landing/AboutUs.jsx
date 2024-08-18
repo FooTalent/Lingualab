@@ -12,7 +12,7 @@ const AboutUs = () => {
           />
           <div className="absolute top-0 left-0 p-4">
             <h2 className="mt-20 ml-16 text-7xl font-bold text-[#444444]">
-              Hola!
+              ¡Hola!
             </h2>
             <p className="mt-2 ml-16 text-3xl text-[#444444]">
               <br />
@@ -51,7 +51,7 @@ const AboutUs = () => {
                 title: "Desafío:",
                 text: "Buscamos un cliente real que tuviese una necesidad. Pensamos una idea innovadora para convertirse en un producto útil. Validamos de Idea. Nos aseguramos de que tuviera potencial y fuese exitosa.",
               },
-              { title: "Duración:", text: "6 semanas, más de 150hs." },
+              { title: "Duración:", text: "8 semanas, más de 200hs." },
             ].map((item, index) => (
               <div key={index} className="flex items-start space-x-2">
                 <img

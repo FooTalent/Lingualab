@@ -29,7 +29,7 @@ const NavProfile = () => {
                     />
                 ) : <span className='flex justify-center items-center font-bold rounded-full w-8 h-8 bg-Yellow uppercase'>{initials ? initials : "?"}</span>}
 
-                <h3 className='p-2'>Hola! Profesor</h3>
+                <h3 className='p-2'>Hola! Docente</h3>
                 <button onClick={handleMenuToggle} className='relative'>
                     <ExpandMoreIcon className='text-white' />
                 </button>
