@@ -13,7 +13,7 @@ export default function NavButtonList({ onNavigate, onView, today, view }) {
     ]
 
     return (
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-6">
             <div className='flex items-center gap-2'>
                 <NavButton label={navButtons[0].label} onClick={navButtons[0].action} icon={navButtons[0].icon} />
                 <span className='font-medium text-xl'>{today}</span>

@@ -17,13 +17,19 @@ export default function ClassCalendar({ localizer, date, handleNavigate, handleS
 
     const handleEvents = (classes) => {
         let newEvents = [];
+
         classes.forEach(item => {
             if (item.title && item.daytime) {
                 const start = new Date(item.daytime)
                 const end = new Date(start)
                 end.setHours(start.getHours() + 1)
 
-                newEvents.push({ title: item.title, start: start, end: end, level: item.level });
+                newEvents.push({
+                    title: item.title,
+                    start: start,
+                    end: end,
+                    level: item.level
+                });
             }
         });
 
@@ -44,47 +50,50 @@ export default function ClassCalendar({ localizer, date, handleNavigate, handleS
     };
 
     return (
-        <Calendar
-            localizer={localizer}
-            date={date}
-            onNavigate={handleNavigate}
-            events={handleEvents(data)}
-            onSelectSlot={handleSelectSlot}
-            formats={formats}
-            selectable={true}
-            views={['day', 'week', 'month']}
-            view={view}
-            onView={handleView}
-            className='min-h-screen cursor-pointer'
-            components={{
-                toolbar: () => (
-                    <NavButtonList
-                        onNavigate={handleNavigate}
-                        onView={handleView}
-                        today={handleDate(date)}
-                        view={view}
-                    />
-                ),
-                eventWrapper: EventWrapper,
-                dateCellWrapper: ({ children }) => (
-                    <DateCellWrapper view={view}>
-                        {children}
-                    </DateCellWrapper>
-                ),
-                eventContainerWrapper: ({ children }) => (
-                    <EventContainerWrapper view={view}>
-                        {children}
-                    </EventContainerWrapper>
-                ),
-                month: {
-                    header: ({ label }) => {
-                        const formattedDate = dayjs(date).format('dddd').slice(0, 2).charAt(0).toUpperCase() + dayjs(date).format('dddd').slice(1, 3);
-                        return (
-                            <Month label={label} date={formattedDate} />
-                        );
+        <>
+            <NavButtonList
+                onNavigate={handleNavigate}
+                onView={handleView}
+                today={handleDate(date)}
+                view={view}
+            />
+
+            <Calendar
+                localizer={localizer}
+                date={date}
+                onNavigate={handleNavigate}
+                events={handleEvents(data)}
+                onSelectSlot={handleSelectSlot}
+                formats={formats}
+                toolbar={false}
+                selectable={true}
+                views={['day', 'week', 'month']}
+                view={view}
+                onView={handleView}
+                className='min-h-screen border border-Grey rounded-lg cursor-pointer overflow-hidden'
+                components={{
+                    eventWrapper: EventWrapper,
+                    dateCellWrapper: ({ children }) => (
+                        <DateCellWrapper view={view}>
+                            {children}
+                        </DateCellWrapper>
+                    ),
+                    eventContainerWrapper: ({ children }) => (
+                        <EventContainerWrapper view={view}>
+                            {children}
+                        </EventContainerWrapper>
+                    ),
+                    month: {
+                        header: ({ label }) => {
+                            const formattedDate = dayjs(date).format('dddd').slice(0, 2).charAt(0).toUpperCase() + dayjs(date).format('dddd').slice(1, 3);
+                            return (
+                                <Month label={label} date={formattedDate} />
+                            );
+                        },
                     },
-                },
-            }}
-        />
+                }}
+            />
+        </>
+
     );
 }
