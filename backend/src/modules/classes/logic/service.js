@@ -33,8 +33,6 @@ export default class Service extends CustomService {
     try {
       const programsWithTeacher = await this.programDao.getProgramsByTeacherId(teacherId);
       const programIds = programsWithTeacher.map(p => p._id);
-      console.log(programIds);
-      
   
       const filter = {
         program: { $in: programIds },

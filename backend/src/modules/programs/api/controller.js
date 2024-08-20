@@ -52,4 +52,30 @@ export default class Controller extends CustomController {
       next(error);
     }
   }
+
+  countPrograms = async (req, res, next) => {
+    try {
+      let {techaerId, isTemplate} = req.query
+
+      if (!techaerId) return res.sendUserError("Falta incluir el campo: techaerId")
+      if (!isTemplate) return res.sendUserError("Falta incluir el campo: isTemplate")
+      isTemplate = isTemplate === "true"
+
+      const units = await this.service.countPrograms(techaerId, isTemplate)
+
+      res.sendSuccess(units);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  hourlyLoad  = async (req, res, next) => {
+    try {
+      const teacherId = req.user._id;
+      const hours = await this.service.hourlyLoad(teacherId )
+      res.sendSuccess(hours)
+    } catch (error) {
+      next(error);
+    }
+  }
 }

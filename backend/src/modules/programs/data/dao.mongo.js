@@ -29,5 +29,7 @@ export default class ThisDaoMongo extends DaoMongo {
   getProgramsByTeacherId = async (teacherId) => {
     return await this.model.find({ teacher: teacherId, isTemplate: false }).select('_id');
   };
+
+  countPrograms = async (teacherId, isTemplate) => await this.model.countDocuments({ teacher: teacherId, isTemplate })
 }
 

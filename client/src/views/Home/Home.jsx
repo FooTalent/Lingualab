@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAppStore } from "../../store/useAppStore";
 import SearchIcon from "@mui/icons-material/Search";
-import { getNextNClassesByTeacher } from "../../services/programs.services";
+import { getCountPrograms, getHourlyLoad, getNextNClassesByTeacher } from "../../services/programs.services";
 import DisplayNextClasses from "./DisplayNextClasses";
 import { useNavigate } from "react-router-dom";
 
@@ -10,6 +10,9 @@ const Home = () => {
   const navigate = useNavigate(); 
 
   const [classes, setClasses] = useState([]);
+  const [countPrograms, setCountPrograms] = useState(0);
+  const [countClassRooms, setCountClassRooms] = useState(0);
+  const [hourlyLoad, setHourlyLoad] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -21,10 +24,16 @@ const Home = () => {
         try {
           setLoading(true);
           const response = await getNextNClassesByTeacher(user.token, 2);
-          if (response.isError) {
-            throw new Error(response.message);
-          }
+          if (response.isError) { throw new Error(response.message); }
           setClasses(response.data);
+
+          const cprograms = await getCountPrograms(user.token, userDetail._id, true ) || 0
+          setCountPrograms(cprograms.data);
+          const cclassrroms = await getCountPrograms(user.token, userDetail._id, false ) || 0
+          setCountClassRooms(cclassrroms.data);
+          const chourlyLoad = await getHourlyLoad(user.token ) || 0
+          setHourlyLoad(chourlyLoad.data);
+
         } catch (error) {
           console.error("Error al cargar los Programas", error);
           setError(error.message);
@@ -70,7 +79,7 @@ const Home = () => {
                   descubre cómo gestionar a tus alumnos.
                 </p>
                 <button
-                 onClick={() => navigate("/videotutorial")}  
+                  onClick={() => navigate("/videotutorial")}  
                 className="bg-card hover:bg-Yellow text-Yellow tracking-wide hover:text-card font-extrabold px-4 py-2 rounded-lg self-start ease-out duration-6000">
                   Tutorial
                 </button>
@@ -84,7 +93,7 @@ const Home = () => {
                   alt="Total Programa"
                   className="w-[75px] h-auto rounded-lg"
                 />
-                <p className="text-xl font-semibold leading-6">15</p>
+                <p className="text-xl font-semibold leading-6">{countPrograms}</p>
                 <p className="leading-custom">Total de programas</p>
               </div>
 
@@ -94,7 +103,7 @@ const Home = () => {
                   alt="Programa Completo"
                   className="w-[75px] h-auto rounded-lg"
                 />
-                <p className="text-xl font-semibold leading-6">6</p>
+                <p className="text-xl font-semibold leading-6">{countClassRooms}</p>
                 <p className="leading-custom">Programas completos</p>
               </div>
 
@@ -104,7 +113,7 @@ const Home = () => {
                   alt="Carga Horaria"
                   className="w-[75px] h-auto rounded-lg"
                 />
-                <p className="text-xl font-semibold leading-6">120 hrs</p>
+                <p className="text-xl font-semibold leading-6">{hourlyLoad} hrs</p>
                 <p className="leading-custom">Total carga horaria</p>
               </div>
             </div>
