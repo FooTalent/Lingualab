@@ -3,7 +3,7 @@ import { useAppStore } from "../store/useAppStore"
 
 const NavBar = () => {
     const { pathname } = useLocation()
-    const {status} = useAppStore()
+    const { status } = useAppStore()
     const navPages = [
         { text: "Inicio", to: "/" },
         { text: "Aula Virtual", to: "/aulavirtual" },
@@ -13,25 +13,41 @@ const NavBar = () => {
     ]
 
     const navLanding = [
-        { text: "Inicio", to: "/landing"},
-        { text: "Historia", to: "/historia"},
-        { text: "Conócenos", to: "/conocenos"}
+        { text: "Inicio", to: "/landing" },
+        { text: "Historia", to: "/historia" },
+        { text: "Conócenos", to: "/conocenos" }
     ]
 
     return (
         <div>
-            <ul className="flex justify-center gap-[30px] w-[683px]">
-                { status === true ? 
-                navPages.map((item, text) => (
-                    <li key={text} className={`${pathname === item.to ? "text-Yellow font-extrabold" : "text-white font-normal"} text-[22px] px-2 gap-6`}>
-                        <Link to={item.to}>
-                            {item.text}
-                        </Link>
-                    </li>
-                )) : 
+            <ul className="flex justify-evenly gap-8">
+                {status === true ?
+                    navPages.map((item, text) => (
+                        <li
+                            key={text}
+                            className="min-w-[133px] py-[10px] px-2 text-center"
+                        >
+                            <Link
+                                to={item.to}
+                                className={`hover:text-Yellow hover:font-semibold ease-out duration-300 text-[22px] leading-[25.78px]
+                                    ${pathname === item.to ? "text-Yellow font-extrabold" : "text-white font-normal"} 
+                                `}
+                            >
+                                {item.text}
+                            </Link>
+                        </li>
+                    )) :
                     navLanding.map((item, text) => (
-                        <li key={text} className={`${pathname === item.to ? "text-Yellow font-extrabold" : "text-white font-normal"} text-[22px] px-2 gap-6`}>
-                            <Link to={item.to}>
+                        <li
+                            key={text}
+                            className="min-w-[133px] py-[10px] px-2 text-center"
+                        >
+                            <Link
+                                to={item.to}
+                                className={`hover:text-Yellow hover:font-semibold ease-out duration-300 text-[22px] leading-[25.78px]
+                                    ${pathname === item.to ? "text-Yellow font-extrabold" : "text-white font-normal"} 
+                                `}
+                            >
                                 {item.text}
                             </Link>
                         </li>
