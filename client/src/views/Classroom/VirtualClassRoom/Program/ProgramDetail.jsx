@@ -177,8 +177,8 @@ const ProgramDetail = () => {
               key={classroom._id}
               classroom={classroom}
               editFunction={handleShowEditClass}
-              deleteFunction={handleEditContentClass}
-              editContentFunction={handleDeleteClass}
+              editContentFunction={handleEditContentClass}
+              deleteFunction={handleDeleteClass}
             />
           ))}
         </div>

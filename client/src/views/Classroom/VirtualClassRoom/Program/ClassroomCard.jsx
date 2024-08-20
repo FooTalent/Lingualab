@@ -46,7 +46,7 @@ const ClassroomCard = ({ classroom, editFunction, deleteFunction, editContentFun
   }
 
   return (
-    <div className="flex flex-col p-4 gap-4 rounded-xl shadow-cardContainer text-card">
+    <div className="flex flex-col p-4 gap-4 rounded-xl shadow-cardContainer text-card relative">
       <div className="flex items-center justify-between">
         <div className='flex'>
           <span className="text-white px-2 py-1 rounded mr-2" style={{backgroundColor: LEVELS_MAP[level]}}>{level}</span>
