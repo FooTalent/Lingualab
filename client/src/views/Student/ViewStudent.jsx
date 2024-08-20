@@ -32,7 +32,7 @@ const ViewStudent = () => {
           const response = await getStudents(user.token);
           setStudents(response.data);
           setAllStudents(response.data)
-          
+
           const filter = { eid: userDetail._id }
           const res = await getReviews(user.token, filter)
           setScore(res.data)
@@ -59,7 +59,7 @@ const ViewStudent = () => {
   const handleAddStudent = async (newStudent) => {
     try {
       const addedStudent = await inviteStudent(user.token, newStudent);
-      if (addedStudent.isError === false){
+      if (addedStudent.isError === false) {
         setModalNewStudent(true)
         setTimeout(() => {
           setModalNewStudent(false)
@@ -83,7 +83,7 @@ const ViewStudent = () => {
     const searched = inputRef.current.value.trim().toLowerCase()
     const normalizedSearched = removeAccents(searched)
 
-    if(!searched){
+    if (!searched) {
       setRefresh(!refresh)
     }
     const filteredStudents = allStudents.filter(student => {
@@ -100,19 +100,24 @@ const ViewStudent = () => {
         <div className="flex gap-6">
           <button
             onClick={handleShowInfo}
-            className={`w-[200px] border-2 px-4 py-3 rounded-lg leading-5 tracking-wide ease-out duration-600 hover:bg-Yellow hover:font-extrabold ${showInfo
-              ? 'border-Yellow bg-Yellow font-extrabold'
-              : 'border-Yellow text-black bg-YellowDeselect'
-              }`}
+            className={`w-[200px] border-2 px-4 py-3 rounded-lg leading-5 tracking-wide ease-out duration-600 hover:bg-Yellow hover:font-extrabold 
+              border-Yellow bg-Yellow font-extrabold
+              `}
+          // ${showInfo
+          //   ? 'border-Yellow bg-Yellow font-extrabold'
+          //   : 'border-Yellow text-black bg-YellowDeselect'
+          // }
           >
             Información Personal
           </button>
           <button
-            onClick={handleShowGrades}
-            className={`w-[144px] border-2 px-4 py-3 rounded-lg leading-5 tracking-wide ease-out duration-600 hover:bg-Yellow hover:font-extrabold ${!showInfo
-              ? 'border-Yellow bg-Yellow font-extrabold'
-              : 'border-Yellow text-black bg-YellowDeselect'
-              }`}
+            // onClick={handleShowGrades}
+            className={`w-[144px] border-2 px-4 py-3 rounded-lg leading-5 tracking-wide
+              opacity-50 !cursor-not-allowed border-Yellow bg-YellowDeselect text-black`}
+          // ${!showInfo
+          //   ? 'border-Yellow bg-Yellow font-extrabold'
+          //   : 'border-Yellow text-black bg-YellowDeselect'
+          // }
           >
             Calificaciones
           </button>
@@ -129,7 +134,7 @@ const ViewStudent = () => {
             <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#444444]" />
           </div>
 
-          <button 
+          <button
             onClick={handleSearchStudents}
             className="bg-Purple tracking-wide hover:bg-PurpleHover text-white font-extrabold px-4 py-3 rounded-lg h-[48px] ease-out duration-600">
             Buscar
