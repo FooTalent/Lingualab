@@ -62,7 +62,7 @@ export default function CreateResourceForm({ onSubmit, onCancel, data }) {
                 className="flex flex-col gap-2"
             >
                 <div className="grid grid-cols-3 gap-4">
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-2">
                         <label htmlFor="language" className="text-lg leading-5 p-0">Idioma:</label>
                         <select
                             id="language"
