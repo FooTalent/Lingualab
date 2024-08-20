@@ -11,10 +11,10 @@ const getUTCOffset = () => {
 
 const CurrentTime = () => {
     const now = new Date();
-    const formatDate = format(now, "EEEE d 'de' MMMM, yyyy - hh:mm aaa", { locale: es });
+    const formatDate = format(now, "EEEE d 'de' MMMM, yyyy - HH:mm", { locale: es });
     const adaptedDate = formatDate.split(' ').map((item, index) =>
         (index === 0 || index === 3 ? item.charAt(0).toUpperCase() + item.slice(1) : item)
-    ).join(' ');
+    ).join(' ') + ' hs';
 
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const country = timeZone.split('/')[1].replace('_', ' ');
@@ -22,7 +22,7 @@ const CurrentTime = () => {
 
     return (
         <div className='flex font-normal text-[14px] justify-end py-5'>
-            {adaptedDate} - ({utcOffset}) {country}
+            {adaptedDate} / {country}
         </div>
     );
 }
