@@ -108,7 +108,7 @@ const Profile = ({ profile }) => {
         }}
       />
       <div className="flex flex-col items-center border-2 border-solid border-gray-200 rounded-2xl " style={{ marginTop: '-100px' }}>
-        <h2 className="mt-36 text-lg font-semibold">{profileData.last_name} {profileData.first_name}, {profileData.role === "Teacher" ? "Profesor" : "Estudiante"}</h2>
+        <h2 className="mt-36 text-lg font-semibold">{profileData.last_name} {profileData.first_name}</h2>
         <div className="px-6 py-4 flex justify-center">
           <textarea
             className="shadow appearance-none border rounded w-[600px] h-[120px] py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none"
