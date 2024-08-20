@@ -57,7 +57,7 @@ const Login = () => {
         <>
             <form
                 onSubmit={handleSubmit(handleLogin)}
-                className="flex flex-col md:w-[404px] md:gap-[8px]"
+                className="formUser"
                 noValidate
             >
                 <InputList
@@ -84,7 +84,7 @@ const Login = () => {
             </div>
             <button
                 onClick={() => userLoginGoogle()}
-                className="flex items-center justify-center gap-4 cursor-pointer w-full px-6 py-[10px] border border-BorderGrey rounded-[10px] shadow-sm bg-white">
+                className="flex items-center justify-center gap-4 cursor-pointer w-full px-6 py-[10px] border border-Grey rounded-lg shadow-sm bg-white">
                 <img
                     className="w-[18px] h-[18px]"
                     src="/googleIcon.png"
