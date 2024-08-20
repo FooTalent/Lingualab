@@ -149,8 +149,8 @@ const ViewStudent = () => {
               <>
                 <th className='max-w-[250px]'>Nombre y Apellido</th>
                 <th className='max-w-[120px]'>Nivel</th>
-                <th className='max-w-[168px] whitespace-nowrap'>Fecha de Nacimiento</th>
                 <th className='max-w-[160px]'>Teléfono</th>
+                <th className='max-w-[168px] whitespace-nowrap'>Fecha de Nacimiento</th>
                 <th className='max-w-[300px]'>Email</th>
               </>
             ) : (
@@ -196,8 +196,8 @@ const ViewStudent = () => {
                       <span className='w-[184px]'>{student.first_name} {student.last_name}</span>
                     </td>
                     <td className='w-[120px]'>{student.level}</td>
-                    <td className='max-w-[168px] whitespace-nowrap'>{handleBirthday(student.birthday)}</td>
                     <td className='w-[160px]'>{student.phone}</td>
+                    <td className='max-w-[168px] whitespace-nowrap'>{handleBirthday(student.birthday)}</td>
                     <td className='w-[300px]'>{student.email}</td>
                   </>
                 ) : (
