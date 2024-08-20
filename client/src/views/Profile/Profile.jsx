@@ -12,13 +12,14 @@ const Profile = ({ profile }) => {
   const [refresh, setRefresh] = useState(false);
   const [error, setError] = useState(null);
   const [originalProfileData, setOriginalProfileData] = useState(userDetail);
-  
+  const [isEditing, setIsEditing] = useState(false);
+
   // edit
   const [profileData, setProfileData] = useState(userDetail);
   const [countryOptionsState, setCountryOptionsState] = useState([]);
   const [languageOptions, setLanguageOptions] = useState([]);
 
-    // Modals
+  // Modals
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
   useEffect(() => {
@@ -69,6 +70,10 @@ const Profile = ({ profile }) => {
     }));
   };
 
+  const handleEdit = () => {
+    setIsEditing(true)
+  }
+
   const handleSelectChange = (name, selectedOption) => {
     setProfileData(prevState => ({
       ...prevState,
@@ -81,7 +86,7 @@ const Profile = ({ profile }) => {
       const updatedUser = await userUpdate(user.token, profileData);
       localStorage.setItem('userDetail', JSON.stringify(updatedUser))
       setProfileData(updatedUser);
-      setIsSuccessModalOpen(true); 
+      setIsSuccessModalOpen(true);
       setRefresh(prevRefresh => !prevRefresh);
     } catch (error) {
       console.error('Error updating user data:', error);
@@ -89,9 +94,9 @@ const Profile = ({ profile }) => {
     }
   };
 
-  
   const handleCancel = () => {
     setProfileData(originalProfileData);
+    setIsEditing(false)
   };
 
   if (loading) { return <div>Loading...</div>; }
@@ -106,8 +111,11 @@ const Profile = ({ profile }) => {
           setRefresh(prevRefresh => !prevRefresh);
           handleOpenSuccessModal();
         }}
+        isEditing={isEditing}
+        handleEdit={handleEdit}
       />
-      <div className="flex flex-col items-center border-2 border-solid border-gray-200 rounded-2xl " style={{ marginTop: '-100px' }}>
+
+      <div className="flex flex-col items-center border-2 border-solid border-inputBg shadow-customTable rounded-2xl " style={{ marginTop: '-100px' }}>
         <h2 className="mt-36 text-lg font-semibold">{profileData.last_name} {profileData.first_name}</h2>
         <div className="px-6 py-4 flex justify-center">
           <textarea
