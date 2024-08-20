@@ -24,7 +24,7 @@ const ProgramDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-    // Edit Program
+  // Edit Program
   const [program, setProgram] = useState(null);
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   // Create Class
@@ -96,9 +96,9 @@ const ProgramDetail = () => {
   const handleShowEditClass = (editClassId) => {
     const classToEdit = program.classes.find(cls => cls._id === editClassId)
     setEditClass(classToEdit)
-    if( editClass ) setIsEditClassModalsOpen(true);
+    if (editClass) setIsEditClassModalsOpen(true);
   };
-  
+
   const handleEditClass = async (classId, classData) => {
     try {
       setIsEditClassModalsOpen(false);
@@ -133,7 +133,7 @@ const ProgramDetail = () => {
       <div className='flex flex-row justify-between items-center mb-4'>
         <BackButton />
         <div className="flex items-center">
-          <span className="text-white px-2 py-1 rounded mr-2" style={{backgroundColor: LEVELS_MAP[program.level]}}>{program.level}</span>
+          <span className="text-white px-2 py-1 rounded mr-2" style={{ backgroundColor: LEVELS_MAP[program.level] }}>{program.level}</span>
           <h1 className="text-3xl font-bold">{program.title}</h1>
         </div>
         <div className='flex items-center gap-6'>
@@ -157,15 +157,18 @@ const ProgramDetail = () => {
           <p className="mb-2"><strong>Descripción:</strong> {program.description}</p>
         ) : null}
         <p className="mb-2"><strong>Idioma:</strong> {program.language}</p>
-        <p className="mb-4"><strong>Profesor:</strong> {program.teacher.last_name}, {program.teacher.first_name}</p>
+        <p className="mb-2"><strong>Docente:</strong> {program.teacher.last_name}, {program.teacher.first_name}</p>
         {program.students.length > 0 && (
-          <div className="mb-4">
-            <h3 className="font-semibold">Alumnos:</h3>
-            <ul>
-              {program.students.map((student) => (
-                <li key={student._id}>{student.last_name}, {student.first_name}</li>
-              ))}
-            </ul>
+          <div className="flex flex-nowrap gap-2 mb-4">
+            <h3 className="font-semibold">Estudiante/s:</h3>
+            {program.students.map((student, index) => {
+              let programLenght = program.students.length
+              let isTheLast = programLenght === (index + 1)
+
+              return (
+                <span key={student._id}>{student.last_name}, {student.first_name} {!isTheLast ? '-' : ''}</span>
+              )
+            })}
           </div>
         )}
       </div>
@@ -226,21 +229,21 @@ const ProgramDetail = () => {
 
       {/* Confirmation Modal for deleted class */}
       <Modal modalSize={'small'} isOpen={deleteClassModal}>
-          <div className="flex justify-center ">
-            <img src={popUp} alt="Eliminar clase" />
-          </div>
-          <div className='flex gap-4'>
-            <button
-              onClick={() => setDeleteClassModal(false)}
-              className="w-full px-4 py-2 border border-Purple text-Purple  rounded-md hover:bg-Purple hover:text-white">
-              Cancelar
-            </button>
-            <button
-              onClick={handleConfirmDelete}
-              className="w-full px-4 py-2 bg-Purple text-white rounded-md hover:bg-PurpleHover">
-              Eliminar clase
-            </button>
-          </div>
+        <div className="flex justify-center ">
+          <img src={popUp} alt="Eliminar clase" />
+        </div>
+        <div className='flex gap-4'>
+          <button
+            onClick={() => setDeleteClassModal(false)}
+            className="w-full px-4 py-2 border border-Purple text-Purple  rounded-md hover:bg-Purple hover:text-white">
+            Cancelar
+          </button>
+          <button
+            onClick={handleConfirmDelete}
+            className="w-full px-4 py-2 bg-Purple text-white rounded-md hover:bg-PurpleHover">
+            Eliminar clase
+          </button>
+        </div>
       </Modal>
     </div>
   );

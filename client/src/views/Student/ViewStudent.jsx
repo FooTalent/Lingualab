@@ -68,7 +68,7 @@ const ViewStudent = () => {
       setRefresh(!refresh);
       setIsModalOpen(false);
     } catch (error) {
-      console.error('Error al agregar al alumno', error);
+      console.error('Error al agregar estudiante', error);
       setError(error.message);
     }
   };
@@ -233,11 +233,11 @@ const ViewStudent = () => {
           onClick={handleModalOpen}
           className="bg-Yellow hover:bg-card hover:text-Yellow font-extrabold tracking-wide flex gap-[10px] px-6 py-4 w-[370px] justify-center items-center rounded-lg text-xl leading-7 ease-out duration-600"
         >
-          <span>Agregar alumno</span>
+          <span>Agregar estudiante</span>
           <AddIcon />
         </button>
       </div>
-      <Modal isOpen={isModalOpen} onClose={handleModalClose} title="Agregar Alumno" modalSize='small'>
+      <Modal isOpen={isModalOpen} onClose={handleModalClose} title="Agregar Estudiante" modalSize='small'>
         <AddStudentForm
           onSubmit={handleAddStudent}
           onClose={handleModalClose}
@@ -245,7 +245,7 @@ const ViewStudent = () => {
       </Modal>
       <Modal isOpen={modalNewStudent} modalSize='xsmall'>
         <div className="flex justify-center">
-          <img src={NewStudent} alt="Agregaste un alumno" />
+          <img src={NewStudent} alt="Agregaste un estudiante" />
         </div>
       </Modal>
     </div>

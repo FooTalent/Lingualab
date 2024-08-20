@@ -22,7 +22,7 @@ const AddStudentForm = ({ onSubmit, onClose }) => {
         <input
           type="text"
           id='nombre'
-          placeholder="Ingresa tu nombre"
+          placeholder="Ingresa el nombre"
           value={firstName}
           onChange={(e) =>
             setFirstName(e.target.value)}
@@ -35,7 +35,7 @@ const AddStudentForm = ({ onSubmit, onClose }) => {
         <input
           id='apellido'
           type="text"
-          placeholder="Ingresa tu apellido"
+          placeholder="Ingresa el apellido"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
           className={`border ${lastName ? 'border-card text-card' : 'border-Grey'} hover:border-card focus:border-card text-Grey rounded-lg py-2 px-4 ease-out duration-600 focus:outline-none`}
@@ -47,7 +47,7 @@ const AddStudentForm = ({ onSubmit, onClose }) => {
         <input
           id='email'
           type="email"
-          placeholder="Ingresa tu Email"
+          placeholder="Ingresa el Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className={`border ${email ? 'border-card text-card' : 'border-Grey'} hover:border-card focus:border-card text-Grey rounded-lg py-2 px-4 ease-out duration-600 focus:outline-none`}

@@ -280,7 +280,7 @@ const EditVCRForm = ({ program, onSubmit, onClose, teacherId, token }) => {
           </button>
         </div>
       </form>
-      <Modal isOpen={isModalOpen} onClose={handleModalClose} title="Agregar Alumno" modalSize='medium'>
+      <Modal isOpen={isModalOpen} onClose={handleModalClose} title="Invitar Estudiante" modalSize='medium'>
         <AddStudentForm
           onSubmit={handleAddOneMoreStudent}
         />

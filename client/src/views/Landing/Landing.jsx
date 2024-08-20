@@ -4,9 +4,9 @@ import Carousel from "./Carousel";
 const Landing = () => {
 
   const targetRef = useRef(null)
-  
+
   const handleScroll = () => {
-    if(targetRef.current){
+    if (targetRef.current) {
       targetRef.current.scrollIntoView({ behavior: 'smooth' })
     }
   }
@@ -82,7 +82,7 @@ const Landing = () => {
           </div>
           <div className="rounded p-4 pl-20">
             <h3 className="text-2xl font-bold mb-4 text-left">
-              Seguimiento de Alumnos
+              Seguimiento de Estudiantes
             </h3>
             <div className="flex items-start mb-2">
               <img
@@ -91,7 +91,7 @@ const Landing = () => {
                 className="w-6 h-6"
               />
               <p className="ml-2 text-left text-lg  pl-8">
-                Visualiza la lista de tus alumnos, sus <br />
+                Visualiza la lista de tus estudiantes, sus <br />
                 calificaciones y datos personales.
               </p>
             </div>
@@ -166,54 +166,54 @@ const Landing = () => {
       </div>
 
       <div className="bg-[#9747FF] py-12 px-4">
-  <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
-    
-    <div className="md:col-span-2 text-white flex flex-col items-center">
-      <h3 className="text-center text-3xl mb-4">Domina un nuevo idioma con recursos interactivos</h3>
-    </div>
-    
-    <div className="flex justify-center md:justify-start items-center px-4">
-      <img
-        src="/ImagesLanding/dominarecursos.png"
-        alt="Recursos"
-        className="mt-4 w-4/5 h-auto"
-      />
-    </div>
-    
-    <div className="grid grid-cols-2 gap-4 px-4">
-      <img
-        src="/ImagesLanding/diccionario.png"
-        alt="Diccionario"
-        className="w-44 h-auto"
-      />
-      <img
-        src="/ImagesLanding/juegos.png"
-        alt="Juegos"
-        className="w-44 h-auto"
-      />
-      <img
-        src="/ImagesLanding/canciones.png"
-        alt="Canciones"
-        className="w-44 h-auto"
-      />
-      <img
-        src="/ImagesLanding/series.png"
-        alt="Series"
-        className="w-44 h-auto"
-      />
-      <img
-        src="/ImagesLanding/ejerciciogramatical.png"
-        alt="Ejercicios Gramaticales"
-        className="w-44 h-auto"
-      />
-      <img
-        src="/ImagesLanding/libros.png"
-        alt="Libros"
-        className="w-44 h-auto"
-      />
-    </div>
-  </div>
-</div>
+        <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
+
+          <div className="md:col-span-2 text-white flex flex-col items-center">
+            <h3 className="text-center text-3xl mb-4">Domina un nuevo idioma con recursos interactivos</h3>
+          </div>
+
+          <div className="flex justify-center md:justify-start items-center px-4">
+            <img
+              src="/ImagesLanding/dominarecursos.png"
+              alt="Recursos"
+              className="mt-4 w-4/5 h-auto"
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 px-4">
+            <img
+              src="/ImagesLanding/diccionario.png"
+              alt="Diccionario"
+              className="w-44 h-auto"
+            />
+            <img
+              src="/ImagesLanding/juegos.png"
+              alt="Juegos"
+              className="w-44 h-auto"
+            />
+            <img
+              src="/ImagesLanding/canciones.png"
+              alt="Canciones"
+              className="w-44 h-auto"
+            />
+            <img
+              src="/ImagesLanding/series.png"
+              alt="Series"
+              className="w-44 h-auto"
+            />
+            <img
+              src="/ImagesLanding/ejerciciogramatical.png"
+              alt="Ejercicios Gramaticales"
+              className="w-44 h-auto"
+            />
+            <img
+              src="/ImagesLanding/libros.png"
+              alt="Libros"
+              className="w-44 h-auto"
+            />
+          </div>
+        </div>
+      </div>
 
 
       <div className="py-12 text-center">

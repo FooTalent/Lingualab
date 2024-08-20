@@ -169,7 +169,7 @@ export default function Calendario() {
                 </div>
             </Modal>
 
-            <Modal isOpen={inviteModal} onClose={handleCancelInvite} title="Agregar Alumno" modalSize='small'>
+            <Modal isOpen={inviteModal} onClose={handleCancelInvite} title="Asignar Estudiante" modalSize='small'>
                 <AddStudentForm
                     onSubmit={handleAddOneMoreStudent}
                     onClose={handleCancelInvite}

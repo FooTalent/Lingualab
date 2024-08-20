@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { LEVELS_MAP } from '../../../../utils/valueLists';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import Options from '../../../../components/user/classes/Options';  
+import Options from '../../../../components/user/classes/Options';
 import DeleteIcon from '@mui/icons-material/Delete';
 import editarPrograma from '/editarPrograma.svg'
 import { deleteProgram } from '../../../../services/programs.services';
@@ -83,17 +83,17 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
         </div>
 
         <p className='flex gap-2'>
-          <span className='font-semibold'>Alumno/s:</span>
-            {
-              program.students.length > 0 ?
-                (program.students.map((student) => 
-                  student ? (
+          <span className='font-semibold'>Estudiante/s:</span>
+          {
+            program.students.length > 0 ?
+              (program.students.map((student) =>
+                student ? (
                   `${student.last_name}, ${student.first_name}; `
-                  ) : (
+                ) : (
                   '-'
-                  )
-                )) : '-'
-            }
+                )
+              )) : '-'
+          }
         </p>
 
         <p className='flex gap-4'>
@@ -104,8 +104,8 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
           <span className='font-semibold'>Hora:</span>
           {
             program.first_class ?
-            gettingHourClass(program.first_class, program.duration_hours) :
-            '-'
+              gettingHourClass(program.first_class, program.duration_hours) :
+              '-'
           }
         </p>
       </div>
