@@ -14,19 +14,22 @@ import { useAppStore } from '../../../store/useAppStore';
 export default function ClassCard({ id, title, students, duration, date, program, toggleOptions, stateOption, openModalDelete, openModalInvite }) {
     const { user } = useAppStore()
     const [stringStudents, setStringStudents] = useState('-');
+    const [isLoading, setIsLoading] = useState(false)
     const links = [
-        { function: () => openModalInvite(id), label: <><PersonAddIcon /> Invitar al/los alumno/s</> },
+        { function: () => openModalInvite(id), label: <><PersonAddIcon /> Invitar estudiante/s:</> },
         { path: `/aulavirtual/aula/${program._id}`, label: <><WatchLaterIcon /> Editar fecha y hora</> },
         { path: `/classroom/${id}`, label: <><ShareIcon /> Compartir</> },
         { function: () => openModalDelete(id), label: <><DeleteIcon /> Eliminar clase</> },
     ]
 
     useEffect(() => {
+        setIsLoading(true)
         try {
             handleStudents()
         } catch (error) {
             console.log(error)
         }
+        setIsLoading(false)
     }, [students]);
 
     const handleStudents = async () => {
@@ -69,6 +72,8 @@ export default function ClassCard({ id, title, students, duration, date, program
         e.stopPropagation();
     };
 
+    if (isLoading) return <p>Cargando...</p>
+
     return (
         <>
             <div className='relative border-2 border-white hover:border-Purple rounded-xl shadow-cardContainer p-4 flex justify-between flex-nowrap w-full text-card ease-out duration-600'>
@@ -90,7 +95,7 @@ export default function ClassCard({ id, title, students, duration, date, program
                     </div>
                 </div>
 
-                <div className='flex flex-col justify-between items-end w-4/12'>
+                <div className='flex flex-col justify-between items-end w-fit'>
                     <button
                         id={`button-Options-${id}`}
                         className='text-Purple'
@@ -102,14 +107,14 @@ export default function ClassCard({ id, title, students, duration, date, program
                     <Link
                         to={isNow ? '' : `/aulavirtual/aula/${program._id}`}
                         target={isNow ? '_blank' : ''}
-                        className={`flex gap-2 rounded-lg px-2 py-2 font-extrabold ease-out duration-600 ${isNow ? 'bg-yellowInput hover:bg-card hover:text-yellowInput' : 'bg-Purple text-white hover:bg-PurpleHover'}`}
+                        className={`flex gap-2 rounded-lg px-4 py-[10px] font-extrabold ease-out duration-300 ${isNow ? 'bg-yellowInput hover:bg-card hover:text-yellowInput' : 'bg-Purple text-white hover:bg-PurpleHover'}`}
                         onClick={handleLinkClick}
                     >
                         {isNow ? <><VideocamIcon />Unirse</> : 'Ir al aula'}
                     </Link>
                 </div>
 
-                {stateOption === id && <Options state={stateOption} id={id} links={links} />}
+                {stateOption === id && <Options state={stateOption} id={id} links={links} positionTop={'27%'} />}
             </div>
 
 

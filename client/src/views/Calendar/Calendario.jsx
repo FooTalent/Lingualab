@@ -26,8 +26,10 @@ export default function Calendario() {
     const [inviteModal, setInviteModal] = useState(false);
     const [modalNewStudent, setModalNewStudent] = useState(false)
     const [classIdToDelete, setClassIdToDelete] = useState(null);
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
+        setIsLoading(true)
         fetchTeacherClasses()
     }, [])
 
@@ -36,6 +38,7 @@ export default function Calendario() {
         const newClasses = await getClassesByTeacherAndDate(user.token, userDetail._id, '')
         if (!newClasses.isError) {
             setClasses(newClasses.data);
+            setIsLoading(false)
         } else {
             Toast.fire({
                 title: 'No ha sido posible obtener las clases',
@@ -128,9 +131,11 @@ export default function Calendario() {
         }
     };
 
+    if (isLoading) return <p>Cargando...</p>
+
     return (
         <>
-            <main className='container mx-auto flex flex-col gap-5'>
+            <main className='container mx-auto flex flex-col gap-8'>
                 <ClassCalendar
                     localizer={localizer}
                     date={date}
