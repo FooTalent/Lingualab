@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
-export default function Options({ state, id, links }) {
+export default function Options({ state, id, links, positionTop }) {
     return (
         <div
-            className={`absolute top-1/4 end-0 text-sm border shadow-cardContainer z-10 rounded-lg bg-white p-4 ${state ? 'flex flex-col gap-4' : 'hidden'}`}
+            className={`absolute top-[${positionTop ?? '25%'}] end-0 text-sm border shadow-cardContainer z-10 rounded-lg bg-white p-4 ${state ? 'flex flex-col gap-4' : 'hidden'}`}
         >
 
             {links.map((link, index) => {

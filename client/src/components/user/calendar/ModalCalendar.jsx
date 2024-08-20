@@ -46,7 +46,7 @@ export default function ModalCalendar({ open, setOpen, onNavigate, label, data, 
     let formattedStart = dayjs(start)
     let formattedEnd = dayjs(end)
 
-    return `${formattedStart.format('HH:mm')} hs : ${formattedEnd.format('HH:mm')} hs`;
+    return `${formattedStart.format('HH:mm')} - ${formattedEnd.format('HH:mm')}`;
   };
 
   const handleOpen = () => {
@@ -71,8 +71,9 @@ export default function ModalCalendar({ open, setOpen, onNavigate, label, data, 
       <div
         className='absolute inset-0 bg-card bg-opacity-50'
         onClick={handleOutsideClick}
-      ></div>
-      <div className='m-auto flex flex-col gap-6 z-20 p-6 bg-white shadow-modal rounded-2xl w-4/12 h-4/6'>
+      >
+      </div>
+      <div className='m-auto flex flex-col gap-6 z-20 p-6 bg-white shadow-modal rounded-2xl w-[437px] h-4/6'>
         <ModalHeader
           handleOpen={handleOpen}
           label={label}
@@ -81,16 +82,17 @@ export default function ModalCalendar({ open, setOpen, onNavigate, label, data, 
 
         <div className='px-4 py-2 flex flex-col gap-6 h-4/6 overflow-y-auto scrollbar'>
           {dayClasses && dayClasses.length > 0 ? (
-            <ClassList
-              data={dayClasses}
-              toggleOptions={toggleOptions}
-              stateOption={openOptions}
-              openModalDelete={openModalDelete}
-              openModalInvite={openModalInvite}
-            />
-          ) : (
-            <img src={sinClases} alt="No tienes clases programadas" className='m-auto' />
-          )}
+              <ClassList
+                data={dayClasses}
+                toggleOptions={toggleOptions}
+                stateOption={openOptions}
+                openModalDelete={openModalDelete}
+                openModalInvite={openModalInvite}
+              />
+            ) : (
+              <img src={sinClases} alt="No tienes clases programadas" className='m-auto' />
+            )
+          }
         </div>
       </div>
     </div>

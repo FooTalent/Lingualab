@@ -34,7 +34,7 @@ export default function AppLayout() {
                         <NavProfile />
                     </header>
                 </div>
-                <div className='flex flex-col mx-auto max-w-[1210px] px-8p box-content pb-10'>
+                <div className='flex flex-col mx-auto max-w-[1210px] px-5 lg:px-8p box-content pb-10'>
                     <CurrentTime />
                     <Outlet />
                 </div>
