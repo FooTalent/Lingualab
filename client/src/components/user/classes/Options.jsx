@@ -7,13 +7,14 @@ export default function Options({ state, id, links, positionTop }) {
         >
 
             {links.map((link, index) => {
+                console.log(link)
                 if (link.path) {
                     return (
                         <Link
                             key={`${index}-${link.id}`}
-                            to={link.path}
+                            to={!link.disabled && link.path}
                             state={link.state}
-                            className='cursor-pointer py-1 px-2 rounded-md ease-linear duration-200 flex items-center gap-2 !text-card !no-underline hover:bg-yellowInput'
+                            className={`cursor-pointer py-1 px-2 rounded-md ease-linear duration-200 flex items-center gap-2 text-card no-underline hover:bg-yellowInput ${link.disabled && 'opacity-50 !cursor-not-allowed hover:bg-transparent'}`}
                         >
                             {link.label}
                         </Link>
@@ -23,7 +24,7 @@ export default function Options({ state, id, links, positionTop }) {
                         <button
                             key={`${index}-${link.id}`}
                             onClick={() => !link.disabled && link.function(id)}
-                            className={`cursor-pointer py-1 px-2 rounded-md ease-linear duration-200 flex items-center gap-2 !text-card !no-underline hover:bg-yellowInput ${link.disabled && 'opacity-50 !cursor-not-allowed hover:bg-transparent'}`}
+                            className={`cursor-pointer py-1 px-2 rounded-md ease-linear duration-200 flex items-center gap-2 text-card no-underline hover:bg-yellowInput ${link.disabled && 'opacity-50 !cursor-not-allowed hover:bg-transparent'}`}
                         >
                             {link.label}
                         </button>

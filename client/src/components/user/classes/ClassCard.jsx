@@ -16,10 +16,10 @@ export default function ClassCard({ id, title, students, duration, date, program
     const [stringStudents, setStringStudents] = useState('-');
     const [isLoading, setIsLoading] = useState(false)
     const links = [
-        { function: () => openModalInvite(id), label: <><PersonAddIcon /> Invitar estudiante/s:</> },
-        { path: `/aulavirtual/aula/${program._id}`, label: <><WatchLaterIcon /> Editar fecha y hora</> },
-        { path: `/classroom/${id}`, label: <><ShareIcon /> Compartir</> },
-        { function: () => openModalDelete(id), label: <><DeleteIcon /> Eliminar clase</> },
+        { function: () => openModalInvite(id), label: <><PersonAddIcon /> Invitar estudiante/s:</>, disabled: false },
+        { path: `/aulavirtual/aula/${program._id}`, label: <><WatchLaterIcon /> Editar fecha y hora</>, disabled: false },
+        { path: `/classroom/${id}`, label: <><ShareIcon /> Compartir</>, disabled: true },
+        { function: () => openModalDelete(id), label: <><DeleteIcon /> Eliminar clase</>, disabled: false },
     ]
 
     useEffect(() => {
