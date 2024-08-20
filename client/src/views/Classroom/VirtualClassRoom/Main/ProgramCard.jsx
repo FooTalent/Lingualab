@@ -10,6 +10,7 @@ import Modal from '../../../../components/Modal';
 import popUp from '/ImagesVCR/EliminarAula.png'
 import ButtonModal from '../../../../components/Form/ButtonModal';
 import ShareIcon from '@mui/icons-material/Share';
+import gettingHourClass from '../../../../utils/gettingHoursClass';
 
 const ProgramCard = ({ program, buttonFunction, refresh }) => {
   const { user } = useAppStore();
@@ -43,22 +44,6 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
   const handleButton = (e) => {
     e.stopPropagation();
     buttonFunction(program._id);
-  }
-
-  const gettingHourClass = (date, duration) => {
-    let startDate = new Date(date)
-
-    const options = {
-      hour: 'numeric',
-      minute: 'numeric',
-      hour12: false
-    }
-
-    const start = startDate.toLocaleTimeString('en-EN', options)
-    startDate.setHours(startDate.getHours() + duration)
-    const end = startDate.toLocaleTimeString('en-EN', options)
-
-    return `${start} - ${end}`
   }
 
   return (

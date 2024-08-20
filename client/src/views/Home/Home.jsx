@@ -16,8 +16,6 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  console.log(classes);
-
   useEffect(() => {
     if (user && user.token) {
       const fetchClasses = async () => {
