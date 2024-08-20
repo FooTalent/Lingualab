@@ -107,7 +107,7 @@ export default function ClassCard({ id, title, students, duration, date, program
                     <Link
                         to={isNow ? '' : `/aulavirtual/aula/${program._id}`}
                         target={isNow ? '_blank' : ''}
-                        className={`flex gap-2 rounded-lg px-4 py-[10px] font-extrabold ease-out duration-300 ${isNow ? 'bg-yellowInput hover:bg-card hover:text-yellowInput' : 'bg-Purple text-white hover:bg-PurpleHover'}`}
+                        className={`flex gap-2 items-center rounded-lg px-4 py-[10px] font-extrabold ease-out duration-300 truncate whitespace-nowrap ${isNow ? 'bg-yellowInput hover:bg-card hover:text-yellowInput' : 'bg-Purple text-white hover:bg-PurpleHover'}`}
                         onClick={handleLinkClick}
                     >
                         {isNow ? <><VideocamIcon />Unirse</> : 'Ir al aula'}

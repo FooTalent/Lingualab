@@ -50,7 +50,7 @@ export default function ClassCalendar({ localizer, date, handleNavigate, handleS
                 views={['day', 'week', 'month']}
                 view={view}
                 onView={setView}
-                className={`min-h-screen border border-Grey rounded-lg cursor-pointer overflow-hidden 
+                className={`min-h-[753px] lg:min-h-[816px] border border-Grey rounded-lg cursor-pointer overflow-hidden 
                     ${view !== 'month' ? 'hide-all-day' : ''}`}
                 components={{
                     eventWrapper: EventWrapper,
