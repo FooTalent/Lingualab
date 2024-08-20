@@ -243,7 +243,7 @@ const ViewStudent = () => {
           onClose={handleModalClose}
         />
       </Modal>
-      <Modal isOpen={true} modalSize='xsmall'>
+      <Modal isOpen={modalNewStudent} modalSize='xsmall'>
         <div className="flex justify-center">
           <img src={NewStudent} alt="Agregaste un estudiante" />
         </div>
