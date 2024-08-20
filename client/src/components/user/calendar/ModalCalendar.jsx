@@ -73,7 +73,7 @@ export default function ModalCalendar({ open, setOpen, onNavigate, label, data, 
         onClick={handleOutsideClick}
       >
       </div>
-      <div className='m-auto flex flex-col gap-6 z-20 p-6 bg-white shadow-modal rounded-2xl w-[437px] h-4/6'>
+      <div className='m-auto flex flex-col gap-6 z-20 py-6 md:p-6 bg-white shadow-modal rounded-2xl max-w-[95%] sm:w-[437px] h-4/6'>
         <ModalHeader
           handleOpen={handleOpen}
           label={label}

@@ -135,7 +135,7 @@ export default function Calendario() {
 
     return (
         <>
-            <main className='container mx-auto flex flex-col gap-8'>
+            <main className='container mx-auto flex flex-col gap-8 min-h-screen'>
                 <ClassCalendar
                     localizer={localizer}
                     date={date}
