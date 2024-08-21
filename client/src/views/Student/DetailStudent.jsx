@@ -35,7 +35,6 @@ const DetailStudent = () => {
 
     return (
         <div className='container mx-auto'>
-
             <div className='flex justify-between items-center'>
                 <BackButton />
 
@@ -65,63 +64,67 @@ const DetailStudent = () => {
                     </button>
                 )}
             </div>
-            <table className="flex flex-col w-full bg-white gap-4 mx-auto mt-10">
-                <thead className='border rounded-xl border-Purple mx-auto w-full gap-6'>
-                    <tr className='flex justify-between w-full py-6 px-4'>
-                        <th className='w-[160px]'>Clase/Examen</th>
-                        <th className='w-[160px]'>Oral</th>
-                        <th className='w-[160px]'>Escrito</th>
-                        <th className='w-[160px]'>Lectura</th>
-                        <th className='w-[170px]'>Estado</th>
-                    </tr>
-                </thead>
-                <tbody className='border rounded-xl border-Purple mx-auto w-full gap-6 px-4'>
-                    {info?.length > 0 ? (
-                        info.map((classes, index) => (
-                            <tr
-                                key={classes._id}
-                                className={`border-b ${index === 0 ? 'rounded-t-xl' : ''
-                                    } ${index === classes.length - 1 ? 'border-none' : ''
-                                    } flex justify-between items-center w-full py-6 border-Purple gap-6`}
-                            >
-                                {edit === true ? (
-                                    <>
-                                        <td className='w-[160px]'>{classes.level}</td>
-                                        <input className='w-[160px]'>{classes.oral}</input>
-                                        <input className='w-[160px]'>{classes.written}</input>
-                                        <input className='w-[160px]'>{classes.reading}</input>
-                                        <select
-                                            value={classes.state ? classes.state : opcion}
-                                            onChange={handleState}
-                                            className='w-[90px]'
-                                        >
-                                            <option value="" disabled>
-                                                Estado
-                                            </option>
-                                            <option value="Calificado">Calificado</option>
-                                            <option value="Entregado">Entregado</option>
-                                            <option value="Pendiente">Pendiente</option>
-                                            <option value="No Entregado">No entregado</option>
-                                        </select>
-                                    </>
-                                ) : (
-                                    <>
-                                        <td className='w-[160px]'>{classes.level}</td>
-                                        <td className='w-[160px]'>{classes.oral}</td>
-                                        <td className='w-[160px]'>{classes.written}</td>
-                                        <td className='w-[160px]'>{classes.reading}</td>
-                                        <td className='w-[90px]'>{classes.state ? classes.state : opcion}</td>
-                                    </>
-                                )}
-                            </tr>
-                        ))
-                    ) : (
-                        <tr className='flex justify-center items-center w-full py-6 px-4'>
-                            <td>No se encontró ninguna clase asignada a este estudiante</td>
+
+            <div className="relative overflow-x-auto scrollbar bg-transparent">
+                <table className="min-w-full table-fixed bg-white space-y-4 mt-10">
+                    <thead className='w-full py-6 shadow-customTable flex items-center gap-6 border border-Purple rounded-xl'>
+                        <tr className='flex justify-between w-full px-4 text-tableHead text-lg leading-5'>
+                            <th className='w-[160px]'>Clase/Examen</th>
+                            <th className='w-[160px]'>Oral</th>
+                            <th className='w-[160px]'>Escrito</th>
+                            <th className='w-[160px]'>Lectura</th>
+                            <th className='w-[170px]'>Estado</th>
                         </tr>
-                    )}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody className='border border-Purple rounded-xl shadow-customTable p-4 flex flex-col items-center min-h-screen'>
+                        {info?.length > 0 ? (
+                            info.map((classes, index) => (
+                                <tr
+                                    key={classes._id}
+                                    className={`border-b ${index === 0 ? 'rounded-t-xl' : ''
+                                        } ${index === classes.length - 1 ? 'border-none' : ''
+                                        } flex justify-between items-center w-full py-6 border-Purple gap-6`}
+                                >
+                                    {edit === true ? (
+                                        <>
+                                            <td className='w-[160px]'>{classes.level}</td>
+                                            <input className='w-[160px]'>{classes.oral}</input>
+                                            <input className='w-[160px]'>{classes.written}</input>
+                                            <input className='w-[160px]'>{classes.reading}</input>
+                                            <select
+                                                value={classes.state ? classes.state : opcion}
+                                                onChange={handleState}
+                                                className='w-[90px]'
+                                            >
+                                                <option value="" disabled>
+                                                    Estado
+                                                </option>
+                                                <option value="Calificado">Calificado</option>
+                                                <option value="Entregado">Entregado</option>
+                                                <option value="Pendiente">Pendiente</option>
+                                                <option value="No Entregado">No entregado</option>
+                                            </select>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <td className='w-[160px]'>{classes.level}</td>
+                                            <td className='w-[160px]'>{classes.oral}</td>
+                                            <td className='w-[160px]'>{classes.written}</td>
+                                            <td className='w-[160px]'>{classes.reading}</td>
+                                            <td className='w-[90px]'>{classes.state ? classes.state : opcion}</td>
+                                        </>
+                                    )}
+                                </tr>
+                            ))
+                        ) : (
+                            <tr className='flex justify-center items-center w-full py-6 px-4'>
+                                <td>No se encontró ninguna clase asignada a este estudiante</td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+
         </div >
     )
 }
