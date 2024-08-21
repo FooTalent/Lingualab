@@ -28,7 +28,8 @@ export default {
         redError: '#D33013'
       },
       backgroundImage: {
-        'fondo': "url('/fondoLogin.jpg')"
+        'fondo': "url('/fondoLogin.jpg')",
+        'fondoLanding': "url('/ImagesLanding/FondoLandingPrincipal.png')"
       },
       boxShadow: {
         custom: '0px 0px 20px 2px #00000033',
