@@ -11,16 +11,16 @@ const Profile = ({ profile }) => {
   const [refresh, setRefresh] = useState(false);
   const [error, setError] = useState(null);
   const [originalProfileData, setOriginalProfileData] = useState(userDetail);
-  
+
   // edit
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState(userDetail);
   const [countryOptionsState, setCountryOptionsState] = useState([]);
   const [languageOptions, setLanguageOptions] = useState([]);
 
-    // Modals
+  // Modals
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       if (user && user.token) {
@@ -69,6 +69,10 @@ const Profile = ({ profile }) => {
     }));
   };
 
+  const handleEdit = () => {
+    setIsEditing(true)
+  }
+
   const handleSelectChange = (name, selectedOption) => {
     setProfileData(prevState => ({
       ...prevState,
@@ -85,18 +89,23 @@ const Profile = ({ profile }) => {
       const updatedUser = await userUpdate(user.token, profileData);
       localStorage.setItem('userDetail', JSON.stringify(updatedUser))
       setProfileData(updatedUser);
-      setIsSuccessModalOpen(true); 
+      setIsSuccessModalOpen(true);
       setRefresh(prevRefresh => !prevRefresh);
-      setIsEditing(false); 
+      setIsEditing(false);
+
+      setTimeout(() => {
+        setIsSuccessModalOpen(false)
+      }, 2000);
     } catch (error) {
       console.error('Error updating user data:', error);
       setError(error.message);
     }
   };
 
+
   const handleCancel = () => {
     setProfileData(originalProfileData);
-    setIsEditing(false); 
+    setIsEditing(false);
   };
 
   if (loading) { return <div>Loading...</div>; }
@@ -112,12 +121,14 @@ const Profile = ({ profile }) => {
           handleOpenSuccessModal();
         }}
         botonFunction={enableEditing}
+        isEditing={isEditing}
       />
-      <div className="flex flex-col items-center border-2 border-solid border-gray-200 rounded-2xl " style={{ marginTop: '-100px' }}>
-        <h2 className="mt-36 text-lg font-semibold">{profileData.last_name} {profileData.first_name}</h2>
-        <div className="px-6 py-4 flex justify-center">
+
+      <div className="flex flex-col gap-10 border border-inputBg shadow-customTable rounded-xl p-6 -mt-[100px]">
+        <div className='flex flex-col items-center gap-6'>
+          <h2 className="mt-32 text-[26px] leading-8 font-semibold">{profileData.last_name} {profileData.first_name}</h2>
           <textarea
-            className="shadow appearance-none border rounded w-[600px] h-[120px] py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none"
+            className="border border-card rounded-lg w-full h-[120px] py-3 px-4 text-card leading-custom text-justify scrollbar focus:outline-none resize-none"
             style={{ textAlign: 'left' }}
             id="presentation"
             name="presentation"
@@ -127,7 +138,8 @@ const Profile = ({ profile }) => {
             disabled={!isEditing}
           />
         </div>
-        <div className="w-full mt-4 px-6 pb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-12">
           <Dropdown
             title="Datos personales"
             countryOptions={countryOptionsState}
@@ -135,8 +147,9 @@ const Profile = ({ profile }) => {
             profileData={profileData}
             handleInputChange={handleInputChange}
             handleSelectChange={handleSelectChange}
-            isEditable ={isEditing}
+            isEditable={isEditing}
           />
+
           <Dropdown
             title="Formación"
             countryOptions={[]}
@@ -144,26 +157,33 @@ const Profile = ({ profile }) => {
             profileData={profileData}
             handleInputChange={handleInputChange}
             handleSelectChange={handleSelectChange}
-            isEditable ={isEditing}
+            isEditable={isEditing}
           />
         </div>
-        <div className="px-6 py-4 flex justify-center gap-6">
-          <button
-            className="w-52 bg-white text-purple-500 border-purple-500 border-solid border-2 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="button"
-            onClick={handleCancel}
-          >
-            Cancelar
-          </button>
-          <button
-            className="w-52 bg-purple-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="button"
-            onClick={handleUpdateProfile}
-          >
-            Confirmar edición
-          </button>
-        </div>
-        <SuccessModal isOpen={isSuccessModalOpen} onClose={handleCloseSuccessModal} />
+
+        {
+          isEditing
+            ? (
+              <div className="flex justify-center items-center gap-6">
+                <button
+                  className="min-w-52 bg-white hover:bg-Purple text-Purple hover:text-white border-Purple border font-extrabold tracking-wide leading-6 py-2 px-8 rounded-lg focus:outline-none focus:shadow-outline ease-out duration-300"
+                  type="button"
+                  onClick={handleCancel}
+                >
+                  Cancelar
+                </button>
+                <button
+                  className="min-w-52 bg-Purple hover:bg-PurpleHover text-white border-Purple border font-extrabold tracking-wide leading-6 py-2 px-8 rounded-lg focus:outline-none focus:shadow-outline ease-out duration-300"
+                  type="button"
+                  onClick={handleUpdateProfile}
+                >
+                  Guardar edición
+                </button>
+              </div>
+            )
+            : <></>
+        }
+        <SuccessModal isOpen={isSuccessModalOpen} />
       </div>
     </div>
   );
