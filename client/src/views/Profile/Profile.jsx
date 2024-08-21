@@ -11,7 +11,6 @@ const Profile = ({ profile }) => {
   const [refresh, setRefresh] = useState(false);
   const [error, setError] = useState(null);
   const [originalProfileData, setOriginalProfileData] = useState(userDetail);
-  const [isEditing, setIsEditing] = useState(false);
 
   // edit
   const [isEditing, setIsEditing] = useState(false);
