@@ -6,7 +6,7 @@ import { userUpdatePhoto } from '../../services/index';
 import EditIcon from '@mui/icons-material/Edit';
 import { RingLoader } from 'react-spinners';
 
-const ProfilePicture = ({ photo, token, refreshProfile }) => {
+const ProfilePicture = ({ photo, token, refreshProfile, botonFunction }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -47,11 +47,13 @@ const ProfilePicture = ({ photo, token, refreshProfile }) => {
     <div className="relative">
       <div className="bg-white gap-4 flex items-center justify-center">
         {photo ? (
-          <img
-            className='h-[200px] w-[200px] rounded-full'
-            src={crearURLCompleta(photo)}
-            alt="Profile"
-          />
+          <button onClick={handleOpenModal}>
+            <img
+              className='h-[200px] w-[200px] rounded-full'
+              src={crearURLCompleta(photo)}
+              alt="Profile"
+            />
+          </button>
         ) : (
           <div className='flex items-center justify-center border rounded-full p-2 gap-2 h-[200px] w-[200px]'>
             <BsCameraFill className='h-[100px] w-[100px] text-gray-500' />
@@ -59,7 +61,7 @@ const ProfilePicture = ({ photo, token, refreshProfile }) => {
         )}
         <button
           className="bg-purple-500 text-white rounded-full p-2 absolute top-28 right-6"
-          onClick={handleOpenModal}
+          onClick={botonFunction}
         >
           <EditIcon />
         </button>

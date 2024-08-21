@@ -3,8 +3,7 @@ import ProfilePicture from './ProfilePicture';
 import Dropdown from './Dropdown';
 import SuccessModal from './SuccessModal';
 import { useAppStore } from '../../store/useAppStore';
-import { userUpdate, userUpdatePhoto, getUserData, getCountries, getLanguages } from '../../services/index';
-import { crearURLCompleta } from '../../utils/urifoto';
+import { userUpdate, getUserData, getCountries, getLanguages } from '../../services/index';
 
 const Profile = ({ profile }) => {
   const { userDetail, user } = useAppStore();
@@ -14,13 +13,14 @@ const Profile = ({ profile }) => {
   const [originalProfileData, setOriginalProfileData] = useState(userDetail);
   
   // edit
+  const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState(userDetail);
   const [countryOptionsState, setCountryOptionsState] = useState([]);
   const [languageOptions, setLanguageOptions] = useState([]);
 
     // Modals
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       if (user && user.token) {
@@ -76,6 +76,10 @@ const Profile = ({ profile }) => {
     }));
   };
 
+  const enableEditing = () => {
+    setIsEditing(true);
+  };
+
   const handleUpdateProfile = async () => {
     try {
       const updatedUser = await userUpdate(user.token, profileData);
@@ -83,15 +87,16 @@ const Profile = ({ profile }) => {
       setProfileData(updatedUser);
       setIsSuccessModalOpen(true); 
       setRefresh(prevRefresh => !prevRefresh);
+      setIsEditing(false); 
     } catch (error) {
       console.error('Error updating user data:', error);
       setError(error.message);
     }
   };
 
-  
   const handleCancel = () => {
     setProfileData(originalProfileData);
+    setIsEditing(false); 
   };
 
   if (loading) { return <div>Loading...</div>; }
@@ -106,6 +111,7 @@ const Profile = ({ profile }) => {
           setRefresh(prevRefresh => !prevRefresh);
           handleOpenSuccessModal();
         }}
+        botonFunction={enableEditing}
       />
       <div className="flex flex-col items-center border-2 border-solid border-gray-200 rounded-2xl " style={{ marginTop: '-100px' }}>
         <h2 className="mt-36 text-lg font-semibold">{profileData.last_name} {profileData.first_name}</h2>
@@ -118,6 +124,7 @@ const Profile = ({ profile }) => {
             value={profileData.presentation || ''}
             onChange={handleInputChange}
             placeholder="Acerca de mí..."
+            disabled={!isEditing}
           />
         </div>
         <div className="w-full mt-4 px-6 pb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -128,6 +135,7 @@ const Profile = ({ profile }) => {
             profileData={profileData}
             handleInputChange={handleInputChange}
             handleSelectChange={handleSelectChange}
+            isEditable ={isEditing}
           />
           <Dropdown
             title="Formación"
@@ -136,6 +144,7 @@ const Profile = ({ profile }) => {
             profileData={profileData}
             handleInputChange={handleInputChange}
             handleSelectChange={handleSelectChange}
+            isEditable ={isEditing}
           />
         </div>
         <div className="px-6 py-4 flex justify-center gap-6">
