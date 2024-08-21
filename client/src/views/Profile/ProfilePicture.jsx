@@ -6,7 +6,7 @@ import { userUpdatePhoto } from '../../services/index';
 import EditIcon from '@mui/icons-material/Edit';
 import { RingLoader } from 'react-spinners';
 
-const ProfilePicture = ({ photo, token, refreshProfile, isEditing, handleEdit }) => {
+const ProfilePicture = ({ photo, token, refreshProfile, botonFunction }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -48,14 +48,13 @@ const ProfilePicture = ({ photo, token, refreshProfile, isEditing, handleEdit })
     <div>
       <div className="flex items-center justify-center">
         {photo ? (
-          <div className='flex h-[200px] w-[200px] rounded-full'>
+          <button onClick={handleOpenModal}>
             <img
-              className='object-cover cursor-pointer'
+              className='h-[200px] w-[200px] rounded-full'
               src={crearURLCompleta(photo)}
               alt="Profile"
-              onClick={handleOpenModal}
             />
-          </div>
+          </button>
         ) : (
           <div className='flex border border-Grey rounded-full p-2 gap-2 h-[200px] w-[200px]'>
             <BsCameraFill className='m-auto h-[100px] w-[100px] text-Grey' />
@@ -63,10 +62,8 @@ const ProfilePicture = ({ photo, token, refreshProfile, isEditing, handleEdit })
         )}
 
         <button
-          className={`hover:bg-PurpleHover text-white rounded-full p-3 absolute top-28 right-6 ease-out duration-300
-            ${isEditing ? 'bg-Purple' : 'bg-Grey'}
-            `}
-          onClick={isEditing ? handleOpenModal : handleEdit}
+          className="bg-purple-500 text-white rounded-full p-2 absolute top-28 right-6"
+          onClick={botonFunction}
         >
           <EditIcon />
         </button>

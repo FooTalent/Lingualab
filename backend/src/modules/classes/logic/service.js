@@ -34,10 +34,13 @@ export default class Service extends CustomService {
       const programsWithTeacher = await this.programDao.getProgramsByTeacherId(teacherId);
       const programIds = programsWithTeacher.map(p => p._id);
   
+      const oneHourAgo = new Date();
+      oneHourAgo.setHours(oneHourAgo.getHours() - 1);
+
       const filter = {
         program: { $in: programIds },
         isTemplate: false,
-        daytime: { $exists: true, $ne: null, $gte: new Date() },
+        daytime: { $exists: true, $ne: null, $gte: oneHourAgo },
       };
   
       return await this.dao.get(filter, { limit: limit, sort: { daytime: 1 } });

@@ -7,7 +7,6 @@ export default function Options({ state, id, links, positionTop }) {
         >
 
             {links.map((link, index) => {
-                console.log(link)
                 if (link.path) {
                     return (
                         <Link

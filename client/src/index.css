@@ -24,7 +24,7 @@
     }
 
     .inputSubmit {
-        @apply bg-Yellow w-full p-3 font-[500] rounded-lg text-lg cursor-pointer;
+        @apply bg-Yellow w-full p-3 font-medium rounded-lg text-lg cursor-pointer mt-6;
     }
 
     .link {
@@ -40,7 +40,7 @@
     }
 
     .formUser {
-        @apply flex flex-col md:gap-[8px] md:w-[404px]
+        @apply flex flex-col gap-2 md:w-[404px]
     }
     .imgLogoTech {
         @apply w-12 h-12
