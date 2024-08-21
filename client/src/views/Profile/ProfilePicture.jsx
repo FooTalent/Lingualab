@@ -6,7 +6,7 @@ import { userUpdatePhoto } from '../../services/index';
 import EditIcon from '@mui/icons-material/Edit';
 import { RingLoader } from 'react-spinners';
 
-const ProfilePicture = ({ photo, token, refreshProfile, botonFunction }) => {
+const ProfilePicture = ({ photo, token, refreshProfile, botonFunction, isEditing }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -62,8 +62,10 @@ const ProfilePicture = ({ photo, token, refreshProfile, botonFunction }) => {
         )}
 
         <button
-          className="bg-purple-500 text-white rounded-full p-2 absolute top-28 right-6"
-          onClick={botonFunction}
+          className={`hover:bg-PurpleHover text-white rounded-full p-3 absolute top-28 right-6 ease-out duration-300
+              ${isEditing ? 'bg-Purple' : 'bg-Grey'}
+            `}
+          onClick={!isEditing ? botonFunction : handleOpenModal}
         >
           <EditIcon />
         </button>
