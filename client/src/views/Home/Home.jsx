@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const { user, status, userDetail } = useAppStore();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -66,11 +66,11 @@ const Home = () => {
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="flex flex-col gap-4 justify-between flex-1">
             <div className="shadow-home rounded-xl px-8 flex items-center gap-6 h-[250px] w-[700px]">
-              <div className="flex-1">
+              <div className="flex-1 bg-[#FFDC00] rounded-lg p-4 flex items-center justify-center">
                 <img
-                  src="/ImagesHome/creacionvideo.PNG"
+                  src="/ImagesHome/Popup_Comencemos.png"
                   alt="PopupComencemos"
-                  className="max-w-80 h-[230px]"
+                  className="max-w-80 h-[180px] object-contain"
                 />
               </div>
 
@@ -85,8 +85,9 @@ const Home = () => {
                   descubre cómo gestionar a tus alumnos.
                 </p>
                 <button
-                 onClick={() => navigate("/videotutorial")}  
-                className="bg-card hover:bg-Yellow text-Yellow tracking-wide hover:text-card font-extrabold px-4 py-2 rounded-lg self-start ease-out duration-6000">
+                  onClick={() => navigate("/videotutorial")}
+                  className="bg-card hover:bg-Yellow text-Yellow tracking-wide hover:text-card font-extrabold px-4 py-2 rounded-lg self-start ease-out duration-6000"
+                >
                   Tutorial
                 </button>
               </div>
@@ -126,7 +127,9 @@ const Home = () => {
 
             <div className="grid grid-cols-2 gap-10 m-0 mt-6">
               <div className="flex flex-col gap-4">
-                <h2 className="text-xl leading-6 font-semibold mb-2">Tu clase ahora</h2>
+                <h2 className="text-xl leading-6 font-semibold mb-2">
+                  Tu clase ahora
+                </h2>
                 <div className="shadow-home rounded-xl py-6 px-8 flex flex-col gap-4 text-center items-center">
                   <img
                     src="/ImagesHome/campana.png"
@@ -138,7 +141,9 @@ const Home = () => {
               </div>
 
               <div className="flex flex-col gap-4">
-                <h2 className="text-xl leading-6 font-semibold mb-2">Tu próxima clase</h2>
+                <h2 className="text-xl leading-6 font-semibold mb-2">
+                  Tu próxima clase
+                </h2>
                 <div className="shadow-home rounded-xl py-6 px-8 flex flex-col gap-4 text-center items-center">
                   <img
                     src="/ImagesHome/calendarioh.png"
@@ -176,7 +181,9 @@ const Home = () => {
             </div>
 
             <div className="flex flex-col gap-4 mb-10">
-              <h2 className="text-xl leading-6 font-semibold mb-2">Preguntas Frecuentes</h2>
+              <h2 className="text-xl leading-6 font-semibold mb-2">
+                Preguntas Frecuentes
+              </h2>
               <div className="shadow-home rounded-xl py-6 px-8 flex items-center gap-6 max-w-[390px]">
                 <img
                   src="/ImagesHome/preguntash.png"
@@ -184,8 +191,8 @@ const Home = () => {
                   className="object-cover rounded-lg max-h-[185px]"
                 />
                 <div className="flex flex-col justify-between gap-4">
-                <button
-                    onClick={() => navigate("/questions")} 
+                  <button
+                    onClick={() => navigate("/questions")}
                     className="bg-Purple tracking-wide text-white font-extrabold px-4 py-2 rounded-lg ease-out duration-6000"
                   >
                     Ver preguntas
