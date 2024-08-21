@@ -22,7 +22,7 @@ const ForgotPassword = () => {
 
     return (
         <>
-            <p className="text-2xl font-[500] text-black">
+            <p className="text-2xl font-medium text-black">
                 Recuperá tu contraseña
             </p>
 

@@ -12,7 +12,7 @@ export default function ModalHeader({ handleOpen, label, onNavigate }) {
             >
                 <CloseIcon fontWeight={'bold'} fontSize='medium' />
             </button>
-            <div className='flex justify-between items-center clases-center text-xl'>
+            <div className='flex justify-between items-center clases-center text-xl font-medium'>
                 <button className='cursor-pointer' onClick={() => onNavigate('PREV', 'day')}>
                     <KeyboardArrowLeftIcon fontSize='large' className='text-Purple' />
                 </button>

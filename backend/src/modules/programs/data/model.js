@@ -6,9 +6,9 @@ const thisSchema = new Schema({
   // basic properties
   title:       { type: String, require:true },
   description: { type: String, },
-  classes:     [{ type: Schema.Types.ObjectId, ref: 'classes' }],
-  teacher:        { type: Schema.Types.ObjectId, ref: 'users', required: true },
-  students:       [{ type: Schema.Types.ObjectId, ref: 'users'}],
+  classes:     [{ type: Schema.Types.ObjectId, ref: 'classes',autopopulate: false }],
+  teacher:     {  type: Schema.Types.ObjectId, ref: 'users', required: true, autopopulate: false },
+  students:    [{ type: Schema.Types.ObjectId, ref: 'users', autopopulate: false}],
   isTemplate:  { type: Boolean, default: true },
 
   // aditional properties
@@ -28,20 +28,6 @@ const thisSchema = new Schema({
     updatedAt: 'updated'
   },
 })
-
-thisSchema.pre(['findOne', 'find'], function(next) {
-  this
-  .populate({
-    path: 'teacher',
-    select: '-password'
-  })
-  .populate('classes')
-  .populate({
-    path: 'students',
-    select: '_id first_name last_name'
-  });
-  next();
-});
 
 const dataModel = model('programs', thisSchema)
 

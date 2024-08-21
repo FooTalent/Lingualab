@@ -1,7 +1,7 @@
 import { register } from "../services";
 import { Toast } from "../utils/toast";
 
-export const createRegisterSlice = (set) => ({
+export const createRegisterSlice = (set, get) => ({
     complete: false,
     userRegister: async (userData) => {
         const registerUser = await register(userData)

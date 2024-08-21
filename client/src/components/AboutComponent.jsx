@@ -43,15 +43,15 @@ const AboutComponent = () => {
                                 <h2 className="text-[28px] font-normal">Front</h2>
                                 <div className="flex gap-6">
                                     <div className="flex gap-6 flex-col">
-                                        <img className="imgLogoTech" src="/ImagesAboutUs/figma.svg" alt="" />
-                                        <img className="imgLogoTech" src="/ImagesAboutUs/ilustrator.svg" alt="" />
+                                        <img className="imgLogoTech" src="/ImagesAboutUs/materialui.svg" alt="" />
+                                        <img className="imgLogoTech" src="/ImagesAboutUs/vs.svg" alt="" />
                                     </div>
                                     <div className="flex justify-center items-center">
-                                        <img className="imgLogoTech" src="/ImagesAboutUs/ow.svg" alt="" />
+                                        <img className="imgLogoTech" src="/ImagesAboutUs/react.svg" alt="" />
                                     </div>
                                     <div className="flex gap-6 flex-col">
-                                        <img className="imgLogoTech" src="/ImagesAboutUs/miro.svg" alt="" />
-                                        <img className="imgLogoTech" src="/ImagesAboutUs/mora.svg" alt="" />
+                                        <img className="imgLogoTech" src="/ImagesAboutUs/jsf.svg" alt="" />
+                                        <img className="imgLogoTech" src="/ImagesAboutUs/tailwind.svg" alt="" />
                                     </div>
                                 </div>
                             </div>

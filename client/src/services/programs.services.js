@@ -222,3 +222,52 @@ export const getClassesByTeacherAndDate= async (token, teacherId, date ) => {
     throw error;
   }
 };
+
+export const getNextNClassesByTeacher= async (token, limit ) => {
+  try {
+    const textlimit = limit ? "?limit="+limit : ''
+    const response = await axios.get(`${url}api/classes/calendar/next-clases${textlimit}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      console.error('Acceso no autorizado - talvez token invalido');
+    }
+    throw error;
+  }
+};
+
+// --------------- HOME ------------------
+export const getCountPrograms = async (token, teacherId, isTemplate ) => {
+  try {
+    const response = await axios.get(`${url}api/programs/count/programs?techaerId=${teacherId}&isTemplate=${isTemplate}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      console.error('Acceso no autorizado - talvez token invalido');
+    }
+    throw error;
+  }
+};
+export const getHourlyLoad = async (token ) => {
+  try {
+    const response = await axios.get(`${url}api/programs/count/hourlyLoad`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      console.error('Acceso no autorizado - talvez token invalido');
+    }
+    throw error;
+  }
+};

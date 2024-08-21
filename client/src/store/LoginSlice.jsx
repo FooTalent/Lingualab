@@ -6,19 +6,19 @@ export const createUserSlice = (set, get) => ({
     userDetail: {},
     status: false,
     change: false,
+
     // user sessions
     userLogin: async (userData) => {
-        const loginUser = await login(userData)
-
-        if (loginUser.isError === false) {
+        const loginUser = await login(userData);
+        if (!loginUser.isError) {
             set(() => ({
                 status: true,
                 user: { email: userData.email, token: loginUser.data.token }
-            }))
+            }));
             Toast.fire({
                 title: "Bienvenido",
                 icon: "success"
-            })
+            });
             const { token } = get().user;
             if (token) {
                 try {
@@ -33,13 +33,13 @@ export const createUserSlice = (set, get) => ({
                     console.error('Error fetching user data:', error);
                 }
             }
-            localStorage.setItem('status', JSON.stringify(get().status))
-            localStorage.setItem('user', JSON.stringify(get().user))
+            localStorage.setItem('status', JSON.stringify(get().status));
+            localStorage.setItem('user', JSON.stringify(get().user));
         } else {
             Toast.fire({
                 title: `${loginUser.message}`,
                 icon: "error"
-            })
+            });
         }
     },
     userLoginGoogle: async () => {
@@ -77,19 +77,19 @@ export const createUserSlice = (set, get) => ({
             })
         }
     },
-    loguot: () => {
+    logout: () => {
         set(() => ({
             status: false,
             user: null,
             userDetail: null
-        }))
-        localStorage.setItem('status', JSON.stringify(get().status))
-        localStorage.setItem('user', JSON.stringify(get().user))
+        }));
+        localStorage.setItem('status', JSON.stringify(get().status));
+        localStorage.setItem('user', JSON.stringify(get().user));
         localStorage.setItem('userDetail', JSON.stringify(get().userDetail));
         Toast.fire({
             title: "Sesión finalizada",
             icon: "info"
-        })
+        });
     },
     localLogin: () => {
         const storeLogin = localStorage.getItem('status')

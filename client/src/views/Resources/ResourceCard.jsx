@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom"
 import { LEVELS_MAP } from "../../utils/valueLists"
+import IconSvg from "../../utils/SvgWrapper"
 
 export default function ResourceCard({ resource, deleteFunc, editFunc }) {
     const { _id } = resource
@@ -16,11 +16,12 @@ export default function ResourceCard({ resource, deleteFunc, editFunc }) {
                     </span>
                     <h2 className="text-xl leading-6 font-semibold text-[#444]">{resource.title}</h2>
                 </div>
-                <div>
+                <div className="flex items-center gap-3">
+                    <IconSvg category={resource.type} className={'w-6'}/>
                     <p className="text-sm leading-4">
-                        <Link to={resource.url} className="hover:underline">
+                        <a href={resource.url} className="hover:underline" target="_blank" rel="noopener noreferrer">
                             {resource.url}
-                        </Link>
+                        </a>
                     </p>
                 </div>
             </div>

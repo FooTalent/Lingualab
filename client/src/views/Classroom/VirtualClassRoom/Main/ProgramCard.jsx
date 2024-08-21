@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { LEVELS_MAP } from '../../../../utils/valueLists';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Options from '../../../../components/user/classes/Options';
-import ShareIcon from '@mui/icons-material/Share';
 import DeleteIcon from '@mui/icons-material/Delete';
 import editarPrograma from '/editarPrograma.svg'
-import duplicar from '/duplicar.svg'
 import { deleteProgram } from '../../../../services/programs.services';
 import { useAppStore } from '../../../../store/useAppStore';
 import Modal from '../../../../components/Modal';
 import popUp from '/ImagesVCR/EliminarAula.png'
 import ButtonModal from '../../../../components/Form/ButtonModal';
+import ShareIcon from '@mui/icons-material/Share';
+import gettingHourClass from '../../../../utils/gettingHoursClass';
 
 const ProgramCard = ({ program, buttonFunction, refresh }) => {
   const { user } = useAppStore();
@@ -31,8 +31,8 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
   }
 
   const links = [
-    { path: `/`, label: <><ShareIcon />Compartir</> },
-    { path: `/`, label: <><img src={editarPrograma} alt='Editar aula' />Editar aula</> },
+    { path: null, state: 'edit', label: <><ShareIcon /> Compartir</>, disabled: true },
+    { path: `/aulavirtual/aula/${program._id}`, state: 'edit', label: <><img src={editarPrograma} alt='Editar aula' />Editar aula</> },
     { path: ``, label: <><DeleteIcon />Eliminar aula</>, function: handleDelete },
   ];
 
@@ -44,22 +44,6 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
   const handleButton = (e) => {
     e.stopPropagation();
     buttonFunction(program._id);
-  }
-
-  const gettingHourClass = (date, duration) => {
-    let startDate = new Date(date)
-
-    const options = {
-      hour: 'numeric',
-      minute: 'numeric',
-      hour12: false
-    }
-
-    const start = startDate.toLocaleTimeString('en-EN', options)
-    startDate.setHours(startDate.getHours() + duration)
-    const end = startDate.toLocaleTimeString('en-EN', options)
-
-    return `${start} - ${end}`
   }
 
   return (
@@ -84,17 +68,17 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
         </div>
 
         <p className='flex gap-2'>
-          <span className='font-semibold'>Alumno/s:</span>
-            {
-              program.students.length > 0 ?
-                (program.students.map((student) => 
-                  student ? (
+          <span className='font-semibold'>Estudiante/s:</span>
+          {
+            program.students.length > 0 ?
+              (program.students.map((student) =>
+                student ? (
                   `${student.last_name}, ${student.first_name}; `
-                  ) : (
+                ) : (
                   '-'
-                  )
-                )) : '-'
-            }
+                )
+              )) : '-'
+          }
         </p>
 
         <p className='flex gap-4'>
@@ -105,8 +89,8 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
           <span className='font-semibold'>Hora:</span>
           {
             program.first_class ?
-            gettingHourClass(program.first_class, program.duration_hours) :
-            '-'
+              gettingHourClass(program.first_class, program.duration_hours) :
+              '-'
           }
         </p>
       </div>

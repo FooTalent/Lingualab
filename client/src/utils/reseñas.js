@@ -10,13 +10,13 @@ export const reseñas = [
     {
         id: 2,
         name: "Pedro M",
-        rol: "Alumno",
+        rol: "Estudiante",
         review: "Comentario de usuario sobre la plataforma",   
     },
     {
         id: 3,
         name: "Tamara G",
-        rol: "Alumno",
+        rol: "Estudiante",
         review: "Comentario de usuario sobre la plataforma",   
     },
     {
@@ -28,7 +28,7 @@ export const reseñas = [
     {
         id: 5,
         name: "Sofia M",
-        rol: "Alumno",
+        rol: "Estudiante",
         review: "Comentario de usuario sobre la plataforma",   
     },
     {
@@ -46,7 +46,7 @@ export const reseñas = [
     {
         id: 8,
         name: "Mario R",
-        rol: "Alumno",
+        rol: "Estudiante",
         review: "Comentario de usuario sobre la plataforma",   
     },
     {

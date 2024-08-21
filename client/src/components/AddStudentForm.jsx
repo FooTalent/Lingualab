@@ -9,7 +9,7 @@ const AddStudentForm = ({ onSubmit, onClose }) => {
   const [level, setLevel] = useState('A1-A2');
   const [birthday, setBirthday] = useState('');
   const [phone, setPhone] = useState('');
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit({ first_name: firstName, last_name: lastName, email, level, birthday, phone });
@@ -22,7 +22,7 @@ const AddStudentForm = ({ onSubmit, onClose }) => {
         <input
           type="text"
           id='nombre'
-          placeholder="Ingresa tu nombre"
+          placeholder="Ingresa el nombre"
           value={firstName}
           onChange={(e) =>
             setFirstName(e.target.value)}
@@ -35,7 +35,7 @@ const AddStudentForm = ({ onSubmit, onClose }) => {
         <input
           id='apellido'
           type="text"
-          placeholder="Ingresa tu apellido"
+          placeholder="Ingresa el apellido"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
           className={`border ${lastName ? 'border-card text-card' : 'border-Grey'} hover:border-card focus:border-card text-Grey rounded-lg py-2 px-4 ease-out duration-600 focus:outline-none`}
@@ -47,7 +47,7 @@ const AddStudentForm = ({ onSubmit, onClose }) => {
         <input
           id='email'
           type="email"
-          placeholder="Ingresa tu Email"
+          placeholder="Ingresa el Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className={`border ${email ? 'border-card text-card' : 'border-Grey'} hover:border-card focus:border-card text-Grey rounded-lg py-2 px-4 ease-out duration-600 focus:outline-none`}
@@ -60,7 +60,7 @@ const AddStudentForm = ({ onSubmit, onClose }) => {
           id='nivel'
           name="level"
           value={level}
-          onChange={(value) => setLevel(value)}
+          onChange={(e) => setLevel(e.target.value)}
           className={`border ${level ? 'border-card text-card' : 'border-Grey'} hover:border-card focus:border-card text-Grey rounded-lg py-2 px-4 ease-out duration-600 focus:outline-none`}
           style={{ color: LEVELS_MAP[level] }}
         >

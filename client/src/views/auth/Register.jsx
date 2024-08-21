@@ -106,7 +106,7 @@ export default function Register() {
                 <input
                     type="submit"
                     value='Crear Cuenta'
-                    className="inputSubmit"
+                    className="inputSubmit mt-[10px]"
                 />
             </form>
             <div className='flex flex-col items-center w-full'>

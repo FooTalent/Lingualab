@@ -3,16 +3,18 @@ import { useAppStore } from "../../store/useAppStore"
 import { deleteResource, fetchResourcesWithFilter, postResource, fetchResourceById, editResource } from "../../services/resources.services"
 import ResourceForm from "../../components/Resources/ResourceForm";
 import ResourceCard from "./ResourceCard"
-import { Toast } from "../../utils/toast";
 import CategoryFilter from "../../components/Resources/CategoryFilter";
 import { LEVELS, RESOURCE_TYPES } from "../../utils/valueLists";
 import LevelFilter from "../../components/Resources/LevelFilter";
 import Modal from "../../components/Modal";
 import imgEliminarRecurso from "/EliminarRecurso.png"
 import RecursoNoEncontrado from "/RecursoNoEncontrado.png"
-import SearchIcon from "@mui/icons-material/Search";
+import RecursoEliminado from "/Popup_RecursosEliminados.png"
+import GuardadoExistosamente from "/Popup_SeGuardoExitosamente.png"
+import AgregasteRecurso from "/Popup_FelicidadesAgregasteUnRecurso.png"
 import ButtonModal from "../../components/Form/ButtonModal";
 import BackButton from "../../components/BackButtom";
+import Searcher from "./Searcher";
 
 export default function Resources({ onSelect, selected }) {
 
@@ -21,12 +23,14 @@ export default function Resources({ onSelect, selected }) {
   const [error, setError] = useState(null)
   const [selectedLevel, setSelectedLevel] = useState('')
   const [selectedCat, setSelectedCat] = useState('')
-  const [isSearch, setIsSearch] = useState(false)
   const [title, setTitle] = useState('')
   const [refreshCards, setRefreshCards] = useState(true)
   const [modalStatus, setModalStatus] = useState(false)
   const { user } = useAppStore()
   const [deleteModal, setDeleteModal] = useState(false)
+  const [itemDeleted, setItemDeleted] = useState(false)
+  const [itemEdited, setItemEdited] = useState(false)
+  const [resourceCreated, setResourceCreated] = useState(false)
   const [idCard, setIdCard] = useState('')
   const [editModal, setEditModal] = useState(false)
 
@@ -42,16 +46,13 @@ export default function Resources({ onSelect, selected }) {
             setLoading(true)
             const res = await fetchResourcesWithFilter(user.token, filter)
             setResources(res.data)
-            setIsSearch(true)
           }
-          if (!selectedLevel) {
-            setIsSearch(false)
-          } else {
-            let filter = `level=${selectedLevel}`
-            if (selectedCat) filter += `&type=${selectedCat}`
-            if (title) filter += `&title=${title}`
-            await updateResources(filter)
-          }
+
+          let filter = selectedLevel ? `level=${selectedLevel}` : ''
+          if (title) filter += `&title=${title}`
+          if (selectedCat) filter += `&type=${selectedCat}`
+          await updateResources(filter)
+          
         } catch (error) {
           console.error('Error al llamar recursos:', error);
           setError(error.message)
@@ -88,19 +89,14 @@ export default function Resources({ onSelect, selected }) {
   const handleSubmitCreate = async (data) => {
     const newResource = await postResource(data, user.token)
     if (newResource.isError === false) {
-      Toast.fire({
-        title: "Recurso agregado",
-        icon: "success"
-      })
       setRefreshCards(!refreshCards)
       setModalStatus(false)
+      setResourceCreated(true)
       setSelectedLevel('')
       setSelectedCat('')
-    } else {
-      Toast.fire({
-        title: `${newResource.message}`,
-        icon: "error"
-      })
+      setTimeout(() => {
+        setResourceCreated(false)
+      }, 2000)
     }
   }
 
@@ -108,12 +104,12 @@ export default function Resources({ onSelect, selected }) {
   const handleSubmitEdit = async (id, data) => {
     const editedResource = await editResource(id, data, user.token)
     if (editedResource.isError === false) {
-      Toast.fire({
-        title: "Recurso editado",
-        icon: "success"
-      })
-      setEditModal(false)
       setRefreshCards(!refreshCards)
+      setEditModal(false)
+      setItemEdited(true)
+      setTimeout(() => {
+        setItemEdited(false)
+      }, 2000)
     }
   }
 
@@ -131,12 +127,12 @@ export default function Resources({ onSelect, selected }) {
   const handleConfirmDelete = async () => {
     const response = await deleteResource(idCard, user.token)
     if (response.isError === false) {
-      Toast.fire({
-        title: "Recurso eliminado",
-        icon: "warning"
-      })
       setRefreshCards(!refreshCards)
       setDeleteModal(false)
+      setItemDeleted(true)
+      setTimeout(() => {
+        setItemDeleted(false)
+      }, 2000)
     }
   }
 
@@ -234,33 +230,13 @@ export default function Resources({ onSelect, selected }) {
           </aside>
 
           <div className={`flex flex-col ${onSelect ? 'gap-8' : 'gap-14'} justify-between`}>
-            <form onSubmit={handleSearch}>
-              <div className="flex items-center gap-4">
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="¿Qué estas buscando?"
-                    className="border border-Grey rounded-lg px-4 py-3 pl-11 w-[566px] h-[48px] bg-inputBg text-card placeholder:text-Grey outline-none focus:border-Purple hover:border-Purple"
-                  />
-                  <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#444444]" />
-                </div>
-                <button className="bg-Purple tracking-wide hover:bg-PurpleHover text-white font-extrabold px-4 py-3 rounded-lg h-[48px] ease-linear duration-200">
-                  Buscar
-                </button>
-              </div>
-            </form>
+            <Searcher handleSearch={handleSearch} />
 
             <div className="flex flex-col p-2 grow w-full gap-6 text-card max-h-[585px] overflow-y-auto scrollbar">
               {
                 loading ? <p className="text-center">Cargando datos...</p> : (
                   error ? <p className="m-auto text-center">{error}</p> :
-                    (!isSearch ? (
-                      <div className="m-auto text-[50px] text-center font-semibold">
-                        <p className="max-w-[700px]">
-                          Selecciona el nivel del recurso que quieres filtrar y después elegí la categoría
-                        </p>
-                      </div>
-                    ) : (
+                    (
                       resources.length === 0 ? (
                         <div className="m-auto">
                           <img src={RecursoNoEncontrado} alt="imagen de recurso no encontrado" className="max-w-[400px]" />
@@ -287,34 +263,43 @@ export default function Resources({ onSelect, selected }) {
                         ))
                       )
                     )
-                    )
-                )}
-              {
-                <Modal title={"Edita un Recurso"} onClose={() => setEditModal(false)} isOpen={editModal}>
-                  <ResourceForm
-                    onSubmit={handleSubmitEdit}
-                    onCancel={() => setEditModal(false)}
-                    data={resources.find(r => r._id === idCard)} />
-                </Modal>
+                )
               }
-              {
-                <Modal title={"Crea un nuevo Recurso"} onClose={(() => setModalStatus(false))} isOpen={modalStatus}>
-                  <ResourceForm
-                    onSubmit={handleSubmitCreate}
-                    onCancel={() => setModalStatus(false)} />
-                </Modal>
-              }
-              {
-                <Modal isOpen={deleteModal} modalSize={"small"}>
-                  <div className="flex justify-center">
-                    <img src={imgEliminarRecurso} alt="quieres eliminar un recurso?" />
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <ButtonModal buttonAction={() => setDeleteModal(false)} type='prev' label={'Cancelar'} />
-                    <ButtonModal buttonAction={handleConfirmDelete} type={'next'} label={'Eliminar Recurso'} />
-                  </div>
-                </Modal>
-              }
+              <Modal title={"Edita un Recurso"} onClose={() => setEditModal(false)} isOpen={editModal}>
+                <ResourceForm
+                  onSubmit={handleSubmitEdit}
+                  onCancel={() => setEditModal(false)}
+                  data={resources.find(r => r._id === idCard)} />
+              </Modal>
+              <Modal title={"Crea un nuevo Recurso"} onClose={(() => setModalStatus(false))} isOpen={modalStatus}>
+                <ResourceForm
+                  onSubmit={handleSubmitCreate}
+                  onCancel={() => setModalStatus(false)} />
+              </Modal>
+              <Modal isOpen={deleteModal} modalSize={"small"}>
+                <div className="flex justify-center">
+                  <img src={imgEliminarRecurso} alt="quieres eliminar un recurso?" />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <ButtonModal buttonAction={() => setDeleteModal(false)} type='prev' label={'Cancelar'} />
+                  <ButtonModal buttonAction={handleConfirmDelete} type={'next'} label={'Eliminar Recurso'} />                  
+                </div>
+              </Modal>
+              <Modal isOpen={resourceCreated} modalSize={"xsmall"}>
+                <div className="flex justify-center">
+                  <img src={AgregasteRecurso} alt="Agregaste un recurso" />
+                </div>
+              </Modal>
+              <Modal isOpen={itemDeleted} modalSize={"xsmall"}>
+                <div className="flex justify-center">
+                  <img src={RecursoEliminado} alt="Recurso eliminado" />
+                </div>
+              </Modal>
+              <Modal isOpen={itemEdited} modalSize={"xsmall"}>
+                <div className="flex justify-center">
+                  <img src={GuardadoExistosamente} alt="Guardado exitosamente" />
+                </div>
+              </Modal>
             </div>
           </div>
         </section>

@@ -12,9 +12,7 @@ export const getStudents = async (token) => {
     });
     return response.data;
   } catch (error) {
-    if (error.response && error.response.status === 401) {
-      console.error('Acceso no autorizado - talvez token invalido');
-    }
+    console.error('Error fetching students:', error);
     throw error;
   }
 };
@@ -22,6 +20,7 @@ export const getStudents = async (token) => {
 // obtener 1 estudiante
 export const getStudentsById = async (token, idStudent) => {
   try {
+    if (!idStudent) throw new Error('ID del estudiante no proporcionado');
     const response = await axios.get(`${url}api/users/students/${idStudent}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -29,9 +28,7 @@ export const getStudentsById = async (token, idStudent) => {
     });
     return response.data;
   } catch (error) {
-    if (error.response && error.response.status === 401) {
-      console.error('Acceso no autorizado - talvez token invalido');
-    }
+    console.error('Error fetching student by ID:', error);
     throw error;
   }
 };
@@ -39,6 +36,7 @@ export const getStudentsById = async (token, idStudent) => {
 // Actualizar estudiante de ese profesor (no te deja de otros)
 export const updateStudent = async (token, idStudent, data) => {
   try {
+    if (!idStudent) throw new Error('ID del estudiante no proporcionado');
     const response = await axios.put(`${url}api/users/students/${idStudent}`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -46,9 +44,7 @@ export const updateStudent = async (token, idStudent, data) => {
     });
     return response.data;
   } catch (error) {
-    if (error.response && error.response.status === 401) {
-      console.error('Acceso no autorizado - talvez token invalido');
-    }
+    console.error('Error updating student:', error);
     throw error;
   }
 };
@@ -63,9 +59,7 @@ export const inviteStudent = async (token, data) => {
     });
     return response.data;
   } catch (error) {
-    if (error.response && error.response.status === 401) {
-      console.error('Acceso no autorizado - talvez token invalido');
-    }
+    console.error('Error inviting student:', error);
     throw error;
   }
 };
@@ -81,18 +75,15 @@ comment = comentarios (opcional) */
 
 export const getReviews = async (token, filter) => {
   try {
-    const data = filter 
     const response = await axios.get(`${url}api/reviews/`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      params: data,
+      params: filter,
     });
     return response.data;
   } catch (error) {
-    if (error.response && error.response.status === 401) {
-      console.error('Acceso no autorizado - talvez token invalido');
-    }
+    console.error('Error fetching reviews:', error);
     throw error;
   }
 };
@@ -106,15 +97,14 @@ export const createReviews = async (token, data) => {
     });
     return response.data;
   } catch (error) {
-    if (error.response && error.response.status === 401) {
-      console.error('Acceso no autorizado - talvez token invalido');
-    }
+    console.error('Error creating review:', error);
     throw error;
   }
 };
 
 export const updateReviews = async (token, id, data) => {
   try {
+    if (!id) throw new Error('ID de la reseña no proporcionado');
     const response = await axios.put(`${url}api/reviews/${id}`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -122,15 +112,14 @@ export const updateReviews = async (token, id, data) => {
     });
     return response.data;
   } catch (error) {
-    if (error.response && error.response.status === 401) {
-      console.error('Acceso no autorizado - talvez token invalido');
-    }
+      console.error('Error updating review:', error);
     throw error;
   }
 };
 
-export const deleteReviews = async (token) => {
+export const deleteReviews = async (token, id) => {
   try {
+    if (!id) throw new Error('ID de la reseña no proporcionado');
     const response = await axios.delete(`${url}api/reviews/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -138,9 +127,7 @@ export const deleteReviews = async (token) => {
     });
     return response.data;
   } catch (error) {
-    if (error.response && error.response.status === 401) {
-      console.error('Acceso no autorizado - talvez token invalido');
-    }
+    console.error('Error deleting review:', error);
     throw error;
   }
 };

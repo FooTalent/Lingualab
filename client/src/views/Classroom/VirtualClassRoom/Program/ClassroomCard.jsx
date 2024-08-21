@@ -3,13 +3,19 @@ import { LEVELS_MAP } from '../../../../utils/valueLists';
 import { Link } from 'react-router-dom';
 import { useAppStore } from '../../../../store/useAppStore';
 import { fetchResourceById } from '../../../../services/resources.services';
+import EditIcon from '@mui/icons-material/Edit';
 import IconSvg from '../../../../utils/SvgWrapper';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import DeleteIcon from '@mui/icons-material/Delete';
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Options from '../../../../components/user/classes/Options';
 
-const ClassroomCard = ({ classroom, buttonFunction }) => {
+const ClassroomCard = ({ classroom, editFunction, deleteFunction, editContentFunction }) => {
   const { level, title, students, daytime, duration_hours, _id } = classroom;
   const [openResources, setOpenResources] = useState(true)
   const [resourcesClass, setResourcesClass] = useState([])
+  const [state, setState] = useState(false)
   const { user } = useAppStore();
 
   useEffect(() => {
@@ -29,22 +35,36 @@ const ClassroomCard = ({ classroom, buttonFunction }) => {
     fetchSelectedResources();
   }, [classroom]);
 
+  const links = [
+    { path: ``, label: <><NoteAddIcon />Agregar contenido</>, function: editContentFunction },
+    { label: <><EditIcon /> Editar clase</>, function: editFunction },
+    { path: ``, label: <><DeleteIcon />Eliminar clase</>, function: deleteFunction },
+  ]
+
+  const handleOptions = () => {
+    setState(!state)
+  }
+
   return (
-    <div className="bg-white shadow-md rounded-md p-4 mb-4 text-card">
+    <div className="flex flex-col p-4 gap-4 rounded-xl shadow-cardContainer text-card relative">
       <div className="flex items-center justify-between">
         <div className='flex'>
           <span className="text-white px-2 py-1 rounded mr-2" style={{backgroundColor: LEVELS_MAP[level]}}>{level}</span>
           <h2 className="text-xl font-semibold">{title}</h2>
         </div>
         <div className='flex justify-between gap-4'>
-          <button className="bg-blue-500 text-white px-2 py-1 rounded-md w-full" onClick={() => buttonFunction(_id)}>
-            Modificar Clase
+          <button
+            onClick={handleOptions}
+          >
+            <MoreVertIcon className='text-Purple' />
           </button>
+          <Options id={_id} state={state} links={links} />
         </div>
       </div>
       <div className="text-gray-700 mb-2">
         <strong>Fecha:</strong> {daytime ? new Date(daytime).toLocaleString('es-ES') : null }
       </div>
+      <span className='border-t border-Grey'></span>
       <div className='flex items-center gap-6 text-sm'>
         <button
           onClick={() => setOpenResources(!openResources)}

@@ -1,28 +1,64 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import AuthLayout from './layouts/AuthLayout'
-import Login from './views/auth/Login'
-import AppLayout from './layouts/AppLayout'
-import Home from './views/Home'
-import Register from './views/auth/Register'
-import ForgotPassword from './views/auth/ForgotPassword'
-import NewPassword from './views/auth/NewPassword'
-import Profile from './views/Profile/Profile'
-import VirtualClassRoom from './views/Classroom/VirtualClassRoom/VirtualClassRoom'
-import VCRDetail from './views/Classroom/VirtualClassRoom/Program/ProgramDetail'
-import VCRClassDetail from './views/Classroom/VirtualClassRoom/Class/ClassDetail'
-import WorkSpace from './views/Classroom/WorkSpace/WorkSpace'
-import ProgramDetail from './views/Classroom/WorkSpace/Program/ProgramDetail'
-import ClassDetail from './views/Classroom/WorkSpace/Class/ClassDetail'
-import Recursos from './views/Resources/Resources'
-import Calendario from './views/Calendar/Calendario'
-import Landing from './views/Landing/Landing'
-import History from './views/Landing/History'
-import AboutUs from './views/Landing/AboutUs'
-import ViewStudent from './views/Student/ViewStudent'
-import DetailStudent from './views/Student/DetailStudent'
-import LandingLayout from './layouts/LandingLayout'
+// React Router
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+// Layouts
+import AuthLayout from './layouts/AuthLayout';
+import AppLayout from './layouts/AppLayout';
+import LandingLayout from './layouts/LandingLayout';
+
+// Views: Auth
+import Login from './views/auth/Login';
+import Register from './views/auth/Register';
+import ForgotPassword from './views/auth/ForgotPassword';
+import NewPassword from './views/auth/NewPassword';
+
+// Views: Home
+import Home from './views/Home/Home';
+
+// Views: Classroom - VirtualClassRoom
+import VirtualClassRoom from './views/Classroom/VirtualClassRoom/VirtualClassRoom';
+import VCRDetail from './views/Classroom/VirtualClassRoom/Program/ProgramDetail';
+import VCRClassDetail from './views/Classroom/VirtualClassRoom/Class/ClassDetail';
+
+// Views: Classroom - WorkSpace
+import WorkSpace from './views/Classroom/WorkSpace/WorkSpace';
+import ProgramDetail from './views/Classroom/WorkSpace/Program/ProgramDetail';
+import ClassDetail from './views/Classroom/WorkSpace/Class/ClassDetail';
+
+// Views: Student
+import ViewStudent from './views/Student/ViewStudent';
+import DetailStudent from './views/Student/DetailStudent';
+
+// Views: Resources
+import Recursos from './views/Resources/Resources';
+
+// Views: Calendar
+import Calendario from './views/Calendar/Calendario';
+
+// Views: Landing
+import Landing from './views/Landing/Landing';
+import History from './views/Landing/History';
+import AboutUs from './views/Landing/AboutUs';
+
+// Views: Profile
+import Profile from './views/Profile/Profile';
+
+// Views: Error
+import Error404 from './views/Error/404';
+
+// Custom Hooks
+import { useAxiosInterceptor } from "./hooks/useAxiosInterceptor";
+
+//Views: Questions
+import Questions from './views/HomeAnex/Questions';
+
+//Views: Video Tutorial
+import VideoTutorial from './views/Tutorial/VideoTutorial';
+
 
 export default function Router() {
+    useAxiosInterceptor();
+
     return (
         <BrowserRouter>
             <Routes>
@@ -45,6 +81,8 @@ export default function Router() {
                     <Route path='/calendario' element={<Calendario />} />
                     <Route path='/student' element={<ViewStudent />} />
                     <Route path="/student/:studentId" element={<DetailStudent />} />
+                    <Route path='/questions' element={<Questions />} />
+                    <Route path='/videotutorial' element={<VideoTutorial />} />
                 </Route>
 
                 <Route element={<AuthLayout />}>
@@ -53,7 +91,9 @@ export default function Router() {
                     <Route path='/auth/forgot-password' element={<ForgotPassword />} />
                     <Route path='/auth/newpassword' element={<NewPassword />} />
                 </Route>
+
+                <Route path='*' element={<Error404 />} />
             </Routes>
         </BrowserRouter>
-    )
+    );
 }
