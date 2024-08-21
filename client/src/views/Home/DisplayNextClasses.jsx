@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import CardClass from './CardClass';
-import { useNavigate } from 'react-router-dom';
 
 const DisplayNextClasses = ({ classes, loading, error, refresh, buttonFunction }) => {
-  const navigate = useNavigate();
 
   if (loading) return <p className="text-center">Cargando Datos...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
@@ -67,7 +65,10 @@ const DisplayNextClasses = ({ classes, loading, error, refresh, buttonFunction }
           </div>
           <div className="flex flex-col gap-4">
             <h2 className="text-xl leading-6 font-semibold mb-2">Tu próxima clase</h2>
-            <CardClass thisclass={classes[1]}/>
+            <CardClass
+              thisclass={classes[1]}
+              buttonFunction={buttonFunction}
+              />
           </div>
         </div>
       )}

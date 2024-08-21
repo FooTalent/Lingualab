@@ -66,7 +66,7 @@ const CardClass = ({ thisclass, buttonFunction, deleteFunction }) => {
         </div>
         <button
           className="bg-Purple hover:bg-PurpleHover text-white px-4 py-2 rounded-lg font-extrabold ease-linear duration-150"
-          onClick={(e) => buttonFunction(thisclass._id)}
+          onClick={handleButton}
         >
           Ver clases
         </button>
