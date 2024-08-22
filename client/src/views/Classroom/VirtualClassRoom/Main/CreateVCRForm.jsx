@@ -120,7 +120,6 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
   };
 
   const onFormSubmit = async (data) => {
-    console.log(data)
     onSubmit({ ...data, first_class: programData.startDateTime });
   };
 
