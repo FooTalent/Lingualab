@@ -68,17 +68,11 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
   };
 
   const handleStudentChange = (studentId) => {
-    const selected = students.find(student => student._id === studentId)
-    setSelectedStudent(selected);
-  };
-
-  const handleAddStudent = () => {
-    if (selectedStudent && !programData.studentIds.includes(selectedStudent._id)) {
-      setProgramData({
-        ...programData,
-        studentIds: [...programData.studentIds, selectedStudent._id],
-      });
-      setSelectedStudent(null);
+    if (!programData.studentIds.includes(studentId)) {
+      setProgramData((prevData) => ({
+        ...prevData,
+        studentIds: [...prevData.studentIds, studentId],
+      }));
     }
   };
 
@@ -179,13 +173,6 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
               />
             </div>
             <div className='flex flex-row h-full gap-4 mt-10'>
-              <button
-                type="button"
-                onClick={handleAddStudent}
-                className="flex gap-4 text-xl font-extrabold text-black border border-Yellow px-4 py-3 rounded-lg bg-YellowDeselect "
-              >
-                +
-              </button>
               <button
                 type="button"
                 onClick={handleModalOpen}
