@@ -7,6 +7,7 @@ import TextEditor from '../../../../components/TextEditor/TextEditor';
 import BackButton from '../../../../components/BackButtom';
 import Resources from '../../../Resources/Resources';
 import IconSvg from '../../../../utils/SvgWrapper';
+import Spinner from '../../../../components/Spinner/Spinner';
 
 const VCRClassDetail = () => {
   const { eid } = useParams();
@@ -69,7 +70,7 @@ const VCRClassDetail = () => {
     navigate(-1);
   };
 
-  if (loading) return <p className="text-center text-gray-500">Cargando datos...</p>;
+  if (loading) return <Spinner />
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (

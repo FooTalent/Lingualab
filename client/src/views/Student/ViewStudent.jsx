@@ -10,6 +10,7 @@ import { format } from 'date-fns';
 import AddIcon from '@mui/icons-material/Add';
 import { removeAccents } from '../../utils/removeAccents';
 import NewStudent from "/ImagesStudent/AgregasteUnAlumno.png"
+import Spinner from "../../components/Spinner/Spinner"
 
 const ViewStudent = () => {
   const { user, userDetail } = useAppStore();
@@ -193,9 +194,7 @@ const ViewStudent = () => {
 
           <tbody className='border border-Purple rounded-xl shadow-customTable p-4 flex flex-col items-center'>
             {loading ? (
-              <tr>
-                <td colSpan="6" className="text-center py-4">Cargando...</td>
-              </tr>
+              <Spinner />
             ) : error ? (
               <tr>
                 <td colSpan="6" className="text-center py-4 text-red-500">
