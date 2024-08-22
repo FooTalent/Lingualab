@@ -5,6 +5,7 @@ import { crearURLCompleta } from '../../utils/urifoto';
 import { userUpdatePhoto } from '../../services/index';
 import EditIcon from '@mui/icons-material/Edit';
 import { RingLoader } from 'react-spinners';
+import Spinner from '../../components/Spinner/Spinner';
 
 const ProfilePicture = ({ photo, token, refreshProfile, botonFunction, isEditing }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -108,7 +109,7 @@ const ProfilePicture = ({ photo, token, refreshProfile, botonFunction, isEditing
 
         {isLoading && (
           <div className="flex justify-center items-center mt-4">
-            <RingLoader color="#6b21a8" size={60} />
+            <Spinner />
           </div>
         )}
       </Modal>
