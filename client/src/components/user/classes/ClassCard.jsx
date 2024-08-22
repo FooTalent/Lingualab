@@ -10,13 +10,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import dayjs from 'dayjs';
 import { getStudentsById } from '../../../services/students.services';
 import { useAppStore } from '../../../store/useAppStore';
+import Spinner from '../../Spinner/Spinner'
 
 export default function ClassCard({ id, title, students, duration, date, program, toggleOptions, stateOption, openModalDelete, openModalInvite }) {
     const { user } = useAppStore()
-    const [stringStudents, setStringStudents] = useState('-');
+    const [stringStudents, setStringStudents] = useState('-')
     const [isLoading, setIsLoading] = useState(false)
+    const [isLoadingNames, setIsLoadingNames] = useState(null)
     const links = [
-        { function: () => openModalInvite(id), label: <><PersonAddIcon /> Invitar estudiante/s:</>, disabled: false },
+        { function: () => openModalInvite(program._id), label: <><PersonAddIcon /> Invitar estudiante/s:</>, disabled: false },
         { path: `/aulavirtual/aula/${program._id}`, label: <><WatchLaterIcon /> Editar fecha y hora</>, disabled: false },
         { path: `/classroom/${id}`, label: <><ShareIcon /> Compartir</>, disabled: true },
         { function: () => openModalDelete(id), label: <><DeleteIcon /> Eliminar clase</>, disabled: false },
@@ -33,17 +35,22 @@ export default function ClassCard({ id, title, students, duration, date, program
     }, [students]);
 
     const handleStudents = async () => {
-        if (!students.length) return '-';
+        setIsLoadingNames(true)
+        if (students.length < 1) {
+            setStringStudents('-')
+        }
 
         let newStudents = []
         for (let student of students) {
-            let fetchUser = await getStudentsById(user.token, student);
+            let fetchUser = await getStudentsById(user.token, student._id);
             fetchUser.data.map(newStudent => {
                 newStudents.push(`${newStudent.last_name}, ${newStudent.first_name}`);
             })
         }
-
-        setStringStudents(newStudents)
+        if (newStudents.length > 0) {
+            setStringStudents(newStudents)
+        }
+        setIsLoadingNames(false)
     }
 
     const checkIsNow = () => {
@@ -72,7 +79,7 @@ export default function ClassCard({ id, title, students, duration, date, program
         e.stopPropagation();
     };
 
-    if (isLoading) return <p>Cargando...</p>
+    if (isLoading) return <Spinner />
 
     return (
         <>
@@ -82,7 +89,7 @@ export default function ClassCard({ id, title, students, duration, date, program
                     <div className='flex flex-col gap-2'>
                         <p className='flex py-1 gap-2 items-center truncate w-full whitespace-nowrap leading-4'>
                             <span className='font-semibold whitespace-normal'>Estudiante/s: </span>
-                            <span className='truncate'>{stringStudents}</span>
+                            <span className='truncate'>{isLoadingNames ? 'Cargando...' : stringStudents}</span>
                         </p>
                         <p className='flex py-1 gap-2 whitespace-nowrap items-center truncate leading-4'>
                             <span className='font-semibold'>Fecha de inicio: </span>
@@ -94,7 +101,6 @@ export default function ClassCard({ id, title, students, duration, date, program
                         </p>
                     </div>
                 </div>
-
                 <div className='flex flex-col justify-between items-end w-fit'>
                     <button
                         id={`button-Options-${id}`}
@@ -113,7 +119,6 @@ export default function ClassCard({ id, title, students, duration, date, program
                         {isNow ? <><VideocamIcon />Unirse</> : 'Ir al aula'}
                     </Link>
                 </div>
-
                 {stateOption === id && <Options state={stateOption} id={id} links={links} positionTop={'27%'} />}
             </div>
 
