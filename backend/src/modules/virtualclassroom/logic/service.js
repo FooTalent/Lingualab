@@ -14,7 +14,7 @@ export default class CustomService {
     this.daoEvent = new Event();
   }
 
-  createProgram = async (templateId, studentIds, user, isTemplate = false ) => {
+  createProgram = async (title, templateId, studentIds, user, isTemplate = false ) => {
     // NOTA
     // isTemplate = true = duplica programa
     // isTemplate = false = crea un aula en base a un programa
@@ -31,7 +31,7 @@ export default class CustomService {
 
     // 2 - preparo datos programa (o los creo vacios)
     const dataNewProgram = {
-      title: templateId ? templateProgram.title : "Sin titulo",
+      title: title ? title : templateProgram.title,
       description: templateId ? templateProgram.description : "",
       teacher: user._id,
       language: templateId ? templateProgram.language : "Inglés",
@@ -153,16 +153,22 @@ export default class CustomService {
     }
   }
 
-  createCustomProgram = async (templateId, studentIds, first_class, daysOfWeek, user ) => {
+  createCustomProgram = async (title, templateId, studentIds, first_class, daysOfWeek, user ) => {
 
     // crea aula
-    const newProgram = await this.createProgram(
+    let newProgram = await this.createProgram(
+      title,
       templateId,
       studentIds,
       user,
       false,
       { first_class, daysOfWeek }
     );
+
+    // Actualizar las clases con la nueva fecha y hora de inicio
+    if (first_class && daysOfWeek) {
+      newProgram = await this.update(newProgram._id, { first_class, daysOfWeek})
+    }
 
     return newProgram;
   }
