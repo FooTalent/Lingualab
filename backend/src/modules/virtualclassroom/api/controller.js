@@ -178,7 +178,7 @@ export default class Controller {
         await this.service.addStudentToClassRoom(newStudent._id, clasroomId)
       }
       
-      res.sendCreated({}, "Invitacion exitoso")
+      res.sendCreated({_id: newStudent._id}, "Invitacion exitoso")
     } catch(error) {
       next(error)
     }
