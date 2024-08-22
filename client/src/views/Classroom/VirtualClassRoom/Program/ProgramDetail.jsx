@@ -14,6 +14,7 @@ import CreatedClass from '../Class/CreatedClass'
 import logo from '/CreasteUnaClase.png';
 import popUp from '/Popup_EliminarClase.png'
 import EditClassForm from './EditClassForm';
+import Spinner from '../../../../components/Spinner/Spinner'
 
 const ProgramDetail = () => {
   const { eid } = useParams();
@@ -125,7 +126,7 @@ const ProgramDetail = () => {
     navigate(`/aulavirtual/clase/${classId}`);
   };
 
-  if (loading) return <p className="text-center">Cargando datos...</p>;
+  if (loading) return <Spinner />
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (

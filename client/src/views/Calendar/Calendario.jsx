@@ -13,6 +13,7 @@ import Modal from '../../components/Modal';
 import AddStudentForm from '../../components/AddStudentForm';
 import { inviteStudent } from '../../services/students.services';
 import NewStudent from '/ImagesStudent/AgregasteUnAlumno.png'
+import Spinner from '../../components/Spinner/Spinner';
 
 dayjs.locale('es');
 const localizer = dayjsLocalizer(dayjs);
@@ -131,7 +132,7 @@ export default function Calendario() {
         }
     };
 
-    if (isLoading) return <p>Cargando...</p>
+    if (isLoading) return <Spinner />
 
     return (
         <>

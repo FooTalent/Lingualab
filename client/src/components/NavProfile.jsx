@@ -21,7 +21,7 @@ const NavProfile = () => {
 
     return (
         <div className='relative flex justify-end items-center gap-3 h-12'>
-            <NotificationsIcon className='w-6 h-6 cursor-pointer text-white' />
+            <NotificationsIcon className='w-6 h-6 text-white opacity-50 cursor-not-allowed' />
             <div className='flex flex-row justify-center items-center text-white'>
                 {userDetail?.photo ? (
                     <img className='flex justify-center items-center font-bold rounded-full w-8 h-8'
