@@ -19,12 +19,18 @@ export default class Controller {
   }
   create = async (req, res, next) => {
     try {
-      let { templateId, studentIds, first_class, daysOfWeek,} = req.body;
+      let { title, templateId, studentIds, first_class, daysOfWeek} = req.body;
 
       if (first_class) { first_class = toUTC(first_class); }
-      console.log("Controller studentIds: ",studentIds);
 
-      const newProgram = await this.service.createCustomProgram(templateId, studentIds, first_class, daysOfWeek, req.user);
+      const newProgram = await this.service.createCustomProgram(
+        title,
+        templateId,
+        studentIds,
+        first_class,
+        daysOfWeek,
+        req.user
+      );
       res.sendSuccess(newProgram)
     } catch (error) {
       next(error);
