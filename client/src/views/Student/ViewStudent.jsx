@@ -138,7 +138,7 @@ const ViewStudent = () => {
           <button
             // onClick={handleShowGrades}
             className={`lg:w-[144px] border-2 px-1 lg:px-4 py-3 rounded-lg leading-5 tracking-wide truncate
-              opacity-50 !cursor-not-allowed border-Yellow bg-YellowDeselect text-black`}
+              opacity-50 !cursor-not-allowed border-card bg-card bg-opacity-50 text-black`}
           // ${!showInfo
           //   ? 'border-Yellow bg-Yellow font-extrabold'
           //   : 'border-Yellow text-black bg-YellowDeselect'
