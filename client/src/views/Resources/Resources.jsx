@@ -34,6 +34,7 @@ export default function Resources({ onSelect, selected }) {
   const [resourceCreated, setResourceCreated] = useState(false)
   const [idCard, setIdCard] = useState('')
   const [editModal, setEditModal] = useState(false)
+  const [modalSize, setModalSize] = useState({});
 
   // Elementos usado para las classes + onSelect
   const [selectedResources, setSelectedResources] = useState([]);
@@ -81,6 +82,29 @@ export default function Resources({ onSelect, selected }) {
 
     fetchSelectedResources();
   }, [selected]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      let size = {};
+
+      if (window.innerWidth >= 1024) {
+        size = { add: 'medium', created: 'small', deleted: 'xsmall' };
+      } else if (window.innerWidth >= 768) {
+        size = { add: 'full', created: 'small', deleted: 'small' };
+      } else {
+        size = { add: 'full', created: 'medium' };
+      }
+
+      setModalSize(size);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   // Funciones para crear un nuevo recurso
   const handleCreateResource = async () => {
@@ -270,51 +294,48 @@ export default function Resources({ onSelect, selected }) {
                     )
                 )
               }
-              <Modal title={"Edita un Recurso"} onClose={() => setEditModal(false)} isOpen={editModal}>
+              <Modal title={"Edita un Recurso"} onClose={() => setEditModal(false)} isOpen={editModal} modalSize={modalSize.add}>
                 <ResourceForm
                   onSubmit={handleSubmitEdit}
                   onCancel={() => setEditModal(false)}
                   data={resources.find(r => r._id === idCard)} />
               </Modal>
-              <Modal title={"Crea un nuevo Recurso"} onClose={(() => setModalStatus(false))} isOpen={modalStatus}>
+
+              <Modal title={"Crea un nuevo Recurso"} onClose={(() => setModalStatus(false))} isOpen={modalStatus} modalSize={modalSize.add}>
                 <ResourceForm
                   onSubmit={handleSubmitCreate}
                   onCancel={() => setModalStatus(false)} />
               </Modal>
-              <Modal isOpen={deleteModal} modalSize={"small"}>
+
+              <Modal isOpen={deleteModal} modalSize={modalSize.created}>
                 <div className="flex justify-center">
                   <img src={imgEliminarRecurso} alt="quieres eliminar un recurso?" />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col xl:grid grid-cols-2 gap-4">
                   <ButtonModal buttonAction={() => setDeleteModal(false)} type='prev' label={'Cancelar'} />
                   <ButtonModal buttonAction={handleConfirmDelete} type={'next'} label={'Eliminar Recurso'} />
                 </div>
               </Modal>
-              <Modal isOpen={resourceCreated} modalSize={"xsmall"}>
+
+              <Modal isOpen={resourceCreated} modalSize={modalSize.deleted}>
                 <div className="flex justify-center">
                   <img src={AgregasteRecurso} alt="Agregaste un recurso" />
                 </div>
               </Modal>
-              <Modal isOpen={itemDeleted} modalSize={"xsmall"}>
+
+              <Modal isOpen={itemDeleted} modalSize={modalSize.deleted}>
                 <div className="flex justify-center">
                   <img src={RecursoEliminado} alt="Recurso eliminado" />
                 </div>
               </Modal>
-              <Modal isOpen={itemEdited} modalSize={"xsmall"}>
+
+              <Modal isOpen={itemEdited} modalSize={modalSize.deleted}>
                 <div className="flex justify-center">
                   <img src={GuardadoExistosamente} alt="Guardado exitosamente" />
                 </div>
               </Modal>
             </div>
           </div>
-
-          {/* <aside>
-            <div className="flex flex-col gap-8">
-            </div>
-          </aside>
-
-          <div className={`flex flex-col ${onSelect ? 'gap-8' : 'gap-14'} justify-between`}>
-          </div> */}
         </section>
       </div>
     </div>
