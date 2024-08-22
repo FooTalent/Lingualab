@@ -1,4 +1,4 @@
-import configEnv, { googleEnv } from "../../../config/env.js";
+import configEnv from "../../../config/env.js";
 import CustomService from "../../../libraries/customs/service.js";
 import createToken from "./createToken.js";
 import { createHashAsync, isValidPasswordAsync } from "./passwords.js";
@@ -6,13 +6,14 @@ import ThisDaoMongo from "../data/dao.mongo.js";
 import { sendMail } from "../../../libraries/emails/sendMail.js";
 import generateRandomPassword from "../../../libraries/utils/generateRandomPassword.js";
 import AppError from "../../../config/AppError.js";
-
+import ProgramsDao from "../../programs/data/dao.mongo.js"
 
 export default class Service extends CustomService {
   constructor() {
     super(new ThisDaoMongo);
     this.admins = configEnv.uadmins || []
     this.admin_pass = configEnv.uadmin_pass
+    this.daoProgram = new ProgramsDao()
   }
 
   get = async (filter, excludePassword = true )  => await this.dao.get   (filter, excludePassword)
@@ -107,20 +108,5 @@ export default class Service extends CustomService {
   // ACTUALIZACION DE IMAGEN
   updatePhoto = async (uid, path) => {
     return await this.dao.update({_id: uid}, {photo: path})
-  }
-
-  // STUDENTS
-  inviteStudent = async (user, newStudent, password ) => {
-    const to = newStudent.email
-    const subject  = `Datos de acceso a Lingualab de parte del profesor ${user.last_name}`
-    const template = 'invitation'
-    const context = {
-      profesorNombre: user.first_name,
-      profesorApellido: user.last_name,
-      usuario: newStudent.email,
-      contrasena: password,
-      accesoURL: configEnv.cors_origin
-    }
-    return sendMail( to, subject, template, context)
   }
 }
