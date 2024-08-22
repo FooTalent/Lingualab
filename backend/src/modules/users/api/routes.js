@@ -31,7 +31,6 @@ router
 .get    ('/students/', handleAuth(clients), controller.getStudent)
 .get    ('/students/:sid', handleAuth(clients), controller.getStudentbyId)
 .put    ('/students/:sid', handleAuth(clients), controller.updateStudent)
-.post   ('/inviteStudent', handleAuth(clients), controller.inviteStudent)
 
 // Admins
 .get('/', handleAuth(['ADMIN']), controller.get)

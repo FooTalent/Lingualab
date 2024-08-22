@@ -12,20 +12,21 @@ export default class ThisDaoMongo extends DaoMongo {
     .limit(options.limit || 0)
     .populate({
       path: 'program',
-      select: 'title teacher students',
-      populate: {
-        path: 'students',
-        select: 'first_name last_name',  
-        options: { maxDepth: 1 } 
-      },
-      populate: {
-        path: 'teacher',
-        select: '_id first_name last_name',  
-        options: { maxDepth: 1 } 
-      },
+      select: 'title teacher students duration_hours',
+      populate: [
+        {
+          path: 'students',
+          select: '_id first_name last_name',
+          options: { maxDepth: 1 }
+        },
+        {
+          path: 'teacher',
+          select: '_id first_name last_name',
+          options: { maxDepth: 1 }
+        }
+      ],
       options: { maxDepth: 1 }
     })
-    .select('-students.password');
     return result;
   }
 

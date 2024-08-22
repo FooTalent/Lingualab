@@ -103,4 +103,22 @@ export default class Service extends CustomService {
       throw error
     }
   }
+
+  countPrograms = async (teacherId, isTemplate) => this.dao.countPrograms(teacherId, isTemplate)
+
+  hourlyLoad = async (teacherId) => {
+    const programs = await this.dao.get({teacher: teacherId, isTemplate: false});
+  
+
+    let totalHoras = 0;
+
+    for (const program of programs) {
+      const numClases = program.classes.length;
+      const durationProgram = program.duration_hours || 0;
+      const hourlyLoadProgram = durationProgram * numClases;
+      totalHoras += hourlyLoadProgram;
+    }
+    
+    return totalHoras;
+  }
 }

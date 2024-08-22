@@ -1,77 +1,57 @@
-import React, { useState } from 'react';
-import { LEVELS, LEVELS_MAP } from '../../../../utils/valueLists';
+import { useForm } from 'react-hook-form';
+import ErrorMessage from '../../../../components/ErrorMessage';
 
 const CreateClassForm = ({ programData, onSubmit, onClose }) => {
-  const [classroomData, setClassroomData] = useState({
-    duration_hours: 1,
-    teacher: programData.teacher._id,
-    language: programData.language,
-    level: programData.level,
-    program: programData._id
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    mode: "onChange",
+    defaultValues: {
+      teacher: programData.teacher._id,
+      language: programData.language,
+      level: programData.level,
+      program: programData._id,
+      title: '',
+      description: ''
+    }
   });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setClassroomData({
-      ...classroomData,
-      isTemplate: false,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(classroomData);
+  const onFormSubmit = (data) => {
+    onSubmit(data);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onFormSubmit)}>
       <div className="mb-4">
         <label className="block text-gray-700">Título</label>
         <input
+          id='title'
           type="text"
-          name="title"
-          value={classroomData.title}
-          onChange={handleInputChange}
-          className="w-full p-2 border rounded-md"
+          {...register("title", { required: "Este campo es obligatorio" })}
+          className={`w-full p-2 border rounded-md ${errors.title ? 'border-red-500' : ''}`}
         />
+        {errors.title && (
+          <ErrorMessage>{errors.title.message}</ErrorMessage>
+        )}
       </div>
+
       <div className="mb-4">
         <label className="block text-gray-700">Descripción</label>
         <input
+          id='description'
           type="text"
-          name="description"
-          value={classroomData.description}
-          onChange={handleInputChange}
-          className="w-full p-2 border rounded-md"
+          {...register("description", {
+            required: "Este campo es obligatorio",
+            minLength: {
+              value: 10,
+              message: "La descripción debe tener al menos 10 caracteres"
+            }
+          })}
+          className={`w-full p-2 border rounded-md ${errors.description ? 'border-red-500' : ''}`}
         />
+        {errors.description && (
+          <ErrorMessage>{errors.description.message}</ErrorMessage>
+        )}
       </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">Nivel</label>
-        <select
-          name="level"
-          value={classroomData.level}
-          onChange={handleInputChange}
-          className="w-full p-2 border rounded-md"
-          style={{ color: LEVELS_MAP[classroomData.level] }}
-        >
-          {LEVELS.map((level, i) => (
-            <option key={i} value={level.data} style={{ color: level.color }}>
-              {level.data}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">Duración (horas)</label>
-        <input
-          type="number"
-          name="duration_hours"
-          value={classroomData.duration_hours}
-          onChange={handleInputChange}
-          className="w-full p-2 border rounded-md"
-        />
-      </div>
+
       <div className="flex justify-end">
         <button
           type="button"

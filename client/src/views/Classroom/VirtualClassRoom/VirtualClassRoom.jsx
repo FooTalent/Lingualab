@@ -10,9 +10,11 @@ import CreateVCRForm from './Main/CreateVCRForm';
 import logo from '/ImagesVCR/CreasteUnAula.png';
 import ProgramCard from './Main/ProgramCard';
 import sinAulas from '/ImagesVCR/NoHayAulas.png'
+import { removeAccents } from '../../../utils/removeAccents';
 
 const VirtualClassRoom = () => {
   const [programs, setPrograms] = useState([]);
+  const [allPrograms, setAllPrograms] = useState([])
   const [loading, setLoading] = useState(true);
   const [refresh, setRefresh] = useState(false);
   const [error, setError] = useState(null);
@@ -32,6 +34,7 @@ const VirtualClassRoom = () => {
             throw new Error(response.message);
           }
           setPrograms(response.data);
+          setAllPrograms(response.data);
         } catch (error) {
           console.error('Error al cargar las aulas virtuales', error);
           setError(error.message);
@@ -47,6 +50,7 @@ const VirtualClassRoom = () => {
   }, [user, userDetail, refresh]);
 
   const handleCreateProgram = async (programData) => {
+    console.log(programData)
     try {
       const newProgram = await createVCRoom(user.token, userDetail._id, programData);
       setNewProgramId(newProgram.data._id);
@@ -71,9 +75,24 @@ const VirtualClassRoom = () => {
     setRefresh(prevRefresh => !prevRefresh);
   };
 
+  const handleSearchVCR = (term) => {
+    if (!term){
+      setRefresh(prevRefresh => !prevRefresh)
+    }
+    const filteredVCR = allPrograms.filter(program => {
+      const normalizedTitle = removeAccents(program.title.toLowerCase()) 
+      return normalizedTitle.includes(term.toLowerCase())
+    })
+    setPrograms(filteredVCR)
+  }
+
   return (
     <div className="container mx-auto flex flex-col gap-11">
-      <NavWorkSpace setModal={setIsModalOpen} buttonDescription={"Crear Aula"} route={'aulavirtual'} />
+      <NavWorkSpace 
+        setModal={setIsModalOpen} 
+        buttonDescription={"Crear Aula"} 
+        route={'aulavirtual'}
+        onSearch={handleSearchVCR} />
 
       {loading ? (
         <p className="text-center">Cargando Datos...</p>

@@ -12,7 +12,10 @@ router
 .post   ("/",     handleAuth(users), controller.create)
 .put    ("/:eid", handleAuth(users), controller.updateId)
 .delete ("/:eid", handleAuth(users), controller.deleteId)
-.get    ("/calendar/next-clases", handleAuth(users), controller.getNextClasses)
 .get    ("/calendar/get",     handleAuth(users), controller.getClassCalendar)
+.get    ("/calendar/next-clases", handleAuth(users), controller.getNextClasses)
+
+// ! ERROR PENDIENTE QUE NO SE LLEGA A REVISAR: next-clases solo toma clases siguientes y actual (solo si dura 1 hora)
+/* No se resuelve porque habria que modificar la logica de las aulas / clases y no da el tiempo */
 
 export default router

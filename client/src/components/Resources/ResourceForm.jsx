@@ -1,88 +1,73 @@
-import { useEffect, useState } from "react"
-import { LEVELS_MAP, RESOURCE_TYPES } from "../../utils/valueLists"
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { LEVELS_MAP, RESOURCE_TYPES } from "../../utils/valueLists";
 import { getLanguages } from "../../services";
+import ErrorMessage from "../ErrorMessage";
 
 export default function CreateResourceForm({ onSubmit, onCancel, data }) {
     const [languageOptions, setLanguageOptions] = useState([]);
-    const [formData, setFormData] = useState({
-        title: '',
-        type: '',
-        level: '',
-        language: '',
-        url: '',
-        description: ''
-    })
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm({
+        mode: "onChange",
+        defaultValues: {
+            title: '',
+            type: '',
+            level: '',
+            language: '',
+            url: '',
+            description: ''
+        }
+    });
 
     useEffect(() => {
         const fetchValues = async () => {
-        try {
-            const languages = await getLanguages();
-            setLanguageOptions(languages.map(language => ({ value: language, label: language })));
-            if(!data){
-                setFormData(prev => ({...prev, language: languages[0]?.value || ''}))
+            try {
+                const languages = await getLanguages();
+                setLanguageOptions(languages.map(language => ({ value: language, label: language })));
+                if (!data) {
+                    setValue("language", languages[0]?.value || '');
+                }
+            } catch (error) {
+                console.error('Error fetching languages:', error);
             }
-        } catch (error) {
-            console.error('Error fetching languages:', error);
-        }
-    };
+        };
 
-    fetchValues();
-    }, [data]);
+        fetchValues();
+    }, [data, setValue]);
 
     useEffect(() => {
         if (data && languageOptions.length > 0) {
-            setFormData({
-                title: data.title || '',
-                type: data.type || '',
-                level: data.level || '',
-                language: data.language || '',
-                url: data.url || '',
-                description: data.description || ''
-            })
+            setValue("title", data.title || '');
+            setValue("type", data.type || '');
+            setValue("level", data.level || '');
+            setValue("language", data.language || '');
+            setValue("url", data.url || '');
+            setValue("description", data.description || '');
         }
-    }, [data, languageOptions])
+    }, [data, languageOptions, setValue]);
 
-    const levelsArr = Object.keys(LEVELS_MAP)
+    const levelsArr = Object.keys(LEVELS_MAP);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value
-        }))
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleFormSubmit = (formData) => {
         if (data) {
-            onSubmit(data._id, formData)
+            onSubmit(data._id, formData);
         } else {
-            onSubmit(formData)
+            onSubmit(formData);
         }
-    }
+    };
 
     return (
         <div>
             <form
-                onSubmit={handleSubmit}
-                className="flex flex-col gap-6"
+                onSubmit={handleSubmit(handleFormSubmit)}
+                className="flex flex-col gap-2"
             >
                 <div className="grid grid-cols-3 gap-4">
-                    <div className="flex flex-col gap-4">
-                        <label
-                            htmlFor="language"
-                            className="text-lg leading-5 p-0"
-                        >
-                            Idioma:
-                        </label>
-
+                    <div className="flex flex-col gap-2">
+                        <label htmlFor="language" className="text-lg leading-5 p-0">Idioma:</label>
                         <select
                             id="language"
-                            name="language"
-                            value={formData.language}
-                            onChange={handleChange}
-                            className={`border ${formData.language ? 'border-card text-card' : 'border-Grey'} hover:border-card focus:border-card text-Grey rounded-lg py-3 px-4 ease-out duration-600 focus:outline-none`}
-                            required
+                            {...register("language", { required: "Este campo es obligatorio" })}
+                            className={`border ${errors.language ? 'border-red-500 text-red-500' : 'border-card text-card'} hover:border-card focus:border-card rounded-lg py-3 px-4 ease-out duration-600 focus:outline-none`}
                         >
                             <option value="" disabled>Seleccionar el idioma</option>
                             {
@@ -91,17 +76,17 @@ export default function CreateResourceForm({ onSubmit, onCancel, data }) {
                                 ))
                             }
                         </select>
+                        {errors.language && (
+                            <ErrorMessage>{errors.language.message}</ErrorMessage>
+                        )}
                     </div>
 
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-2">
                         <label htmlFor="level" className="text-lg leading-5 p-0">Nivel:</label>
                         <select
                             id="level"
-                            name="level"
-                            value={formData.level}
-                            onChange={handleChange}
-                            className={`border ${formData.type ? 'border-card text-card' : 'border-Grey'} hover:border-card focus:border-card text-Grey rounded-lg py-3 px-4 ease-out duration-600 focus:outline-none`}
-                            required
+                            {...register("level", { required: "Este campo es obligatorio" })}
+                            className={`border ${errors.level ? 'border-red-500 text-red-500' : 'border-card text-card'} hover:border-card focus:border-card rounded-lg py-3 px-4 ease-out duration-600 focus:outline-none`}
                         >
                             <option value="" disabled>Seleccionar el nivel</option>
                             {
@@ -110,17 +95,17 @@ export default function CreateResourceForm({ onSubmit, onCancel, data }) {
                                 ))
                             }
                         </select>
+                        {errors.level && (
+                            <ErrorMessage>{errors.level.message}</ErrorMessage>
+                        )}
                     </div>
 
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-2">
                         <label htmlFor="type" className="text-lg leading-5 p-0">Recurso:</label>
                         <select
                             id="type"
-                            name="type"
-                            value={formData.type}
-                            onChange={handleChange}
-                            className={`border ${formData.type ? 'border-card text-card' : 'border-Grey'} hover:border-card focus:border-card text-Grey rounded-lg py-3 px-4 ease-out duration-600 focus:outline-none`}
-                            required
+                            {...register("type", { required: "Este campo es obligatorio" })}
+                            className={`border ${errors.type ? 'border-red-500 text-red-500' : 'border-card text-card'} hover:border-card focus:border-card rounded-lg py-3 px-4 ease-out duration-600 focus:outline-none`}
                         >
                             <option value="" disabled>Seleccionar el recurso</option>
                             {
@@ -129,47 +114,51 @@ export default function CreateResourceForm({ onSubmit, onCancel, data }) {
                                 ))
                             }
                         </select>
+                        {errors.type && (
+                            <ErrorMessage>{errors.type.message}</ErrorMessage>
+                        )}
                     </div>
                 </div>
 
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
                     <label htmlFor="title" className="text-lg leading-5 p-0">Nombre del recurso:</label>
                     <input
                         type="text"
                         id="title"
-                        name="title"
-                        value={formData.title}
-                        onChange={handleChange}
+                        {...register("title", { required: "Este campo es obligatorio" })}
                         placeholder="Escribe el nombre del recurso..."
-                        className={`border ${formData.title ? 'border-card text-card' : 'border-Grey'} hover:border-card focus:border-card text-Grey rounded-lg py-3 px-4 ease-out duration-600 focus:outline-none`}
-                        required
+                        className={`border ${errors.title ? 'border-red-500 text-red-500' : 'border-card text-card'} hover:border-card focus:border-card rounded-lg py-3 px-4 ease-out duration-600 focus:outline-none`}
                     />
+                    {errors.title && (
+                        <ErrorMessage>{errors.title.message}</ErrorMessage>
+                    )}
                 </div>
 
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
                     <label htmlFor="url" className="text-lg leading-5 p-0">Link del Recurso:</label>
                     <input
                         type="url"
                         id="url"
-                        name="url"
-                        value={formData.url}
-                        onChange={handleChange}
+                        {...register("url", { required: "Este campo es obligatorio", pattern: { value: /^(https?:\/\/)?([\w\-]+)+([\w\-]*)+(\.\w{2,})+(:[0-9]+)?(\/[\w\-._~:/?#[\]@!$&'()*+,;=]*)?$/, message: "URL no válida" } })}
                         placeholder="https://..."
-                        className={`border ${formData.url ? 'border-card text-card' : 'border-Grey'} hover:border-card focus:border-card text-Grey rounded-lg py-3 px-4 ease-out duration-600 focus:outline-none`}
-                        required
+                        className={`border ${errors.url ? 'border-red-500 text-red-500' : 'border-card text-card'} hover:border-card focus:border-card rounded-lg py-3 px-4 ease-out duration-600 focus:outline-none`}
                     />
+                    {errors.url && (
+                        <ErrorMessage>{errors.url.message}</ErrorMessage>
+                    )}
                 </div>
 
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
                     <label htmlFor="description" className="text-lg leading-5 p-0">Observaciones:</label>
                     <textarea
                         id="description"
-                        name="description"
-                        value={formData.description}
-                        onChange={handleChange}
-                        className={`border h-[90px] ${formData.description ? 'border-card text-card' : 'border-Grey'} hover:border-card focus:border-card text-Grey rounded-lg py-3 px-4 ease-out duration-600 focus:outline-none`}
+                        {...register("description", { required: "Este campo es obligatorio" })}
+                        className={`border h-[90px] ${errors.description ? 'border-red-500 text-red-500' : 'border-card text-card'} hover:border-card focus:border-card rounded-lg py-3 px-4 ease-out duration-600 focus:outline-none`}
                         placeholder="Incluya comentarios adicionales sobre cómo utilizar este recurso."
                     />
+                    {errors.description && (
+                        <ErrorMessage>{errors.description.message}</ErrorMessage>
+                    )}
                 </div>
 
                 <div className="grid grid-cols-2 gap-6">
@@ -177,13 +166,13 @@ export default function CreateResourceForm({ onSubmit, onCancel, data }) {
                         type="button"
                         onClick={onCancel}
                         className={`outline-none border rounded-lg py-3 px-8 text-xl font-extrabold ease-out duration-600 tracking-wide border-Purple text-Purple hover:bg-Purple hover:text-white hover:border-PurpleHover focus:border-PurpleHover`}
-                        >
+                    >
                         Cancelar
                     </button>
                     <button
                         type="submit"
                         className={`outline-none border rounded-lg py-3 px-8 text-xl font-extrabold ease-out duration-600 tracking-wide border-Purple bg-Purple text-white hover:border-PurpleHover hover:bg-PurpleHover focus:border-PurpleHover`}
-                        >
+                    >
                         {data ? 'Guardar edición' : 'Agregar Recurso'}
                     </button>
                 </div>

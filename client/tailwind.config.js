@@ -25,9 +25,12 @@ export default {
         inputBg: '#F9F9F9',
         darkGray: '#444444',
         tableHead: '#1B1B1B',
+        redError: '#D33013',
+        inputFile: '#E5E5E5',
       },
       backgroundImage: {
-        'fondo': "url('/fondoLogin.jpg')"
+        'fondo': "url('/fondoLogin.jpg')",
+        'fondoLanding': "url('/ImagesLanding/FondoLandingPrincipal.png')"
       },
       boxShadow: {
         custom: '0px 0px 20px 2px #00000033',
@@ -36,6 +39,7 @@ export default {
         modal: '0px 0px 12px 0px #00000080',
         home: '0px 0px 4px 1px #00000033',
         customTable: '0px 0px 4px 1px #00000026',
+        questions: '0px 0px 12px 2px #00000026',
       },
       fontSize: {
         customTitle: '28px',

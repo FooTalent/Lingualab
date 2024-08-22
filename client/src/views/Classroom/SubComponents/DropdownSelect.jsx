@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import AddIcon from '@mui/icons-material/Add';
+import ErrorMessage from '../../../components/ErrorMessage';
 
-export default function DropdownSelect({ label, icon, options, selectedOption, onSelect }) {
+export default function DropdownSelect({ name, label, icon, options, selectedOption, onSelect, errors, register, setValue, clearErrors }) {
   const [isOpen, setIsOpen] = useState(false);
-
   const isObjectArray = options.length > 0 && typeof options[0] === 'object';
 
   const handleSelect = (value) => {
     onSelect(value);
+    setValue(name, value);
+    clearErrors(name);
     setIsOpen(false);
   };
 
@@ -48,17 +50,18 @@ export default function DropdownSelect({ label, icon, options, selectedOption, o
           )}
         </div>
 
-        {
-          icon
-            ? <button
-              className={`flex items-center gap-4 bg-card hover:bg-Yellow font-extrabold text-Yellow hover:text-card border-2 border-card hover:border-Yellow rounded-lg py-3 px-4 ease-linear duration-150`}
-            >
-              <AddIcon />
-            </button>
-            : <></>
-        }
+        {icon && (
+          <button
+            className={`flex items-center gap-4 bg-card hover:bg-Yellow font-extrabold text-Yellow hover:text-card border-2 border-card hover:border-Yellow rounded-lg py-3 px-4 ease-linear duration-150`}
+          >
+            <AddIcon />
+          </button>
+        )}
       </div>
 
-    </div >
+      {errors[name] && (
+        <ErrorMessage>{errors[name].message}</ErrorMessage>
+      )}
+    </div>
   );
 }

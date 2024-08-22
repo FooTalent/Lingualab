@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { crearURLCompleta } from '../utils/urifoto';
 
 const NavProfile = () => {
-    const { loguot, userDetail } = useAppStore()
+    const { logout, userDetail } = useAppStore()
     const [menuOpen, setMenuOpen] = useState(false);
 
     const handleMenuToggle = () => {
@@ -47,7 +47,7 @@ const NavProfile = () => {
                             </li>
                             <li>
                                 <button
-                                    onClick={() => loguot()}
+                                    onClick={() => logout()}
                                     className='buttonNavProf'
                                 >
                                     Cerrar sesión

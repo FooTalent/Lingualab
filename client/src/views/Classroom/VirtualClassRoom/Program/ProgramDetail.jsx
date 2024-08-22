@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAppStore } from '../../../../store/useAppStore';
-import { createClass, deleteClass, getProgramById, updateProgram } from '../../../../services/programs.services';
+import { createClass, deleteClass, getProgramById, updateClass, updateProgram } from '../../../../services/programs.services';
 import Modal from '../../../../components/Modal';
 import CreateClassForm from './CreateClassForm';
 import ClassroomCard from './ClassroomCard';
@@ -13,26 +13,33 @@ import EditVCRForm from './EditVCRForm';
 import CreatedClass from '../Class/CreatedClass'
 import logo from '/CreasteUnaClase.png';
 import popUp from '/Popup_EliminarClase.png'
+import EditClassForm from './EditClassForm';
 
 const ProgramDetail = () => {
   const { eid } = useParams();
   const { user } = useAppStore();
+  const location = useLocation();
   const navigate = useNavigate();
   const [refresh, setRefresh] = useState(true);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-    // Edit Program
+  // Edit Program
   const [program, setProgram] = useState(null);
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   // Create Class
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isCreated, setIsCreated] = useState(false);
+  const [isCreateClassModalOpen, setIsCreateClassModalOpen] = useState(false);
+  const [isCreatedClass, setIsCreatedClass] = useState(false);
   const [newClassId, setNewClassId] = useState(null);
-    // Delete Class
-    const [idClass, setIdClass] = useState(false);
-    const [deleteModal, setDeleteModal] = useState(false);
+  // Edit Class
+  const [isEditClassModalsOpen, setIsEditClassModalsOpen] = useState(false);
+  const [editClass, setEditClass] = useState(null);
+  const [isEditClass, setIsEditClass] = useState(false);
+  // Delete Class
+  const [idDeleteClass, setIdDeleteClass] = useState(false);
+  const [deleteClassModal, setDeleteClassModal] = useState(false);
 
+  // Load data
   useEffect(() => {
     if (user && user.token) {
       const fetchProgram = async () => {
@@ -54,6 +61,14 @@ const ProgramDetail = () => {
     }
   }, [user, eid, refresh]);
 
+  useEffect(() => {
+    if (location.state === 'edit') {
+      setIsModalEditOpen(true);
+      navigate(location.pathname, { replace: true });
+    }
+  }, [location]);
+
+  // Functions
   const handleEditProgram = async (newProgram) => {
     try {
       await updateProgram(user.token, eid, newProgram);
@@ -70,26 +85,43 @@ const ProgramDetail = () => {
       const newClass = await createClass(user.token, classData);
       setNewClassId(newClass.data._id)
       setRefresh(!refresh);
-      setIsModalOpen(false);
-      setIsCreated(true);
+      setIsCreateClassModalOpen(false);
+      setIsCreatedClass(true);
     } catch (error) {
       console.error('Error al crear la clase', error);
       setError(error.message);
     }
   };
 
+  const handleShowEditClass = (editClassId) => {
+    const classToEdit = program.classes.find(cls => cls._id === editClassId)
+    setEditClass(classToEdit)
+    if (editClass) setIsEditClassModalsOpen(true);
+  };
+
+  const handleEditClass = async (classId, classData) => {
+    try {
+      setIsEditClassModalsOpen(false);
+      await updateClass(user.token, classId, classData);
+      setRefresh(!refresh);
+    } catch (error) {
+      console.error('Error al actualizar la clase', error);
+      setError(error.message);
+    }
+  };
+
   const handleDeleteClass = (id) => {
-    setIdClass(id)
-    setDeleteModal(true)
+    setIdDeleteClass(id)
+    setDeleteClassModal(true)
   }
 
   const handleConfirmDelete = async () => {
-    await deleteClass(user.token, idClass)
-    setDeleteModal(false)
+    await deleteClass(user.token, idDeleteClass)
+    setDeleteClassModal(false)
     setRefresh(prevRefresh => !prevRefresh)
   }
 
-  const handleEditClass = (classId) => {
+  const handleEditContentClass = (classId) => {
     navigate(`/aulavirtual/clase/${classId}`);
   };
 
@@ -101,8 +133,8 @@ const ProgramDetail = () => {
       <div className='flex flex-row justify-between items-center mb-4'>
         <BackButton />
         <div className="flex items-center">
-          <span className="text-white px-2 py-1 rounded mr-2" style={{backgroundColor: LEVELS_MAP[program.level]}}>{program.level}</span>
-          <h1 className="text-3xl font-bold mb-4">{program.title}</h1>
+          <span className="text-white px-2 py-1 rounded mr-2" style={{ backgroundColor: LEVELS_MAP[program.level] }}>{program.level}</span>
+          <h1 className="text-3xl font-bold">{program.title}</h1>
         </div>
         <div className='flex items-center gap-6'>
           <button
@@ -113,9 +145,9 @@ const ProgramDetail = () => {
           </button>
           <button
             className={`flex items-center gap-4 bg-Yellow hover:bg-card font-extrabold text-card hover:text-Yellow border-2 border-Yellow hover:border-card rounded-lg py-3 px-4 ease-linear duration-150`}
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => setIsCreateClassModalOpen(true)}
           >
-            Crear <AddIcon />
+            Crear clase<AddIcon />
           </button>
         </div>
       </div>
@@ -125,15 +157,18 @@ const ProgramDetail = () => {
           <p className="mb-2"><strong>Descripción:</strong> {program.description}</p>
         ) : null}
         <p className="mb-2"><strong>Idioma:</strong> {program.language}</p>
-        <p className="mb-4"><strong>Profesor:</strong> {program.teacher.last_name}, {program.teacher.first_name}</p>
+        <p className="mb-2"><strong>Docente:</strong> {program.teacher.last_name}, {program.teacher.first_name}</p>
         {program.students.length > 0 && (
-          <div className="mb-4">
-            <h3 className="font-semibold">Alumnos:</h3>
-            <ul>
-              {program.students.map((student) => (
-                <li key={student._id}>{student.last_name}, {student.first_name}</li>
-              ))}
-            </ul>
+          <div className="flex flex-nowrap gap-2 mb-4">
+            <h3 className="font-semibold">Estudiante/s:</h3>
+            {program.students.map((student, index) => {
+              let programLenght = program.students.length
+              let isTheLast = programLenght === (index + 1)
+
+              return (
+                <span key={student._id}>{student.last_name}, {student.first_name} {!isTheLast ? '-' : ''}</span>
+              )
+            })}
           </div>
         )}
       </div>
@@ -144,8 +179,9 @@ const ProgramDetail = () => {
             <ClassroomCard
               key={classroom._id}
               classroom={classroom}
-              buttonFunction={handleEditClass}
-              deleteButton={handleDeleteClass}
+              editFunction={handleShowEditClass}
+              editContentFunction={handleEditContentClass}
+              deleteFunction={handleDeleteClass}
             />
           ))}
         </div>
@@ -153,13 +189,7 @@ const ProgramDetail = () => {
         <p>No tiene clases cargadas</p>
       )}
 
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Crear Clase">
-        <CreateClassForm
-          programData={program}
-          onSubmit={handleCreateClass}
-          onClose={() => setIsModalOpen(false)}
-        />
-      </Modal>
+      {/* Edit Program Modal */}
       <Modal isOpen={isModalEditOpen} onClose={() => setIsModalEditOpen(false)} title="Editar Aula">
         <EditVCRForm
           onSubmit={handleEditProgram}
@@ -169,29 +199,51 @@ const ProgramDetail = () => {
           token={user.token}
         />
       </Modal>
-      <Modal isOpen={isCreated} onClose={() => setIsCreated(false)} modalSize={'small'}>
+
+      {/* Create Class Modal */}
+      <Modal isOpen={isCreateClassModalOpen} onClose={() => setIsCreateClassModalOpen(false)} title="Crear Clase">
+        <CreateClassForm
+          programData={program}
+          onSubmit={handleCreateClass}
+          onClose={() => setIsCreateClassModalOpen(false)}
+        />
+      </Modal>
+
+      {/* Confirmation Modal for created class */}
+      <Modal isOpen={isCreatedClass} onClose={() => setIsCreatedClass(false)} modalSize={'small'}>
         <CreatedClass
-          onClose={() => setIsCreated(false)}
+          onClose={() => setIsCreatedClass(false)}
           logo={logo}
           pathNewClass={`/workspace/class/${newClassId}`}
         />
       </Modal>
-      <Modal modalSize={'small'} isOpen={deleteModal}>
-          <div className="flex justify-center ">
-            <img src={popUp} alt="Eliminar clase" />
-          </div>
-          <div className='flex gap-4'>
-            <button
-              onClick={() => setDeleteModal(false)}
-              className="w-full px-4 py-2 border border-Purple text-Purple  rounded-md hover:bg-Purple hover:text-white">
-              Cancelar
-            </button>
-            <button
-              onClick={handleConfirmDelete}
-              className="w-full px-4 py-2 bg-Purple text-white rounded-md hover:bg-PurpleHover">
-              Eliminar clase
-            </button>
-          </div>
+
+      {/* Edit Class Modal */}
+      <Modal isOpen={isEditClassModalsOpen} onClose={() => setIsEditClassModalsOpen(false)} title="Modificar Clase">
+        <EditClassForm
+          classData={editClass}
+          onSubmit={handleEditClass}
+          onClose={() => setIsEditClassModalsOpen(false)}
+        />
+      </Modal>
+
+      {/* Confirmation Modal for deleted class */}
+      <Modal modalSize={'small'} isOpen={deleteClassModal}>
+        <div className="flex justify-center ">
+          <img src={popUp} alt="Eliminar clase" />
+        </div>
+        <div className='flex gap-4'>
+          <button
+            onClick={() => setDeleteClassModal(false)}
+            className="w-full px-4 py-2 border border-Purple text-Purple  rounded-md hover:bg-Purple hover:text-white">
+            Cancelar
+          </button>
+          <button
+            onClick={handleConfirmDelete}
+            className="w-full px-4 py-2 bg-Purple text-white rounded-md hover:bg-PurpleHover">
+            Eliminar clase
+          </button>
+        </div>
       </Modal>
     </div>
   );

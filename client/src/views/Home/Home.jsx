@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAppStore } from "../../store/useAppStore";
 import SearchIcon from "@mui/icons-material/Search";
-import { getNextNClassesByTeacher } from "../../services/programs.services";
+import { getCountPrograms, getHourlyLoad, getNextNClassesByTeacher } from "../../services/programs.services";
 import DisplayNextClasses from "./DisplayNextClasses";
 import { useNavigate } from "react-router-dom";
 
@@ -10,21 +10,29 @@ const Home = () => {
   const navigate = useNavigate();
 
   const [classes, setClasses] = useState([]);
+  const [countPrograms, setCountPrograms] = useState(0);
+  const [countClassRooms, setCountClassRooms] = useState(0);
+  const [hourlyLoad, setHourlyLoad] = useState(0);
+  const [refresh, setRefresh] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  console.log(classes);
-
+  
   useEffect(() => {
     if (user && user.token) {
       const fetchClasses = async () => {
         try {
           setLoading(true);
           const response = await getNextNClassesByTeacher(user.token, 2);
-          if (response.isError) {
-            throw new Error(response.message);
-          }
+          if (response.isError) { throw new Error(response.message); }
           setClasses(response.data);
+
+          const cprograms = await getCountPrograms(user.token, userDetail._id, true ) || 0
+          setCountPrograms(cprograms.data);
+          const cclassrroms = await getCountPrograms(user.token, userDetail._id, false ) || 0
+          setCountClassRooms(cclassrroms.data);
+          const chourlyLoad = await getHourlyLoad(user.token ) || 0
+          setHourlyLoad(chourlyLoad.data);
+
         } catch (error) {
           console.error("Error al cargar los Programas", error);
           setError(error.message);
@@ -37,7 +45,15 @@ const Home = () => {
     } else {
       setLoading(false);
     }
-  }, [user, userDetail]);
+  }, [user, userDetail, refresh]);
+
+  const handleRefresh = () => {
+    setRefresh(prevRefresh => !prevRefresh)
+  }
+
+  const handleEditContentClass = (classId) => {
+    navigate(`/aulavirtual/clase/${classId}`);
+  };
 
   if (status)
     return (
@@ -46,21 +62,6 @@ const Home = () => {
           <h1 className="text-home leading-9 font-semibold">
             ¡Te damos la bienvenida!
           </h1>
-
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="¿Qué estás buscando?"
-                className="border border-Grey rounded-lg px-4 py-3 pl-11 w-[566px] h-[48px] bg-inputBg text-card placeholder:text-Grey outline-none focus:border-Purple hover:border-Purple"
-              />
-              <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#444444]" />
-            </div>
-
-            <button className="bg-Purple tracking-wide hover:bg-PurpleHover text-white font-extrabold px-4 py-3 rounded-lg h-[48px] ease-out duration-600">
-              Buscar
-            </button>
-          </div>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-20 max-w ">
@@ -100,7 +101,7 @@ const Home = () => {
                   alt="Total Programa"
                   className="w-[75px] h-auto rounded-lg"
                 />
-                <p className="text-xl font-semibold leading-6">15</p>
+                <p className="text-xl font-semibold leading-6">{countPrograms}</p>
                 <p className="leading-custom">Total de programas</p>
               </div>
 
@@ -110,7 +111,7 @@ const Home = () => {
                   alt="Programa Completo"
                   className="w-[75px] h-auto rounded-lg"
                 />
-                <p className="text-xl font-semibold leading-6">6</p>
+                <p className="text-xl font-semibold leading-6">{countClassRooms}</p>
                 <p className="leading-custom">Programas completos</p>
               </div>
 
@@ -120,45 +121,18 @@ const Home = () => {
                   alt="Carga Horaria"
                   className="w-[75px] h-auto rounded-lg"
                 />
-                <p className="text-xl font-semibold leading-6">120 hrs</p>
+                <p className="text-xl font-semibold leading-6">{hourlyLoad} hrs</p>
                 <p className="leading-custom">Total carga horaria</p>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-10 m-0 mt-6">
-              <div className="flex flex-col gap-4">
-                <h2 className="text-xl leading-6 font-semibold mb-2">
-                  Tu clase ahora
-                </h2>
-                <div className="shadow-home rounded-xl py-6 px-8 flex flex-col gap-4 text-center items-center">
-                  <img
-                    src="/ImagesHome/campana.png"
-                    alt="Campana"
-                    className="h-auto rounded-lg"
-                  />
-                  <p className="font-bold">No tienes clases creadas</p>
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-4">
-                <h2 className="text-xl leading-6 font-semibold mb-2">
-                  Tu próxima clase
-                </h2>
-                <div className="shadow-home rounded-xl py-6 px-8 flex flex-col gap-4 text-center items-center">
-                  <img
-                    src="/ImagesHome/calendarioh.png"
-                    alt="Calendario"
-                    className="h-auto rounded-lg"
-                  />
-                  <p className="font-bold">No tienes clases programadas</p>
-                </div>
-              </div>
-            </div>
-
+            {/* CARDS PROXIMAS CLASES */}
             <DisplayNextClasses
               classes={classes}
               loading={loading}
               error={error}
+              refresh = {handleRefresh}
+              buttonFunction={handleEditContentClass}
             />
           </div>
 

@@ -90,10 +90,6 @@ const VCRClassDetail = () => {
         <p className="text-lg font-medium">Descripción:</p>
         <p className="text-gray-700">{classData?.description}</p>
       </div>
-      <div className="mb-4">
-        <p className="text-lg font-medium">Duración:</p>
-        <p className="text-gray-700">{classData?.duration_hours} hs</p>
-      </div>
       <hr className="my-4" />
 
       <div>

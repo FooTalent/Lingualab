@@ -4,14 +4,14 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const Questions = () => {
   const [activeIndex, setActiveIndex] = useState(null);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleToggle = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
 
   const handleGoBack = () => {
-    navigate('/'); 
+    navigate('/');
   };
 
   const faqs = [
@@ -47,46 +47,36 @@ const Questions = () => {
   ];
 
   return (
-    <div className="relative p-6">
+    <div className="flex flex-col items-start text-card gap-6">
       <button
-        className="absolute top-4 left-4 flex items-center w-28 h-12 bg-transparent text-gray-700 border border-gray-700 rounded-md text-xl p-1"
-        onClick={handleGoBack} 
+        className="flex items-center gap-4 bg-transparent hover:bg-card text-card hover:text-white border border-card rounded-md text-lg font-medium p-3 ease-out duration-300"
+        onClick={handleGoBack}
       >
-        <ArrowBackIcon className="mr-2" />
+        <ArrowBackIcon />
         Volver
       </button>
 
-      <h1 className="mt-16 mr-2 text-gray-700 text-3xl font-semibold ">
-        Preguntas Frecuentes
-      </h1>
+      <div className='w-full grid grid-cols-3'>
+        <h1 className="text-[32px] leading-9 font-medium">
+          Preguntas Frecuentes
+        </h1>
 
-      <div className="flex justify-center my-6">
-        <img src="/ImagesHome/preguntasfrecuentes.png" alt="Preguntas Frecuentes" className="max-w-full h-auto" />
+        <img src="/ImagesHome/preguntasfrecuentes.png" alt="Preguntas Frecuentes" className="object-cover m-auto" />
       </div>
 
-      <div
-        className="mx-auto bg-white border border-gray-300 rounded-tl-md"
-        style={{
-          width: '1210px',
-          height: '368px',
-          padding: '16px 0px 0px 0px',
-          borderRadius: '12px 0px 0px 0px',
-        }}
-      >
+      <div className="bg-white shadow-questions rounded-xl p-4 w-full">
         {faqs.map((faq, index) => (
-          <div key={index} className="mb-4">
+          <div key={index}>
             <div
-              className="cursor-pointer flex justify-between items-center bg-white p-4 border-b border-gray-300"
+              className={`cursor-pointer flex justify-between items-center py-4 px-5 border-b ${activeIndex == index ? 'border-white' : 'border-Grey'} ease-out duration-300`}
               onClick={() => handleToggle(index)}
             >
-              <span className="text-gray-700">{faq.question}</span>
+              <span className="text-card text-xl leading-6 font-medium">{faq.question}</span>
               <span
-                className={`transform transition-transform duration-300 ${
-                  activeIndex === index ? 'rotate-180' : 'rotate-0'
-                }`}
+                className={`transform transition-transform ease-out duration-300 ${activeIndex === index ? 'rotate-180' : 'rotate-0'}`}
               >
                 <svg
-                  className="w-6 h-6 text-indigo-600"
+                  className="w-6 h-6 text-Purple"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -101,11 +91,14 @@ const Questions = () => {
                 </svg>
               </span>
             </div>
-            {activeIndex === index && (
-              <div className="bg-white p-4 text-gray-700">
+
+            <div
+              className={`overflow-hidden transition-max-height ease-out duration-300 ${activeIndex === index ? 'max-h-16' : 'max-h-0'}`}
+            >
+              <div className="px-4 py-5 text-card text-sm leading-4 border-b border-Grey ease-out duration-300">
                 {faq.answer}
               </div>
-            )}
+            </div>
           </div>
         ))}
       </div>

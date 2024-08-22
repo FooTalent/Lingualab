@@ -52,7 +52,7 @@ export const updateStudent = async (token, idStudent, data) => {
 // Invitacion alumno (solo email obligatorio)
 export const inviteStudent = async (token, data) => {
   try {
-    const response = await axios.post(`${url}api/users/inviteStudent`, data, {
+    const response = await axios.post(`${url}api/virtual/inviteStudent`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
