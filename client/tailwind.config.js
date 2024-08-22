@@ -27,6 +27,7 @@ export default {
         tableHead: '#1B1B1B',
         redError: '#D33013',
         inputFile: '#E5E5E5',
+        about: '#FFF8CC'
       },
       backgroundImage: {
         'fondo': "url('/fondoLogin.jpg')",
