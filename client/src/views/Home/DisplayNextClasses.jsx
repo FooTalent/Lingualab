@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import CardClass from './CardClass';
+import Spinner from '../../components/Spinner/Spinner';
 
 const DisplayNextClasses = ({ classes, loading, error, refresh, buttonFunction }) => {
 
-  if (loading) return <p className="text-center">Cargando Datos...</p>;
+  if (loading) return <Spinner />
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
   if (classes.length === 0) return <p className="text-center">No hay Próximas clases</p>;
 

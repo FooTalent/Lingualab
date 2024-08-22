@@ -13,6 +13,7 @@ import Modal from '../../components/Modal';
 import AddStudentForm from '../../components/AddStudentForm';
 import { inviteStudent } from '../../services/students.services';
 import NewStudent from '/ImagesStudent/AgregasteUnAlumno.png'
+import Spinner from '../../components/Spinner/Spinner';
 
 dayjs.locale('es');
 const localizer = dayjsLocalizer(dayjs);
@@ -27,6 +28,7 @@ export default function Calendario() {
     const [modalNewStudent, setModalNewStudent] = useState(false)
     const [classIdToDelete, setClassIdToDelete] = useState(null);
     const [isLoading, setIsLoading] = useState(false)
+    const [classroomIdToInvite, setClassroomIdToInvite] = useState(null)
 
     useEffect(() => {
         setIsLoading(true)
@@ -72,10 +74,10 @@ export default function Calendario() {
         setClassIdToDelete(classId);
     }
 
-    const handleInvite = (classId) => {
+    const handleInvite = (classroomId) => {
         setOpen(false);
         setInviteModal(true);
-        setClassIdToDelete(classId);
+        setClassroomIdToInvite(classroomId)
     }
 
     const handleCancelDelete = () => {
@@ -116,8 +118,10 @@ export default function Calendario() {
     }
 
     const handleAddOneMoreStudent = async (newStudent) => {
+        if (!classroomIdToInvite) return
+        const data = {...newStudent, clasroomId: classroomIdToInvite}
         try {
-            const addedStudent = await inviteStudent(user.token, newStudent);
+            const addedStudent = await inviteStudent(user.token, data);
             if (addedStudent.isError === false) {
                 setModalNewStudent(true)
                 setTimeout(() => {
@@ -131,7 +135,7 @@ export default function Calendario() {
         }
     };
 
-    if (isLoading) return <p>Cargando...</p>
+    if (isLoading) return <Spinner />
 
     return (
         <>

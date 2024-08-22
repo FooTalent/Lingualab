@@ -26,6 +26,8 @@ export default class ThisDaoMongo extends DaoMongo {
     select: '_id first_name last_name'
   });
 
+  cleanGetBy = async (filter) => await this.model.findOne(filter)
+
   getProgramsByTeacherId = async (teacherId) => {
     return await this.model.find({ teacher: teacherId, isTemplate: false }).select('_id');
   };

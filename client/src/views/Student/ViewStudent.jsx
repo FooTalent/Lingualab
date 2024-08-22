@@ -10,6 +10,7 @@ import { format } from 'date-fns';
 import AddIcon from '@mui/icons-material/Add';
 import { removeAccents } from '../../utils/removeAccents';
 import NewStudent from "/ImagesStudent/AgregasteUnAlumno.png"
+import Spinner from "../../components/Spinner/Spinner"
 
 const ViewStudent = () => {
   const { user, userDetail } = useAppStore();
@@ -137,7 +138,7 @@ const ViewStudent = () => {
           <button
             // onClick={handleShowGrades}
             className={`lg:w-[144px] border-2 px-1 lg:px-4 py-3 rounded-lg leading-5 tracking-wide truncate
-              opacity-50 !cursor-not-allowed border-Yellow bg-YellowDeselect text-black`}
+              opacity-50 !cursor-not-allowed border-card bg-card bg-opacity-50 text-black`}
           // ${!showInfo
           //   ? 'border-Yellow bg-Yellow font-extrabold'
           //   : 'border-Yellow text-black bg-YellowDeselect'
@@ -193,9 +194,7 @@ const ViewStudent = () => {
 
           <tbody className='border border-Purple rounded-xl shadow-customTable p-4 flex flex-col items-center'>
             {loading ? (
-              <tr>
-                <td colSpan="6" className="text-center py-4">Cargando...</td>
-              </tr>
+              <Spinner />
             ) : error ? (
               <tr>
                 <td colSpan="6" className="text-center py-4 text-red-500">

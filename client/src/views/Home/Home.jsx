@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const { user, status, userDetail } = useAppStore();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const [classes, setClasses] = useState([]);
   const [countPrograms, setCountPrograms] = useState(0);
@@ -64,67 +64,68 @@ const Home = () => {
           </h1>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8">
-          <div className="flex flex-col gap-4 justify-between flex-1">
-            <div className="shadow-home rounded-xl px-8 flex items-center gap-6 h-[250px] w-[700px]">
-              <div className="flex-1">
+        <div className="flex flex-col lg:flex-row gap-20 w-[770px]">
+          <div className="flex flex-col gap-7 w-full">
+            <div className="shadow-home rounded-xl py-6 px-8 flex items-center gap-6 h-auto"> 
+                <div className="flex items-center justify-center w-[326px] h-[194px] bg-[#FFDC00] rounded-lg">
                 <img
-                  src="/ImagesHome/creacionvideo.PNG"
+                  src="/ImagesHome/Popup_Comencemos.png"
                   alt="PopupComencemos"
-                  className="max-w-80 h-[230px]"
                 />
-              </div>
-
-              <div className="flex flex-col justify-between gap-4 flex-1">
-                <h2 className="text-xl leading-6 font-semibold">
+                </div>        
+                
+              <div className="flex flex-col justify-between w-[372px] h-[194px]">
+                <h2 className="text-xl font-medium">
                   ¡Empecemos a dar clases!
                 </h2>
-                <p className="leading-custom">
+                <div className="flex">
+                <p className="text-[16px] font-normal leading-[18.75px]">
                   Ingresa a ver más para acceder al instructivo de cómo crear
                   tus programas, clases, y cómo agregar materiales. Encontrá
                   recursos útiles, un recorrido completo por la página y
                   descubre cómo gestionar a tus alumnos.
                 </p>
+                </div>
                 <button
-                  onClick={() => navigate("/videotutorial")}  
-                className="bg-card hover:bg-Yellow text-Yellow tracking-wide hover:text-card font-extrabold px-4 py-2 rounded-lg self-start ease-out duration-6000">
+                  onClick={() => navigate("/videotutorial")}
+                  className="bg-card hover:bg-Yellow text-Yellow tracking-wide hover:text-card font-extrabold px-4 py-[10px] text-[16px] rounded-lg self-start ease-out duration-6000"
+                >
                   Tutorial
                 </button>
               </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-10 m-0">
-              <div className="shadow-home rounded-xl py-6 px-8 flex flex-col gap-4">
+            <div className="flex flex-row w-full justify-between">
+              <div className="shadow-home rounded-xl py-6 px-8 flex gap-[23px] flex-col">
                 <img
                   src="/ImagesHome/TotalPrograma.png"
                   alt="Total Programa"
-                  className="w-[75px] h-auto rounded-lg"
+                  className="w-[75px] h-[75px] rounded-lg"
                 />
-                <p className="text-xl font-semibold leading-6">{countPrograms}</p>
-                <p className="leading-custom">Total de programas</p>
+                <p className="text-[22px] leading-[25.75px] font-semibold">{countPrograms}</p>
+                <p className="text-[16px] font-normal leading-custom">Total de programas</p>
               </div>
 
-              <div className="shadow-home rounded-xl py-6 px-8 flex flex-col gap-4">
+              <div className="shadow-home rounded-xl py-6 px-8 flex gap-[23px] flex-col">
                 <img
                   src="/ImagesHome/ProgramaCompleto.png"
                   alt="Programa Completo"
-                  className="w-[75px] h-auto rounded-lg"
+                  className="w-[75px] h-[75px] rounded-lg"
                 />
-                <p className="text-xl font-semibold leading-6">{countClassRooms}</p>
-                <p className="leading-custom">Programas completos</p>
+                <p className="text-[22px] leading-[25.75px] font-semibold">{countClassRooms}</p>
+                <p className="text-[16px] font-normal leading-custom">Programas completos</p>
               </div>
 
-              <div className="shadow-home rounded-xl py-6 px-8 flex flex-col gap-4">
+              <div className="shadow-home rounded-xl w-[224px] py-6 px-8 flex gap-[24px] flex-col">
                 <img
                   src="/ImagesHome/CargaHoraria.png"
                   alt="Carga Horaria"
-                  className="w-[75px] h-auto rounded-lg"
+                  className="w-[75px] h-[75px] rounded-lg"
                 />
-                <p className="text-xl font-semibold leading-6">{hourlyLoad} hrs</p>
-                <p className="leading-custom">Total carga horaria</p>
+                <p className="text-[22px] leading-[25.75px] font-semibold">{hourlyLoad} hrs</p>
+                <p className="text-[16px] font-normal leading-custom">Total carga horaria</p>
               </div>
             </div>
-
 
             {/* CARDS PROXIMAS CLASES */}
             <DisplayNextClasses
@@ -136,8 +137,8 @@ const Home = () => {
             />
           </div>
 
-          <div className="flex flex-col justify-between gap-8 lg:max-w-[390px]">
-            <div className="shadow-home rounded-xl py-6 px-8 flex flex-col gap-6 h-[480px] w-[330px]">
+          <div className="flex flex-col justify-between gap-14 lg:max-w-[800px]">
+            <div className="shadow-home rounded-xl py-6 px-8 flex flex-col gap-6 h-[487px] max w-[350px]">
               <h2 className="text-xl leading-6 font-semibold">
                 Últimas Novedades
               </h2>
@@ -155,7 +156,9 @@ const Home = () => {
             </div>
 
             <div className="flex flex-col gap-4 mb-10">
-              <h2 className="text-xl leading-6 font-semibold mb-2">Preguntas Frecuentes</h2>
+              <h2 className="text-xl leading-6 font-semibold mb-2">
+                Preguntas Frecuentes
+              </h2>
               <div className="shadow-home rounded-xl py-6 px-8 flex items-center gap-6 max-w-[390px]">
                 <img
                   src="/ImagesHome/preguntash.png"
@@ -163,8 +166,8 @@ const Home = () => {
                   className="object-cover rounded-lg max-h-[185px]"
                 />
                 <div className="flex flex-col justify-between gap-4">
-                <button
-                    onClick={() => navigate("/questions")} 
+                  <button
+                    onClick={() => navigate("/questions")}
                     className="bg-Purple tracking-wide text-white font-extrabold px-4 py-2 rounded-lg ease-out duration-6000"
                   >
                     Ver preguntas

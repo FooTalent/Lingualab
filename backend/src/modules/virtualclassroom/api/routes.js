@@ -16,4 +16,8 @@ router
 //.post   ('/gevent/class/:cid', handleAuth(users),   controller.createEventClass) // --> En desarrollo
 //.post   ('/gevent/program/:pid', handleAuth(users),   controller.createEvent) // --> En desarrollo
 
+router
+.post   ('/inviteStudent', handleAuth(clients), controller.inviteStudent)
+.put    ('/addStudent', handleAuth(clients), controller.addStudentToClassRoom)
+
 export default router

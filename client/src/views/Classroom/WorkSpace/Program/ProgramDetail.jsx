@@ -15,6 +15,7 @@ import CreatedClass from '../Class/CreatedClass'
 import ProgramInfo from './ProgramInfo';
 import logo from '/CreasteUnaClase.png';
 import popUp from '/Popup_EliminarClase.png'
+import Spinner from '../../../../components/Spinner/Spinner'
 
 const ProgramDetail = () => {
   const { eid } = useParams();
@@ -126,7 +127,7 @@ const ProgramDetail = () => {
     navigate(`/workspace/class/${classId}`);
   };
 
-  if (loading) return <p className="text-center">Cargando datos...</p>;
+  if (loading) return <Spinner />
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (

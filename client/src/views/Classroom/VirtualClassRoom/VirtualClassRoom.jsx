@@ -11,6 +11,7 @@ import logo from '/ImagesVCR/CreasteUnAula.png';
 import ProgramCard from './Main/ProgramCard';
 import sinAulas from '/ImagesVCR/NoHayAulas.png'
 import { removeAccents } from '../../../utils/removeAccents';
+import Spinner from '../../../components/Spinner/Spinner';
 
 const VirtualClassRoom = () => {
   const [programs, setPrograms] = useState([]);
@@ -94,7 +95,7 @@ const VirtualClassRoom = () => {
         onSearch={handleSearchVCR} />
 
       {loading ? (
-        <p className="text-center">Cargando Datos...</p>
+        <Spinner />
       ) : error ? (
         <p className="text-center text-red-500">Error: {error}</p>
       ) : programs.length === 0 ? (

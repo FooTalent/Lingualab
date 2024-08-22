@@ -68,17 +68,11 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
   };
 
   const handleStudentChange = (studentId) => {
-    const selected = students.find(student => student._id === studentId)
-    setSelectedStudent(selected);
-  };
-
-  const handleAddStudent = () => {
-    if (selectedStudent && !programData.studentIds.includes(selectedStudent._id)) {
-      setProgramData({
-        ...programData,
-        studentIds: [...programData.studentIds, selectedStudent._id],
-      });
-      setSelectedStudent(null);
+    if (!programData.studentIds.includes(studentId)) {
+      setProgramData((prevData) => ({
+        ...prevData,
+        studentIds: [...prevData.studentIds, studentId],
+      }));
     }
   };
 
@@ -106,6 +100,12 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
   const handleAddOneMoreStudent = async (newStudent) => {
     try {
       const addedStudent = await inviteStudent(user.token, newStudent);
+
+      setProgramData((prevData) => ({
+        ...prevData,
+        studentIds: [...prevData.studentIds, addedStudent.data._id],
+      }));
+
       if (addedStudent.isError === false) {
         setModalNewStudent(true)
         setTimeout(() => {
@@ -120,13 +120,39 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
   };
 
   const onFormSubmit = async (data) => {
-    console.log(data)
-    onSubmit({ ...data, first_class: programData.startDateTime });
+    if (programData.studentIds.length === 0) {
+      setError('studentsId', {
+        type: 'manual',
+        message: 'Debe invitar al menos un alumno',
+      });
+      return;
+    }
+    onSubmit({ ...data, first_class: programData.startDateTime, studentIds: programData.studentIds });
   };
 
   return (
     <>
       <form onSubmit={handleSubmit(onFormSubmit)}>
+        <div className="flex flex-col gap-3 font-medium mb-4">
+          <label className="p-0 text-custom">Nombre</label>
+          <input
+            type="text"
+            name="title"
+            value={programData.title}
+            {...register("title", { 
+              required: "Escriba un nombre",
+              onChange: (e) => {
+                handleInputChange(e);
+                clearErrors("title");
+              }
+            })}
+            className="py-3 px-4 border border-Grey rounded-lg placeholder:text-Grey outline-none focus:border-card hover:border-card"
+            placeholder='Escribe el nombre del aula...'
+          />
+          {errors.title && (
+            <ErrorMessage>{errors.title.message}</ErrorMessage>
+          )}
+        </div>
         <div className="mb-4">
           <DropdownSelect
             setValue={setValue}
@@ -152,7 +178,7 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
                 name="studentsId"
                 errors={errors}
                 clearErrors={clearErrors}
-                register={register("studentsId", { required: "Debe invitar al menos un alumno" })}
+                register={register("studentsId")}
                 label="Estudiante/s"
                 options={students.map(student => ({ label: `${student.last_name}, ${student.first_name}`, value: student._id }))}
                 selectedOption={selectedStudent ? `${selectedStudent.last_name}, ${selectedStudent.first_name}` : 'Seleccionar Estudiante'}
@@ -160,13 +186,6 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
               />
             </div>
             <div className='flex flex-row h-full gap-4 mt-10'>
-              <button
-                type="button"
-                onClick={handleAddStudent}
-                className="flex gap-4 text-xl font-extrabold text-black border border-Yellow px-4 py-3 rounded-lg bg-YellowDeselect "
-              >
-                +
-              </button>
               <button
                 type="button"
                 onClick={handleModalOpen}

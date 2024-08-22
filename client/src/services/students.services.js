@@ -52,7 +52,7 @@ export const updateStudent = async (token, idStudent, data) => {
 // Invitacion alumno (solo email obligatorio)
 export const inviteStudent = async (token, data) => {
   try {
-    const response = await axios.post(`${url}api/users/inviteStudent`, data, {
+    const response = await axios.post(`${url}api/virtual/inviteStudent`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -63,6 +63,22 @@ export const inviteStudent = async (token, data) => {
     throw error;
   }
 };
+
+// Agregar Alumno a clase
+export const addStudenttoClassroom = async (token, studentId, clasroomId) => {
+  try {
+    const response = await axios.put(`${url}api/virtual/addStudent`, {studentId, clasroomId}, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error adding student:', error);
+    throw error;
+  }
+};
+
 
 // Reviews ---------------------------------------------------------------
 /* BODY:

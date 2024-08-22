@@ -15,6 +15,7 @@ import AgregasteRecurso from "/Popup_FelicidadesAgregasteUnRecurso.png"
 import ButtonModal from "../../components/Form/ButtonModal";
 import BackButton from "../../components/BackButtom";
 import Searcher from "./Searcher";
+import Spinner from "../../components/Spinner/Spinner"
 
 export default function Resources({ onSelect, selected }) {
 
@@ -234,7 +235,7 @@ export default function Resources({ onSelect, selected }) {
 
             <div className="flex flex-col p-2 grow w-full gap-6 text-card max-h-[585px] overflow-y-auto scrollbar">
               {
-                loading ? <p className="text-center">Cargando datos...</p> : (
+                loading ? <Spinner /> : (
                   error ? <p className="m-auto text-center">{error}</p> :
                     (
                       resources.length === 0 ? (

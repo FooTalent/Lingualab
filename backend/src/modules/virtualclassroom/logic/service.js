@@ -4,7 +4,8 @@ import Classes from '../../classes/data/dao.mongo.js'
 import Users from '../../users/data/dao.mongo.js'
 import AppError from '../../../config/AppError.js';
 import { google } from "googleapis";
-import { googleEnv } from '../../../config/env.js';
+import configEnv, { googleEnv } from '../../../config/env.js';
+import { sendMail } from "../../../libraries/emails/sendMail.js";
 
 export default class CustomService {
   constructor() {
@@ -14,7 +15,7 @@ export default class CustomService {
     this.daoEvent = new Event();
   }
 
-  createProgram = async (templateId, studentIds, user, isTemplate = false ) => {
+  createProgram = async (title, templateId, studentIds, user, isTemplate = false ) => {
     // NOTA
     // isTemplate = true = duplica programa
     // isTemplate = false = crea un aula en base a un programa
@@ -31,7 +32,7 @@ export default class CustomService {
 
     // 2 - preparo datos programa (o los creo vacios)
     const dataNewProgram = {
-      title: templateId ? templateProgram.title : "Sin titulo",
+      title: title ? title : templateProgram.title,
       description: templateId ? templateProgram.description : "",
       teacher: user._id,
       language: templateId ? templateProgram.language : "Inglés",
@@ -153,16 +154,22 @@ export default class CustomService {
     }
   }
 
-  createCustomProgram = async (templateId, studentIds, first_class, daysOfWeek, user ) => {
+  createCustomProgram = async (title, templateId, studentIds, first_class, daysOfWeek, user ) => {
 
     // crea aula
-    const newProgram = await this.createProgram(
+    let newProgram = await this.createProgram(
+      title,
       templateId,
       studentIds,
       user,
       false,
       { first_class, daysOfWeek }
     );
+
+    // Actualizar las clases con la nueva fecha y hora de inicio
+    if (first_class && daysOfWeek) {
+      newProgram = await this.update(newProgram._id, { first_class, daysOfWeek})
+    }
 
     return newProgram;
   }
@@ -219,4 +226,29 @@ export default class CustomService {
     return {event: event.data, id: newEvent._id};
   }
   updateClassEvent = async (classId, eventId) => await this.daoClass.update({_id: classId}, {event: eventId});
+
+
+  // STUDENTS
+  inviteStudent = async (user, newStudent, password ) => {
+    const to = newStudent.email
+    const subject  = `Datos de acceso a Lingualab de parte del profesor ${user.last_name}`
+    const template = 'invitation'
+    const context = {
+      profesorNombre: user.first_name,
+      profesorApellido: user.last_name,
+      usuario: newStudent.email,
+      contrasena: password,
+      accesoURL: configEnv.cors_origin
+    }
+    return sendMail( to, subject, template, context)
+  }
+
+  addStudentToClassRoom = async (studentId, classRoomId) => {
+
+    const classroom = await this.daoProgram.cleanGetBy({_id: classRoomId})
+    const students = [...classroom.students, studentId]
+    await this.daoProgram.update({_id: classRoomId}, {students})
+
+    return "success"
+  }
 }

@@ -11,6 +11,7 @@ import CardList from '../SubComponents/CardList';
 import CreatedProgram from '../SubComponents/CreatedProgram';
 import sinProgramas from '/ImagesWorkspace/NoHayProgramas.png'
 import { removeAccents } from '../../../utils/removeAccents';
+import Spinner from '../../../components/Spinner/Spinner';
 
 const WorkSpace = () => {
   const [programs, setPrograms] = useState([]);
@@ -97,7 +98,7 @@ const WorkSpace = () => {
 
       {
         loading ? (
-          <p className="text-center">Cargando Datos...</p>
+          <Spinner />
         ) : error ? (
           <p className="text-center text-red-500">Error: {error}</p>
         ) : programs.length === 0 ? (

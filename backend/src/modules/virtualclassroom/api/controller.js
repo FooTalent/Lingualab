@@ -3,6 +3,7 @@ import { toUTC } from "../../../libraries/utils/convertToUTC.js";
 import validateFields from "../../../libraries/utils/validatefiels.js";
 import Service from "../logic/service.js";
 import { COUNTRY_TIMEZONES } from "../logic/timezoneMapping.js";
+import UsersService from "../../users/logic/service.js"
 
 export default class Controller {
   constructor() {
@@ -15,16 +16,25 @@ export default class Controller {
         'country',    // pais, usado para el timezone del horario
         'students'    // Un array de {email} Lista de asistentes
       ],
+      invite: ['email'],
+      addStudent: ['studentId', 'clasroomId']
     }
+    this.userService = new UsersService()
   }
   create = async (req, res, next) => {
     try {
-      let { templateId, studentIds, first_class, daysOfWeek,} = req.body;
+      let { title, templateId, studentIds, first_class, daysOfWeek} = req.body;
 
       if (first_class) { first_class = toUTC(first_class); }
-      console.log("Controller studentIds: ",studentIds);
 
-      const newProgram = await this.service.createCustomProgram(templateId, studentIds, first_class, daysOfWeek, req.user);
+      const newProgram = await this.service.createCustomProgram(
+        title,
+        templateId,
+        studentIds,
+        first_class,
+        daysOfWeek,
+        req.user
+      );
       res.sendSuccess(newProgram)
     } catch (error) {
       next(error);
@@ -142,6 +152,45 @@ export default class Controller {
       }
     } catch (error) {
       next(error);
+    }
+  }
+
+  // STUDENTS
+  inviteStudent = async (req, res, next) => {
+    try{
+      const userData = validateFields(req.body, this.requieredfield.invite);
+      const {first_name, last_name, password, level, birthday, phone, clasroomId} = req.body
+      
+      userData.first_name = first_name || "Nombre" ;
+      userData.last_name = last_name || "Apellido" ;
+      userData.level = level || "A1-A2" ;
+      birthday && (userData.birthday = birthday)
+      phone && (userData.phone = phone)
+      userData.teacher = req.user._id
+      userData.role = 'Student'
+      const emailPassword = password || "12345";
+      userData.password = emailPassword ;
+
+      const newStudent = await this.userService.register(userData)
+      await this.service.inviteStudent(req.user, newStudent, emailPassword)
+
+      if( clasroomId ) {
+        await this.service.addStudentToClassRoom(newStudent._id, clasroomId)
+      }
+      
+      res.sendCreated({_id: newStudent._id, first_name: newStudent.first_name, last_name: newStudent.last_name}, "Invitacion exitoso")
+    } catch(error) {
+      next(error)
+    }
+  }
+
+  addStudentToClassRoom = async (req, res, next) => {
+    try {
+      const {studentId, clasroomId} = validateFields(req.body, this.requieredfield.addStudent);
+      await this.service.addStudentToClassRoom(studentId, clasroomId)
+      res.sendSuccess("Estudiante agregado a la clase")
+    } catch (error) {
+      next(error)
     }
   }
 }
