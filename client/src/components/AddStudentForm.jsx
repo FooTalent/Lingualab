@@ -114,14 +114,15 @@ const AddStudentForm = ({ onSubmit, onClose }) => {
               id='nivel'
               name="level"
               className={`border ${errors.level ? 'border-red-500' : 'border-Grey'} hover:border-card focus:border-card text-Grey rounded-lg py-2 px-4 ease-out duration-600 focus:outline-none`}
-              style={{ color: LEVELS_MAP[field.value] }}
             >
               <option value='' disabled>Selecciona el nivel</option>
-              {LEVELS.map((level, i) => (
-                <option key={i} value={level.data}>
-                  {level.data}
-                </option>
-              ))}
+              {
+                LEVELS.map((level, i) => (
+                  <option key={i} value={level.data}>
+                    {level.data}
+                  </option>
+                ))
+              }
             </select>
           )}
         />
