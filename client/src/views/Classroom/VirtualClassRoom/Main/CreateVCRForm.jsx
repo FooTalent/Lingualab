@@ -120,13 +120,32 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
   };
 
   const onFormSubmit = async (data) => {
-    console.log(data)
     onSubmit({ ...data, first_class: programData.startDateTime });
   };
 
   return (
     <>
       <form onSubmit={handleSubmit(onFormSubmit)}>
+        <div className="flex flex-col gap-3 font-medium mb-4">
+          <label className="p-0 text-custom">Nombre</label>
+          <input
+            type="text"
+            name="title"
+            value={programData.title}
+            {...register("title", { 
+              required: "Escriba un nombre",
+              onChange: (e) => {
+                handleInputChange(e);
+                clearErrors("title");
+              }
+            })}
+            className="py-3 px-4 border border-Grey rounded-lg placeholder:text-Grey outline-none focus:border-card hover:border-card"
+            placeholder='Escribe el nombre del aula...'
+          />
+          {errors.title && (
+            <ErrorMessage>{errors.title.message}</ErrorMessage>
+          )}
+        </div>
         <div className="mb-4">
           <DropdownSelect
             setValue={setValue}
