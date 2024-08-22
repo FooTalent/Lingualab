@@ -4,7 +4,8 @@ import Classes from '../../classes/data/dao.mongo.js'
 import Users from '../../users/data/dao.mongo.js'
 import AppError from '../../../config/AppError.js';
 import { google } from "googleapis";
-import { googleEnv } from '../../../config/env.js';
+import configEnv, { googleEnv } from '../../../config/env.js';
+import { sendMail } from "../../../libraries/emails/sendMail.js";
 
 export default class CustomService {
   constructor() {
@@ -225,4 +226,29 @@ export default class CustomService {
     return {event: event.data, id: newEvent._id};
   }
   updateClassEvent = async (classId, eventId) => await this.daoClass.update({_id: classId}, {event: eventId});
+
+
+  // STUDENTS
+  inviteStudent = async (user, newStudent, password ) => {
+    const to = newStudent.email
+    const subject  = `Datos de acceso a Lingualab de parte del profesor ${user.last_name}`
+    const template = 'invitation'
+    const context = {
+      profesorNombre: user.first_name,
+      profesorApellido: user.last_name,
+      usuario: newStudent.email,
+      contrasena: password,
+      accesoURL: configEnv.cors_origin
+    }
+    return sendMail( to, subject, template, context)
+  }
+
+  addStudentToClassRoom = async (studentId, classRoomId) => {
+
+    const classroom = await this.daoProgram.cleanGetBy({_id: classRoomId})
+    const students = [...classroom.students, studentId]
+    await this.daoProgram.update({_id: classRoomId}, {students})
+
+    return "success"
+  }
 }
