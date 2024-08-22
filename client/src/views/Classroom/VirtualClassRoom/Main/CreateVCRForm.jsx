@@ -100,6 +100,12 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
   const handleAddOneMoreStudent = async (newStudent) => {
     try {
       const addedStudent = await inviteStudent(user.token, newStudent);
+
+      setProgramData((prevData) => ({
+        ...prevData,
+        studentIds: [...prevData.studentIds, addedStudent.data._id],
+      }));
+
       if (addedStudent.isError === false) {
         setModalNewStudent(true)
         setTimeout(() => {
@@ -114,7 +120,14 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
   };
 
   const onFormSubmit = async (data) => {
-    onSubmit({ ...data, first_class: programData.startDateTime });
+    if (programData.studentIds.length === 0) {
+      setError('studentsId', {
+        type: 'manual',
+        message: 'Debe invitar al menos un alumno',
+      });
+      return;
+    }
+    onSubmit({ ...data, first_class: programData.startDateTime, studentIds: programData.studentIds });
   };
 
   return (
@@ -165,7 +178,7 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
                 name="studentsId"
                 errors={errors}
                 clearErrors={clearErrors}
-                register={register("studentsId", { required: "Debe invitar al menos un alumno" })}
+                register={register("studentsId")}
                 label="Estudiante/s"
                 options={students.map(student => ({ label: `${student.last_name}, ${student.first_name}`, value: student._id }))}
                 selectedOption={selectedStudent ? `${selectedStudent.last_name}, ${selectedStudent.first_name}` : 'Seleccionar Estudiante'}

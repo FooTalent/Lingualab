@@ -6,8 +6,8 @@ import ErrorMessage from './ErrorMessage';
 const AddStudentForm = ({ onSubmit, onClose }) => {
   const { handleSubmit, control, formState: { errors } } = useForm({
     defaultValues: {
-      firstName: '',
-      lastName: '',
+      first_Name: '',
+      last_name: '',
       email: '',
       level: 'A1-A2',
       birthday: '',
@@ -24,7 +24,7 @@ const AddStudentForm = ({ onSubmit, onClose }) => {
       <div className='flex flex-col gap-2'>
         <label htmlFor="nombre" className='p-0 text-lg leading-5 font-medium'>Nombre</label>
         <Controller
-          name="firstName"
+          name="first_name"
           control={control}
           rules={{
             required: 'El nombre es obligatorio',
@@ -39,19 +39,19 @@ const AddStudentForm = ({ onSubmit, onClose }) => {
               type="text"
               id='nombre'
               placeholder="Ingresa el nombre"
-              className={`border ${errors.firstName ? 'border-red-500' : 'border-Grey'} hover:border-card focus:border-card text-Grey rounded-lg py-2 px-4 ease-out duration-600 focus:outline-none`}
+              className={`border ${errors.first_name ? 'border-red-500' : 'border-Grey'} hover:border-card focus:border-card text-Grey rounded-lg py-2 px-4 ease-out duration-600 focus:outline-none`}
             />
           )}
         />
-        {errors.firstName && (
-          <ErrorMessage>{errors.firstName.message}</ErrorMessage>
+        {errors.first_name && (
+          <ErrorMessage>{errors.first_name.message}</ErrorMessage>
         )}
       </div>
 
       <div className='flex flex-col gap-2'>
         <label htmlFor="apellido" className='p-0 text-lg leading-5 font-medium'>Apellido</label>
         <Controller
-          name="lastName"
+          name="last_name"
           control={control}
           rules={{
             required: 'El apellido es obligatorio',
@@ -66,12 +66,12 @@ const AddStudentForm = ({ onSubmit, onClose }) => {
               id='apellido'
               type="text"
               placeholder="Ingresa el apellido"
-              className={`border ${errors.lastName ? 'border-red-500' : 'border-Grey'} hover:border-card focus:border-card text-Grey rounded-lg py-2 px-4 ease-out duration-600 focus:outline-none`}
+              className={`border ${errors.last_name ? 'border-red-500' : 'border-Grey'} hover:border-card focus:border-card text-Grey rounded-lg py-2 px-4 ease-out duration-600 focus:outline-none`}
             />
           )}
         />
-        {errors.lastName && (
-          <ErrorMessage>{errors.lastName.message}</ErrorMessage>
+        {errors.last_name && (
+          <ErrorMessage>{errors.last_name.message}</ErrorMessage>
         )}
       </div>
 
