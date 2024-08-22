@@ -63,7 +63,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col lg:flex-row gap-20 max-w ">
           <div className="flex flex-col gap-4 justify-between flex-1">
             <div className="shadow-home rounded-xl px-8 flex items-center gap-6 h-[250px] w-[700px]">
               <div className="flex-1 bg-[#FFDC00] rounded-lg p-4 flex items-center justify-center">
@@ -162,8 +162,8 @@ const Home = () => {
             />
           </div>
 
-          <div className="flex flex-col justify-between gap-8 lg:max-w-[390px]">
-            <div className="shadow-home rounded-xl py-6 px-8 flex flex-col gap-6 h-[480px] w-[330px]">
+          <div className="flex flex-col justify-between gap-14 lg:max-w-[800px]">
+            <div className="shadow-home rounded-xl py-6 px-8 flex flex-col gap-6 h-[480px] max w-[350px]">
               <h2 className="text-xl leading-6 font-semibold">
                 Últimas Novedades
               </h2>
