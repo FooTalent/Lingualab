@@ -24,14 +24,17 @@ const Home = () => {
           setLoading(true);
           const response = await getNextNClassesByTeacher(user.token, 2);
           if (response.isError) { throw new Error(response.message); }
+          
+          console.log(response);
+          
           setClasses(response.data);
 
-          const cprograms = await getCountPrograms(user.token, userDetail._id, true ) || 0
-          setCountPrograms(cprograms.data);
-          const cclassrroms = await getCountPrograms(user.token, userDetail._id, false ) || 0
-          setCountClassRooms(cclassrroms.data);
-          const chourlyLoad = await getHourlyLoad(user.token ) || 0
-          setHourlyLoad(chourlyLoad.data);
+          const cprograms = await getCountPrograms(user.token, userDetail._id, true )
+          setCountPrograms(cprograms.data  || 0);
+          const cclassrroms = await getCountPrograms(user.token, userDetail._id, false )
+          setCountClassRooms(cclassrroms.data  || 0);
+          const chourlyLoad = await getHourlyLoad(user.token )
+          setHourlyLoad(chourlyLoad.data  || 0);
 
         } catch (error) {
           console.error("Error al cargar los Programas", error);
