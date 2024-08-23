@@ -94,14 +94,19 @@ const VCRClassDetail = () => {
                 {selectedResources.map((resource, index) => (
                   <li key={index} className='flex items-center'>
                     <IconSvg category={resource.type} className={"h-6"} />
-                    <Link to={resource.url}>{resource.title}</Link>
+                    <Link
+                      to={resource.url}
+                      className="w-full text-Purple underline decoration-1 focus:outline-none focus:shadow-outline"
+                    >
+                      {resource.title}
+                    </Link>
                   </li>
                 ))}
               </ul>
             </div>
           )
         }
-        
+
         <div className="flex flex-col xl:flex-row justify-between items-center gap-y-5">
           <div className='grid grid-cols-2 gap-6 md:self-start'>
             <button

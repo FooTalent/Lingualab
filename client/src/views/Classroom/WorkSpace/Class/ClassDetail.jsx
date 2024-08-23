@@ -9,7 +9,6 @@ import IconSvg from '../../../../utils/SvgWrapper';
 import ButtonModal from '../../../../components/Form/ButtonModal';
 import Spinner from '../../../../components/Spinner/Spinner';
 
-
 const ClassDetail = () => {
   const { eid } = useParams();
   const { user } = useAppStore();
@@ -98,7 +97,12 @@ const ClassDetail = () => {
               {selectedResources.map((resource, index) => (
                 <li key={index} className='flex items-center'>
                   <IconSvg category={resource.type} className={"h-6"} />
-                  <Link to={resource.url}>{resource.title}</Link>
+                  <Link
+                    to={resource.url}
+                    className="w-full text-Purple underline decoration-1 focus:outline-none focus:shadow-outline"
+                  >
+                    {resource.title}
+                  </Link>
                 </li>
               ))}
             </ul>

@@ -107,11 +107,11 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
           }
         </p>
 
-        <p className='flex gap-4'>
+        <p className='flex gap-2'>
           <span className='font-semibold'>Fecha Inicio:</span>
           {program.first_class ? new Date(program.first_class).toLocaleDateString() : '-'}
         </p>
-        <p className='flex gap-4'>
+        <p className='flex gap-2'>
           <span className='font-semibold'>Hora:</span>
           {
             program.first_class ?

@@ -76,11 +76,11 @@ const ProgramDetail = () => {
       let size = {};
 
       if (window.innerWidth >= 1024) {
-        size = { add: 'medium', addSmall: 'small', created: 'xsmall' };
+        size = { add: 'medium', created: 'xsmall' };
       } else if (window.innerWidth >= 768) {
-        size = { add: 'full', addSmall: 'medium', created: 'small' };
+        size = { add: 'full', created: 'small' };
       } else {
-        size = { add: 'full', addSmall: 'full', created: 'medium' };
+        size = { add: 'full', created: 'medium' };
       }
 
       setModalSize(size);
@@ -113,6 +113,10 @@ const ProgramDetail = () => {
       setRefresh(!refresh);
       setIsCreateClassModalOpen(false);
       setIsCreatedClass(true);
+
+      setTimeout(() => {
+        setIsCreatedClass(false)
+      }, 2000);
     } catch (error) {
       console.error('Error al crear la clase', error);
       setError(error.message);
@@ -174,7 +178,7 @@ const ProgramDetail = () => {
             className={`flex items-center justify-center gap-4 whitespace-nowrap bg-card hover:bg-Yellow font-extrabold text-Yellow hover:text-card border-2 border-card hover:border-Yellow rounded-lg py-3 px-4 ease-linear duration-150`}
             onClick={() => setIsModalEditOpen(true)}
           >
-            Editar <EditIcon />
+            Editar programa <EditIcon />
           </button>
           <button
             className={`flex items-center justify-center gap-4 whitespace-nowrap bg-Yellow hover:bg-card font-extrabold text-card hover:text-Yellow border-2 border-Yellow hover:border-card rounded-lg py-3 px-4 ease-linear duration-150`}
@@ -213,7 +217,7 @@ const ProgramDetail = () => {
       </Modal>
 
       {/* Create Class Modal */}
-      <Modal isOpen={isCreateClassModalOpen} onClose={() => setIsCreateClassModalOpen(false)} title="Crear Clase" modalSize={modalSize.addSmall}>
+      <Modal isOpen={isCreateClassModalOpen} onClose={() => setIsCreateClassModalOpen(false)} title="Crear Clase" modalSize={modalSize.add}>
         <CreateClassForm
           programData={program}
           onSubmit={handleCreateClass}

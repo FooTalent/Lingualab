@@ -81,6 +81,10 @@ const WorkSpace = () => {
         setNewProgramId(newProgram.data._id);
         setIsCreated(true);
         setIsModalOpen(false);
+
+        setTimeout(() => {
+          setIsCreated(false)
+        }, 2000);
       }
     } catch (error) {
       console.error('Error al crear el programa', error);

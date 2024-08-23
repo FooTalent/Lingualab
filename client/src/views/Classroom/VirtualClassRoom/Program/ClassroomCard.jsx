@@ -85,7 +85,12 @@ const ClassroomCard = ({ classroom, editFunction, deleteFunction, editContentFun
                   {resourcesClass.map((resource, index) => (
                     <div key={index} className='flex items-center gap-x-2 truncate'>
                       <IconSvg category={resource.type} className={'h-6'} />
-                      <Link to={resource.url}>{resource.title}</Link>
+                      <Link
+                        to={resource.url}
+                        className="w-full text-Purple underline decoration-1 focus:outline-none focus:shadow-outline"
+                      >
+                        {resource.title}
+                      </Link>
                     </div>
                   ))}
                 </div>
