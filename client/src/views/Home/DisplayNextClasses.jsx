@@ -11,7 +11,7 @@ const DisplayNextClasses = ({ classes, loading, error, refresh, buttonFunction }
   return (
     <>
       {classes.length === 0 && (
-        <div className="grid grid-cols-2 gap-10 m-0 mt-6">
+        <div className="order-3 flex flex-col md:grid grid-cols-2 px-2 lg:px-0 gap-10 m-0 mt-6">
           <div className="flex flex-col gap-4">
             <h2 className="text-xl leading-6 font-semibold mb-2">Tu clase ahora</h2>
             <div className="shadow-home rounded-xl py-6 px-8 flex flex-col gap-4 text-center items-center">
@@ -37,10 +37,10 @@ const DisplayNextClasses = ({ classes, loading, error, refresh, buttonFunction }
         </div>
       )}
       {classes.length === 1 && (
-        <div className="grid grid-cols-2 gap-10 m-0 mt-6">
+        <div className="order-3 flex flex-col md:grid grid-cols-2 px-2 lg:px-0 gap-10 m-0 mt-6">
           <div className="flex flex-col gap-4">
             <h2 className="text-xl leading-6 font-semibold mb-2">Tu clase ahora</h2>
-            <CardClass thisclass={classes[0]}/>
+            <CardClass thisclass={classes[0]} />
           </div>
           <div className="flex flex-col gap-4">
             <h2 className="text-xl leading-6 font-semibold mb-2">Tu próxima clase</h2>
@@ -56,20 +56,20 @@ const DisplayNextClasses = ({ classes, loading, error, refresh, buttonFunction }
         </div>
       )}
       {classes.length === 2 && (
-        <div className="grid grid-cols-2 gap-10 m-0 mt-6">
+        <div className="order-3 flex flex-col md:grid grid-cols-2 px-2 lg:px-0 gap-10 m-0 mt-6">
           <div className="flex flex-col gap-4">
             <h2 className="text-xl leading-6 font-semibold mb-2">Tu clase ahora</h2>
             <CardClass
               thisclass={classes[0]}
               buttonFunction={buttonFunction}
-              />
+            />
           </div>
           <div className="flex flex-col gap-4">
             <h2 className="text-xl leading-6 font-semibold mb-2">Tu próxima clase</h2>
             <CardClass
               thisclass={classes[1]}
               buttonFunction={buttonFunction}
-              />
+            />
           </div>
         </div>
       )}
