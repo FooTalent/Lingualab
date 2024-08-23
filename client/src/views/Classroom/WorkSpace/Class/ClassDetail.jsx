@@ -127,8 +127,9 @@ const ClassDetail = () => {
             </button>
 
             <button
-              className='bg-card hover:bg-Yellow text-Yellow hover:text-card rounded-lg py-3 px-8 text-xl font-extrabold ease-linear duration-150'
+              className='bg-card rounded-lg py-3 px-8 text-xl font-extrabold ease-linear duration-150 opacity-50 !cursor-not-allowed border-card bg-opacity-50 text-black'
               onClick={handleOpenResourceModal}
+              disabled
             >
               Ir al Drive
             </button>
