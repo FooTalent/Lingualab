@@ -25,8 +25,6 @@ const Home = () => {
           const response = await getNextNClassesByTeacher(user.token, 2);
           if (response.isError) { throw new Error(response.message); }
           
-          console.log(response);
-          
           setClasses(response.data);
 
           const cprograms = await getCountPrograms(user.token, userDetail._id, true )
