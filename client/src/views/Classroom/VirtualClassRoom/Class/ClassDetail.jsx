@@ -5,7 +5,7 @@ import { getClassById, updateClass } from '../../../../services/programs.service
 import { LEVELS_MAP } from '../../../../utils/valueLists';
 import TextEditor from '../../../../components/TextEditor/TextEditor';
 import BackButton from '../../../../components/BackButtom';
-import Resources from '../../../Resources/Resources';
+import Resources from '../../../Resources/Resources2';
 import IconSvg from '../../../../utils/SvgWrapper';
 import Spinner from '../../../../components/Spinner/Spinner';
 

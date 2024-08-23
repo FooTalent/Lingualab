@@ -64,6 +64,22 @@ export const inviteStudent = async (token, data) => {
   }
 };
 
+// Agregar Alumno a clase
+export const addStudenttoClassroom = async (token, studentId, clasroomId) => {
+  try {
+    const response = await axios.put(`${url}api/virtual/addStudent`, {studentId, clasroomId}, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error adding student:', error);
+    throw error;
+  }
+};
+
+
 // Reviews ---------------------------------------------------------------
 /* BODY:
 student = id,

@@ -59,10 +59,10 @@ export default function CreateResourceForm({ onSubmit, onCancel, data }) {
         <div>
             <form
                 onSubmit={handleSubmit(handleFormSubmit)}
-                className="flex flex-col gap-2"
+                className="flex flex-col gap-[20px] lg:gap-2 mt-3 lg:mt-0"
             >
-                <div className="grid grid-cols-3 gap-4">
-                    <div className="flex flex-col gap-2">
+                <div className="flex flex-col lg:grid grid-cols-3 gap-4">
+                    <div className="flex flex-col gap-4 lg:gap-2">
                         <label htmlFor="language" className="text-lg leading-5 p-0">Idioma:</label>
                         <select
                             id="language"
@@ -81,7 +81,7 @@ export default function CreateResourceForm({ onSubmit, onCancel, data }) {
                         )}
                     </div>
 
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col order-1 lg:order-2 gap-4 lg:gap-2">
                         <label htmlFor="level" className="text-lg leading-5 p-0">Nivel:</label>
                         <select
                             id="level"
@@ -100,7 +100,7 @@ export default function CreateResourceForm({ onSubmit, onCancel, data }) {
                         )}
                     </div>
 
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col order-3 gap-4 lg:gap-2">
                         <label htmlFor="type" className="text-lg leading-5 p-0">Recurso:</label>
                         <select
                             id="type"
@@ -120,7 +120,7 @@ export default function CreateResourceForm({ onSubmit, onCancel, data }) {
                     </div>
                 </div>
 
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-4 lg:gap-2">
                     <label htmlFor="title" className="text-lg leading-5 p-0">Nombre del recurso:</label>
                     <input
                         type="text"
@@ -134,7 +134,7 @@ export default function CreateResourceForm({ onSubmit, onCancel, data }) {
                     )}
                 </div>
 
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-4 lg:gap-2">
                     <label htmlFor="url" className="text-lg leading-5 p-0">Link del Recurso:</label>
                     <input
                         type="url"
@@ -148,12 +148,12 @@ export default function CreateResourceForm({ onSubmit, onCancel, data }) {
                     )}
                 </div>
 
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-4 lg:gap-2">
                     <label htmlFor="description" className="text-lg leading-5 p-0">Observaciones:</label>
                     <textarea
                         id="description"
                         {...register("description", { required: "Este campo es obligatorio" })}
-                        className={`border h-[90px] ${errors.description ? 'border-red-500 text-red-500' : 'border-card text-card'} hover:border-card focus:border-card rounded-lg py-3 px-4 ease-out duration-600 focus:outline-none`}
+                        className={`border h-[157px] lg:h-[90px] ${errors.description ? 'border-red-500 text-red-500' : 'border-card text-card'} hover:border-card focus:border-card rounded-lg py-3 px-4 ease-out duration-600 focus:outline-none`}
                         placeholder="Incluya comentarios adicionales sobre cómo utilizar este recurso."
                     />
                     {errors.description && (
@@ -161,7 +161,7 @@ export default function CreateResourceForm({ onSubmit, onCancel, data }) {
                     )}
                 </div>
 
-                <div className="grid grid-cols-2 gap-6">
+                <div className="flex flex-col lg:grid grid-cols-2 gap-6 lg:mt-4">
                     <button
                         type="button"
                         onClick={onCancel}

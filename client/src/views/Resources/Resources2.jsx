@@ -34,7 +34,6 @@ export default function Resources({ onSelect, selected }) {
   const [resourceCreated, setResourceCreated] = useState(false)
   const [idCard, setIdCard] = useState('')
   const [editModal, setEditModal] = useState(false)
-  const [modalSize, setModalSize] = useState({});
 
   // Elementos usado para las classes + onSelect
   const [selectedResources, setSelectedResources] = useState([]);
@@ -54,7 +53,7 @@ export default function Resources({ onSelect, selected }) {
           if (title) filter += `&title=${title}`
           if (selectedCat) filter += `&type=${selectedCat}`
           await updateResources(filter)
-
+          
         } catch (error) {
           console.error('Error al llamar recursos:', error);
           setError(error.message)
@@ -82,29 +81,6 @@ export default function Resources({ onSelect, selected }) {
 
     fetchSelectedResources();
   }, [selected]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      let size = {};
-
-      if (window.innerWidth >= 1024) {
-        size = { add: 'medium', created: 'small', deleted: 'xsmall' };
-      } else if (window.innerWidth >= 768) {
-        size = { add: 'full', created: 'small', deleted: 'small' };
-      } else {
-        size = { add: 'full', created: 'medium' };
-      }
-
-      setModalSize(size);
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
 
   // Funciones para crear un nuevo recurso
   const handleCreateResource = async () => {
@@ -207,31 +183,24 @@ export default function Resources({ onSelect, selected }) {
             ? <div><BackButton /></div>
             : <></>
         }
+        <section className={`flex ${onSelect ? 'justify-center' : 'justify-between'} gap-[70px] `}>
+          <aside>
+            <div className="flex flex-col gap-8">
+              <div className={`grid grid-cols-3 items-center ${onSelect ? 'mb-4' : 'mb-8'} justify-between gap-6`}>
+                {
+                  LEVELS.map((lvl, i) => (
+                    <LevelFilter
+                      key={i}
+                      data={lvl}
+                      onClick={handleFilterLevel}
+                      isSelected={selectedLevel === lvl.data}
+                      onSelect={onSelect}
+                    />
+                  ))
+                }
+              </div>
 
-        <section className={`flex flex-col ${onSelect ? 'justify-center' : ''} gap-8 lg:gap-16`}>
-          <div className="flex flex-col gap-8 lg:gap-0 lg:grid grid-cols-12">
-            <div className={`order-2 xl:order-1 grid grid-cols-3 col-span-4 items-center ${onSelect ? 'mb-4' : ''} justify-between gap-6`}>
-              {
-                LEVELS.map((lvl, i) => (
-                  <LevelFilter
-                    key={i}
-                    data={lvl}
-                    onClick={handleFilterLevel}
-                    isSelected={selectedLevel === lvl.data}
-                    onSelect={onSelect}
-                  />
-                ))
-              }
-            </div>
-
-            <div className="order-1 w-full md:w-3/4 lg:w-full lg:order-2 lg:col-span-7 lg:col-start-6 self-center">
-              <Searcher handleSearch={handleSearch} />
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-8 lg:gap-0 lg:grid grid-cols-12">
-            <div className={`flex flex-col col-span-4 ${onSelect ? 'gap-4' : 'gap-6'}`}>
-              <div className={`w-full flex lg:flex-col overflow-x-auto scrollbar ${onSelect ? 'gap-4' : 'gap-6'}`}>
+              <div className={`flex flex-col ${onSelect ? 'gap-4' : 'gap-6'}`}>
                 {
                   RESOURCE_TYPES.map((resource, i) => (
                     <CategoryFilter
@@ -243,25 +212,28 @@ export default function Resources({ onSelect, selected }) {
                     />
                   ))
                 }
-              </div>
-
-              <button
-                onClick={handleCreateResource}
-                className="bg-Yellow hover:bg-card hover:text-Yellow text-xl font-extrabold text-card tracking-wide py-4 px-6 rounded-lg ease-out duration-600"
-              >
-                Agregar recurso +
-              </button>
-              {onSelect &&
                 <button
-                  onClick={handleConfirmSelection}
-                  className="bg-card hover:bg-Yellow hover:text-card text-xl font-extrabold text-Yellow tracking-wide py-4 px-6 mt-2 rounded-lg ease-out duration-600"
+                  onClick={handleCreateResource}
+                  className="bg-Yellow hover:bg-card hover:text-Yellow text-xl font-extrabold text-card tracking-wide py-4 px-6 mt-2 rounded-lg ease-out duration-600"
                 >
-                  Insertar
+                  Agregar recurso +
                 </button>
-              }
+                {onSelect &&
+                  <button
+                    onClick={handleConfirmSelection}
+                    className="bg-card hover:bg-Yellow hover:text-card text-xl font-extrabold text-Yellow tracking-wide py-4 px-6 mt-2 rounded-lg ease-out duration-600"
+                  >
+                    Insertar
+                  </button>
+                }
+              </div>
             </div>
+          </aside>
 
-            <div className="flex flex-col col-span-7 col-start-6 p-2 grow w-full gap-6 text-card max-h-[585px] overflow-y-auto scrollbar">
+          <div className={`flex flex-col ${onSelect ? 'gap-8' : 'gap-14'} justify-between`}>
+            <Searcher handleSearch={handleSearch} />
+
+            <div className="flex flex-col p-2 grow w-full gap-6 text-card max-h-[585px] overflow-y-auto scrollbar">
               {
                 loading ? <Spinner /> : (
                   error ? <p className="m-auto text-center">{error}</p> :
@@ -294,42 +266,37 @@ export default function Resources({ onSelect, selected }) {
                     )
                 )
               }
-              <Modal title={"Edita un Recurso"} onClose={() => setEditModal(false)} isOpen={editModal} modalSize={modalSize.add}>
+              <Modal title={"Edita un Recurso"} onClose={() => setEditModal(false)} isOpen={editModal}>
                 <ResourceForm
                   onSubmit={handleSubmitEdit}
                   onCancel={() => setEditModal(false)}
                   data={resources.find(r => r._id === idCard)} />
               </Modal>
-
-              <Modal title={"Crea un nuevo Recurso"} onClose={(() => setModalStatus(false))} isOpen={modalStatus} modalSize={modalSize.add}>
+              <Modal title={"Crea un nuevo Recurso"} onClose={(() => setModalStatus(false))} isOpen={modalStatus}>
                 <ResourceForm
                   onSubmit={handleSubmitCreate}
                   onCancel={() => setModalStatus(false)} />
               </Modal>
-
-              <Modal isOpen={deleteModal} modalSize={modalSize.created}>
+              <Modal isOpen={deleteModal} modalSize={"small"}>
                 <div className="flex justify-center">
                   <img src={imgEliminarRecurso} alt="quieres eliminar un recurso?" />
                 </div>
-                <div className="flex flex-col xl:grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-4">
                   <ButtonModal buttonAction={() => setDeleteModal(false)} type='prev' label={'Cancelar'} />
-                  <ButtonModal buttonAction={handleConfirmDelete} type={'next'} label={'Eliminar Recurso'} />
+                  <ButtonModal buttonAction={handleConfirmDelete} type={'next'} label={'Eliminar Recurso'} />                  
                 </div>
               </Modal>
-
-              <Modal isOpen={resourceCreated} modalSize={modalSize.deleted}>
+              <Modal isOpen={resourceCreated} modalSize={"xsmall"}>
                 <div className="flex justify-center">
                   <img src={AgregasteRecurso} alt="Agregaste un recurso" />
                 </div>
               </Modal>
-
-              <Modal isOpen={itemDeleted} modalSize={modalSize.deleted}>
+              <Modal isOpen={itemDeleted} modalSize={"xsmall"}>
                 <div className="flex justify-center">
                   <img src={RecursoEliminado} alt="Recurso eliminado" />
                 </div>
               </Modal>
-
-              <Modal isOpen={itemEdited} modalSize={modalSize.deleted}>
+              <Modal isOpen={itemEdited} modalSize={"xsmall"}>
                 <div className="flex justify-center">
                   <img src={GuardadoExistosamente} alt="Guardado exitosamente" />
                 </div>

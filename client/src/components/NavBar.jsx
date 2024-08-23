@@ -8,6 +8,8 @@ const NavBar = () => {
     const { status } = useAppStore()
     const [nav, setNav] = useState(false);
     const handleClick = () => setNav(!nav);
+    const normalizedPathname = pathname.replace("/workspace", "/aulavirtual");
+
     const navPages = [
         { text: "Inicio", to: "/" },
         { text: "Aula Virtual", to: "/aulavirtual" },
@@ -30,7 +32,6 @@ const NavBar = () => {
         { text: "Registrarse", to: "/auth/register" }
     ]
 
-
     return (
         <div>
             <ul className="hidden md:flex xl:justify-evenly md:gap-1 lg:gap-4 2xl:gap-8">
@@ -43,8 +44,11 @@ const NavBar = () => {
                             <Link
                                 to={item.to}
                                 className={`hover:text-Yellow hover:font-semibold ease-out duration-300 text-[22px] leading-[25.78px]
-                                    ${pathname === item.to ? "text-Yellow font-extrabold" : "text-white font-normal"} 
+                                    ${normalizedPathname === "/" && item.to === "/" ? "text-Yellow font-extrabold" :
+                                        normalizedPathname.includes(item.to) && item.to !== "/" ? "text-Yellow font-extrabold" :
+                                            "text-white font-normal"} 
                                 `}
+
                             >
                                 {item.text}
                             </Link>
@@ -58,8 +62,11 @@ const NavBar = () => {
                             <Link
                                 to={item.to}
                                 className={`hover:text-Yellow hover:font-semibold ease-out duration-300 text-[22px] leading-[25.78px]
-                                    ${pathname === item.to ? "text-Yellow font-extrabold" : "text-white font-normal"} 
+                                    ${normalizedPathname === "/" && item.to === "/" ? "text-Yellow font-extrabold" :
+                                        normalizedPathname.includes(item.to) && item.to !== "/" ? "text-Yellow font-extrabold" :
+                                            "text-white font-normal"} 
                                 `}
+
                             >
                                 {item.text}
                             </Link>

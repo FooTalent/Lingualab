@@ -10,7 +10,6 @@ import Options from '../../components/user/classes/Options';
 
 const CardClass = ({ thisclass, buttonFunction, deleteFunction }) => {
   const [state, setState] = useState(false);
-
   
   const handleOptions = (e) => {
     e.stopPropagation();

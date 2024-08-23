@@ -56,17 +56,12 @@ const EditVCRForm = ({ program, onSubmit, onClose, teacherId, token }) => {
   };
 
   const handleStudentChange = (studentId) => {
-    const selected = students.find(student => student._id === studentId);
-    setSelectedStudent(selected);
-  };
-
-  const handleAddStudent = () => {
-    if (selectedStudent && !programData.students.includes(selectedStudent._id)) {
+    if (studentId && !programData.students.includes(studentId)) {
       setProgramData((prevData) => ({
         ...prevData,
-        students: [...prevData.students, selectedStudent._id],
+        students: [...prevData.students, studentId],
       }));
-      setSelectedStudent(null);
+      setValue("studentsId", "");
     }
   };
 
@@ -134,16 +129,9 @@ const EditVCRForm = ({ program, onSubmit, onClose, teacherId, token }) => {
               register={register("studentsId", { required: "Debe invitar al menos un alumno" })}
               label="Estudiante/s"
               options={students.map(student => ({ label: `${student.last_name}, ${student.first_name}`, value: student._id }))}
-              selectedOption={selectedStudent ? `${selectedStudent.last_name}, ${selectedStudent.first_name}` : 'Seleccionar Estudiante'}
+              selectedOption={'Seleccionar Estudiante'}
               onSelect={handleStudentChange}
             />
-            <button
-              type="button"
-              onClick={handleAddStudent}
-              className="self-end ml-2 bg-Yellow text-darkGray px-5 py-3 rounded-md hover:bg-darkGray hover:text-Yellow duration-150"
-            >
-              +
-            </button>
             <button
               type="button"
               onClick={handleModalOpen}
