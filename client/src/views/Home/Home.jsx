@@ -18,7 +18,7 @@ const Home = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (user && user.token) {
+    if (user && user.token && userDetail?._id) {
       const fetchClasses = async () => {
         try {
           setLoading(true);
@@ -26,7 +26,6 @@ const Home = () => {
           if (response.isError) { throw new Error(response.message); }
           
           setClasses(response.data);
-
           const cprograms = await getCountPrograms(user.token, userDetail._id, true )
           setCountPrograms(cprograms.data  || 0);
           const cclassrroms = await getCountPrograms(user.token, userDetail._id, false )
