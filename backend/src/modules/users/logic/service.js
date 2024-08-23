@@ -98,9 +98,6 @@ export default class Service extends CustomService {
 
     const token = createToken({_id: userFound._id, role: userFound.role})
     await this.dao.updateConection({_id: userFound._id})
-
-    console.log("usuario: ",userFound.email);
-    console.log(token);
     
     return {name: userFound.first_name, token}
   }
