@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAppStore } from '../../../../store/useAppStore';
 import { getClassById, updateClass, getProgramById } from '../../../../services/programs.services';
-import { LEVELS_MAP } from '../../../../utils/valueLists';
 import TextEditor from '../../../../components/TextEditor/TextEditor';
 import BackButton from '../../../../components/BackButtom';
 import Resources from '../../../Resources/Resources2';
 import IconSvg from '../../../../utils/SvgWrapper';
-import ProgramInfo from '../Program/ProgramInfo';
 import ButtonModal from '../../../../components/Form/ButtonModal';
 import Spinner from '../../../../components/Spinner/Spinner';
 
@@ -84,27 +82,17 @@ const ClassDetail = () => {
     <div className="container mx-auto flex flex-col gap-5">
       <div className="flex items-center gap-12">
         <BackButton />
-
-        <div className="flex items-center gap-6 truncate">
-          <span
-            className="text-white py-3 px-4 rounded-lg text-lg font-extrabold"
-            style={{ backgroundColor: LEVELS_MAP[classData?.level] }}
-          >
-            {classData?.level}
-          </span>
-          <h1 className="text-customSubTitle font-semibold">{classData?.title}</h1>
-        </div>
       </div>
 
-      <ProgramInfo program={classData} />
+      <div>
+        <h2 className="text-customSubTitle font-semibold mb-5">Edita el contenido de la clase</h2>
 
-      <div className='flex flex-col gap-5'>
-        <h2 className="text-customSubTitle font-semibold">Edita el contenido de la clase</h2>
-
-        <TextEditor value={richText} onChange={setRichText} />
+        <div className='mb-5'>
+          <TextEditor value={richText} onChange={setRichText} />
+        </div>
 
         {selectedResources.length > 0 && (
-          <div className="my-4">
+          <div className="my-5">
             <p className="text-lg font-medium">Recursos:</p>
             <ul className="list-disc pl-5 text-gray-700 flex flex-col gap-6">
               {selectedResources.map((resource, index) => (
