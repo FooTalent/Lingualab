@@ -12,11 +12,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 
 const ClassroomCard = ({ classroom, editFunction, deleteFunction, editContentFunction }) => {
-  const { level, title, students, daytime, duration_hours, _id } = classroom;
+  const { level, title, description, daytime, duration_hours, _id } = classroom;
   const [resourcesClass, setResourcesClass] = useState([])
   const [openResources, setOpenResources] = useState(true)
   const [state, setState] = useState(false)
   const { user } = useAppStore();
+
 
   useEffect(() => {
     const fetchSelectedResources = async () => {
@@ -40,22 +41,34 @@ const ClassroomCard = ({ classroom, editFunction, deleteFunction, editContentFun
     { label: <><EditIcon /> Editar clase</>, function: editFunction },
     { path: ``, label: <><DeleteIcon />Eliminar clase</>, function: deleteFunction },
   ]
-  
+
   const handleOptions = () => {
     setState(!state)
   }
 
   return (
     <div className="flex flex-col p-4 gap-4 rounded-xl shadow-cardContainer text-card relative">
-      <div className='flex items-center justify-between'>
-        <div className='flex items-center gap-6 text-lg'>
-          <span className="text-white py-2 px-4 rounded-lg font-medium" style={{ backgroundColor: LEVELS_MAP[level] }}>{level}</span>
-          <h2 className="font-bold">{title}</h2>
+      <div className="flex items-center justify-between">
+        <div className='flex flex-col gap-3'>
+          <div className='w-11/12 flex items-center gap-6'>
+            <span className="text-white px-2 py-1 rounded" style={{ backgroundColor: LEVELS_MAP[level] }}>{level}</span>
+            <h2 className="text-xl font-semibold truncate max-w-[70%]">{title}</h2>
+          </div>
+
+          <div className='flex gap-2'>
+            <strong>Descripción:</strong> {description || '-'}
+          </div>
         </div>
-        <button onClick={handleOptions}>
-          <MoreVertIcon className='text-Purple' />
-        </button>
-        <Options id={_id} state={state} links={links} />
+
+        <div className='flex justify-between gap-4'>
+          <button
+            onClick={handleOptions}
+          >
+            <MoreVertIcon className='text-Purple' />
+          </button>
+
+          <Options id={_id} state={state} links={links} positionTop={'40%'} />
+        </div>
       </div>
       <span className='border-t border-Grey'></span>
 
@@ -75,9 +88,14 @@ const ClassroomCard = ({ classroom, editFunction, deleteFunction, editContentFun
               resourcesClass?.length > 0 ? (
                 <div className="flex flex-col gap-2">
                   {resourcesClass.map((resource, index) => (
-                    <div key={index} className='flex items-center truncate'>
-                      <IconSvg category={resource.type} />
-                      <Link to={resource.url}>{resource.title}</Link>
+                    <div key={index} className='flex items-center gap-x-2 truncate'>
+                      <IconSvg category={resource.type} className={'h-6'} />
+                      <Link
+                        to={resource.url}
+                        className="w-full text-Purple underline decoration-1 focus:outline-none focus:shadow-outline"
+                      >
+                        {resource.title}
+                      </Link>
                     </div>
                   ))}
                 </div>

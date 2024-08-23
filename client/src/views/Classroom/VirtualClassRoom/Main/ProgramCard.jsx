@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LEVELS_MAP } from '../../../../utils/valueLists';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Options from '../../../../components/user/classes/Options';
@@ -18,6 +18,30 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
   const [state, setState] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false)
   const [idProgram, setIdProgram] = useState('')
+  const [modalSize, setModalSize] = useState({})
+
+  useEffect(() => {
+    const handleResize = () => {
+      let size = {};
+
+      if (window.innerWidth >= 1024) {
+        size = { delete: 'xsmall' };
+      } else if (window.innerWidth >= 768) {
+        size = { delete: 'small' };
+      } else {
+        size = { delete: 'medium' };
+      }
+
+      setModalSize(size);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const handleDelete = (id) => {
     setState(!state)
@@ -53,7 +77,7 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
       className="relative flex flex-nowrap justify-between shadow-cardContainer rounded-xl p-4"
       onClick={() => setState(false)}
     >
-      <div className='flex flex-col gap-3 w-9/12'>
+      <div className='flex flex-col gap-3 w-8/12'>
         <div className="flex items-center gap-6 text-lg">
           <div
             className="flex items-center text-white py-2 px-4 rounded-lg font-medium"
@@ -62,8 +86,8 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
             {program.level}
           </div>
           <h2
-            className="p-0 text-lg font-bold truncate"
-            style={{ maxWidth: 'calc(100% - 8rem)' }}
+            className="p-0 font-bold truncate"
+            style={{ maxWidth: 'calc(100% - 7rem)' }}
           >
             {program.title}
           </h2>
@@ -83,11 +107,11 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
           }
         </p>
 
-        <p className='flex gap-4'>
+        <p className='flex gap-2'>
           <span className='font-semibold'>Fecha Inicio:</span>
           {program.first_class ? new Date(program.first_class).toLocaleDateString() : '-'}
         </p>
-        <p className='flex gap-4'>
+        <p className='flex gap-2'>
           <span className='font-semibold'>Hora:</span>
           {
             program.first_class ?
@@ -111,13 +135,14 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
         </button>
       </div>
 
-      <Options id={program._id} state={state} links={links} />
-      <Modal modalSize={'xsmall'} isOpen={deleteModal}>
-        <div className='flex flex-col gap-8'>
+      <Options id={program._id} state={state} links={links} positionTop={'26%'} />
+
+      <Modal modalSize={modalSize.delete} isOpen={deleteModal}>
+        <div className='flex flex-col'>
           <div className="flex justify-center ">
             <img src={popUp} alt="Eliminar aula" />
           </div>
-          <div className="grid grid-cols-2 gap-6">
+          <div className="flex flex-col xl:grid grid-cols-2 gap-4 xl:gap-6">
             <ButtonModal buttonAction={() => setDeleteModal(false)} type={'prev'} label={'Cancelar'} />
             <ButtonModal buttonAction={handleConfirmDelete} label={'Eliminar aula'} />
           </div>

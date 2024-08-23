@@ -15,7 +15,7 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
     teacher: programData.teacher._id,
     language: programData.language,
     level: programData.level,
-    program: programData._id ,
+    program: programData._id,
   });
 
   useEffect(() => {
@@ -69,14 +69,14 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className='flex flex-col gap-4 text-card justify-evenly'
+      className='flex flex-col gap-y-5 lg:gap-y-4'
     >
       {loading ? (
         <p>Cargando...</p>
       ) : error ? (
         <p>Error: {error}</p>
       ) : (
-        <>
+        <div className="flex flex-col gap-4 lg:gap-3 font-medium mt-4">
           <InputField
             label="Título"
             name="title"
@@ -93,11 +93,11 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
             placeholder='Escribe una breve descripción...'
           />
 
-          <div className="grid grid-cols-2 gap-8 mt-9">
+          <div className="grid grid-cols-2 gap-8 md:mt-4">
             <ButtonModal buttonAction={onClose} type='prev' label='Cancelar' />
             <ButtonModal buttonAction={onSubmit} type='submit' label='Crear Clase' />
           </div>
-        </>
+        </div>
       )}
     </form>
   );

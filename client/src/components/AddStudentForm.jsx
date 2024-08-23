@@ -20,7 +20,7 @@ const AddStudentForm = ({ onSubmit, onClose }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmitForm)} className="flex flex-col gap-2">
+    <form onSubmit={handleSubmit(onSubmitForm)} className="flex flex-col gap-3 lg:gap-4">
       <div className='flex flex-col gap-2'>
         <label htmlFor="nombre" className='p-0 text-lg leading-5 font-medium'>Nombre</label>
         <Controller
@@ -179,7 +179,7 @@ const AddStudentForm = ({ onSubmit, onClose }) => {
         )}
       </div>
 
-      <div className="grid grid-cols-2 gap-8 mt-5">
+      <div className="grid grid-cols-2 gap-8">
         <ButtonModal buttonAction={onClose} type={'prev'} label={'Cancelar'} />
         <ButtonModal type={'submit'} label={'Guardar'} />
       </div>

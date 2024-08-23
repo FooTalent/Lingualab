@@ -16,8 +16,8 @@ export default function DropdownSelect({ name, label, icon, options, selectedOpt
   };
 
   return (
-    <div className="relative flex flex-wrap justify-between gap-3">
-      <label className="text-custom p-0 w-full">
+    <div className="relative flex flex-wrap justify-between gap-3 w-full">
+      <label className="text-lg md:text-custom p-0 w-full">
         {label}
       </label>
 

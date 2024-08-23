@@ -6,6 +6,7 @@ import Modal from '../../../../components/Modal';
 import AddStudentForm from '../../../../components/AddStudentForm';
 import { useForm } from 'react-hook-form';
 import ErrorMessage from '../../../../components/ErrorMessage';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 
@@ -26,6 +27,7 @@ const EditVCRForm = ({ program, onSubmit, onClose, teacherId, token }) => {
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const [modalSize, setModalSize] = useState({})
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,6 +40,29 @@ const EditVCRForm = ({ program, onSubmit, onClose, teacherId, token }) => {
     };
     fetchData();
   }, [token, teacherId, refresh]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      let size = {};
+
+      if (window.innerWidth >= 1024) {
+        size = { add: 'small', created: 'xsmall' };
+      } else if (window.innerWidth >= 768) {
+        size = { add: 'medium', created: 'small' };
+      } else {
+        size = { add: 'full', created: 'medium' };
+      }
+
+      setModalSize(size);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -100,8 +125,9 @@ const EditVCRForm = ({ program, onSubmit, onClose, teacherId, token }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(handleFormSubmit)}>
-        <div className="mb-4">
+      <form onSubmit={handleSubmit(handleFormSubmit)} className='flex flex-col gap-y-5 lg:gap-y-4'>
+        <div className="flex flex-col gap-4 lg:gap-3 font-medium mt-4">
+          <label className="p-0 text-lg md:text-custom">Nombre</label>
           <input
             type="text"
             name="title"
@@ -113,54 +139,54 @@ const EditVCRForm = ({ program, onSubmit, onClose, teacherId, token }) => {
                 clearErrors("title");
               }
             })}
-            className="w-1/2 p-2 border rounded-md"
+            className="py-3 px-4 border border-Grey rounded-lg placeholder:text-Grey outline-none focus:border-card hover:border-card"
           />
           {errors.title && (
             <ErrorMessage>{errors.title.message}</ErrorMessage>
           )}
         </div>
-        <div className="mb-4 w-full">
-          <div className="flex items-center mb-2">
-            <DropdownSelect
-              setValue={setValue}
-              name="studentsId"
-              errors={errors}
-              clearErrors={clearErrors}
-              register={register("studentsId", { required: "Debe invitar al menos un alumno" })}
-              label="Estudiante/s"
-              options={students.map(student => ({ label: `${student.last_name}, ${student.first_name}`, value: student._id }))}
-              selectedOption={'Seleccionar Estudiante'}
-              onSelect={handleStudentChange}
-            />
-            <button
-              type="button"
-              onClick={handleModalOpen}
-              className="self-end ml-2 bg-Yellow text-darkGray px-4 py-3 rounded-md hover:bg-darkGray hover:text-Yellow duration-150"
-            >
-              Invitar
-            </button>
-          </div>
-          <div className="flex flex-col">
+
+        <div className=" flex flex-col gap-4 lg:gap-3 font-medium">
+          <DropdownSelect
+            setValue={setValue}
+            name="studentsId"
+            errors={errors}
+            clearErrors={clearErrors}
+            register={register("studentsId", { required: "Debe invitar al menos un alumno" })}
+            label="Estudiante/s"
+            options={students.map(student => ({ label: `${student.last_name}, ${student.first_name}`, value: student._id }))}
+            selectedOption={'Seleccionar Estudiante'}
+            onSelect={handleStudentChange}
+          />
+          <button
+            type="button"
+            onClick={handleModalOpen}
+            className="order-3 w-full lg:w-fit text-xl font-extrabold text-Yellow bg-darkGray py-3 px-8 rounded-lg"
+          >
+            Invitar
+          </button>
+
+          <div className="order-2 grid grid-cols-2 gap-4 lg:flex flex-col">
             {programData.students.map((studentId) => {
               const student = students.find((s) => s._id === studentId);
               return (
-                <div key={studentId} className="flex items-center m-1 p-2 border rounded-md bg-gray-200">
-                  <span>{student ? `${student.last_name}, ${student.first_name}` : 'Estudiante desconocido'}</span>
+                <div key={studentId} className="flex items-center py-3 px-4 border border-Grey hover:bg-Grey hover:text-white ease-out duration-300 rounded-lg gap-3 truncate">
                   <button
                     type="button"
                     onClick={() => handleRemoveStudent(studentId)}
-                    className="ml-2 text-red-500"
                   >
-                    x
+                    <CancelIcon />
                   </button>
+                  <span className='max-w-[90%] truncate'>{student ? `${student.last_name}, ${student.first_name}` : 'Estudiante desconocido'}</span>
                 </div>
               );
             })}
           </div>
         </div>
-        <div className='flex flex-row w-full mb-4 gap-4'>
-          <div className="flex flex-col w-1/2">
-            <label className="block text-gray-700 px-0">Fecha de inicio</label>
+
+        <div className='flex flex-col lg:flex-row gap-4 lg:gap-3 font-medium'>
+          <div className="flex flex-col lg:w-1/2 gap-3">
+            <label className="p-0 text-lg md:text-custom">Fecha de inicio</label>
             <input
               type="date"
               name="startDate"
@@ -179,9 +205,10 @@ const EditVCRForm = ({ program, onSubmit, onClose, teacherId, token }) => {
               <ErrorMessage>{errors.startDate.message}</ErrorMessage>
             )}
           </div>
-          <div className="flex flex-col w-1/2">
-            <label className="block text-gray-700 px-0">Seleccionar Día/s</label>
-            <div className='flex flex-row justify-between w-full mb-1'>
+
+          <div className="flex flex-col lg:w-1/2 gap-3">
+            <label className="p-0 text-lg md:text-custom">Seleccionar Día/s</label>
+            <div className='flex flex-row justify-between w-full'>
               {days.map((day) => (
                 <div className='relative' key={day}>
                   <input
@@ -209,9 +236,10 @@ const EditVCRForm = ({ program, onSubmit, onClose, teacherId, token }) => {
             )}
           </div>
         </div>
-        <div className='flex flex-row w-full mb-4 gap-4'>
-          <div className='flex flex-col w-full'>
-            <label className='px-0'>Hora de Inicio</label>
+
+        <div className='flex flex-col lg:flex-row gap-4 lg:gap-3 font-medium'>
+          <div className='flex flex-col lg:w-1/2 gap-3'>
+            <label className='p-0 text-lg md:text-custom'>Hora de Inicio</label>
             <input
               type="time"
               name="time"
@@ -229,8 +257,9 @@ const EditVCRForm = ({ program, onSubmit, onClose, teacherId, token }) => {
               <ErrorMessage>{errors.time.message}</ErrorMessage>
             )}
           </div>
-          <div className='flex flex-col w-full'>
-            <label className='px-0'>Hora fin</label>
+
+          <div className='flex flex-col lg:w-1/2 gap-3'>
+            <label className='p-0 text-lg md:text-custom'>Hora fin</label>
             <input
               type="time"
               name="endTime"
@@ -248,27 +277,26 @@ const EditVCRForm = ({ program, onSubmit, onClose, teacherId, token }) => {
               <ErrorMessage>{errors.endTime.message}</ErrorMessage>
             )}
           </div>
-
         </div>
 
-
-        <div className="flex justify-between">
+        <div className="grid grid-cols-2 gap-8">
           <button
             type="button"
-            className="w-full bg-transparent text-Purple border border-Purple px-4 py-2 rounded-md mr-2 hover:bg-Purple hover:text-white duration-150"
+            className="w-full bg-transparent text-Purple font-extrabold tracking-wide leading-6 border border-Purple px-4 py-2 rounded-md hover:bg-Purple hover:text-white ease-out duration-150"
             onClick={onClose}
           >
             Cancelar
           </button>
           <button
             type="submit"
-            className="w-full bg-Purple text-white px-4 py-2 rounded-md hover:bg-PurpleHover duration-150"
+            className="w-full bg-Purple text-white font-extrabold tracking-wide leading-6 px-4 py-2 rounded-md hover:bg-PurpleHover ease-out duration-150"
           >
-            Modificar Aula
+            Guardar edición
           </button>
         </div>
       </form>
-      <Modal isOpen={isModalOpen} onClose={handleModalClose} title="Invitar Estudiante" modalSize='medium'>
+
+      <Modal isOpen={isModalOpen} onClose={handleModalClose} title="Invitar Estudiante" modalSize={modalSize.add}>
         <AddStudentForm
           onSubmit={handleAddOneMoreStudent}
         />
