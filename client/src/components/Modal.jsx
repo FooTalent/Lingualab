@@ -9,7 +9,7 @@ const Modal = ({ isOpen, onClose, title, children, modalSize }) => {
       <div className={`bg-white flex flex-col gap-2 shadow-modal max-w-5xl py-5 px-10 text-card overflow-y-auto scrollbar
         ${modalSize === 'small' ? 'w-5/12  rounded-3xl'
           : modalSize === 'xsmall' ? 'w-4/12 rounded-3xl'
-            : modalSize === 'full' ? 'w-full h-[90%] self-end rounded-2xl' : 'w-3/4 rounded-lg'} 
+            : modalSize === 'full' ? 'w-full h-[90%] self-end rounded-2xl px-5' : 'w-3/4 rounded-2xl'} 
         `}
       >
         {

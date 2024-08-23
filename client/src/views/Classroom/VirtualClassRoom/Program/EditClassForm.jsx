@@ -25,7 +25,7 @@ const EditClassForm = ({ classData, onSubmit, onClose }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className='flex flex-col gap-4 text-card justify-evenly'
+      className='flex flex-col gap-y-5 lg:gap-y-4 pt-4'
     >
       <InputField
         label="Título"
@@ -43,7 +43,7 @@ const EditClassForm = ({ classData, onSubmit, onClose }) => {
         placeholder='Escribe una breve descripción...'
       />
 
-      <div className="grid grid-cols-2 gap-8 mt-9">
+      <div className="grid grid-cols-2 gap-8 md:mt-4">
         <ButtonModal buttonAction={onClose} type='prev' label='Cancelar' />
         <ButtonModal buttonAction={onSubmit} type='submit' label='Modificar Clase' />
       </div>

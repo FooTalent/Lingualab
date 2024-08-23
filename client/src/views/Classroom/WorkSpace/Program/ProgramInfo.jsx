@@ -7,6 +7,12 @@ export default function ProgramInfo({ program }) {
                 <span className='font-semibold'>Idioma:</span>
                 {program.language}
             </p>
+
+            <p className="w-3/12 flex gap-4">
+                <span className='font-semibold'>Nivel:</span>
+                {program.level}
+            </p>
+
             <p className="w-3/12 flex gap-4">
                 <span className='font-semibold'>Descripción:</span>
                 {program.description}

@@ -22,6 +22,7 @@ const WorkSpace = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCreated, setIsCreated] = useState(false);
   const [newProgramId, setNewProgramId] = useState(null);
+  const [modalSize, setModalSize] = useState({})
   const { user, userDetail } = useAppStore();
   const navigate = useNavigate();
 
@@ -50,13 +51,40 @@ const WorkSpace = () => {
     }
   }, [user, userDetail, refresh]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      let size = {};
+
+      if (window.innerWidth >= 1024) {
+        size = { add: 'medium', created: 'xsmall' };
+      } else if (window.innerWidth >= 768) {
+        size = { add: 'full', created: 'small' };
+      } else {
+        size = { add: 'full', created: 'medium' };
+      }
+
+      setModalSize(size);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const handleCreateProgram = async (programData) => {
     try {
-      if (programData ) {
+      if (programData) {
         const newProgram = await createProgram(user.token, userDetail._id, programData);
         setNewProgramId(newProgram.data._id);
         setIsCreated(true);
         setIsModalOpen(false);
+
+        setTimeout(() => {
+          setIsCreated(false)
+        }, 2000);
       }
     } catch (error) {
       console.error('Error al crear el programa', error);
@@ -78,11 +106,11 @@ const WorkSpace = () => {
   };
 
   const handleSearchPrograms = (term) => {
-    if (!term){
+    if (!term) {
       setRefresh(prevRefresh => !prevRefresh)
     }
     const filteredPrograms = allPrograms.filter(program => {
-      const normalizedTitle = removeAccents(program.title.toLowerCase()) 
+      const normalizedTitle = removeAccents(program.title.toLowerCase())
       return normalizedTitle.includes(term.toLowerCase())
     })
     setPrograms(filteredPrograms)
@@ -90,11 +118,11 @@ const WorkSpace = () => {
 
   return (
     <div className="container mx-auto flex flex-col gap-11">
-      <NavWorkSpace 
-        setModal={setIsModalOpen} 
-        buttonDescription={"Crear Programa"} 
-        route={'workspace'} 
-        onSearch={handleSearchPrograms}/>
+      <NavWorkSpace
+        setModal={setIsModalOpen}
+        buttonDescription={"Crear Programa"}
+        route={'workspace'}
+        onSearch={handleSearchPrograms} />
 
       {
         loading ? (
@@ -108,7 +136,7 @@ const WorkSpace = () => {
         ) : <CardList data={programs} CardComponent={ProgramCard} buttonFunction={buttonFunction} refresh={setRefresh} />
       }
 
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Crear Programa" modalSize={'medium'}>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Crear Programa" modalSize={modalSize.add}>
         <CreateProgramForm
           onSubmit={handleCreateProgram}
           onClose={() => setIsModalOpen(false)}
@@ -117,7 +145,7 @@ const WorkSpace = () => {
         />
       </Modal>
 
-      <Modal isOpen={isCreated} onClose={handleModalClose} modalSize={'small'}>
+      <Modal isOpen={isCreated} onClose={handleModalClose} modalSize={modalSize.created}>
         <CreatedProgram
           onClose={handleModalClose}
           logo={logo}

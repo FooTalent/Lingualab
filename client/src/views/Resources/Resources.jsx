@@ -201,16 +201,16 @@ export default function Resources({ onSelect, selected }) {
   // los priemros 2 div son usadas para las classes
   return (
     <div className={onSelect ? "fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50" : ""}>
-      <div className={onSelect ? "bg-white max-h-[95%] flex flex-col gap-6 shadow-modal w-11/12 py-5 px-8 rounded-3xl overflow-y-auto scrollbar" : ""}>
+      <div className={onSelect ? "bg-white max-h-[95%] flex flex-col gap-6 shadow-modal w-full py-5 px-4 rounded-3xl overflow-y-auto scrollbar" : ""}>
         {
           onSelect
             ? <div><BackButton /></div>
             : <></>
         }
 
-        <section className={`flex flex-col ${onSelect ? 'justify-center' : ''} gap-8 lg:gap-16`}>
+        <section className={`flex flex-col ${onSelect ? 'justify-center gap-6' : 'gap-8 lg:gap-16'}`}>
           <div className="flex flex-col gap-8 lg:gap-0 lg:grid grid-cols-12">
-            <div className={`order-2 xl:order-1 grid grid-cols-3 col-span-4 items-center ${onSelect ? 'mb-4' : ''} justify-between gap-6`}>
+            <div className={`order-2 xl:order-1 grid grid-cols-3 col-span-4 items-center ${onSelect ? 'mb-4 lg:mb-0' : ''} justify-between gap-6`}>
               {
                 LEVELS.map((lvl, i) => (
                   <LevelFilter
@@ -274,7 +274,7 @@ export default function Resources({ onSelect, selected }) {
                         resources.map((resource, i) => (
                           <div key={i} className={onSelect && "flex items-center"}>
                             {onSelect &&
-                              <div className="w-1/12 flex items-center me-2">
+                              <div className="flex items-center me-2">
                                 <input
                                   type="checkbox"
                                   onChange={() => handleSelect(resource)}
@@ -283,11 +283,14 @@ export default function Resources({ onSelect, selected }) {
                                 />
                               </div>
                             }
+
                             <ResourceCard
                               resource={resource}
                               key={i}
                               deleteFunc={handleDelete}
-                              editFunc={handleEdit} />
+                              editFunc={handleEdit}
+                              onSelect={onSelect} 
+                              />
                           </div>
                         ))
                       )

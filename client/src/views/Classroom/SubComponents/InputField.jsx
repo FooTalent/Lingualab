@@ -2,8 +2,8 @@ import React from 'react'
 
 export default function InputField({ label, name, value, onChange, placeholder }) {
     return (
-        <div className="flex flex-col gap-2 font-medium">
-            <label className="p-0 text-custom">{label}</label>
+        <div className="flex flex-col gap-4 lg:gap-3 font-medium">
+            <label className="p-0 text-lg md:text-custom">{label}</label>
             <input
                 type="text"
                 name={name}
