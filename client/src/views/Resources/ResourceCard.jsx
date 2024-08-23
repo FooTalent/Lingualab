@@ -5,27 +5,31 @@ export default function ResourceCard({ resource, deleteFunc, editFunc }) {
     const { _id } = resource
 
     return (
-        <article className="flex w-full shadow-home px-8 py-6 gap-6 rounded-lg text-card">
-            <div className="flex flex-col gap-4 w-full">
-                <div className="flex items-center gap-6">
+        <article className="flex flex-wrap w-full items-center justify-between shadow-home py-4 px-6 lg:px-8 lg:py-6 gap-y-4 lg:gap-0 rounded-lg text-card">
+            <div className="flex flex-col md:flex-col w-9/12 gap-4">
+                <div className="w-full flex items-center gap-3 lg:gap-6">
                     <span
-                        className="text-white text-sm py-2 px-4 rounded-lg"
+                        className="text-white whitespace-nowrap lg:text-sm py-2 px-4 rounded-lg"
                         style={{ backgroundColor: LEVELS_MAP[resource.level] }}
                     >
                         {resource.level}
                     </span>
-                    <h2 className="text-xl leading-6 font-semibold text-[#444]">{resource.title}</h2>
+                    <h2 className="w-full text-xl leading-6 font-semibold truncate text-card">
+                        {resource.title}
+                    </h2>
                 </div>
-                <div className="flex items-center gap-3">
-                    <IconSvg category={resource.type} className={'w-6'}/>
-                    <p className="text-sm leading-4">
-                        <a href={resource.url} className="hover:underline" target="_blank" rel="noopener noreferrer">
+
+                <div className="flex w-full md:order-2 items-center gap-3">
+                    <IconSvg category={resource.type} className={'w-6'} />
+                    <p className="text-sm leading-4 truncate">
+                        <a href={resource.url} className="hover:underline " target="_blank" rel="noopener noreferrer">
                             {resource.url}
                         </a>
                     </p>
                 </div>
             </div>
-            <div className="flex items-center gap-6 px-2">
+
+            <div className="flex w-1/4 md:w-auto self-end md:items-center md:self-center justify-center gap-6 px-2">
                 <button
                     onClick={() => deleteFunc(_id)}
                     className="text-darkGray hover:text-Grey flex items-center ease-out duration-600"

@@ -33,9 +33,11 @@ const NavProfile = () => {
                 <button onClick={handleMenuToggle} className='relative'>
                     <ExpandMoreIcon className='text-white' />
                 </button>
-                {menuOpen && (
-                    <div className='border border-Purple absolute top-full left-32 mt-4 w-48 bg-white rounded-lg shadow-lg'>
-                        <ul className='py-1'
+            </div>
+            {
+                menuOpen && (
+                    <div className='absolute top-[50%] shadow-customTable p-4 mt-4 bg-white rounded-lg'>
+                        <ul className='space-y-2'
                             onClick={handleMenuClose}>
                             <li>
                                 <Link
@@ -55,8 +57,8 @@ const NavProfile = () => {
                             </li>
                         </ul>
                     </div>
-                )}
-            </div>
+                )
+            }
         </div>
     );
 }

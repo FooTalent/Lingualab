@@ -2,10 +2,10 @@
 const AboutComponent = () => {
     return (
         <div className="flex flex-col items-center mx-auto max-w-[1200px] my-16 gap-20">
-            <h2 className="text-3xl font-bold text-[#444444] mb-8">
+            <h2 className="text-3xl font-bold text-[#444444] md:mb-8">
                 Tecnologías Utilizadas
             </h2>
-            <div className="flex justify-between items-center w-full mx-auto">
+            <div className="flex md:flex-row flex-col md:gap-0 gap-9 justify-between items-center w-full mx-auto">
                 <div className="flex flex-col border h-full border-Grey p-5 rounded-[20px] gap-6">
                     <h2 className="text-3xl font-medium text-center">Diseño</h2>
                     <div className="flex gap-4">
