@@ -20,8 +20,17 @@ const CreateProgramForm = ({ onSubmit, onClose }) => {
     const fetchValues = async () => {
       try {
         const languages = await getLanguages();
-        setLanguageOptions(languages.map(language => ({ value: language, label: language })));
-        setProgramData({ ...programData, language: languages[0] });
+        const defaultLanguage = languages[0] || '';
+        const languageOptions = languages.map(language => ({ value: language, label: language }));
+
+        setLanguageOptions(languageOptions);
+        setProgramData(prevData => ({
+          ...prevData,
+          language: defaultLanguage,
+        }));
+        setValue('language', defaultLanguage);
+        setValue('level', LEVELS[0].data);
+        
       } catch (error) {
         console.error('Error fetching languages:', error);
       }

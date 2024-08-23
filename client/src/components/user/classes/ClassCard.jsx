@@ -29,7 +29,7 @@ export default function ClassCard({ id, title, students, duration, date, program
         try {
             handleStudents()
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
         setIsLoading(false)
     }, [students]);
