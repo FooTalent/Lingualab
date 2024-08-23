@@ -30,7 +30,7 @@ const CardClass = ({ thisclass, buttonFunction, deleteFunction }) => {
   ];
 
   return (
-    <div className="shadow-home rounded-lg max-w-[357px] h-[161px] p-4 cursor-pointer flex flex-nowrap">
+    <div className="shadow-home mx-auto rounded-lg max-w-[357px] h-[161px] p-4 cursor-pointer flex flex-nowrap">
       <div className="flex flex-col justify-between h-full">
         <h2
           className="p-0 text-base font-bold truncate"
@@ -64,7 +64,7 @@ const CardClass = ({ thisclass, buttonFunction, deleteFunction }) => {
           <Options id={thisclass._id} state={state} links={links} />
         </div>
         <button
-          className="bg-Purple hover:bg-PurpleHover text-white px-4 py-2 rounded-lg font-extrabold ease-linear duration-150"
+          className="bg-Purple hover:bg-PurpleHover text-white whitespace-nowrap px-4 py-2 rounded-lg font-extrabold ease-linear duration-150"
           onClick={handleButton}
         >
           Ver clases

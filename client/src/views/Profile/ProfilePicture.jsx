@@ -72,7 +72,7 @@ const ProfilePicture = ({ photo, token, refreshProfile, botonFunction, isEditing
         </button>
       </div>
 
-      <Modal isOpen={isModalOpen} onClose={handleModalClose} title=" ">
+      <Modal isOpen={isModalOpen} onClose={handleModalClose} title=" " modalSize={'medium'}>
         <div className='flex flex-col gap-4'>
           <h2 className='text-xl leading-6 font-extrabold'>Elegir nueva foto de perfil</h2>
           <p>Solo se permite imagenes maximo 5 Mb y que sean ".jpeg" o ".png"</p>
@@ -83,7 +83,7 @@ const ProfilePicture = ({ photo, token, refreshProfile, botonFunction, isEditing
             <img src={URL.createObjectURL(selectedFile)} alt="Selected Preview" className="w-48 h-48 object-cover rounded-full" />
           )}
 
-          <div className="w-full flex items-center gap-4 border border-Grey rounded-lg p-[14px] text-card">
+          <div className="w-full flex flex-col md:flex-row items-center gap-4 border border-Grey rounded-lg p-[14px] text-card">
             <label
               className="cursor-pointer text-lg font-medium leading-5 border border-card rounded text-card bg-inputFile p-3 hover:bg-card hover:text-inputFile ease-out duration-150"
             >

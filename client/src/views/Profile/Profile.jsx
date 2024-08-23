@@ -164,7 +164,7 @@ const Profile = ({ profile }) => {
         {
           isEditing
             ? (
-              <div className="flex justify-center items-center gap-6">
+              <div className="flex flex-col md:flex-row justify-center md:items-center gap-6">
                 <button
                   className="min-w-52 bg-white hover:bg-Purple text-Purple hover:text-white border-Purple border font-extrabold tracking-wide leading-6 py-2 px-8 rounded-lg focus:outline-none focus:shadow-outline ease-out duration-300"
                   type="button"
