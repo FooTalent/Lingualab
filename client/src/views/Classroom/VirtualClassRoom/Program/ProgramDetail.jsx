@@ -75,11 +75,11 @@ const ProgramDetail = () => {
       let size = {};
 
       if (window.innerWidth >= 1024) {
-        size = { add: 'medium', created: 'xsmall' };
+        size = { add: 'medium', addSmall: 'small', created: 'xsmall' };
       } else if (window.innerWidth >= 768) {
-        size = { add: 'full', created: 'small' };
+        size = { add: 'full', addSmall: 'medium', created: 'small' };
       } else {
-        size = { add: 'full', created: 'medium' };
+        size = { add: 'full', addSmall: 'full', created: 'medium' };
       }
 
       setModalSize(size);
@@ -154,22 +154,25 @@ const ProgramDetail = () => {
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (
-    <div className="container mx-auto p-4">
-      <div className='flex flex-row justify-between items-center mb-4'>
+    <div className="container mx-auto lg:p-4">
+      <div className='flex flex-col lg:flex-row justify-between items-start gap-y-8 lg:items-center lg:justify-between'>
         <BackButton />
-        <div className="flex items-center">
-          <span className="text-white px-2 py-1 rounded mr-2" style={{ backgroundColor: LEVELS_MAP[program.level] }}>{program.level}</span>
-          <h1 className="text-3xl font-bold">{program.title}</h1>
+
+        <div className="order-3 md:order-2 w-full md:self-center flex justify-center items-center truncate max-w-[90%] lg:max-w-[40%]">
+          <span className="hidden text-white px-2 py-1 rounded mr-2" style={{ backgroundColor: LEVELS_MAP[program.level] }}>{program.level}</span>
+          <h1 className="max-w-full text-3xl font-bold truncate">{program.title}</h1>
         </div>
-        <div className='flex items-center gap-6'>
+
+        <div className='order-2 lg:order-3 w-full md:w-fit md:self-center grid grid-cols-2 lg:flex items-center gap-6'>
           <button
-            className={`flex items-center gap-4 bg-card hover:bg-Yellow font-extrabold text-Yellow hover:text-card border-2 border-card hover:border-Yellow rounded-lg py-3 px-4 ease-linear duration-150`}
+            className={`flex items-center justify-center gap-4 whitespace-nowrap bg-card hover:bg-Yellow font-extrabold text-Yellow hover:text-card border-2 border-card hover:border-Yellow rounded-lg py-3 px-4 ease-linear duration-150`}
             onClick={() => setIsModalEditOpen(true)}
           >
             Editar <EditIcon />
           </button>
+
           <button
-            className={`flex items-center gap-4 bg-Yellow hover:bg-card font-extrabold text-card hover:text-Yellow border-2 border-Yellow hover:border-card rounded-lg py-3 px-4 ease-linear duration-150`}
+            className={`flex items-center justify-center gap-4 whitespace-nowrap bg-Yellow hover:bg-card font-extrabold text-card hover:text-Yellow border-2 border-Yellow hover:border-card rounded-lg py-3 px-4 ease-linear duration-150`}
             onClick={() => setIsCreateClassModalOpen(true)}
           >
             Crear clase<AddIcon />
@@ -215,7 +218,7 @@ const ProgramDetail = () => {
       )}
 
       {/* Edit Program Modal */}
-      <Modal isOpen={isModalEditOpen} onClose={() => setIsModalEditOpen(false)} title="Editar Aula">
+      <Modal isOpen={isModalEditOpen} onClose={() => setIsModalEditOpen(false)} title="Editar Aula" modalSize={modalSize.add}>
         <EditVCRForm
           onSubmit={handleEditProgram}
           program={program}
@@ -226,7 +229,7 @@ const ProgramDetail = () => {
       </Modal>
 
       {/* Create Class Modal */}
-      <Modal isOpen={isCreateClassModalOpen} onClose={() => setIsCreateClassModalOpen(false)} title="Crear Clase">
+      <Modal isOpen={isCreateClassModalOpen} onClose={() => setIsCreateClassModalOpen(false)} title="Crear Clase" modalSize={modalSize.addSmall}>
         <CreateClassForm
           programData={program}
           onSubmit={handleCreateClass}
@@ -235,7 +238,7 @@ const ProgramDetail = () => {
       </Modal>
 
       {/* Confirmation Modal for created class */}
-      <Modal isOpen={isCreatedClass} onClose={() => setIsCreatedClass(false)} modalSize={'small'}>
+      <Modal isOpen={isCreatedClass} onClose={() => setIsCreatedClass(false)} modalSize={modalSize.created}>
         <CreatedClass
           onClose={() => setIsCreatedClass(false)}
           logo={logo}
@@ -244,7 +247,7 @@ const ProgramDetail = () => {
       </Modal>
 
       {/* Edit Class Modal */}
-      <Modal isOpen={isEditClassModalsOpen} onClose={() => setIsEditClassModalsOpen(false)} title="Modificar Clase">
+      <Modal isOpen={isEditClassModalsOpen} onClose={() => setIsEditClassModalsOpen(false)} title="Modificar Clase" modalSize={modalSize.add}>
         <EditClassForm
           classData={editClass}
           onSubmit={handleEditClass}
@@ -253,21 +256,24 @@ const ProgramDetail = () => {
       </Modal>
 
       {/* Confirmation Modal for deleted class */}
-      <Modal modalSize={'small'} isOpen={deleteClassModal}>
-        <div className="flex justify-center ">
+      <Modal modalSize={modalSize.created} isOpen={deleteClassModal}>
+        <div className='flex flex-col gap-8'>
           <img src={popUp} alt="Eliminar clase" />
-        </div>
-        <div className='flex gap-4'>
-          <button
-            onClick={() => setDeleteClassModal(false)}
-            className="w-full px-4 py-2 border border-Purple text-Purple  rounded-md hover:bg-Purple hover:text-white">
-            Cancelar
-          </button>
-          <button
-            onClick={handleConfirmDelete}
-            className="w-full px-4 py-2 bg-Purple text-white rounded-md hover:bg-PurpleHover">
-            Eliminar clase
-          </button>
+
+          <div className='flex flex-col xl:grid grid-cols-2 gap-6'>
+            <button
+              onClick={() => setDeleteClassModal(false)}
+              className="border border-Purple bg-white hover:bg-Purple text-Purple hover:text-white font-extrabold py-3 px-8 rounded-lg mr-2 ease-linear duration-150"
+            >
+              Cancelar
+            </button>
+            <button
+              onClick={handleConfirmDelete}
+              className="border border-Purple bg-Purple hover:bg-PurpleHover text-white font-extrabold py-3 px-8 rounded-lg ease-linear duration-150"
+            >
+              Eliminar clase
+            </button>
+          </div>
         </div>
       </Modal>
     </div>

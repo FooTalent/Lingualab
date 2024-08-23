@@ -8,6 +8,7 @@ import Modal from '../../../../components/Modal';
 import AddStudentForm from '../../../../components/AddStudentForm';
 import ErrorMessage from '../../../../components/ErrorMessage';
 import NewStudent from '/ImagesStudent/AgregasteUnAlumno.png'
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
   const { user } = useAppStore();
@@ -50,9 +51,9 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
       let size = {};
 
       if (window.innerWidth >= 1024) {
-        size = { add: 'small', created: 'xsmall'};
+        size = { add: 'small', created: 'xsmall' };
       } else if (window.innerWidth >= 768) {
-        size = { add: 'medium', created: 'small'};
+        size = { add: 'medium', created: 'small' };
       } else {
         size = { add: 'full', created: 'medium' };
       }
@@ -212,30 +213,30 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
             <button
               type="button"
               onClick={handleModalOpen}
-              className="w-full lg:w-fit text-xl font-extrabold text-Yellow bg-darkGray py-3 px-8 rounded-lg"
+              className="order-3 w-full lg:w-fit text-xl font-extrabold text-Yellow bg-darkGray py-3 px-8 rounded-lg"
             >
               Invitar
             </button>
-          </div>
 
-          <div className="flex flex-col mt-3">
-            {programData.studentIds.map((studentId) => {
-              const student = students.find((s) => s._id === studentId);
-              return (
-                <div key={studentId} className="flex items-center m-1 p-2 border rounded-md bg-gray-200">
-                  <span>{student ? `${student.last_name}, ${student.first_name}` : 'Estudiante desconocido'}</span>
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveStudent(studentId)}
-                    className="ml-2 text-red-500"
-                  >
-                    x
-                  </button>
-                </div>
-              );
-            })}
+            <div className="order-2 grid grid-cols-2 gap-4 lg:flex flex-col">
+              {programData.studentIds.map((studentId) => {
+                const student = students.find((s) => s._id === studentId);
+                return (
+                  <div key={studentId} className="flex items-center py-3 px-4 border border-Grey rounded-lg gap-3 truncate">
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveStudent(studentId)}
+                    >
+                      <CancelIcon />
+                    </button>
+                    <span className='max-w-[90%] truncate'>{student ? `${student.last_name}, ${student.first_name}` : 'Estudiante desconocido'}</span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
+
         <div className='order-3 lg:order-4 flex flex-col lg:flex-row gap-4 lg:gap-3 font-medium'>
           <div className="flex flex-col lg:w-1/2 gap-3">
             <label className="p-0 text-lg md:text-custom">Fecha de inicio</label>
@@ -288,6 +289,7 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
             )}
           </div>
         </div>
+
         <div className='order-5 flex flex-col lg:flex-row gap-4 lg:gap-3 font-medium'>
           <div className='flex flex-col lg:w-1/2 gap-3'>
             <label className='p-0 text-lg md:text-custom'>Hora de Inicio</label>
@@ -308,6 +310,7 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
               <ErrorMessage>{errors.time.message}</ErrorMessage>
             )}
           </div>
+
           <div className='flex flex-col lg:w-1/2 gap-3'>
             <label className='p-0 text-lg md:text-custom'>Hora fin</label>
             <input
@@ -327,9 +330,7 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
               <ErrorMessage>{errors.endTime.message}</ErrorMessage>
             )}
           </div>
-
         </div>
-
 
         <div className="order-last grid grid-cols-2 gap-8">
           <button

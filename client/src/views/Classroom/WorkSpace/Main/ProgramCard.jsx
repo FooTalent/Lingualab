@@ -98,7 +98,7 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
         </button>
       </div>
 
-      <Options id={program._id} state={state} links={links} />
+      <Options id={program._id} state={state} links={links} positionTop={'30%'} />
       <Modal modalSize={'xsmall'} isOpen={deleteModal}>
         <div className="flex justify-center ">
           <img src={popUp} alt="Eliminar programa" />

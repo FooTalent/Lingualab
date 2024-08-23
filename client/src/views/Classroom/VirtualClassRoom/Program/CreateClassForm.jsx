@@ -19,25 +19,27 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onFormSubmit)}>
-      <div className="mb-4">
-        <label className="block text-gray-700">Título</label>
+    <form onSubmit={handleSubmit(onFormSubmit)} className='flex flex-col gap-y-5 lg:gap-y-4'>
+      <div className="flex flex-col gap-4 lg:gap-3 font-medium mt-4">
+        <label className="p-0 text-lg md:text-custom">Título</label>
         <input
           id='title'
           type="text"
+          placeholder='Escribe el nombre de la clase...'
           {...register("title", { required: "Este campo es obligatorio" })}
-          className={`w-full p-2 border rounded-md ${errors.title ? 'border-red-500' : ''}`}
+          className={`py-3 px-4 border border-Grey rounded-lg placeholder:text-Grey outline-none focus:border-card hover:border-card ${errors.title ? 'border-red-500' : ''}`}
         />
         {errors.title && (
           <ErrorMessage>{errors.title.message}</ErrorMessage>
         )}
       </div>
 
-      <div className="mb-4">
-        <label className="block text-gray-700">Descripción</label>
+      <div className="flex flex-col gap-4 lg:gap-3 font-medium">
+        <label className="p-0 text-lg md:text-custom">Descripción</label>
         <input
           id='description'
           type="text"
+          placeholder='Escribe una breve descripción...'
           {...register("description", {
             required: "Este campo es obligatorio",
             minLength: {
@@ -45,26 +47,26 @@ const CreateClassForm = ({ programData, onSubmit, onClose }) => {
               message: "La descripción debe tener al menos 10 caracteres"
             }
           })}
-          className={`w-full p-2 border rounded-md ${errors.description ? 'border-red-500' : ''}`}
+          className={`py-3 px-4 border border-Grey rounded-lg placeholder:text-Grey outline-none focus:border-card hover:border-card ${errors.description ? 'border-red-500' : ''}`}
         />
         {errors.description && (
           <ErrorMessage>{errors.description.message}</ErrorMessage>
         )}
       </div>
 
-      <div className="flex justify-end">
+      <div className="grid grid-cols-2 gap-8 md:mt-4">
         <button
           type="button"
-          className="bg-gray-500 text-white px-4 py-2 rounded-md mr-2"
+          className="w-full bg-transparent text-Purple font-extrabold tracking-wide leading-6 border border-Purple px-4 py-2 md:py-3 rounded-md hover:bg-Purple hover:text-white ease-out duration-150"
           onClick={onClose}
         >
           Cancelar
         </button>
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded-md"
+          className="w-full bg-Purple text-white font-extrabold tracking-wide leading-6 px-4 py-2 md:py-3 rounded-md hover:bg-PurpleHover ease-out duration-150"
         >
-          Crear
+          Crear clase
         </button>
       </div>
     </form>
