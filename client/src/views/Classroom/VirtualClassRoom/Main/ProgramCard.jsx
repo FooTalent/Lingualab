@@ -10,6 +10,7 @@ import Modal from '../../../../components/Modal';
 import popUp from '/ImagesVCR/EliminarAula.png'
 import ButtonModal from '../../../../components/Form/ButtonModal';
 import ShareIcon from '@mui/icons-material/Share';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import gettingHourClass from '../../../../utils/gettingHoursClass';
 
 const ProgramCard = ({ program, buttonFunction, refresh }) => {
@@ -31,6 +32,7 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
   }
 
   const links = [
+    { path: null, state: 'edit', label: <><PersonAddIcon /> Asignar estudiante/s</>, disabled: true },
     { path: null, state: 'edit', label: <><ShareIcon /> Compartir</>, disabled: true },
     { path: `/aulavirtual/aula/${program._id}`, state: 'edit', label: <><img src={editarPrograma} alt='Editar aula' />Editar aula</> },
     { path: ``, label: <><DeleteIcon />Eliminar aula</>, function: handleDelete },
