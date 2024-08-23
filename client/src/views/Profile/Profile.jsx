@@ -4,6 +4,7 @@ import Dropdown from './Dropdown';
 import SuccessModal from './SuccessModal';
 import { useAppStore } from '../../store/useAppStore';
 import { userUpdate, getUserData, getCountries, getLanguages } from '../../services/index';
+import Spinner from '../../components/Spinner/Spinner';
 
 const Profile = ({ profile }) => {
   const { userDetail, user } = useAppStore();
@@ -108,7 +109,7 @@ const Profile = ({ profile }) => {
     setIsEditing(false);
   };
 
-  if (loading) { return <div>Loading...</div>; }
+  if (loading) { return <div className='flex min-h-screen justify-center'><Spinner /></div>; }
   if (error) { return <div>Ha ocurrido un error: {error}</div>; }
 
   return (
