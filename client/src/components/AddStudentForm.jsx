@@ -39,7 +39,7 @@ const AddStudentForm = ({ onSubmit, onClose }) => {
               type="text"
               id='nombre'
               placeholder="Ingresa el nombre"
-              className={`border ${errors.first_name ? 'border-red-500' : 'border-Grey'} hover:border-card focus:border-card text-Grey rounded-lg py-2 px-4 ease-out duration-600 focus:outline-none`}
+              className={`border ${errors.first_name ? 'border-red-500' : 'border-Grey'} hover:border-card focus:border-card text-card rounded-lg py-2 px-4 ease-out duration-600 focus:outline-none`}
             />
           )}
         />
@@ -66,7 +66,7 @@ const AddStudentForm = ({ onSubmit, onClose }) => {
               id='apellido'
               type="text"
               placeholder="Ingresa el apellido"
-              className={`border ${errors.last_name ? 'border-red-500' : 'border-Grey'} hover:border-card focus:border-card text-Grey rounded-lg py-2 px-4 ease-out duration-600 focus:outline-none`}
+              className={`border ${errors.last_name ? 'border-red-500' : 'border-Grey'} hover:border-card focus:border-card text-card rounded-lg py-2 px-4 ease-out duration-600 focus:outline-none`}
             />
           )}
         />
@@ -93,7 +93,7 @@ const AddStudentForm = ({ onSubmit, onClose }) => {
               id='email'
               type="email"
               placeholder="Ingresa el Email"
-              className={`border ${errors.email ? 'border-red-500' : 'border-Grey'} hover:border-card focus:border-card text-Grey rounded-lg py-2 px-4 ease-out duration-600 focus:outline-none`}
+              className={`border ${errors.email ? 'border-red-500' : 'border-Grey'} hover:border-card focus:border-card text-card rounded-lg py-2 px-4 ease-out duration-600 focus:outline-none`}
             />
           )}
         />
@@ -113,7 +113,7 @@ const AddStudentForm = ({ onSubmit, onClose }) => {
               {...field}
               id='nivel'
               name="level"
-              className={`border ${errors.level ? 'border-red-500' : 'border-Grey'} hover:border-card focus:border-card text-Grey rounded-lg py-2 px-4 ease-out duration-600 focus:outline-none`}
+              className={`border ${errors.level ? 'border-red-500' : 'border-Grey'} hover:border-card focus:border-card text-card rounded-lg py-2 px-4 ease-out duration-600 focus:outline-none`}
             >
               <option value='' disabled>Selecciona el nivel</option>
               {
@@ -143,7 +143,7 @@ const AddStudentForm = ({ onSubmit, onClose }) => {
               type="date"
               id="fechaNacimiento"
               placeholder="Fecha de Nacimiento"
-              className={`border ${errors.birthday ? 'border-red-500' : 'border-Grey'} hover:border-card focus:border-card text-Grey rounded-lg py-2 px-4 ease-out duration-600 focus:outline-none`}
+              className={`border ${errors.birthday ? 'border-red-500' : 'border-Grey'} hover:border-card focus:border-card text-card rounded-lg py-2 px-4 ease-out duration-600 focus:outline-none`}
             />
           )}
         />
@@ -170,7 +170,7 @@ const AddStudentForm = ({ onSubmit, onClose }) => {
               id='tel'
               type="tel"
               placeholder="+54 - 11 - 0000 - 0000"
-              className={`border ${errors.phone ? 'border-red-500' : 'border-Grey'} hover:border-card focus:border-card text-Grey rounded-lg py-2 px-4 ease-out duration-600 focus:outline-none`}
+              className={`border ${errors.phone ? 'border-red-500' : 'border-Grey'} hover:border-card focus:border-card text-card rounded-lg py-2 px-4 ease-out duration-600 focus:outline-none`}
             />
           )}
         />
