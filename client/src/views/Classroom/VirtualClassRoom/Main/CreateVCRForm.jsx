@@ -23,6 +23,7 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
   const [selectedStudent, setSelectedStudent] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalNewStudent, setModalNewStudent] = useState(false)
+  const [modalSize, setModalSize] = useState({})
 
   const days = [
     'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'
@@ -43,6 +44,29 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
     };
     fetchData();
   }, [token, teacherId, refresh]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      let size = {};
+
+      if (window.innerWidth >= 1024) {
+        size = { add: 'small', created: 'xsmall'};
+      } else if (window.innerWidth >= 768) {
+        size = { add: 'medium', created: 'small'};
+      } else {
+        size = { add: 'full', created: 'medium' };
+      }
+
+      setModalSize(size);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -132,14 +156,14 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onFormSubmit)}>
-        <div className="flex flex-col gap-3 font-medium mb-4">
-          <label className="p-0 text-custom">Nombre</label>
+      <form onSubmit={handleSubmit(onFormSubmit)} className='flex flex-col gap-y-5 lg:gap-y-4'>
+        <div className="order-1 flex flex-col gap-4 lg:gap-3 font-medium mt-4">
+          <label className="p-0 text-lg md:text-custom">Nombre</label>
           <input
             type="text"
             name="title"
             value={programData.title}
-            {...register("title", { 
+            {...register("title", {
               required: "Escriba un nombre",
               onChange: (e) => {
                 handleInputChange(e);
@@ -153,7 +177,8 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
             <ErrorMessage>{errors.title.message}</ErrorMessage>
           )}
         </div>
-        <div className="mb-4">
+
+        <div className="order-2 flex flex-col gap-4 lg:gap-3 font-medium">
           <DropdownSelect
             setValue={setValue}
             name="templateId"
@@ -170,33 +195,30 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
             onSelect={(value) => handleSelectChange('templateId', value)}
           />
         </div>
-        <div className="mb-4">
-          <div className='flex flex-row gap-4'>
-            <div className="mb-2">
-              <DropdownSelect
-                setValue={setValue}
-                name="studentsId"
-                errors={errors}
-                clearErrors={clearErrors}
-                register={register("studentsId")}
-                label="Estudiante/s"
-                options={students.map(student => ({ label: `${student.last_name}, ${student.first_name}`, value: student._id }))}
-                selectedOption={selectedStudent ? `${selectedStudent.last_name}, ${selectedStudent.first_name}` : 'Seleccionar Estudiante'}
-                onSelect={handleStudentChange}
-              />
-            </div>
-            <div className='flex flex-row h-full gap-4 mt-10'>
-              <button
-                type="button"
-                onClick={handleModalOpen}
-                className="flex gap-[10px] text-xl font-extrabold text-Yellow bg-darkGray py-3 px-8 rounded-lg"
-              >
-                Invitar
-              </button>
-            </div>
+
+        <div className="order-4">
+          <div className='flex flex-col lg:flex-row lg:items-end justify-between gap-4'>
+            <DropdownSelect
+              setValue={setValue}
+              name="studentsId"
+              errors={errors}
+              clearErrors={clearErrors}
+              register={register("studentsId")}
+              label="Estudiante/s"
+              options={students.map(student => ({ label: `${student.last_name}, ${student.first_name}`, value: student._id }))}
+              selectedOption={selectedStudent ? `${selectedStudent.last_name}, ${selectedStudent.first_name}` : 'Seleccionar Estudiante'}
+              onSelect={handleStudentChange}
+            />
+            <button
+              type="button"
+              onClick={handleModalOpen}
+              className="w-full lg:w-fit text-xl font-extrabold text-Yellow bg-darkGray py-3 px-8 rounded-lg"
+            >
+              Invitar
+            </button>
           </div>
 
-          <div className="flex flex-col">
+          <div className="flex flex-col mt-3">
             {programData.studentIds.map((studentId) => {
               const student = students.find((s) => s._id === studentId);
               return (
@@ -214,9 +236,9 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
             })}
           </div>
         </div>
-        <div className='flex flex-row w-full mb-4 gap-4'>
-          <div className="flex flex-col w-1/2">
-            <label className="block text-gray-700 px-0">Fecha de inicio</label>
+        <div className='order-3 lg:order-4 flex flex-col lg:flex-row gap-4 lg:gap-3 font-medium'>
+          <div className="flex flex-col lg:w-1/2 gap-3">
+            <label className="p-0 text-lg md:text-custom">Fecha de inicio</label>
             <input
               type="date"
               name="startDate"
@@ -235,9 +257,10 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
               <ErrorMessage>{errors.startDate.message}</ErrorMessage>
             )}
           </div>
-          <div className="flex flex-col w-1/2">
-            <label className="block text-gray-700 px-0">Seleccionar Día/s</label>
-            <div className='flex flex-row justify-between w-full mb-1'>
+
+          <div className="flex flex-col lg:w-1/2 gap-3">
+            <label className="p-0 text-lg md:text-custom">Seleccionar Día/s</label>
+            <div className='flex flex-row justify-between w-full'>
               {days.map((day) => (
                 <div className='relative' key={day}>
                   <input
@@ -265,9 +288,9 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
             )}
           </div>
         </div>
-        <div className='flex flex-row w-full mb-4 gap-4'>
-          <div className='flex flex-col w-full'>
-            <label className='px-0'>Hora de Inicio</label>
+        <div className='order-5 flex flex-col lg:flex-row gap-4 lg:gap-3 font-medium'>
+          <div className='flex flex-col lg:w-1/2 gap-3'>
+            <label className='p-0 text-lg md:text-custom'>Hora de Inicio</label>
             <input
               type="time"
               name="time"
@@ -285,8 +308,8 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
               <ErrorMessage>{errors.time.message}</ErrorMessage>
             )}
           </div>
-          <div className='flex flex-col w-full'>
-            <label className='px-0'>Hora fin</label>
+          <div className='flex flex-col lg:w-1/2 gap-3'>
+            <label className='p-0 text-lg md:text-custom'>Hora fin</label>
             <input
               type="time"
               name="endTime"
@@ -308,29 +331,30 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
         </div>
 
 
-        <div className="flex justify-between">
+        <div className="order-last grid grid-cols-2 gap-8">
           <button
             type="button"
-            className="w-full bg-transparent text-Purple border border-Purple px-4 py-2 rounded-md mr-2 hover:bg-Purple hover:text-white duration-150"
+            className="w-full bg-transparent text-Purple font-extrabold tracking-wide leading-6 border border-Purple px-4 py-2 rounded-md hover:bg-Purple hover:text-white ease-out duration-150"
             onClick={onClose}
           >
             Cancelar
           </button>
           <button
             type="submit"
-            className="w-full bg-Purple text-white px-4 py-2 rounded-md hover:bg-PurpleHover duration-150"
+            className="w-full bg-Purple text-white font-extrabold tracking-wide leading-6 px-4 py-2 rounded-md hover:bg-PurpleHover ease-out duration-150"
           >
             Crear Aula
           </button>
         </div>
       </form>
-      <Modal isOpen={isModalOpen} onClose={handleModalClose} title="Invitar Estudiante" modalSize='medium'>
+      <Modal isOpen={isModalOpen} onClose={handleModalClose} title="Invitar Estudiante" modalSize={modalSize.add}>
         <AddStudentForm
           onSubmit={handleAddOneMoreStudent}
           onClose={handleModalClose}
         />
       </Modal>
-      <Modal isOpen={modalNewStudent} modalSize='xsmall'>
+
+      <Modal isOpen={modalNewStudent} modalSize={modalSize.created}>
         <div className="flex justify-center">
           <img src={NewStudent} alt="Agregaste un alumno" />
         </div>

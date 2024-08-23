@@ -22,6 +22,7 @@ const VirtualClassRoom = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCreated, setIsCreated] = useState(false);
   const [newProgramId, setNewProgramId] = useState(null);
+  const [modalSize, setModalSize] = useState({})
   const { user, userDetail } = useAppStore();
   const navigate = useNavigate();
 
@@ -50,6 +51,29 @@ const VirtualClassRoom = () => {
     }
   }, [user, userDetail, refresh]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      let size = {};
+
+      if (window.innerWidth >= 1024) {
+        size = { add: 'medium', created: 'xsmall'};
+      } else if (window.innerWidth >= 768) {
+        size = { add: 'full', created: 'small'};
+      } else {
+        size = { add: 'full', created: 'medium' };
+      }
+
+      setModalSize(size);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const handleCreateProgram = async (programData) => {
     try {
       const newProgram = await createVCRoom(user.token, userDetail._id, programData);
@@ -76,21 +100,21 @@ const VirtualClassRoom = () => {
   };
 
   const handleSearchVCR = (term) => {
-    if (!term){
+    if (!term) {
       setRefresh(prevRefresh => !prevRefresh)
     }
     const filteredVCR = allPrograms.filter(program => {
-      const normalizedTitle = removeAccents(program.title.toLowerCase()) 
+      const normalizedTitle = removeAccents(program.title.toLowerCase())
       return normalizedTitle.includes(term.toLowerCase())
     })
     setPrograms(filteredVCR)
   }
 
   return (
-    <div className="container mx-auto flex flex-col gap-11">
-      <NavWorkSpace 
-        setModal={setIsModalOpen} 
-        buttonDescription={"Crear Aula"} 
+    <div className="container mx-auto flex flex-col gap-6 lg:gap-11">
+      <NavWorkSpace
+        setModal={setIsModalOpen}
+        buttonDescription={"Crear Aula"}
         route={'aulavirtual'}
         onSearch={handleSearchVCR} />
 
@@ -100,19 +124,19 @@ const VirtualClassRoom = () => {
         <p className="text-center text-red-500">Error: {error}</p>
       ) : programs.length === 0 ? (
         <div className="min-h-screen flex">
-          <img src={sinAulas} alt="No hay aulas creadas" className='m-auto'/>
+          <img src={sinAulas} alt="No hay aulas creadas" className='m-auto' />
         </div>
       ) : (
-        <CardList 
-          data={programs} 
-          CardComponent={ProgramCard} 
-          buttonFunction={buttonFunction} 
+        <CardList
+          data={programs}
+          CardComponent={ProgramCard}
+          buttonFunction={buttonFunction}
           refresh={setRefresh}
         />
       )}
 
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Crear Aula">
-        <CreateVCRForm 
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} modalSize={modalSize.add} title="Crear Aula">
+        <CreateVCRForm
           onSubmit={handleCreateProgram}
           onClose={() => setIsModalOpen(false)}
           teacherId={userDetail._id}
@@ -120,7 +144,7 @@ const VirtualClassRoom = () => {
         />
       </Modal>
 
-      <Modal isOpen={isCreated} onClose={handleModalClose} modalSize={'small'}>
+      <Modal isOpen={isCreated} onClose={handleModalClose} modalSize={modalSize.created}>
         <CreatedProgram
           onClose={handleModalClose}
           logo={logo}

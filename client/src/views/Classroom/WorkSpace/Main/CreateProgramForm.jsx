@@ -30,7 +30,7 @@ const CreateProgramForm = ({ onSubmit, onClose }) => {
         }));
         setValue('language', defaultLanguage);
         setValue('level', LEVELS[0].data);
-        
+
       } catch (error) {
         console.error('Error fetching languages:', error);
       }
@@ -61,10 +61,10 @@ const CreateProgramForm = ({ onSubmit, onClose }) => {
   return (
     <form
       onSubmit={handleSubmit(handleForm)}
-      className='flex flex-col gap-4 text-card justify-evenly'
+      className='flex flex-col gap-y-5 lg:gap-y-4'
     >
-      <div className="flex flex-col gap-3 font-medium">
-        <label className="p-0 text-custom">Título</label>
+      <div className="flex flex-col gap-4 lg:gap-3 font-medium mt-4">
+        <label className="p-0 text-lg md:text-custom">Título</label>
         <input
           type="text"
           name="title"
@@ -84,8 +84,8 @@ const CreateProgramForm = ({ onSubmit, onClose }) => {
         )}
       </div>
 
-      <div className="flex flex-col gap-3 font-medium">
-        <label className="p-0 text-custom">Descripción</label>
+      <div className="flex flex-col gap-4 lg:gap-3 font-medium">
+        <label className="p-0 text-lg md:text-custom">Descripción</label>
         <input
           type="text"
           name="description"
@@ -105,31 +105,36 @@ const CreateProgramForm = ({ onSubmit, onClose }) => {
         )}
       </div>
 
-      <DropdownSelect
-        setValue={setValue}
-        name="language"
-        errors={errors}
-        clearErrors={clearErrors}
-        register={register("language", { required: "Selecciona un idioma" })}
-        label="Idioma"
-        options={languageOptions}
-        selectedOption={programData.language}
-        onSelect={(value) => handleSelectChange('language', value)}
-      />
+      <div className='flex flex-col gap-4 lg:gap-3 font-medium'>
+        <DropdownSelect
+          setValue={setValue}
+          name="language"
+          errors={errors}
+          clearErrors={clearErrors}
+          register={register("language", { required: "Selecciona un idioma" })}
+          label="Idioma"
+          options={languageOptions}
+          selectedOption={programData.language}
+          onSelect={(value) => handleSelectChange('language', value)}
+        />
+      </div>
 
-      <DropdownSelect
-        setValue={setValue}
-        name="level"
-        errors={errors}
-        clearErrors={clearErrors}
-        register={register("level", { required: "Selecciona un nivel" })}
-        label="Nivel"
-        options={LEVELS.map(level => level.data)}
-        selectedOption={programData.level}
-        onSelect={(value) => handleSelectChange('level', value)}
-      />
+      <div className='flex flex-col gap-4 lg:gap-3 font-medium'>
+        <DropdownSelect
+          setValue={setValue}
+          name="level"
+          errors={errors}
+          clearErrors={clearErrors}
+          register={register("level", { required: "Selecciona un nivel" })}
+          label="Nivel"
+          options={LEVELS.map(level => level.data)}
+          selectedOption={programData.level}
+          onSelect={(value) => handleSelectChange('level', value)}
+        />
+      </div>
 
-      <div className="grid grid-cols-2 gap-8 mt-6">
+
+      <div className="grid grid-cols-2 gap-8">
         <ButtonModal buttonAction={onClose} type='prev' label='Cancelar' />
         <ButtonModal buttonAction={onSubmit} type='next' label='Crear Programa' />
       </div>

@@ -15,18 +15,18 @@ import { useNavigate } from 'react-router-dom';
 const ProgramCard = ({ program, buttonFunction, refresh }) => {
   const { user, userDetail } = useAppStore();
   const [state, setState] = useState(false)
-  const [deleteModal, setDeleteModal] = useState(false) 
+  const [deleteModal, setDeleteModal] = useState(false)
   const [idProgram, setIdProgram] = useState('')
   const navigate = useNavigate()
 
   const handleDelete = (id) => {
     setState(!state)
-    setDeleteModal(true)  
+    setDeleteModal(true)
     setIdProgram(id)
   }
 
   const handleConfirmDelete = async () => {
-    const response = await deleteProgram(user.token, idProgram) 
+    const response = await deleteProgram(user.token, idProgram)
     setDeleteModal(false)
     refresh(prevRefresh => !prevRefresh)
   }
@@ -38,7 +38,7 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
   }
 
   const handleCreateVCR = async (id) => {
-    const response = await createVCRoom(user.token, userDetail._id, {templateId: id})
+    const response = await createVCRoom(user.token, userDetail._id, { templateId: id })
     const data = response.data
     navigate(`/aulavirtual/aula/${data._id}`)
   }
@@ -57,7 +57,7 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
 
   return (
     <div className="relative flex flex-nowrap justify-between shadow-cardContainer rounded-xl p-4">
-      <div className='flex flex-col gap-3 w-9/12'>
+      <div className='flex flex-col gap-3 w-8/12'>
         <div className="flex items-center gap-6 text-lg">
           <div
             className="flex items-center text-white py-2 px-4 rounded-lg font-medium"
@@ -66,8 +66,8 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
             {program.level}
           </div>
           <h2
-            className="p-0 text-lg font-bold truncate"
-            style={{ maxWidth: 'calc(100% - 8rem)' }}
+            className="p-0 font-bold truncate"
+            style={{ maxWidth: 'calc(100% - 7rem)' }}
           >
             {program.title}
           </h2>

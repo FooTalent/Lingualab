@@ -24,6 +24,7 @@ const ProgramDetail = () => {
   const [refresh, setRefresh] = useState(true);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [modalSize, setModalSize] = useState({})
 
   // Edit Program
   const [program, setProgram] = useState(null);
@@ -68,6 +69,29 @@ const ProgramDetail = () => {
       navigate(location.pathname, { replace: true });
     }
   }, [location]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      let size = {};
+
+      if (window.innerWidth >= 1024) {
+        size = { add: 'medium', created: 'xsmall' };
+      } else if (window.innerWidth >= 768) {
+        size = { add: 'full', created: 'small' };
+      } else {
+        size = { add: 'full', created: 'medium' };
+      }
+
+      setModalSize(size);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   // Functions
   const handleEditProgram = async (newProgram) => {

@@ -16,7 +16,6 @@ export default function ClassCard({ id, title, students, duration, date, program
     const { user } = useAppStore()
     const [stringStudents, setStringStudents] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
-    const [isLoadingNames, setIsLoadingNames] = useState(null)
     const links = [
         { function: () => openModalInvite(program._id), label: <><PersonAddIcon /> Invitar estudiante/s:</>, disabled: false },
         { path: `/aulavirtual/aula/${program._id}`, label: <><WatchLaterIcon /> Editar fecha y hora</>, disabled: false },
@@ -35,7 +34,6 @@ export default function ClassCard({ id, title, students, duration, date, program
     }, [students]);
 
     const handleStudents = async () => {
-        setIsLoadingNames(true)
         if (students.length < 1) {
             setStringStudents('-')
         }
@@ -50,7 +48,6 @@ export default function ClassCard({ id, title, students, duration, date, program
         if (newStudents.length > 0) {
             setStringStudents(newStudents)
         }
-        setIsLoadingNames(false)
     }
 
     const checkIsNow = () => {
@@ -79,58 +76,47 @@ export default function ClassCard({ id, title, students, duration, date, program
         e.stopPropagation();
     };
 
-    if (isLoading) return <Spinner />
+    if (isLoading || !stringStudents) return <Spinner />
 
     return (
         <>
-            <div className={`relative border-2 border-white hover:border-Purple rounded-xl shadow-cardContainer p-4 flex ${isLoadingNames ? 'justify-center' : 'justify-between'} flex-nowrap w-full text-card ease-out duration-600 md:min-h-40`}>
-                {
-                    isLoadingNames ?
-                    <div className='text-center flex items-center'>
-                        <Spinner />
-                    </div> :
-                    <>
-                        <div className='flex flex-col gap-4 w-8/12'>
-                            <h2 className='font-extrabold text-lg leading-5'>{title}</h2>
-                            <div className='flex flex-col gap-2'>
-                                <p className='flex py-1 gap-2 items-center truncate w-full whitespace-nowrap leading-4'>
-                                    <span className='font-semibold whitespace-normal'>Estudiante/s:</span>
-                                    <span className='truncate'>{stringStudents}</span>
-                                </p>
-                                <p className='flex py-1 gap-2 whitespace-nowrap items-center truncate leading-4'>
-                                    <span className='font-semibold'>Fecha de inicio: </span>
-                                    {dayjs(date).format('YYYY-MM-DD')}
-                                </p>
-                                <p className='flex py-1 gap-2 whitespace-nowrap items-center truncate leading-4'>
-                                    <span className='font-semibold'>Hora: </span>
-                                    {duration}
-                                </p>
-                            </div>
-                        </div><div className='flex flex-col justify-between items-end w-fit'>
-                                <button
-                                    id={`button-Options-${id}`}
-                                    className='text-Purple'
-                                    onClick={handleCardOptions}
-                                >
-                                    <MoreVertIcon />
-                                </button>
+            <div className={`relative border-2 border-white hover:border-Purple rounded-xl shadow-cardContainer p-4 flex flex-nowrap w-full text-card ease-out duration-600 md:min-h-40`}>
+                <div className='flex flex-col gap-4 w-8/12'>
+                    <h2 className='font-extrabold text-lg leading-5'>{title}</h2>
+                    <div className='flex flex-col gap-2'>
+                        <p className='flex py-1 gap-2 items-center truncate w-full whitespace-nowrap leading-4'>
+                            <span className='font-semibold whitespace-normal'>Estudiante/s:</span>
+                            <span className='truncate'>{stringStudents}</span>
+                        </p>
+                        <p className='flex py-1 gap-2 whitespace-nowrap items-center truncate leading-4'>
+                            <span className='font-semibold'>Fecha de inicio: </span>
+                            {dayjs(date).format('YYYY-MM-DD')}
+                        </p>
+                        <p className='flex py-1 gap-2 whitespace-nowrap items-center truncate leading-4'>
+                            <span className='font-semibold'>Hora: </span>
+                            {duration}
+                        </p>
+                    </div>
+                </div><div className='flex flex-col justify-between items-end w-fit'>
+                    <button
+                        id={`button-Options-${id}`}
+                        className='text-Purple'
+                        onClick={handleCardOptions}
+                    >
+                        <MoreVertIcon />
+                    </button>
 
-                                <Link
-                                    to={isNow ? '' : `/aulavirtual/aula/${program._id}`}
-                                    target={isNow ? '_blank' : ''}
-                                    className={`flex gap-2 items-center rounded-lg px-4 py-[10px] font-extrabold ease-out duration-300 truncate whitespace-nowrap ${isNow ? 'bg-yellowInput hover:bg-card hover:text-yellowInput' : 'bg-Purple text-white hover:bg-PurpleHover'}`}
-                                    onClick={handleLinkClick}
-                                >
-                                    {isNow ? <><VideocamIcon />Unirse</> : 'Ir al aula'}
-                                </Link>
-                            </div>
-                        </>
-                }
-                
+                    <Link
+                        to={isNow ? '' : `/aulavirtual/aula/${program._id}`}
+                        target={isNow ? '_blank' : ''}
+                        className={`flex gap-2 items-center rounded-lg px-4 py-[10px] font-extrabold ease-out duration-300 truncate whitespace-nowrap ${isNow ? 'bg-yellowInput hover:bg-card hover:text-yellowInput' : 'bg-Purple text-white hover:bg-PurpleHover'}`}
+                        onClick={handleLinkClick}
+                    >
+                        {isNow ? <><VideocamIcon />Unirse</> : 'Ir al aula'}
+                    </Link>
+                </div>
                 {stateOption === id && <Options state={stateOption} id={id} links={links} positionTop={'27%'} />}
-            </div>
-
-
+            </div >
         </>
     );
 }
