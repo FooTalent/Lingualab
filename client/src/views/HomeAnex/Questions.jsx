@@ -56,8 +56,8 @@ const Questions = () => {
         Volver
       </button>
 
-      <div className='w-full grid grid-cols-3'>
-        <h1 className="text-[32px] leading-9 font-medium">
+      <div className='w-full flex flex-col gap-6 xl:grid grid-cols-3'>
+        <h1 className="lg:text-[32px] leading-9 font-medium text-custom">
           Preguntas Frecuentes
         </h1>
 
@@ -93,7 +93,7 @@ const Questions = () => {
             </div>
 
             <div
-              className={`overflow-hidden transition-max-height ease-out duration-300 ${activeIndex === index ? 'max-h-16' : 'max-h-0'}`}
+              className={`overflow-hidden transition-max-height ease-out duration-300 ${activeIndex === index ? 'max-h-40 md:max-h-16' : 'max-h-0'}`}
             >
               <div className="px-4 py-5 text-card text-sm leading-4 border-b border-Grey ease-out duration-300">
                 {faq.answer}
