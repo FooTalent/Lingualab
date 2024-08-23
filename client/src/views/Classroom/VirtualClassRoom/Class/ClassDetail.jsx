@@ -81,6 +81,7 @@ const VCRClassDetail = () => {
 
       <div className='flex flex-col gap-5'>
         <h2 className="text-2xl font-semibold">Edita el contenido de la clase</h2>
+
         <div>
           <TextEditor value={richText} onChange={setRichText} />
         </div>
@@ -100,6 +101,7 @@ const VCRClassDetail = () => {
             </div>
           )
         }
+        
         <div className="flex flex-col xl:flex-row justify-between items-center gap-y-5">
           <div className='grid grid-cols-2 gap-6 md:self-start'>
             <button

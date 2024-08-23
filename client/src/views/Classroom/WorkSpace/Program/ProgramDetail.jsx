@@ -25,7 +25,8 @@ const ProgramDetail = () => {
   const [refresh, setRefresh] = useState(true);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
+  const [modalSize, setModalSize] = useState({})
+
   // Edit Program
   const [program, setProgram] = useState(null);
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
@@ -70,6 +71,29 @@ const ProgramDetail = () => {
     }
   }, [location]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      let size = {};
+
+      if (window.innerWidth >= 1024) {
+        size = { add: 'medium', addSmall: 'small', created: 'xsmall' };
+      } else if (window.innerWidth >= 768) {
+        size = { add: 'full', addSmall: 'medium', created: 'small' };
+      } else {
+        size = { add: 'full', addSmall: 'full', created: 'medium' };
+      }
+
+      setModalSize(size);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   // Functions
   const handleEditProgram = async (data) => {
     try {
@@ -98,9 +122,9 @@ const ProgramDetail = () => {
   const handleShowEditClass = (editClassId) => {
     const classToEdit = program.classes.find(cls => cls._id === editClassId)
     setEditClass(classToEdit)
-    if( editClass ) setIsEditClassModalsOpen(true);
+    if (editClass) setIsEditClassModalsOpen(true);
   };
-  
+
   const handleEditClass = async (classId, classData) => {
     try {
       setIsEditClassModalsOpen(false);
@@ -131,28 +155,29 @@ const ProgramDetail = () => {
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (
-    <div className="container mx-auto flex flex-col gap-8">
-      <div className='flex justify-between items-center'>
-        <div className='flex gap-6'>
+    <div className="container mx-auto text-card flex flex-col gap-5">
+      <div className='flex flex-col lg:flex-row justify-between items-start gap-y-8 lg:items-center lg:justify-between'>
+        <div className='flex justify-between items-center w-full lg:gap-4 lg:w-auto'>
           <BackButton />
           <div className='bg-card text-white rounded-lg text-xl px-4 py-3 italic font-black tracking-normal'>
             Modelo
           </div>
         </div>
-        <div className="flex items-center gap-8">
-          <span className="text-white text-lg font-extrabold py-3 px-4 rounded-lg" style={{ backgroundColor: LEVELS_MAP[program.level] }}>{program.level}</span>
-          <h1 className="text-card text-customSubTitle font-semibold">{program.title}</h1>
+
+        <div className="order-3 md:order-2 w-full md:self-center flex justify-center items-center truncate max-w-[90%] lg:max-w-[40%]">
+          <span className="hidden text-white text-lg font-extrabold py-3 px-4 rounded-lg" style={{ backgroundColor: LEVELS_MAP[program.level] }}>{program.level}</span>
+          <h1 className="max-w-full text-3xl font-bold truncate">{program.title}</h1>
         </div>
 
-        <div className='flex items-center gap-6'>
+        <div className='order-2 lg:order-3 w-full md:w-fit md:self-center grid grid-cols-2 lg:flex items-center gap-6'>
           <button
-            className={`flex items-center gap-4 bg-card hover:bg-Yellow font-extrabold text-Yellow hover:text-card border-2 border-card hover:border-Yellow rounded-lg py-3 px-4 ease-linear duration-150`}
+            className={`flex items-center justify-center gap-4 whitespace-nowrap bg-card hover:bg-Yellow font-extrabold text-Yellow hover:text-card border-2 border-card hover:border-Yellow rounded-lg py-3 px-4 ease-linear duration-150`}
             onClick={() => setIsModalEditOpen(true)}
           >
             Editar <EditIcon />
           </button>
           <button
-            className={`flex items-center gap-4 bg-Yellow hover:bg-card font-extrabold text-card hover:text-Yellow border-2 border-Yellow hover:border-card rounded-lg py-3 px-4 ease-linear duration-150`}
+            className={`flex items-center justify-center gap-4 whitespace-nowrap bg-Yellow hover:bg-card font-extrabold text-card hover:text-Yellow border-2 border-Yellow hover:border-card rounded-lg py-3 px-4 ease-linear duration-150`}
             onClick={() => setIsCreateClassModalOpen(true)}
           >
             Crear clase <AddIcon />
@@ -163,7 +188,7 @@ const ProgramDetail = () => {
       <ProgramInfo program={program} />
 
       {program && program.classes && program.classes.length > 0 ? (
-        <div className="flex flex-col justify-evenly gap-6">
+        <div className="grid grid-cols-1 gap-4">
           {program.classes.map((classroom) => (
             <ClassroomCard
               key={classroom._id}
@@ -178,8 +203,8 @@ const ProgramDetail = () => {
         <p>No tiene clases cargadas</p>
       )}
 
-      {/* Edit Program Modal */}  
-      <Modal isOpen={isModalEditOpen} onClose={() => setIsModalEditOpen(false)} title="Editar Programa">
+      {/* Edit Program Modal */}
+      <Modal isOpen={isModalEditOpen} onClose={() => setIsModalEditOpen(false)} title="Editar Programa" modalSize={modalSize.add}>
         <EditProgramForm
           program={program}
           onSubmit={handleEditProgram}
@@ -188,7 +213,7 @@ const ProgramDetail = () => {
       </Modal>
 
       {/* Create Class Modal */}
-      <Modal isOpen={isCreateClassModalOpen} onClose={() => setIsCreateClassModalOpen(false)} title="Crear Clase">
+      <Modal isOpen={isCreateClassModalOpen} onClose={() => setIsCreateClassModalOpen(false)} title="Crear Clase" modalSize={modalSize.addSmall}>
         <CreateClassForm
           programData={program}
           onSubmit={handleCreateClass}
@@ -197,7 +222,7 @@ const ProgramDetail = () => {
       </Modal>
 
       {/* Confirmation Modal for created class */}
-      <Modal isOpen={isCreatedClass} onClose={() => setIsCreatedClass(false)} modalSize={'small'}>
+      <Modal isOpen={isCreatedClass} onClose={() => setIsCreatedClass(false)} modalSize={modalSize.created}>
         <CreatedClass
           onClose={() => setIsCreatedClass(false)}
           logo={logo}
@@ -206,7 +231,7 @@ const ProgramDetail = () => {
       </Modal>
 
       {/* Edit Class Modal */}
-      <Modal isOpen={isEditClassModalsOpen} onClose={() => setIsEditClassModalsOpen(false)} title="Modificar Clase">
+      <Modal isOpen={isEditClassModalsOpen} onClose={() => setIsEditClassModalsOpen(false)} title="Modificar Clase" modalSize={modalSize.add}>
         <EditClassForm
           classData={editClass}
           onSubmit={handleEditClass}
@@ -215,24 +240,26 @@ const ProgramDetail = () => {
       </Modal>
 
       {/* Confirmation Modal for deleted class */}
-      <Modal modalSize={'small'} isOpen={deleteClassModal}>
-          <div className="flex justify-center ">
-            <img src={popUp} alt="Eliminar clase" />
-          </div>
-          <div className='flex gap-4'>
+      <Modal modalSize={modalSize.created} isOpen={deleteClassModal}>
+        <div className='flex flex-col gap-8'>
+          <img src={popUp} alt="Eliminar clase" />
+          <div className='flex flex-col xl:grid grid-cols-2 gap-6'>
             <button
               onClick={() => setDeleteClassModal(false)}
-              className="w-full px-4 py-2 border border-Purple text-Purple  rounded-md hover:bg-Purple hover:text-white">
+              className="border border-Purple bg-white hover:bg-Purple text-Purple hover:text-white font-extrabold py-3 px-8 rounded-lg mr-2 ease-linear duration-150"
+            >
               Cancelar
             </button>
             <button
               onClick={handleConfirmDelete}
-              className="w-full px-4 py-2 bg-Purple text-white rounded-md hover:bg-PurpleHover">
+              className="border border-Purple bg-Purple hover:bg-PurpleHover text-white font-extrabold py-3 px-8 rounded-lg ease-linear duration-150"
+            >
               Eliminar clase
             </button>
           </div>
-      </Modal>
-    </div>
+        </div>
+      </Modal >
+    </div >
   );
 };
 

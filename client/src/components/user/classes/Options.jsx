@@ -6,7 +6,7 @@ export default function Options({ state, id, links, positionTop }) {
             className={`absolute right-0 text-sm border shadow-cardContainer z-10 rounded-lg bg-white p-4 
             ${state ? 'flex flex-col gap-4' : 'hidden'}
             `}
-            style={{top: positionTop ?? '25%' }}
+            style={{ top: parseInt(positionTop) > 40 ? '40%' : positionTop ?? '25%' }}
         >
             {links.map((link, index) => {
                 if (link.path) {

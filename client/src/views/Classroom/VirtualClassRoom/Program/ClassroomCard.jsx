@@ -49,20 +49,22 @@ const ClassroomCard = ({ classroom, editFunction, deleteFunction, editContentFun
     <div className="flex flex-col p-4 gap-4 rounded-xl shadow-cardContainer text-card relative">
       <div className="flex items-center justify-between">
         <div className='w-11/12 flex items-center gap-6'>
-          <span className="text-white px-2 py-1 rounded" style={{backgroundColor: LEVELS_MAP[level]}}>{level}</span>
+          <span className="text-white px-2 py-1 rounded" style={{ backgroundColor: LEVELS_MAP[level] }}>{level}</span>
           <h2 className="text-xl font-semibold truncate max-w-[70%]">{title}</h2>
         </div>
+
         <div className='flex justify-between gap-4'>
           <button
             onClick={handleOptions}
           >
             <MoreVertIcon className='text-Purple' />
           </button>
+
           <Options id={_id} state={state} links={links} positionTop={'30%'} />
         </div>
       </div>
       <div>
-        <strong>Fecha:</strong> {daytime ? new Date(daytime).toLocaleString('es-ES') : null }
+        <strong>Fecha:</strong> {daytime ? new Date(daytime).toLocaleString('es-ES') : null}
       </div>
       <span className='border-t border-Grey'></span>
       <div className='flex items-center gap-6 text-sm'>
@@ -93,7 +95,7 @@ const ClassroomCard = ({ classroom, editFunction, deleteFunction, editContentFun
             )
           }
         </div>
-      </div>   
+      </div>
     </div>
   );
 };
