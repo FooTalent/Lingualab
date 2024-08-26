@@ -26,7 +26,7 @@ export default function LandingLayout() {
         <>
             <div className='min-h-screen w-full'>
                 <div className='bg-Purple'>
-                    <header className='flex items-center justify-between md:max-w-[1210px] md:mx-auto h-12 md:h-[80px] px-5 py-[10px] md:py-4'>
+                    <header className='flex z-40 w-full mx-auto  items-center justify-between max-w-[1210px] h-[48px] md:h-[80px] px-5 py-4'>
                         <LogoHeader />
                         <NavBar />
                         <NavAuth />
