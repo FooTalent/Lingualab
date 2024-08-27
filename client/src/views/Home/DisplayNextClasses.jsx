@@ -4,7 +4,11 @@ import Spinner from '../../components/Spinner/Spinner';
 
 const DisplayNextClasses = ({ classes, loading, error, refresh, buttonFunction }) => {
 
-  if (loading) return <Spinner />;
+  if (loading) return (
+    <div className='flex justify-center items-center py-16'>
+      <Spinner />
+    </div>
+  );
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
   
   if (!classes || classes.length === 0) {

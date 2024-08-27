@@ -70,7 +70,11 @@ const VCRClassDetail = () => {
     navigate(-1);
   };
 
-  if (loading) return <Spinner />
+  if (loading) return (
+    <div className='flex justify-center items-center min-h-80'>
+      <Spinner />
+    </div>
+  )
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
   return (

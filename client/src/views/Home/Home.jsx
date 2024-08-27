@@ -3,6 +3,7 @@ import { useAppStore } from "../../store/useAppStore";
 import { getCountPrograms, getHourlyLoad, getNextNClassesByTeacher } from "../../services/programs.services";
 import DisplayNextClasses from "./DisplayNextClasses";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../../components/Spinner/Spinner";
 
 const Home = () => {
   const { user, userDetail } = useAppStore();
@@ -94,33 +95,48 @@ const Home = () => {
             </div>
 
             <div className="order-1 lg:order-2 flex w-full justify-between md:justify-center lg:justify-between lg:gap-0 md:gap-10">
-              <div className="w-[107px] md:w-auto shadow-home rounded-xl p-4 lg:py-6 xl:px-8 flex items-center gap-2 lg:gap-[23px] justify-center lg:text-start flex-col">
-                <img
-                  src="/ImagesHome/TotalPrograma.png"
-                  alt="Total Programa"
-                  className="w-[75px] h-[75px] rounded-lg"
-                />
-                <p className="text-[22px] leading-[25.75px] font-semibold">{countPrograms}</p>
+              <div className="w-[107px] md:w-auto shadow-home rounded-xl p-4 lg:py-6 xl:px-8 flex items-center gap-2 lg:gap-[23px] justify-between lg:text-start flex-col lg:min-h-[217px] min-h-[187px]">
+                {
+                  loading ? <Spinner /> :
+                    <>
+                      <img
+                        src="/ImagesHome/TotalPrograma.png"
+                        alt="Total Programa"
+                        className="w-[75px] h-[75px] rounded-lg"
+                      />
+                      <p className="text-[22px] leading-[25.75px] font-semibold">{countPrograms}</p>
+                    </>
+                }
                 <p className="text-xs lg:text-[16px] font-normal leading-custom">Total de programas</p>
               </div>
 
-              <div className="w-[107px] md:w-auto shadow-home rounded-xl p-4 lg:py-6 xl:px-8 flex items-center gap-2 lg:gap-[23px] justify-center lg:text-start flex-col">
-                <img
-                  src="/ImagesHome/ProgramaCompleto.png"
-                  alt="Programa Completo"
-                  className="w-[75px] h-[75px] rounded-lg"
-                />
-                <p className="text-[22px] leading-[25.75px] font-semibold">{countClassRooms}</p>
+              <div className="w-[107px] md:w-auto shadow-home rounded-xl p-4 lg:py-6 xl:px-8 flex items-center gap-2 lg:gap-[23px] justify-between lg:text-start flex-col lg:min-h-[217px] min-h-[187px]">
+                {
+                  loading ? <Spinner /> :
+                  <>
+                    <img
+                    src="/ImagesHome/ProgramaCompleto.png"
+                    alt="Programa Completo"
+                    className="w-[75px] h-[75px] rounded-lg"
+                    />
+                    <p className="text-[22px] leading-[25.75px] font-semibold">{countClassRooms}</p>
+                  </>
+                }
                 <p className="text-xs lg:text-[16px] font-normal leading-custom">Programas completos</p>
               </div>
 
-              <div className="w-[107px] md:w-auto shadow-home rounded-xl p-4 lg:py-6 xl:px-8 flex items-center gap-2 lg:gap-[23px] justify-center lg:text-start flex-col">
-                <img
-                  src="/ImagesHome/CargaHoraria.png"
-                  alt="Carga Horaria"
-                  className="w-[75px] h-[75px] rounded-lg"
-                />
-                <p className="text-[22px] leading-[25.75px] font-semibold">{hourlyLoad} hrs</p>
+              <div className="w-[107px] md:w-auto shadow-home rounded-xl p-4 lg:py-6 xl:px-8 flex items-center gap-2 lg:gap-[23px] justify-between lg:text-start flex-col lg:min-h-[217px] min-h-[187px]">
+                {
+                  loading ? <Spinner /> :
+                  <>
+                    <img
+                    src="/ImagesHome/CargaHoraria.png"
+                    alt="Carga Horaria"
+                    className="w-[75px] h-[75px] rounded-lg"
+                    />
+                    <p className="text-[22px] leading-[25.75px] font-semibold">{hourlyLoad}</p>
+                  </>
+                }
                 <p className="text-xs lg:text-[16px] font-normal leading-custom">Total carga horaria</p>
               </div>
             </div>

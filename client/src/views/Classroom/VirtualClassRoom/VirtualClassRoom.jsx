@@ -121,7 +121,9 @@ const VirtualClassRoom = () => {
         onSearch={handleSearchVCR} />
 
       {loading ? (
-        <Spinner />
+        <div className='flex justify-center items-center min-h-80'>
+          <Spinner />
+        </div>
       ) : error ? (
         <p className="text-center text-red-500">Error: {error}</p>
       ) : programs.length === 0 ? (
