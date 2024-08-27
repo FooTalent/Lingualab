@@ -4,14 +4,14 @@ import { useAppStore } from '../store/useAppStore'
 import { useEffect } from 'react'
 
 export default function AuthLayout() {
-    const { localLogin } = useAppStore()
+    const { localLogin, status } = useAppStore()
 
     useEffect(() => {
         const initialize = async () => {
             await localLogin();
         };
         initialize();
-    }, [localLogin]);
+    }, [localLogin, status]);
 
     return (
         <>

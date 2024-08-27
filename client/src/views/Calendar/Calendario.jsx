@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppStore } from '../../store/useAppStore';
 import { dayjsLocalizer } from 'react-big-calendar';
 import ClassCalendar from '../../components/user/calendar/ClassCalendar';
@@ -19,7 +19,7 @@ dayjs.locale('es');
 const localizer = dayjsLocalizer(dayjs);
 
 export default function Calendario() {
-    const { user, userDetail } = useAppStore()
+    const { user, userDetail, status, localLogin } = useAppStore()
     const [classes, setClasses] = useState([])
     const [date, setDate] = useState(new Date());
     const [open, setOpen] = useState(false);
@@ -31,9 +31,14 @@ export default function Calendario() {
     const [classroomIdToInvite, setClassroomIdToInvite] = useState(null)
 
     useEffect(() => {
+        if (!user.token) {
+            localLogin();
+        } else {
+            fetchTeacherClasses();
+        }
         setIsLoading(true)
-        fetchTeacherClasses()
-    }, [])
+    }, [user, userDetail, status])
+
 
     const fetchTeacherClasses = async () => {
         // startDate=2024-07-01&endDate=2024-08-01

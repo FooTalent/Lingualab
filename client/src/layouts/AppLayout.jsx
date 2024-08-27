@@ -1,5 +1,5 @@
 import LogoHeader from '../components/LogoHeader'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import { useAppStore } from '../store/useAppStore'
 import { useEffect } from 'react'
 import NavProfile from '../components/NavProfile'
@@ -7,22 +7,13 @@ import NavBar from '../components/NavBar'
 import CurrentTime from '../components/CurrentTime'
 
 export default function AppLayout() {
-    const navigate = useNavigate()
     const { status, localLogin } = useAppStore()
-    console.log(status)
     useEffect(() => {
         const initialize = async () => {
-          if (!status) {
             await localLogin();
-            if (!status && window.location.pathname !== '/landing') {
-              navigate('/landing');
-            }
-          } else {
-            navigate(window.location.pathname);
-          }
         };
         initialize();
-      }, [status, localLogin, navigate]);
+    }, [localLogin, status]);
 
     return (
         <>

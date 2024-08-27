@@ -8,14 +8,14 @@ import Footer from '../views/Landing/Footer'
 
 export default function LandingLayout() {
     
-    const { localLogin } = useAppStore()
+    const { localLogin, status } = useAppStore()
 
     useEffect(() => {
         const initialize = async () => {
             await localLogin();
         };
         initialize();
-    }, [localLogin]);
+    }, [localLogin, status]);
 
     return (
         <>
