@@ -36,8 +36,9 @@ app.use(passport.initialize())
 // App Routes --------------------------------
 app.get('/', (req, res) => {res.send({prueba: "texto de prueba del backend"})});
 app.use('/api', appRouter);
+app.use(express.static(path.join(__dirname, 'public')));
 app.get('*', (req, res, next) => {
-  if (req.originalUrl.startsWith('/api') || req.originalUrl.startsWith('/public')) {
+  if (req.originalUrl.startsWith('/api')) {
     next();
   } else {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
