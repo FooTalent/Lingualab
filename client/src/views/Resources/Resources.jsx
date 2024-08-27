@@ -263,7 +263,12 @@ export default function Resources({ onSelect, selected }) {
 
             <div className="flex flex-col col-span-7 col-start-6 p-2 grow w-full gap-6 text-card max-h-[585px] overflow-y-auto scrollbar">
               {
-                loading ? <Spinner /> : (
+                loading ? 
+                <div className='flex justify-center items-center min-h-80'>
+                  <Spinner />
+                </div>
+                : 
+                (
                   error ? <p className="m-auto text-center">{error}</p> :
                     (
                       resources.length === 0 ? (

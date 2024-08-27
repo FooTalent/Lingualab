@@ -135,7 +135,11 @@ export default function Calendario() {
         }
     };
 
-    if (isLoading) return <Spinner />
+    if (isLoading) return (
+        <div className='flex justify-center items-center min-h-80'>
+            <Spinner />
+        </div>
+    )
 
     return (
         <>
