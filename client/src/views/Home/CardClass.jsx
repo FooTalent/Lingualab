@@ -37,14 +37,14 @@ const CardClass = ({ thisclass, buttonFunction, deleteFunction }) => {
         >
           {thisclass.title}
         </h2>
-        <p className='flex text-sm gap-4'>
+        <div className='flex text-sm gap-4'>
           <span className='font-semibold'>Estudiante/s:</span>
           <div>
             {thisclass.program.students.map((student) => (
               <div key={student._id}>{student.last_name}, {student.first_name}</div>
             ))}
           </div>
-        </p>
+        </div>
         <p className='flex text-sm gap-4'>
           <span className='font-semibold'>Fecha Inicio: </span>
           { thisclass.daytime ? new Date(thisclass.daytime).toLocaleDateString() : '-'}
