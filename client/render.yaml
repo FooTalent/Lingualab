@@ -1,5 +1,10 @@
-staticPublishPath: public
-routes:
-  - type: rewrite
-    source: "/*"
-    destination: "/index.html"
+services:
+  - type: web
+    name: my-app
+    env: static
+    buildCommand: npm run build
+    startCommand: npm run start
+    staticPublishPath: /path-to-your-build-folder
+    routes:
+      - src: /*
+        dest: /index.html
