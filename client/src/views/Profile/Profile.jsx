@@ -109,7 +109,7 @@ const Profile = ({ profile }) => {
     setIsEditing(false);
   };
 
-  if (loading) { return <div className='flex min-h-screen justify-center'><Spinner /></div>; }
+  if (loading) { return <div className='flex min-h-80 justify-center items-center'><Spinner /></div>; }
   if (error) { return <div>Ha ocurrido un error: {error}</div>; }
 
   return (
