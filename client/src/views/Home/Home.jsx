@@ -160,7 +160,7 @@ const Home = () => {
               <h2 className="text-xl leading-6 font-semibold mb-2">
                 Preguntas Frecuentes
               </h2>
-              <div className="shadow-home rounded-xl p-4 md:py-6 md:px-8 flex items-center w-full md:w-auto gap-6 xl:max-w-[390px]">
+              <div className="shadow-home rounded-xl p-4 md:py-6 md:px-8 flex items-center justify-center w-full md:w-auto gap-6 xl:max-w-[390px]">
                 <img
                   src="/ImagesHome/preguntash.png"
                   alt="Preguntas"
