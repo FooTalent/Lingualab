@@ -1,23 +1,17 @@
 import Logo from '../components/Logo'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet} from 'react-router-dom'
 import { useAppStore } from '../store/useAppStore'
 import { useEffect } from 'react'
 
 export default function AuthLayout() {
-    const navigate = useNavigate()
-    const { status, localLogin } = useAppStore()
+    const { localLogin } = useAppStore()
 
     useEffect(() => {
         const initialize = async () => {
-            if (!status) {
-                await localLogin();
-            }
+            await localLogin();
         };
         initialize();
-        if (status) {
-            navigate('/')
-        }
-    }, [status, navigate])
+    }, [localLogin]);
 
     return (
         <>

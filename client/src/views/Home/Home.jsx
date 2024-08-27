@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { useAppStore } from "../../store/useAppStore";
-import SearchIcon from "@mui/icons-material/Search";
 import { getCountPrograms, getHourlyLoad, getNextNClassesByTeacher } from "../../services/programs.services";
 import DisplayNextClasses from "./DisplayNextClasses";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const { user, status, userDetail } = useAppStore();
+  const { user, userDetail } = useAppStore();
   const navigate = useNavigate();
 
   const [classes, setClasses] = useState([]);
@@ -55,7 +54,6 @@ const Home = () => {
     navigate(`/aulavirtual/clase/${classId}`);
   };
 
-  if (status)
     return (
       <div className="flex flex-col gap-8 lg:gap-12 text-card pt-8">
         <div className="flex justify-between items-center">
