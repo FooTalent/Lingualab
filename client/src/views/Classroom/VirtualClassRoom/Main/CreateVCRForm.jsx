@@ -12,7 +12,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 
 const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
   const { user } = useAppStore();
-  const { register, handleSubmit, formState: { errors }, setValue, clearErrors } = useForm();
+  const { register, handleSubmit, formState: { errors }, setValue, clearErrors, setError } = useForm();
   const [programData, setProgramData] = useState({
     studentIds: [],
     daysOfWeek: [],
@@ -30,7 +30,7 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
     'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'
   ]
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toLocaleString().split("T")[0];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,7 +73,7 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
     const { name, value } = e.target;
     setProgramData((prevData) => {
       const newData = { ...prevData, [name]: value };
-
+  
       if (name === 'startDate' || name === 'time') {
         const date = newData.startDate || prevData.startDate;
         const time = newData.time || prevData.time;

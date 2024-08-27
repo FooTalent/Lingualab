@@ -22,6 +22,7 @@ const WorkSpace = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCreated, setIsCreated] = useState(false);
   const [newProgramId, setNewProgramId] = useState(null);
+  const [newProgramData, setNewProgramData] = useState(null);
   const [modalSize, setModalSize] = useState({})
   const { user, userDetail } = useAppStore();
   const navigate = useNavigate();
@@ -79,6 +80,7 @@ const WorkSpace = () => {
       if (programData) {
         const newProgram = await createProgram(user.token, userDetail._id, programData);
         setNewProgramId(newProgram.data._id);
+        setNewProgramData(programData); 
         setIsCreated(true);
         setIsModalOpen(false);
 
@@ -99,10 +101,10 @@ const WorkSpace = () => {
   const handleModalClose = () => {
     setIsCreated(false);
     setPrograms((prevPrograms) => [
-      ...prevPrograms.filter((p) => p._id !== newProgramId),
-      { _id: newProgramId, ...programData },
+      ...prevPrograms,
+      { _id: newProgramId, ...newProgramData },
     ]);
-    setRefresh(prevRefresh => !prevRefresh);
+    setRefresh((prevRefresh) => !prevRefresh);
   };
 
   const handleSearchPrograms = (term) => {
