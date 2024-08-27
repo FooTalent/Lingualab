@@ -1,11 +1,13 @@
 import { useForm } from "react-hook-form";
 import { useAppStore } from "../../store/useAppStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import InputList from "../../components/Form/InputList";
+import Spinner from "../../components/Spinner/Spinner";
 
 const Login = () => {
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false)
     const initialValues = {
         email: '',
         password: '',
@@ -49,17 +51,41 @@ const Login = () => {
         }
     }, [status]);
 
+    useEffect(() => {
+        if (loading) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, [loading]);
+
     const handleLogin = async (formData) => {
+        setLoading(true)
         await userLogin(formData)
         await localLogin()
+        setLoading(false)
     }
+
     return (
         <>
+            {
+                loading && (
+                    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                        <Spinner />
+                    </div>
+                )
+            }
+
             <form
                 onSubmit={handleSubmit(handleLogin)}
                 className="formUser"
                 noValidate
             >
+
                 <InputList
                     data={initialValues}
                     register={register}
