@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppStore } from '../../store/useAppStore';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import InputList from '../../components/Form/InputList'
+import Spinner from '../../components/Spinner/Spinner';
 
 export default function Register() {
     const navigate = useNavigate();
     const { userRegister, complete, resetComplete } = useAppStore();
+    const [loading, setLoading] = useState(false)
 
     const initialValues = {
         first_name: '',
@@ -21,7 +23,9 @@ export default function Register() {
     });
 
     const handleForm = async (formData) => {
+        setLoading(true)
         await userRegister(formData);
+        setLoading(false)
     };
 
     useEffect(() => {
@@ -31,6 +35,18 @@ export default function Register() {
             resetComplete();
         }
     }, [complete, navigate, reset, resetComplete]);
+
+    useEffect(() => {
+        if (loading) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, [loading]);
 
     const getInputConfig = (inputName) => {
         let params = {
@@ -91,6 +107,14 @@ export default function Register() {
 
     return (
         <React.Fragment>
+
+            {
+                loading && (
+                    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                        <Spinner />
+                    </div>
+                )
+            }
 
             <form
                 onSubmit={handleSubmit(handleForm)}
