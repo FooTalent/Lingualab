@@ -30,7 +30,7 @@ const CardClass = ({ thisclass, buttonFunction, deleteFunction }) => {
   ];
 
   return (
-    <div className="shadow-home mx-auto rounded-lg max-w-[357px] h-[161px] p-4 cursor-pointer flex flex-nowrap">
+    <div className="shadow-home mx-auto rounded-lg w-full max-w-[357px] h-[161px] p-4 cursor-pointer flex justify-between flex-nowrap">
       <div className="flex flex-col justify-between h-full">
         <h2
           className="p-0 text-base font-bold truncate"
