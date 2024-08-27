@@ -62,7 +62,7 @@ const Home = () => {
           </h1>
         </div>
 
-        <div className="flex flex-col xl:flex-row gap-8 xl:gap-20 flex-grow">
+        <div className="flex flex-col xl:flex-row gap-y-8 xl:gap-x-4 2xl:gap-20 flex-grow">
           <div className="flex flex-col justify-between gap-7 w-full">
             <div className="order-2 lg:order-1 shadow-home rounded-xl p-4 lg:py-6 lg:px-8 flex flex-col md:flex-row items-center gap-6 h-auto">
               <div className="flex items-center justify-center lg:w-[300px] h-[194px] bg-[#FFDC00] rounded-lg">
@@ -94,7 +94,7 @@ const Home = () => {
             </div>
 
             <div className="order-1 lg:order-2 flex w-full justify-between md:justify-center lg:justify-between lg:gap-0 md:gap-10">
-              <div className="w-[107px] md:w-auto shadow-home rounded-xl p-4 lg:py-6 lg:px-8 flex items-center gap-2 lg:gap-[23px] justify-center lg:text-start flex-col">
+              <div className="w-[107px] md:w-auto shadow-home rounded-xl p-4 lg:py-6 xl:px-8 flex items-center gap-2 lg:gap-[23px] justify-center lg:text-start flex-col">
                 <img
                   src="/ImagesHome/TotalPrograma.png"
                   alt="Total Programa"
@@ -104,7 +104,7 @@ const Home = () => {
                 <p className="text-xs lg:text-[16px] font-normal leading-custom">Total de programas</p>
               </div>
 
-              <div className="w-[107px] md:w-auto shadow-home rounded-xl p-4 lg:py-6 lg:px-8 flex items-center gap-2 lg:gap-[23px] justify-center lg:text-start flex-col">
+              <div className="w-[107px] md:w-auto shadow-home rounded-xl p-4 lg:py-6 xl:px-8 flex items-center gap-2 lg:gap-[23px] justify-center lg:text-start flex-col">
                 <img
                   src="/ImagesHome/ProgramaCompleto.png"
                   alt="Programa Completo"
@@ -114,7 +114,7 @@ const Home = () => {
                 <p className="text-xs lg:text-[16px] font-normal leading-custom">Programas completos</p>
               </div>
 
-              <div className="w-[107px] md:w-auto shadow-home rounded-xl p-4 lg:py-6 lg:px-8 flex items-center gap-2 lg:gap-[23px] justify-center lg:text-start flex-col">
+              <div className="w-[107px] md:w-auto shadow-home rounded-xl p-4 lg:py-6 xl:px-8 flex items-center gap-2 lg:gap-[23px] justify-center lg:text-start flex-col">
                 <img
                   src="/ImagesHome/CargaHoraria.png"
                   alt="Carga Horaria"
@@ -136,7 +136,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="flex flex-col justify-between items-center gap-4 xl:gap-14 md:max-w-[75%] md:mx-auto xl:max-w-[800px]">
+          <div className="flex flex-col justify-between items-center gap-4 xl:gap-14 md:max-w-[75%] md:mx-auto lg:w-[369px] xl:w-auto xl:max-w-[800px]">
             <div className="order-2 xl:order-1 shadow-home rounded-xl p-4 md:py-6 md:px-8 flex flex-col gap-6 md:h-[487px] w-full">
               <h2 className="text-xl leading-6 font-semibold">
                 Últimas Novedades
@@ -162,7 +162,7 @@ const Home = () => {
                 <img
                   src="/ImagesHome/preguntash.png"
                   alt="Preguntas"
-                  className="object-cover rounded-lg"
+                  className="object-cover rounded-lg lg:w-[40%]"
                 />
                 <div className="flex flex-col justify-between gap-4">
                   <button

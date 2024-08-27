@@ -70,6 +70,12 @@ const Login = () => {
         setLoading(false)
     }
 
+    const handleGoogleLogin = async () => {
+        setLoading(true)
+        await userLoginGoogle()
+        setLoading(false)
+    }
+
     return (
         <>
             {
@@ -109,7 +115,7 @@ const Login = () => {
                 <hr className="w-full border border-black" />
             </div>
             <button
-                onClick={() => userLoginGoogle()}
+                onClick={handleGoogleLogin}
                 className="flex items-center justify-center gap-4 cursor-pointer w-full px-6 py-[10px] border border-Grey rounded-lg shadow-sm bg-white">
                 <img
                     className="w-[18px] h-[18px]"
