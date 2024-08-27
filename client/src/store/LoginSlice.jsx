@@ -72,7 +72,7 @@ export const createUserSlice = (set, get) => ({
             localStorage.setItem('user', JSON.stringify(get().user))
         } else {
             Toast.fire({
-                title: "error",
+                title: "Error al iniciar sesión",
                 icon: "error"
             })
         }

@@ -19,9 +19,10 @@ const EditVCRForm = ({ program, onSubmit, onClose, teacherId, token }) => {
     daysOfWeek: program.daysOfWeek || [],
     first_class: program.first_class || '',
     startDate: program.first_class ? program.first_class.split('T')[0] : '',
-    time: program.first_class ? program.first_class.split('T')[1].slice(0, 5) : '',
+    time: '',
     endTime: '',
   });
+
   const today = new Date().toISOString().split("T")[0];
   const [students, setStudents] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState(null);
@@ -30,16 +31,38 @@ const EditVCRForm = ({ program, onSubmit, onClose, teacherId, token }) => {
   const [modalSize, setModalSize] = useState({})
 
   useEffect(() => {
+    if (program.first_class) {
+      const firstClass = new Date(program.first_class);
+      const formattedHours = firstClass.getHours().toString().padStart(2, '0');
+      const formattedEndHours = (firstClass.getHours() + program.duration_hours).toString().padStart(2, '0');
+      const formattedMinutes = firstClass.getMinutes().toString().padStart(2, '0');
+
+      setProgramData((prevData) => ({
+        ...prevData,
+        time: `${formattedHours}:${formattedMinutes}`,
+        endTime: `${formattedEndHours}:${formattedMinutes}`,
+      }));
+    }
+  }, [program.first_class, program.duration_hours]);
+
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
-        const fetchedStudents = await getStudents(token, teacherId);
-        setStudents(fetchedStudents.data);
+        const { data } = await getStudents(token, teacherId);
+        setStudents(data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
     fetchData();
   }, [token, teacherId, refresh]);
+
+  useEffect(() => {
+    setValue("studentsId", programData.students);
+    setValue("time", programData.time);
+    setValue("endTime", programData.endTime);
+  }, [setValue, programData]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -158,6 +181,7 @@ const EditVCRForm = ({ program, onSubmit, onClose, teacherId, token }) => {
             selectedOption={'Seleccionar Estudiante'}
             onSelect={handleStudentChange}
           />
+
           <button
             type="button"
             onClick={handleModalOpen}
@@ -190,7 +214,6 @@ const EditVCRForm = ({ program, onSubmit, onClose, teacherId, token }) => {
             <input
               type="date"
               name="startDate"
-              min={today}
               value={programData.startDate}
               {...register("startDate", {
                 required: "La fecha de inicio es obligatoria",
