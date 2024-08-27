@@ -12,29 +12,29 @@ const Error404 = () => {
   const { status, localLogin } = useAppStore()
 
   useEffect(() => {
-      const initialize = async () => {
-          if (!status) {
-              await localLogin();
-          }
-      };
-      initialize();
+    const initialize = async () => {
+      if (!status) {
+        await localLogin();
+      }
+    };
+    initialize();
   }, [status, localLogin])
-  
+
   return (
     <>
-      { (status) ? (
+      {(status) ? (
         <div className='min-h-screen w-full'>
-            <div className='bg-Purple'>
-                <header className='flex items-center justify-between max-w-[1210px] mx-auto h-[80px] py-[16px]'>
-                    <LogoHeader />
-                    <NavBar />
-                    <NavProfile />
-                </header>
-            </div>
-            <div className='flex flex-col mx-auto max-w-[1210px] px-8p box-content pb-10'>
-                <CurrentTime />
-                <The404message/>
-            </div>
+          <div className='bg-Purple'>
+            <header className='flex z-40 w-full mx-auto  items-center justify-between max-w-[1210px] h-[48px] md:h-[80px] px-5 py-4'>
+              <LogoHeader />
+              <NavBar />
+              <NavProfile />
+            </header>
+          </div>
+          <div className='flex flex-col mx-auto max-w-[1210px] px-8p box-content pb-10'>
+            <CurrentTime />
+            <The404message />
+          </div>
         </div>
       ) : (
         <div className='min-h-screen w-full'>
@@ -46,7 +46,7 @@ const Error404 = () => {
             </header>
           </div>
           <div className='flex flex-col mx-auto max-w-full'>
-            <The404message/>
+            <The404message />
           </div>
         </div>
       )}

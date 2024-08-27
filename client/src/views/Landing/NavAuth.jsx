@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 const NavAuth = () => {
 
     return (
-        <div className="hidden md:flex items-center lg:gap-6 md:gap-2 font-bold">
+        <div className="hidden lg:flex items-center lg:gap-6 md:gap-2 font-bold">
             <Link
                 to="/auth/login"
                 className="text-white bg-transparent border text-center border-white rounded-lg md:py-3 lg:px-5 md:px-2 hover:bg-white hover:text-Purple duration-150">
