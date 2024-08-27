@@ -73,7 +73,7 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
     const { name, value } = e.target;
     setProgramData((prevData) => {
       const newData = { ...prevData, [name]: value };
-  
+
       if (name === 'startDate' || name === 'time') {
         const date = newData.startDate || prevData.startDate;
         const time = newData.time || prevData.time;
@@ -198,27 +198,29 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
         </div>
 
         <div className="order-4">
-          <div className='flex flex-col lg:flex-row lg:items-end justify-between gap-4'>
-            <DropdownSelect
-              setValue={setValue}
-              name="studentsId"
-              errors={errors}
-              clearErrors={clearErrors}
-              register={register("studentsId")}
-              label="Estudiante/s"
-              options={students.map(student => ({ label: `${student.last_name}, ${student.first_name}`, value: student._id }))}
-              selectedOption={selectedStudent ? `${selectedStudent.last_name}, ${selectedStudent.first_name}` : 'Seleccionar Estudiante'}
-              onSelect={handleStudentChange}
-            />
-            <button
-              type="button"
-              onClick={handleModalOpen}
-              className="order-3 w-full lg:w-fit text-xl font-extrabold text-Yellow bg-darkGray py-3 px-8 rounded-lg"
-            >
-              Invitar
-            </button>
+          <div className='flex flex-col xl:flex-row xl:flex-wrap xl:items-end xl:gap-4'>
+            <div className='flex flex-col xl:flex-row xl:items-end gap-4 w-full'>
+              <DropdownSelect
+                setValue={setValue}
+                name="studentsId"
+                errors={errors}
+                clearErrors={clearErrors}
+                register={register("studentsId")}
+                label="Estudiante/s"
+                options={students.map(student => ({ label: `${student.last_name}, ${student.first_name}`, value: student._id }))}
+                selectedOption={selectedStudent ? `${selectedStudent.last_name}, ${selectedStudent.first_name}` : 'Seleccionar Estudiante'}
+                onSelect={handleStudentChange}
+              />
+              <button
+                type="button"
+                onClick={handleModalOpen}
+                className="w-full xl:w-fit text-xl font-extrabold text-Yellow bg-darkGray py-3 px-8 rounded-lg"
+              >
+                Invitar
+              </button>
+            </div>
 
-            <div className="order-2 grid grid-cols-2 gap-4 lg:flex flex-col">
+            <div className="w-full grid grid-cols-2 gap-4 mt-4 xl:mt-0">
               {programData.studentIds.map((studentId) => {
                 const student = students.find((s) => s._id === studentId);
                 return (
