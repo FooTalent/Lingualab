@@ -194,7 +194,11 @@ const ViewStudent = () => {
 
           <tbody className='border border-Purple rounded-xl shadow-customTable p-4 flex flex-col items-center'>
             {loading ? (
-              <Spinner />
+              <tr>
+                <td colSpan="6" className="text-center py-4">
+                  <Spinner />
+                </td>
+              </tr>
             ) : error ? (
               <tr>
                 <td colSpan="6" className="text-center py-4 text-red-500">
