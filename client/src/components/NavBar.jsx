@@ -34,7 +34,6 @@ const NavBar = () => {
         };
     }, [nav]);
 
-
     const navPages = [
         { text: "Inicio", to: "/" },
         { text: "Aula Virtual", to: "/aulavirtual" },

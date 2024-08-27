@@ -2,13 +2,29 @@ import { useAppStore } from "../../store/useAppStore";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from 'react-router-dom';
 import InputList from '../../components/Form/InputList';
+import { useEffect, useState } from "react";
+import Spinner from "../../components/Spinner/Spinner";
 
 export default function NewPassword() {
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false)
     const initialValues = {
         password: '',
         rPassword: '',
     }
+
+    useEffect(() => {
+        if (loading) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
+
+        return () => {
+            document.body.style.overflow = "auto";
+        };
+    }, [loading]);
+
     const { register, handleSubmit, formState: { errors }, reset, watch } = useForm({
         defaultValues: initialValues, mode: 'onChange', reValidateMode: 'onChange'
     })
@@ -60,15 +76,25 @@ export default function NewPassword() {
     };
 
     const handlePassword = async (formData) => {
+        setLoading(true)
         const { password } = formData
         await newPassword(password, token)
         if (change) {
             navigate("/auth/login");
         }
         reset()
+        setLoading(false)
     }
     return (
         <>
+            {
+                loading && (
+                    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                        <Spinner />
+                    </div>
+                )
+            }
+
             <p className="text-2xl font-[500] text-black">
                 Restablece tu contraseña
             </p>
