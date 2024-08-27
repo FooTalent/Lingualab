@@ -19,15 +19,33 @@ const EditVCRForm = ({ program, onSubmit, onClose, teacherId, token }) => {
     daysOfWeek: program.daysOfWeek || [],
     first_class: program.first_class || '',
     startDate: program.first_class ? program.first_class.split('T')[0] : '',
-    time: program.first_class ? program.first_class.split('T')[1].slice(0, 5) : '',
+    time: '',
     endTime: '',
   });
+
   const today = new Date().toISOString().split("T")[0];
   const [students, setStudents] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const [modalSize, setModalSize] = useState({})
+
+  useEffect(() => {
+    const handleTime = () => {
+      let firstClass = new Date(program.first_class)
+      let formattedHours = String(firstClass.getHours()).padStart(2, '0')
+      let formattedEndHours = String(firstClass.getHours() + program.duration_hours).padStart(2, '0')
+      let formattedMinutes = String(firstClass.getMinutes()).padStart(2, '0');
+
+      setProgramData({
+        ...programData,
+        time: `${formattedHours}:${formattedMinutes}`,
+        endTime: `${formattedEndHours}:${formattedMinutes}`
+      })
+    }
+
+    handleTime()
+  }, [program])
 
   useEffect(() => {
     const fetchData = async () => {
