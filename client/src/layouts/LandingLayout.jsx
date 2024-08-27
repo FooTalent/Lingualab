@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import LogoHeader from '../components/LogoHeader'
 import NavBar from '../components/NavBar'
 import { useAppStore } from '../store/useAppStore'
@@ -7,20 +7,15 @@ import NavAuth from '../views/Landing/NavAuth'
 import Footer from '../views/Landing/Footer'
 
 export default function LandingLayout() {
-    const navigate = useNavigate()
-    const { status, localLogin } = useAppStore()
+    
+    const { localLogin } = useAppStore()
 
     useEffect(() => {
         const initialize = async () => {
-            if (!status) {
-                await localLogin();
-            }
+            await localLogin();
         };
         initialize();
-        if (status) {
-            navigate('/')
-        }
-    }, [status, navigate])
+    }, [localLogin]);
 
     return (
         <>
