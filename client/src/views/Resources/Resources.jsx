@@ -35,36 +35,40 @@ export default function Resources({ onSelect, selected }) {
   const [idCard, setIdCard] = useState('')
   const [editModal, setEditModal] = useState(false)
   const [modalSize, setModalSize] = useState({});
+  const {userDetail, status} = useAppStore()
 
   // Elementos usado para las classes + onSelect
   const [selectedResources, setSelectedResources] = useState([]);
 
   //Llamado de Recursos
   useEffect(() => {
-    if (user) {
-      const getResources = async () => {
-        try {
-          const updateResources = async (filter) => {
-            setLoading(true)
-            const res = await fetchResourcesWithFilter(user.token, filter)
-            setResources(res.data)
-          }
-
-          let filter = selectedLevel ? `level=${selectedLevel}` : ''
-          if (title) filter += `&title=${title}`
-          if (selectedCat) filter += `&type=${selectedCat}`
-          await updateResources(filter)
-
-        } catch (error) {
-          console.error('Error al llamar recursos:', error);
-          setError(error.message)
-        } finally {
-          setLoading(false)
-        }
+    const getResources = async () => {
+      if (!user || !user.token) {
+        // Maneja el caso en que el token no está disponible
+        return;
       }
-      getResources()
-    }
-  }, [user, refreshCards])
+      try {
+        const updateResources = async (filter) => {
+          setLoading(true);
+          const res = await fetchResourcesWithFilter(user.token, filter);
+          setResources(res.data);
+        };
+  
+        let filter = selectedLevel ? `level=${selectedLevel}` : '';
+        if (title) filter += `&title=${title}`;
+        if (selectedCat) filter += `&type=${selectedCat}`;
+        await updateResources(filter);
+  
+      } catch (error) {
+        console.error('Error al llamar recursos:', error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    getResources();
+  }, [user, refreshCards, userDetail, status, selectedLevel, title, selectedCat]);
 
   useEffect(() => {
     const fetchSelectedResources = async () => {

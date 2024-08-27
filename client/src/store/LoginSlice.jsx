@@ -83,23 +83,23 @@ export const createUserSlice = (set, get) => ({
             user: null,
             userDetail: null
         }));
-        localStorage.setItem('status', JSON.stringify(get().status));
-        localStorage.setItem('user', JSON.stringify(get().user));
-        localStorage.setItem('userDetail', JSON.stringify(get().userDetail));
+        localStorage.removeItem('status');
+        localStorage.removeItem('user');
+        localStorage.removeItem('userDetail');
         Toast.fire({
             title: "Sesión finalizada",
             icon: "info"
         });
     },
     localLogin: () => {
-        const storeLogin = localStorage.getItem('status')
-        const userLogin = localStorage.getItem('user')
-        const detail = localStorage.getItem('userDetail')
-        if (storeLogin) {
+        const storedStatus = localStorage.getItem('status')
+        const storedUser = localStorage.getItem('user')
+        const storedUserDetail = localStorage.getItem('userDetail')
+        if (storedStatus) {
             set({
-                status: JSON.parse(storeLogin),
-                user: JSON.parse(userLogin),
-                userDetail: JSON.parse(detail),
+                status: JSON.parse(storedStatus),
+                user: JSON.parse(storedUser),
+                userDetail: JSON.parse(storedUserDetail),
             })
         }
     },
