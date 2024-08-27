@@ -30,7 +30,7 @@ const Carousel = () => {
   };
 
   return (
-    <div className="md:w-[1400px] md:h-[400px] h-[250px] flex items-center mx-auto">
+    <div className="w-full lg:w-[1400px] md:h-[400px] h-[250px] flex items-center mx-auto">
       <div className="w-full md:h-[166px]">
         <Slider {...settings}>
           {reseñas.map((reseña, index) => (

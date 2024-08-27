@@ -28,7 +28,7 @@ export default function AppLayout() {
         <>
             <div className='min-h-screen w-full'>
                 <div className='bg-Purple'>
-                    <header className='flex items-center justify-between max-w-[1210px] mx-auto h-[80px] py-[16px]'>
+                    <header className='flex z-40 w-full mx-auto  items-center justify-between max-w-[1210px] h-[48px] md:h-[80px] px-5 py-4'>
                         <LogoHeader />
                         <NavBar />
                         <NavProfile />
