@@ -96,7 +96,7 @@ const ProgramCard = ({ program, buttonFunction, refresh }) => {
         <p className='flex gap-2'>
           <span className='font-semibold'>Estudiante/s:</span>
           {
-            program.students.length > 0 ?
+            program?.students?.length > 0 ?
               (program.students.map((student) =>
                 student ? (
                   `${student.last_name}, ${student.first_name}; `

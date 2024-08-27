@@ -64,7 +64,7 @@ const Home = () => {
           </h1>
         </div>
 
-        <div className="flex flex-col xl:flex-row gap-8 xl:gap-20 ">
+        <div className="flex flex-col xl:flex-row gap-8 xl:gap-20 flex-grow">
           <div className="flex flex-col justify-between gap-7 w-full">
             <div className="order-2 lg:order-1 shadow-home rounded-xl p-4 lg:py-6 lg:px-8 flex flex-col md:flex-row items-center gap-6 h-auto">
               <div className="flex items-center justify-center lg:w-[300px] h-[194px] bg-[#FFDC00] rounded-lg">
@@ -127,14 +127,15 @@ const Home = () => {
               </div>
             </div>
 
-            {/* CARDS PROXIMAS CLASES */}
-            <DisplayNextClasses
-              classes={classes}
-              loading={loading}
-              error={error}
-              refresh={handleRefresh}
-              buttonFunction={handleEditContentClass}
-            />
+            <div className="order-3 lg:order-3 flex-grow flex flex-col">
+              <DisplayNextClasses
+                classes={classes}
+                loading={loading}
+                error={error}
+                refresh={handleRefresh}
+                buttonFunction={handleEditContentClass}
+              />
+            </div>
           </div>
 
           <div className="flex flex-col justify-between items-center gap-4 xl:gap-14 md:max-w-[75%] md:mx-auto xl:max-w-[800px]">
