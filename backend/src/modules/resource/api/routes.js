@@ -5,7 +5,7 @@ import { handleAuth } from "../../../middleware/handlePolicies.js";
 const router = Router();
 const controller = new Controller()
 
-// http://localhost:8080/api/programs/
+// http://localhost:8080/api/resources/
 router
 .get    ("/",     handleAuth(["TEACHER", "STUDENT"]), controller.get)
 .get    ("/:eid", handleAuth(["TEACHER", "STUDENT"]), controller.getById)
