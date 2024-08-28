@@ -80,7 +80,7 @@ const Home = () => {
                 <div className="flex">
                   <p className="text-[16px] font-normal leading-[18.75px]">
                     Ingresa a ver más para acceder al instructivo de cómo crear
-                    tus programas, clases, y cómo agregar materiales. Encontrá
+                    tus programas, clases, y cómo agregar materiales. Encuentra
                     recursos útiles, un recorrido completo por la página y
                     descubre cómo gestionar a tus alumnos.
                   </p>
@@ -160,7 +160,7 @@ const Home = () => {
               <p className="leading-custom">
                 Mantente al día con las últimas actualizaciones y eventos.
                 Descubre nuevos recursos disponibles para mejorar tus clases,
-                tips para un mejor manejo de tus aulas virtuales, y noticias
+                tips para un mejor manejo de tus aulas virtuales y noticias
                 relevantes del mundo de la educación.
               </p>
               <img
