@@ -57,13 +57,10 @@ export const getProgramById = async (token, programId) => {
 
 export const updateProgram = async (token, programId, data ) => {
   try {
-    console.log(data);
     const updatedData = {
       ...data,
       first_class: data.startDate && data.time ? new Date(`${data.startDate}T${data.time}:00.000Z`).toISOString() : undefined,
     };
-
-    console.log(updatedData);
     
     const response = await axios.put(`${url}api/programs/${programId}`, updatedData, {
       headers: {
@@ -198,16 +195,7 @@ export const getVCRooms = async (token, teacherId) => {
 
 export const createVCRoom = async (token, teacherId, data) => {
   try {
-    const toUTC = (date, time) => {
-      const localDateTime = new Date(`${date}T${time}:00`);
-      return new Date(localDateTime.getTime() + localDateTime.getTimezoneOffset() * 60000).toISOString();
-    };
-
-    const newClassRoom = { 
-      ...data, 
-      teacher: teacherId,
-      first_class: data.startDate && data.time ? toUTC(data.startDate, data.time) : undefined,
-    };
+    const newClassRoom = { ...data, teacher: teacherId}
     const response = await axios.post(`${url}api/virtual`, newClassRoom, {
       headers: {
         Authorization: `Bearer ${token}`,
