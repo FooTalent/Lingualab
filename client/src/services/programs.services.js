@@ -198,14 +198,16 @@ export const getVCRooms = async (token, teacherId) => {
 
 export const createVCRoom = async (token, teacherId, data) => {
   try {
+    const toUTC = (date, time) => {
+      const localDateTime = new Date(`${date}T${time}:00`);
+      return new Date(localDateTime.getTime() + localDateTime.getTimezoneOffset() * 60000).toISOString();
+    };
 
     const newClassRoom = { 
       ...data, 
       teacher: teacherId,
-      first_class: new Date(data.first_class).toISOString(),
-      startDate: new Date(data.startDate).toISOString()
+      first_class: data.startDate && data.time ? toUTC(data.startDate, data.time) : undefined,
     };
-    console.log("newClassRoom: ",newClassRoom);
     const response = await axios.post(`${url}api/virtual`, newClassRoom, {
       headers: {
         Authorization: `Bearer ${token}`,
