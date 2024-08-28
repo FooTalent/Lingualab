@@ -190,6 +190,8 @@ export const getVCRooms = async (token, teacherId) => {
 
 export const createVCRoom = async (token, teacherId, data) => {
   try {
+    console.log(data);
+    
     const newClassRoom = { ...data, teacher: teacherId}
     const response = await axios.post(`${url}api/virtual`, newClassRoom, {
       headers: {
