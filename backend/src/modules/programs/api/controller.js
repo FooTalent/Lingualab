@@ -30,7 +30,7 @@ export default class Controller extends CustomController {
       let newElement = validateFields(req.body, this.requiredFields);
       const { description, isTemplate, duration_hours, first_class } = req.body;
       if (first_class) {
-        newElement.first_class = toUTC(first_class);
+        newElement.first_class = toUTC(first_class, "new");
       }
       const element = await this.service.create({ ...newElement, description, duration_hours, isTemplate });
       res.sendSuccess(element);

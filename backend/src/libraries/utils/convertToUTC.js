@@ -4,15 +4,19 @@ export default function convertToUTC (dateString, isEndOfDay = false) {
   return new Date(date.getTime() + date.getTimezoneOffset() * 60000);
 }
 
-export const toUTC = (date) => {
+export const toUTC = (date, aux) => {
   if (date) {
     console.log("inicial: " + date);
-    return new Date(date);
-    //const localDate = new Date(date)
-    // const UTCDate = new Date(localDate.getTime() + localDate.getTimezoneOffset() * 60000)
-    // const stringDate = UTCDate.toISOString();
-    // console.log('Helper: ', stringDate)
-    // return stringDate
+    if (aux != "new") {
+      return new Date(date);
+
+    } else {
+      const localDate = new Date(date)
+      const UTCDate = new Date(localDate.getTime() + localDate.getTimezoneOffset() * 60000)
+      const stringDate = UTCDate.toISOString();
+      console.log('Helper: ', stringDate)
+      return stringDate
+    }
   }
   return date;
 };
