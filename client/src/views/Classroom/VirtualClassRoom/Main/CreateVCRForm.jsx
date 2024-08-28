@@ -9,7 +9,7 @@ import AddStudentForm from '../../../../components/AddStudentForm';
 import ErrorMessage from '../../../../components/ErrorMessage';
 import NewStudent from '/ImagesStudent/AgregasteUnAlumno.png'
 import CancelIcon from '@mui/icons-material/Cancel';
-import { getTimezone } from '../../../../utils/getTimezone';
+import { formatDatetime } from '../../../../utils/getTimezone';
 
 const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
   const { user } = useAppStore();
@@ -79,8 +79,7 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
         const date = newData.startDate || prevData.startDate;
         const time = newData.time || prevData.time;
         if (date && time) {
-          const timezoneOffset = getTimezone()
-          newData.startDateTime = `${date}T${time}${timezoneOffset}`;
+          newData.startDateTime = formatDatetime(date, time);
         }
       }
       return newData;
