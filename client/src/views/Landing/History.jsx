@@ -108,7 +108,7 @@ const History = () => {
               La problemática detectada ...
             </h2>
             <p className="mt-5" style={{ fontSize: "19px" }}>
-              En base a la necesidad que tienen los docentes que dan clases de{" "}
+              Tiene que ver con la necesidad que tienen los docentes que dan clases de{" "}
               <br />
               idiomas de forma remota, que tienen distribuidos los recursos en{" "}
               <br />
@@ -123,10 +123,10 @@ const History = () => {
               Nuestro público objetivo ...
             </h2>
             <p className="mt-5" style={{ fontSize: "19px" }}>
-              Son los docentes de idiomas, de todos los niveles educativos, que
-              enseñan de forma virtual, y buscan mejorar la eficiencia de sus{" "}
+              Son los docentes de idiomas de todos los niveles educativos que
+              enseñan de forma virtual y buscan mejorar la eficiencia de sus{" "}
               <br />
-              clases y optimizando su tiempo.
+              clases y optimizar su tiempo.
             </p>
           </div>
           <img src="/ImagesHistory/2paso.png" alt="Paso 2" />
