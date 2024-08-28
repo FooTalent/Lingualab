@@ -80,8 +80,7 @@ const CreateVCRForm = ({ onSubmit, onClose, teacherId, token }) => {
         const time = newData.time || prevData.time;
         if (date && time) {
           const timezoneOffset = getTimezone()
-          console.log(timezoneOffset)
-          newData.startDateTime = `${date}T${time}`;
+          newData.startDateTime = `${date}T${time}${timezoneOffset}`;
         }
       }
       return newData;

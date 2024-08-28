@@ -6,7 +6,8 @@ export default function convertToUTC (dateString, isEndOfDay = false) {
 
 export const toUTC = (date, aux) => {
   if (date) {
-      return new Date(date);
+    console.log(date)
+    return new Date(date);
   }
   return date;
 };
