@@ -109,7 +109,7 @@ const History = () => {
             </h2>
             <p className="mt-5" style={{ fontSize: "19px" }}>
               Tiene que ver con la necesidad que tienen los docentes que dan clases de{" "}
-              <br />
+          
               idiomas de forma remota, que tienen distribuidos los recursos en{" "}
               <br />
               múltiples espacios.
