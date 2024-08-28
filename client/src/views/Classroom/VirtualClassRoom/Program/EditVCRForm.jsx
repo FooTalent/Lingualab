@@ -7,6 +7,7 @@ import AddStudentForm from '../../../../components/AddStudentForm';
 import { useForm } from 'react-hook-form';
 import ErrorMessage from '../../../../components/ErrorMessage';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { formatDatetime } from '../../../../utils/getTimezone';
 
 const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 
@@ -96,7 +97,7 @@ const EditVCRForm = ({ program, onSubmit, onClose, teacherId, token }) => {
         const date = newData.startDate || prevData.startDate;
         const time = newData.time || prevData.time;
         if (date && time) {
-          newData.first_class = `${date}T${time}`;
+          newData.first_class = formatDatetime(date, time);
         }
       }
       return newData;

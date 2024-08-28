@@ -57,12 +57,7 @@ export const getProgramById = async (token, programId) => {
 
 export const updateProgram = async (token, programId, data ) => {
   try {
-    const updatedData = {
-      ...data,
-      first_class: data.startDate && data.time ? new Date(`${data.startDate}T${data.time}:00.000Z`).toISOString() : undefined,
-    };
-    
-    const response = await axios.put(`${url}api/programs/${programId}`, updatedData, {
+    const response = await axios.put(`${url}api/programs/${programId}`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
