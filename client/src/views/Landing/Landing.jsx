@@ -30,7 +30,7 @@ const Landing = () => {
           </div>
           <p className="md:text-[28px] text-[12px] text-white font-normal">
             Descubre todo lo que necesitas para enseñar y <br />
-            aprender idiomas en nuestra plataforma. Gestioná <br />
+            aprender idiomas en nuestra plataforma. Gestiona <br />
             tus clases, accede a recursos y crea contenido.
           </p>
           <button onClick={handleScroll} className="w-fit md:px-12 px-3 md:py-3 py-4 md:rounded-lg rounded-[4px] font-medium md:text-[28px] text-[12px] bg-[#FFDC00] text-[#444444]">

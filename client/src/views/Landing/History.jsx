@@ -32,9 +32,9 @@ const History = () => {
               La problemática detectada ...
             </h2>
             <p className="text-[16px] leading-[18,75px] text-justify font-normal">
-              En base a la necesidad que tienen los docentes que dan clases de
-              idiomas de forma remota, que tienen distribuidos los recursos en
-              múltiples espacios.
+              Tiene que ver con la necesidad que tienen los docentes que dan
+              clases de idiomas de forma remota, que tienen distribuidos los
+              recursos en múltiples espacios.
             </p>
           </div>
         </div>
@@ -47,12 +47,12 @@ const History = () => {
           />
           <div className="flex flex-col gap-4">
             <h2 className="text-lg font-extrabold text-center">
-            Nuestro público objetivo ...
+              Nuestro público objetivo ...
             </h2>
             <p className="text-[16px] leading-[18,75px] text-justify font-normal">
-            Son los docentes de idiomas, de todos los niveles educativos, que
-              enseñan de forma virtual, y buscan mejorar la eficiencia de sus
-              clases y optimizando su tiempo.
+              Son los docentes de idiomas de todos los niveles educativos que
+              enseñan de forma virtual y buscan mejorar la eficiencia de sus
+              clases y optimizar su tiempo.
             </p>
           </div>
         </div>
@@ -65,19 +65,15 @@ const History = () => {
           />
           <div className="flex flex-col gap-4">
             <h2 className="text-lg leading-[21,09px] font-extrabold text-center">
-            ¿Cuáles son las necesidades a desarrollar?
+              ¿Cuáles son las necesidades a desarrollar?
             </h2>
             <ul className="list-disc px-2 text-4 leading-[18,75px] text-justify font-normal">
-              <li>
-                Centralizar y organizar sus recursos dispersos.
-              </li>
+              <li>Centralizar y organizar sus recursos dispersos.</li>
               <li>
                 Facilitar la gestión y optimización del tiempo en la creación y
                 administración de clases virtuales.
               </li>
-              <li>
-                Diseñar una interfaz fácil e intuitiva.
-              </li>
+              <li>Diseñar una interfaz fácil e intuitiva.</li>
             </ul>
           </div>
         </div>
@@ -90,12 +86,11 @@ const History = () => {
           />
           <div className="flex flex-col gap-4">
             <h2 className="text-lg font-extrabold text-center">
-            ¿En qué consiste nuestra propuesta?
+              ¿En qué consiste nuestra propuesta?
             </h2>
             <p className="text-[16px] leading-[18,75px] text-justify font-normal">
-            Desarrollar una página web dedicada a ayudar a los docentes a
-              organizar su material y crear clases virtuales de manera más
-              óptima.
+              Desarrollar una página web dedicada a ayudar a los docentes a
+              organizar su material y crear clases virtuales de manera óptima.
             </p>
           </div>
         </div>
