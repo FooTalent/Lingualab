@@ -57,7 +57,15 @@ export const getProgramById = async (token, programId) => {
 
 export const updateProgram = async (token, programId, data ) => {
   try {
-    const response = await axios.put(`${url}api/programs/${programId}`, data, {
+    console.log(data);
+    const updatedData = {
+      ...data,
+      first_class: data.startDate && data.time ? new Date(`${data.startDate}T${data.time}:00.000Z`).toISOString() : undefined,
+    };
+
+    console.log(updatedData);
+    
+    const response = await axios.put(`${url}api/programs/${programId}`, updatedData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -190,9 +198,7 @@ export const getVCRooms = async (token, teacherId) => {
 
 export const createVCRoom = async (token, teacherId, data) => {
   try {
-    
-    console.log("data: ",data);
-    
+
     const newClassRoom = { 
       ...data, 
       teacher: teacherId,
