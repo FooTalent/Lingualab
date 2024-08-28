@@ -43,7 +43,6 @@ export default class Controller extends CustomController {
     try {
       const { eid } = req.params;
       let newElement = req.body;
-      console.log(newElement)
 
       const element = await this.service.update(eid, newElement);
       res.sendSuccess(element);

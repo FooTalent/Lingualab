@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
 import { LEVELS_MAP } from '../../../../utils/valueLists';
 import { Link } from 'react-router-dom';
 import { useAppStore } from '../../../../store/useAppStore';
@@ -64,7 +65,7 @@ const ClassroomCard = ({ classroom, editFunction, deleteFunction, editContentFun
         </div>
       </div>
       <div>
-        <strong>Fecha:</strong> {daytime ? new Date(daytime).toLocaleString('es-ES') : null}
+        <strong>Fecha:</strong> {daytime ? dayjs(daytime).format('D/M/YYYY, HH:mm:ss') : null}
       </div>
       <span className='border-t border-Grey'></span>
       <div className='flex items-center gap-6 text-sm'>
