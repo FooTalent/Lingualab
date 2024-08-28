@@ -26,7 +26,7 @@ export default class Controller {
       let { title, templateId, studentIds, first_class, daysOfWeek} = req.body;
 
       if (first_class) { 
-        console.log(first_class)
+        console.log('Controlador: ', first_class)
         first_class = toUTC(first_class, "new"); 
       }
 

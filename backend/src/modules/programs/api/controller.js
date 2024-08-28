@@ -43,9 +43,8 @@ export default class Controller extends CustomController {
     try {
       const { eid } = req.params;
       let newElement = req.body;
-      if (newElement.first_class) {
-        newElement.first_class = toUTC(newElement.first_class);
-      }
+      console.log(newElement)
+
       const element = await this.service.update(eid, newElement);
       res.sendSuccess(element);
     } catch (error) {

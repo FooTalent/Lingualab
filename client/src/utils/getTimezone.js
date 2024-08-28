@@ -17,5 +17,6 @@ export const convertToClientTimezone = (dateTime) => {
 
 export const formatDatetime = (date, time) => {
     const localDateTime = `${date}T${time}`
+    console.log(localDateTime)
     return convertToClientTimezone(localDateTime)
 }
