@@ -25,7 +25,7 @@ export default class Controller {
     try {
       let { title, templateId, studentIds, first_class, daysOfWeek} = req.body;
 
-      if (first_class) { first_class = toUTC(first_class); }
+      if (first_class) { first_class = toUTC(first_class, "new"); }
 
       const newProgram = await this.service.createCustomProgram(
         title,
