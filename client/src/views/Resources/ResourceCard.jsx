@@ -23,7 +23,7 @@ export default function ResourceCard({ resource, deleteFunc, editFunc, onSelect 
                     <IconSvg category={resource.type} className={'w-6'} />
                     <p className="text-sm leading-4 max-w-[80%] truncate">
                         <a href={resource.url} className="hover:underline" target="_blank" rel="noopener noreferrer">
-                            {resource.url}aaaaaaaaaaaaaaaaaaaaaaaaa
+                            {resource.url}
                         </a>
                     </p>
                 </div>
